@@ -19,6 +19,7 @@ RUN echo "[SETUP] GAME_BASE_DIR: $GAME_BASE_DIR"; \
     echo "[SETUP] MOD: $MOD"; \
     echo "[SETUP] FIX_APPMANIFEST: $FIX_APPMANIFEST"; \
     echo "[SETUP] INSTALL_COUNT: $INSTALL_COUNT"; \
+    echo "[SETUP] VERSION: $VERSION"; \
     if [ ! -z "$MOD" ]; then \
         steamcmd_params="+login anonymous +force_install_dir $GAME_BASE_DIR +app_set_config $APPID mod $MOD +app_update $APPID validate +quit"; \
     else \
