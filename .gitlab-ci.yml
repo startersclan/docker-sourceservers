@@ -12,8 +12,8 @@ variables:
 
 before_script:
   # registry login
-  - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
   - echo $REGISTRY_PASSWORD | docker login -u $REGISTRY_USER --password-stdin
+  - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
 
 setup:
   stage: setup
@@ -47,5 +47,5 @@ setup:
     - triggers
 
 after_script:
-  - docker logout $CI_REGISTRY
   - docker logout
+  - docker logout $CI_REGISTRY
