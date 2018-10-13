@@ -19,7 +19,7 @@ setup:
   stage: setup
   script:
     - echo $APPID
-      && echo $MOD &&
+      && echo $MOD
       && echo $FIX_APPMANIFEST
       && echo $VERSION
       && echo $GAME
