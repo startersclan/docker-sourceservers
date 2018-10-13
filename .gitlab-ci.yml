@@ -18,13 +18,31 @@ before_script:
 setup:
   stage: setup
   script:
-    # $GAME, $APP_ID, MOD, FIX_APPMANIFEST, $VERSION to be issued as a variable through api trigger
-    - docker build -t "${GAME}" -t "${GAME}:${VERSION}" -t "${CI_REGISTRY_IMAGE}/${GAME}" -t "${CI_REGISTRY_IMAGE}/${GAME}:${VERSION}" -t "${CI_REGISTRY_IMAGE}/${GAME}:${CI_JOB_ID}" -f ./$SETUP_FOLDER_NAME/Dockerfile ./$SETUP_FOLDER_NAME --build-arg APPID=$APPID --build-arg MOD=$MOD --build-arg FIX_APPMANIFEST=$FIX_APPMANIFEST --build-arg VERSION=$VERSION
-    - docker push "${GAME}"
-    - docker push "${GAME}:${VERSION}"
-    - docker push "${CI_REGISTRY_IMAGE}/${GAME}"    
-    - docker push "${CI_REGISTRY_IMAGE}/${GAME}:${VERSION}"
-    - docker push "${CI_REGISTRY_IMAGE}/${GAME}:${CI_JOB_ID}"
+    - echo $APPID
+      && echo $MOD &&
+      && echo $FIX_APPMANIFEST
+      && echo $VERSION
+      && echo $GAME
+
+    # $APPID, MOD, FIX_APPMANIFEST, $VERSION, $GAME to be issued as a variable through api trigger
+    - docker build
+      --build-arg APPID=$APPID
+      --build-arg MOD=$MOD
+      --build-arg FIX_APPMANIFEST=$FIX_APPMANIFEST
+      --build-arg VERSION=$VERSION
+      -t "${GAME}"
+      -t "${GAME}:${VERSION}"
+      -t "${CI_REGISTRY_IMAGE}/${GAME}"
+      -t "${CI_REGISTRY_IMAGE}/${GAME}:${VERSION}"
+      -t "${CI_REGISTRY_IMAGE}/${GAME}:${CI_JOB_ID}"
+      -f ./$SETUP_FOLDER_NAME/Dockerfile
+      ./$SETUP_FOLDER_NAME
+
+    - docker push "${$REGISTRY_USER}/${GAME}"
+      && docker push "${$REGISTRY_USER}/${GAME}:${VERSION}"
+    - docker push "${CI_REGISTRY_IMAGE}/${GAME}"
+      && docker push "${CI_REGISTRY_IMAGE}/${GAME}:${VERSION}"
+      && docker push "${CI_REGISTRY_IMAGE}/${GAME}:${CI_JOB_ID}"
   only:
     - triggers
 
