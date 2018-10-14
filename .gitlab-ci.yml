@@ -24,7 +24,7 @@ setup:
       && echo $GAME
       && echo $VERSION
 
-    # $APPID, MOD, FIX_APPMANIFEST, $VERSION, $GAME to be issued as a variable through api trigger
+    # $APPID, $MOD, $FIX_APPMANIFEST, $GAME, $VERSION to be issued as variables through pipeline trigger
     - docker build
       --build-arg APPID=$APPID
       --build-arg MOD=$MOD
