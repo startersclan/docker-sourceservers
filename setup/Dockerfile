@@ -23,18 +23,18 @@ RUN echo "[SETUP] GAME_BASE_DIR: $GAME_BASE_DIR"; \
     echo "[SETUP] GAME: $GAME"; \
     echo "[SETUP] VERSION: $VERSION"; \
     if [ ! -z "$MOD" ]; then \
-        steamcmd_params="+login anonymous +force_install_dir $GAME_BASE_DIR +app_set_config $APPID mod $MOD +app_update $APPID validate +quit"; \
+        steamcmdArgs="+login anonymous +force_install_dir $GAME_BASE_DIR +app_set_config $APPID mod $MOD +app_update $APPID validate +quit"; \
     else \
-        steamcmd_params="+login anonymous +force_install_dir $GAME_BASE_DIR +app_update $APPID validate +quit"; \
+        steamcmdArgs="+login anonymous +force_install_dir $GAME_BASE_DIR +app_update $APPID validate +quit"; \
     fi; \
-    echo "[SETUP] steamcmd parameters: $steamcmd_params"; \
+    echo "[SETUP] steamcmd arguments: $steamcmdArgs"; \
     echo "[SETUP] Downloading game"; \
     if [ "$APPID" = 90 ] && [ "$FIX_APPMANIFEST" = true ]; then \
         echo "[SETUP] APPID is 90 and FIX_APPMANIFEST is true. Appmanifest fix and install count will apply."; \
         i=0; \
         while [ "$i" -le $(( $INSTALL_COUNT-1 )) ]; do \
             echo "[SETUP] Current install count: $(( i+1 ))"; \
-            steamcmd.sh $steamcmd_params; \
+            steamcmd.sh $steamcmdArgs; \
             i=$(( i+1 )); \
             if [ "$i" -eq 1 ]; then \
                 echo "[SETUP] Downloading and applying appmanifest fix"; \
@@ -43,7 +43,7 @@ RUN echo "[SETUP] GAME_BASE_DIR: $GAME_BASE_DIR"; \
         done; \
     else \
         echo "[SETUP] Either APPID is not 90 or FIX_APPMANIFEST is not true. Appmanifest fix and install count will be ignored."; \
-        steamcmd.sh $steamcmd_params; \
+        steamcmd.sh $steamcmdArgs; \
     fi
 
 # Apply game fixes
