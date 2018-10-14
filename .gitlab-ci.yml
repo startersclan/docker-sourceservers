@@ -21,14 +21,15 @@ setup:
     - echo $APPID
       && echo $MOD
       && echo $FIX_APPMANIFEST
-      && echo $VERSION
       && echo $GAME
+      && echo $VERSION
 
     # $APPID, MOD, FIX_APPMANIFEST, $VERSION, $GAME to be issued as a variable through api trigger
     - docker build
       --build-arg APPID=$APPID
       --build-arg MOD=$MOD
       --build-arg FIX_APPMANIFEST=$FIX_APPMANIFEST
+      --build-arg GAME=$GAME
       --build-arg VERSION=$VERSION
       -t "${REGISTRY_USER}/${GAME}"
       -t "${REGISTRY_USER}/${GAME}:${VERSION}"

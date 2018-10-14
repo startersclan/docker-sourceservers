@@ -10,6 +10,7 @@ ARG APPID
 ARG MOD
 ARG FIX_APPMANIFEST=false
 ARG INSTALL_COUNT=3
+ARG GAME
 ARG VERSION
 
 # Download game
@@ -19,6 +20,7 @@ RUN echo "[SETUP] GAME_BASE_DIR: $GAME_BASE_DIR"; \
     echo "[SETUP] MOD: $MOD"; \
     echo "[SETUP] FIX_APPMANIFEST: $FIX_APPMANIFEST"; \
     echo "[SETUP] INSTALL_COUNT: $INSTALL_COUNT"; \
+    echo "[SETUP] GAME: $GAME"; \
     echo "[SETUP] VERSION: $VERSION"; \
     if [ ! -z "$MOD" ]; then \
         steamcmd_params="+login anonymous +force_install_dir $GAME_BASE_DIR +app_set_config $APPID mod $MOD +app_update $APPID validate +quit"; \
@@ -54,9 +56,13 @@ RUN echo "[SETUP] Applying game fixes"; \
 ENV GAME_BASE_DIR $GAME_BASE_DIR
 ENV APPID $APPID
 ENV MOD $MOD
-ENV VERSION $VERSION
 ENV PATH $PATH:$GAME_BASE_DIR
 ENV LD_LIBRARY_PATH .:bin:$LD_LIBRARY_PATH
+
+LABEL appid=$APPID
+LABEL mod=$MOD
+LABEL game=$GAME
+LABEL game_version=$VERSION
 
 WORKDIR $GAME_BASE_DIR
 
