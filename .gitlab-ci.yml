@@ -39,10 +39,7 @@ build:
       $BUILD_DIR
 
     - docker push "${REGISTRY_USER}/${GAME}"
-      && docker push "${REGISTRY_USER}/${GAME}:${VERSION}"
     - docker push "${CI_REGISTRY_IMAGE}/${GAME}"
-      && docker push "${CI_REGISTRY_IMAGE}/${GAME}:${VERSION}"
-      && docker push "${CI_REGISTRY_IMAGE}/${GAME}:${CI_JOB_ID}"
   only:
     - triggers
 
