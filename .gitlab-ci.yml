@@ -31,9 +31,9 @@ setup:
       --build-arg FIX_APPMANIFEST=$FIX_APPMANIFEST
       --build-arg GAME=$GAME
       --build-arg VERSION=$VERSION
-      -t "${REGISTRY_USER}/${GAME}"
+      -t "${REGISTRY_USER}/${GAME}:latest"
       -t "${REGISTRY_USER}/${GAME}:${VERSION}"
-      -t "${CI_REGISTRY_IMAGE}/${GAME}"
+      -t "${CI_REGISTRY_IMAGE}/${GAME}:latest"
       -t "${CI_REGISTRY_IMAGE}/${GAME}:${VERSION}"
       -t "${CI_REGISTRY_IMAGE}/${GAME}:${CI_JOB_ID}"
       -f ./$SETUP_FOLDER_NAME/Dockerfile
