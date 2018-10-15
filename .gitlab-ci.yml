@@ -36,7 +36,7 @@ build:
       -t "${REGISTRY_USER}/${GAME}:${VERSION}"
       -t "${CI_REGISTRY_IMAGE}/${GAME}:latest"
       -t "${CI_REGISTRY_IMAGE}/${GAME}:${VERSION}"
-      -t "${CI_REGISTRY_IMAGE}/${GAME}:${CI_JOB_ID}"
+      -t "${CI_REGISTRY_IMAGE}/${GAME}:${CI_COMMIT_SHA}"
       $BUILD_DIR
 
     - date
