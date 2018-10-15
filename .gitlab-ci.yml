@@ -41,6 +41,7 @@ build:
 
     - date
     - docker push "${REGISTRY_USER}/${GAME}"
+    - date
     - docker push "${CI_REGISTRY_IMAGE}/${GAME}"
 
     - date
