@@ -4,19 +4,19 @@ services:
   - docker:stable-dind
 
 stages:
-  - setup
+  - build
 
 variables:
   DOCKER_DRIVER: overlay2
-  SETUP_FOLDER_NAME: setup
+  BUILD_DIR: build/
 
 before_script:
   # registry login
   - echo $REGISTRY_PASSWORD | docker login -u $REGISTRY_USER --password-stdin
   - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
 
-setup:
-  stage: setup
+build:
+  stage: build
   script:
     - echo $APPID
       && echo $MOD
@@ -36,7 +36,7 @@ setup:
       -t "${CI_REGISTRY_IMAGE}/${GAME}:latest"
       -t "${CI_REGISTRY_IMAGE}/${GAME}:${VERSION}"
       -t "${CI_REGISTRY_IMAGE}/${GAME}:${CI_JOB_ID}"
-      $SETUP_FOLDER_NAME/
+      $BUILD_DIR
 
     - docker push "${REGISTRY_USER}/${GAME}"
       && docker push "${REGISTRY_USER}/${GAME}:${VERSION}"
