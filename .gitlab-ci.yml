@@ -24,6 +24,7 @@ build:
       && echo $GAME
       && echo $VERSION
 
+    - date
     # $APPID, $MOD, $FIX_APPMANIFEST, $GAME, $VERSION to be issued as variables through pipeline trigger
     - docker build
       --build-arg APPID=$APPID
@@ -38,6 +39,7 @@ build:
       -t "${CI_REGISTRY_IMAGE}/${GAME}:${CI_JOB_ID}"
       $BUILD_DIR
 
+    - date
     - docker push "${REGISTRY_USER}/${GAME}"
     - docker push "${CI_REGISTRY_IMAGE}/${GAME}"
   only:
