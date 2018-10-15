@@ -5,7 +5,7 @@ FROM joeltimothyoh/steamcmd
 MAINTAINER The Oh Brothers
 
 ARG GAME_BASE_DIR=/server
-ARG APPMANIFEST_AR_URL=https://gameservers.startersclan.com/shared/assets/hlds/appmanifest.tar.gz
+ARG APPMANIFEST_AR_URL=https://github.com/theohbrothers/hlds-appmanifest/archive/v1.0.0.tar.gz
 ARG APPID
 ARG MOD
 ARG FIX_APPMANIFEST=false
@@ -38,7 +38,7 @@ RUN echo "[SETUP] GAME_BASE_DIR: $GAME_BASE_DIR"; \
             i=$(( i+1 )); \
             if [ "$i" -eq 1 ]; then \
                 echo "[SETUP] Downloading and applying appmanifest fix"; \
-                curl -sqLk "$APPMANIFEST_AR_URL" | tar zxvf - -C $GAME_BASE_DIR/steamapps; \
+                curl -sqL "$APPMANIFEST_AR_URL" | tar -zxvf - -C $GAME_BASE_DIR/steamapps --strip-components=1; \
             fi; \
         done; \
     else \
