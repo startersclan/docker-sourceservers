@@ -1,6 +1,6 @@
 # Builds a base image for the specified game.
 
-FROM joeltimothyoh/steamcmd
+FROM theohbrothers/steamcmd
 
 MAINTAINER The Oh Brothers
 
