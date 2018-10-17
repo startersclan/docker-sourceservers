@@ -47,7 +47,7 @@ build:
     - docker images
 
     # Test the game image
-    - if [ -z "${NO_TEST_RUN}" ]; then
+    - if [ "${NO_TEST_RUN}" != true ]; then
         if [ "${APPID}" = 90 ]; then
           GAME_BIN="hlds_linux";
         else
