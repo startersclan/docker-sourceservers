@@ -13,12 +13,10 @@ env:
 before_script:
   - whoami
   - cat /proc/version
-  - docker version
   - df -h
 
   - echo "${NO_TEST_RUN}"
 
-  # Registry login(s)
   - echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
 
 script:
@@ -39,7 +37,6 @@ script:
       -t "${REGISTRY_USER}/${GAME}:latest"
       -t "${REGISTRY_USER}/${GAME}:${GAME_VERSION}"
       "${BUILD_DIR}"
-  - date
   - docker images
 
   # Test the game image
