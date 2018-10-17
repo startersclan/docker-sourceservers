@@ -41,8 +41,11 @@ build:
 
     - date
     - docker push "${REGISTRY_USER}/${GAME}"
-    - date
-    - docker push "${CI_REGISTRY_IMAGE}/${GAME}"
+
+    - if [ "${PUSH_TO_CI_REGISTRY}" = true ]; then
+        date;
+        docker push "${CI_REGISTRY_IMAGE}/${GAME}";
+      fi
 
     - date
   only:
