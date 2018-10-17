@@ -8,7 +8,7 @@ stages:
 
 env:
   global:
-    - BUILD_DIR=build/
+    - BUILD_DIR="build/"
 
 before_script:
   - whoami
