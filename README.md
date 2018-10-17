@@ -1,10 +1,10 @@
-# Introduction [![Build Status](https://travis-ci.org/joeltimothyoh/docker-sourceservers.svg?branch=travis)](https://travis-ci.org/joeltimothyoh/docker-sourceservers)
+# Introduction [![Build Status](https://travis-ci.org/theohbrothers/docker-sourceservers.svg?branch=github)](https://travis-ci.org/theohbrothers/docker-sourceservers)
 
 Builds up-to-date **Source** / **GoldSrc** dedicated server images through use of `steamcmd`.
 
 ## Supported Tags
 
-* `latest`, `<version>`  [(/build/Dockerfile)](https://github.com/joeltimothyoh/docker-sourceservers/blob/travis/build/Dockerfile)
+* `latest`, `<version>`  [(/build/Dockerfile)](https://github.com/theohbrothers/docker-sourceservers/blob/github/build/Dockerfile)
 
 ## Notes
 
