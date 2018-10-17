@@ -4,7 +4,7 @@ FROM theohbrothers/steamcmd
 
 MAINTAINER The Oh Brothers
 
-ARG GAME_BASE_DIR=/server
+ARG SERVER_DIR=/server
 ARG APPMANIFEST_AR_URL=https://github.com/theohbrothers/hlds-appmanifest/archive/v1.0.0.tar.gz
 ARG APPID
 ARG MOD
@@ -14,7 +14,7 @@ ARG GAME
 ARG VERSION
 
 # Download game
-RUN echo "[SETUP] GAME_BASE_DIR: $GAME_BASE_DIR"; \
+RUN echo "[SETUP] SERVER_DIR: $SERVER_DIR"; \
     echo "[SETUP] APPMANIFEST_AR_URL: $APPMANIFEST_AR_URL"; \
     echo "[SETUP] APPID: $APPID"; \
     echo "[SETUP] MOD: $MOD"; \
@@ -23,9 +23,9 @@ RUN echo "[SETUP] GAME_BASE_DIR: $GAME_BASE_DIR"; \
     echo "[SETUP] GAME: $GAME"; \
     echo "[SETUP] VERSION: $VERSION"; \
     if [ ! -z "$MOD" ]; then \
-        steamcmdArgs="+login anonymous +force_install_dir $GAME_BASE_DIR +app_set_config $APPID mod $MOD +app_update $APPID validate +quit"; \
+        steamcmdArgs="+login anonymous +force_install_dir $SERVER_DIR +app_set_config $APPID mod $MOD +app_update $APPID validate +quit"; \
     else \
-        steamcmdArgs="+login anonymous +force_install_dir $GAME_BASE_DIR +app_update $APPID validate +quit"; \
+        steamcmdArgs="+login anonymous +force_install_dir $SERVER_DIR +app_update $APPID validate +quit"; \
     fi; \
     echo "[SETUP] steamcmd arguments: $steamcmdArgs"; \
     echo "[SETUP] Downloading game"; \
@@ -38,7 +38,7 @@ RUN echo "[SETUP] GAME_BASE_DIR: $GAME_BASE_DIR"; \
             i=$(( i+1 )); \
             if [ "$i" -eq 1 ]; then \
                 echo "[SETUP] Downloading and applying appmanifest fix"; \
-                curl -sqL "$APPMANIFEST_AR_URL" | tar -zxvf - -C $GAME_BASE_DIR/steamapps --strip-components=1; \
+                curl -sqL "$APPMANIFEST_AR_URL" | tar -zxvf - -C $SERVER_DIR/steamapps --strip-components=1; \
             fi; \
         done; \
     else \
@@ -49,14 +49,14 @@ RUN echo "[SETUP] GAME_BASE_DIR: $GAME_BASE_DIR"; \
 # Apply game fixes
 RUN echo "[SETUP] Applying game fixes"; \
     # Create steam_appid.txt containing the app id to prevent crash on first run
-    echo $APPID > $GAME_BASE_DIR/steam_appid.txt
+    echo $APPID > $SERVER_DIR/steam_appid.txt
     # Create a symlink to steamcmd's steamclient.so file to stop the error
     #mkdir -p ~/.steam/sdk32 && ln -sf $STEAMCMD_DIR/linux32/steamclient.so ~/.steam/sdk32/steamclient.so
 
-ENV GAME_BASE_DIR $GAME_BASE_DIR
+ENV SERVER_DIR $SERVER_DIR
 ENV APPID $APPID
 ENV MOD $MOD
-ENV PATH $PATH:$GAME_BASE_DIR
+ENV PATH $PATH:$SERVER_DIR
 ENV LD_LIBRARY_PATH .:bin:$LD_LIBRARY_PATH
 
 LABEL appid=$APPID
@@ -64,7 +64,7 @@ LABEL mod=$MOD
 LABEL game=$GAME
 LABEL game_version=$VERSION
 
-WORKDIR $GAME_BASE_DIR
+WORKDIR $SERVER_DIR
 
 ENTRYPOINT ["/bin/bash", "-c"]
 CMD [""]
