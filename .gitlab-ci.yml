@@ -47,7 +47,7 @@ build:
 
     # Print image's environment variables and test run the game
     - if [ -z "${NO_TEST_RUN}" ]; then
-        if [ "{$APPID}" = 90 ]; then
+        if [ "${APPID}" = 90 ]; then
           GAME_BIN="hlds_linux";
         else
           GAME_BIN="srcds_linux";
