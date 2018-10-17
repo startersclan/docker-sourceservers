@@ -12,26 +12,26 @@ variables:
 
 before_script:
   # registry login
-  - echo $REGISTRY_PASSWORD | docker login -u $REGISTRY_USER --password-stdin
-  - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+  - echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
+  - echo "${CI_REGISTRY_PASSWORD}" | docker login -u "${CI_REGISTRY_USER}" --password-stdin "${CI_REGISTRY}"
 
 build:
   stage: build
   script:
-    - echo $APPID
-      && echo $MOD
-      && echo $FIX_APPMANIFEST
-      && echo $GAME
-      && echo $GAME_VERSION
+    - echo "${APPID}"
+      && echo "${MOD}"
+      && echo "${FIX_APPMANIFEST}"
+      && echo "${GAME}"
+      && echo "${GAME_VERSION}"
 
     - date
     # APPID, MOD, FIX_APPMANIFEST, GAME, GAME_VERSION to be issued as variables through pipeline trigger
     - docker build
-      --build-arg APPID=$APPID
-      --build-arg MOD=$MOD
-      --build-arg FIX_APPMANIFEST=$FIX_APPMANIFEST
-      --build-arg GAME=$GAME
-      --build-arg GAME_VERSION=$GAME_VERSION
+      --build-arg APPID="${APPID}"
+      --build-arg MOD="${MOD}"
+      --build-arg FIX_APPMANIFEST="${FIX_APPMANIFEST}"
+      --build-arg GAME="${GAME}"
+      --build-arg GAME_VERSION="${GAME_VERSION}"
       -t "${REGISTRY_USER}/${GAME}:latest"
       -t "${REGISTRY_USER}/${GAME}:${GAME_VERSION}"
       -t "${CI_REGISTRY_IMAGE}/${GAME}:latest"
@@ -53,4 +53,4 @@ build:
 
 after_script:
   - docker logout
-  - docker logout $CI_REGISTRY
+  - docker logout "${CI_REGISTRY}"
