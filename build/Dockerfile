@@ -9,7 +9,7 @@ ARG MOD
 ARG FIX_APPMANIFEST=false
 ARG INSTALL_COUNT=3
 ARG GAME
-ARG VERSION
+ARG GAME_VERSION
 
 # Download game
 RUN echo "[SETUP] SERVER_DIR: $SERVER_DIR"; \
@@ -19,7 +19,7 @@ RUN echo "[SETUP] SERVER_DIR: $SERVER_DIR"; \
     echo "[SETUP] FIX_APPMANIFEST: $FIX_APPMANIFEST"; \
     echo "[SETUP] INSTALL_COUNT: $INSTALL_COUNT"; \
     echo "[SETUP] GAME: $GAME"; \
-    echo "[SETUP] VERSION: $VERSION"; \
+    echo "[SETUP] GAME_VERSION: $GAME_VERSION"; \
     if [ ! -z "$MOD" ]; then \
         steamcmdArgs="+login anonymous +force_install_dir $SERVER_DIR +app_set_config $APPID mod $MOD +app_update $APPID validate +quit"; \
     else \
@@ -67,4 +67,4 @@ CMD [""]
 LABEL appid=$APPID
 LABEL mod=$MOD
 LABEL game=$GAME
-LABEL game_version=$VERSION
+LABEL game_version=$GAME_VERSION
