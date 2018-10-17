@@ -53,7 +53,7 @@ build:
           GAME_BIN="srcds_linux";
         fi;
         echo ${GAME_BIN};
-        docker run --rm "${REGISTRY_USER}/${GAME}:latest" "printenv && ls -al && exec ${GAME_BIN} -game $GAME +version +exit";
+        docker run --rm "${REGISTRY_USER}/${GAME}:latest" "printenv && ls -al && exec ${GAME_BIN} -game ${GAME} +version +exit";
       fi
     - date
 
