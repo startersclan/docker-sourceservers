@@ -12,6 +12,7 @@ variables:
 
 before_script:
   - echo "${PUSH_TO_CI_REGISTRY}"
+    && echo "${NO_TEST_RUN}"
 
   # Registry login(s)
   - echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
@@ -44,8 +45,16 @@ build:
         $BUILD_DIR
     - date
 
-    # Print image's environment variables
-    - docker run --rm "${REGISTRY_USER}/${GAME}" printenv
+    # Print image's environment variables and test run the game
+    - if [ -z "${NO_TEST_RUN}" ]; then
+        if [ "{$APPID}" = 90 ]; then
+          GAME_BIN="hlds_linux";
+        else
+          GAME_BIN="srcds_linux";
+        fi;
+        echo ${GAME_BIN};
+        docker run --rm "${REGISTRY_USER}/${GAME}:latest" "printenv && exec ${GAME_BIN} -game $GAME +exit";
+      fi
     - date
 
     # Push image
