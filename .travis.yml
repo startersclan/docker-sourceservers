@@ -16,7 +16,6 @@ before_script:
   - docker version
   - df -h
 
-  # Registry login(s)
   - echo "${NO_TEST_RUN}"
 
   # Registry login(s)
