@@ -2,8 +2,6 @@
 
 FROM theohbrothers/steamcmd
 
-MAINTAINER The Oh Brothers
-
 ARG SERVER_DIR=/server
 ARG APPMANIFEST_AR_URL=https://github.com/theohbrothers/hlds-appmanifest/archive/v1.0.0.tar.gz
 ARG APPID
