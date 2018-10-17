@@ -1,0 +1,63 @@
+sudo: required
+
+services:
+  - docker
+
+stages:
+  - build
+
+env:
+  global:
+    - BUILD_DIR=build/
+
+before_script:
+  - whoami
+  - cat /proc/version
+  - docker version
+  - df -h
+
+  # Registry login(s)
+  - echo "${NO_TEST_RUN}"
+
+  # Registry login(s)
+  - echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
+
+script:
+  - echo "${APPID}"
+    && echo "${MOD}"
+    && echo "${FIX_APPMANIFEST}"
+    && echo "${GAME}"
+    && echo "${GAME_VERSION}"
+  - date
+
+  # APPID, MOD, FIX_APPMANIFEST, GAME, GAME_VERSION to be issued as variables for build
+  - docker build
+      --build-arg APPID="${APPID}"
+      --build-arg MOD="${MOD}"
+      --build-arg FIX_APPMANIFEST="${FIX_APPMANIFEST}"
+      --build-arg GAME="${GAME}"
+      --build-arg GAME_VERSION="${GAME_VERSION}"
+      -t "${REGISTRY_USER}/${GAME}:latest"
+      -t "${REGISTRY_USER}/${GAME}:${GAME_VERSION}"
+      "${BUILD_DIR}"
+  - date
+  - docker images
+
+  # Test the game image
+  - if [ "${NO_TEST_RUN}" != true ]; then
+      if [ "${APPID}" = 90 ]; then
+        GAME_BIN="hlds_linux";
+      else
+        GAME_BIN="srcds_linux";
+      fi;
+      echo ${GAME_BIN};
+      docker run --rm "${REGISTRY_USER}/${GAME}:latest" "printenv && ls -al && exec ${GAME_BIN} -game ${GAME} +version +exit";
+    fi
+  - date
+
+  # Push the image
+  - travis_wait 20 docker push "${REGISTRY_USER}/${GAME}"
+  - date
+
+after_script:
+  - docker logout
