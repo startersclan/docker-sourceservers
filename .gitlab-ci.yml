@@ -30,7 +30,7 @@ build:
       && echo "${GAME_VERSION}"
     - date
 
-    # APPID, MOD, FIX_APPMANIFEST, GAME, GAME_VERSION to be issued as variables through pipeline trigger
+    # APPID, MOD, FIX_APPMANIFEST, GAME, GAME_VERSION to be issued as variables for build
     - docker build
         --build-arg APPID="${APPID}"
         --build-arg MOD="${MOD}"
@@ -45,7 +45,7 @@ build:
         $BUILD_DIR
     - date
 
-    # Print image's environment variables and test run the game
+    # Test the game image
     - if [ -z "${NO_TEST_RUN}" ]; then
         if [ "${APPID}" = 90 ]; then
           GAME_BIN="hlds_linux";
@@ -57,7 +57,7 @@ build:
       fi
     - date
 
-    # Push image
+    # Push the image
     - docker push "${REGISTRY_USER}/${GAME}"
     - date
     - if [ "${PUSH_TO_CI_REGISTRY}" = true ]; then
