@@ -53,11 +53,13 @@ RUN echo "[SETUP] Applying game fixes"; \
     # Create a symlink to steamcmd's steamclient.so file to stop the error
     #mkdir -p ~/.steam/sdk32 && ln -sf $STEAMCMD_DIR/linux32/steamclient.so ~/.steam/sdk32/steamclient.so
 
-ENV SERVER_DIR $SERVER_DIR
+# For directly running the hlds_linux / srcds_linux binary
+ENV LD_LIBRARY_PATH .:bin:$LD_LIBRARY_PATH
+
 ENV APPID $APPID
 ENV MOD $MOD
+ENV SERVER_DIR $SERVER_DIR
 ENV PATH $PATH:$SERVER_DIR
-ENV LD_LIBRARY_PATH .:bin:$LD_LIBRARY_PATH
 
 LABEL appid=$APPID
 LABEL mod=$MOD
