@@ -1,10 +1,10 @@
-# Introduction [![pipeline status](https://gitlab.com/theohbrothers/docker-sourceservers/badges/master/pipeline.svg)](https://gitlab.com/theohbrothers/docker-sourceservers/commits/master)
+# Introduction [![Build Status](https://travis-ci.org/joeltimothyoh/docker-sourceservers.svg?branch=travis)](https://travis-ci.org/joeltimothyoh/docker-sourceservers)
 
 Builds up-to-date **Source** / **GoldSrc** dedicated server images through use of `steamcmd`.
 
 ## Supported Tags
 
-* `latest`, `<version>`  [(/build/Dockerfile)](https://gitlab.com/theohbrothers/docker-sourceservers/blob/master/build/Dockerfile)
+* `latest`, `<version>`  [(/build/Dockerfile)](https://github.com/joeltimothyoh/docker-sourceservers/blob/travis/build/Dockerfile)
 
 ## Notes
 
