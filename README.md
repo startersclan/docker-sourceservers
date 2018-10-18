@@ -8,6 +8,9 @@ Builds up-to-date **Source** / **Goldsource** dedicated server images through us
 
 ## Notes
 
-Dedicated servers hosted on **Steam** are usually required to be running the *latest version* of the game in order for clients to connect to them. Simply pull a game image by the `latest` tag.
+Dedicated servers hosted on **Steam** are usually required to be running the *latest version* of the game in order for clients to connect to them. Simply pull the game images by the `latest` tag.
 
-Head over to our [repository](https://hub.docker.com/u/theohbrothers) for a list of available games and versions.
+Available games and versions can be found here:
+
+* [sourceservers (Docker Hub)](https://hub.docker.com/u/sourceservers/dashboard/)
+* [goldsourceservers (Docker Hub)](https://hub.docker.com/u/goldsourceservers/dashboard/)
