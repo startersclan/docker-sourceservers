@@ -25,7 +25,7 @@ script:
 
   # Use GAME as image name unless explicitly specified
   - if [ -z "${GAME_IMAGE_NAME}" ]; then
-      GAME_IMAGE_NAME="${GAME}"
+      GAME_IMAGE_NAME="${GAME}";
     fi
 
   # APPID, MOD, FIX_APPMANIFEST, GAME, GAME_VERSION to be issued as variables for build
