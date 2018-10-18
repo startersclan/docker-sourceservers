@@ -1,10 +1,5 @@
-sudo: required
-
-services:
-  - docker
-
-stages:
-  - build
+language: bash
+services: docker
 
 env:
   global:
