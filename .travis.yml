@@ -20,13 +20,13 @@ script:
     && echo "${FIX_APPMANIFEST}"
     && echo "${GAME}"
     && echo "${GAME_VERSION}"
-    && echo "${GAME_IMAGE_NAME}"
   - date
 
-  # Use GAME as image name unless explicitly specified
-  - if [ -z "${GAME_IMAGE_NAME}" ]; then
-      GAME_IMAGE_NAME="${GAME}";
-    fi
+  - if [ "$APPID" = 90 ]; then
+      REGISTRY="${REGISTRY_GOLDSOURCE}";
+    else
+      REGISTRY="${REGISTRY_SOURCE}";
+    fi;
 
   # APPID, MOD, FIX_APPMANIFEST, GAME, GAME_VERSION to be issued as variables for build
   - docker build
@@ -35,8 +35,8 @@ script:
       --build-arg FIX_APPMANIFEST="${FIX_APPMANIFEST}"
       --build-arg GAME="${GAME}"
       --build-arg GAME_VERSION="${GAME_VERSION}"
-      -t "${REGISTRY_USER}/${GAME_IMAGE_NAME}:latest"
-      -t "${REGISTRY_USER}/${GAME_IMAGE_NAME}:${GAME_VERSION}"
+      -t "${REGISTRY}/${GAME}:latest"
+      -t "${REGISTRY}/${GAME}:${GAME_VERSION}"
       "${BUILD_DIR}"
   - docker images
 
@@ -48,12 +48,12 @@ script:
         GAME_BIN="srcds_linux";
       fi;
       echo ${GAME_BIN};
-      docker run --rm "${REGISTRY_USER}/${GAME_IMAGE_NAME}:latest" "printenv && ls -al && exec ${GAME_BIN} -game ${GAME} +version +exit";
+      docker run --rm "${REGISTRY}/${GAME}:latest" "printenv && ls -al && exec ${GAME_BIN} -game ${GAME} +version +exit";
     fi
   - date
 
   # Push the image
-  - travis_wait 30 docker push "${REGISTRY_USER}/${GAME_IMAGE_NAME}"
+  - travis_wait 30 docker push "${REGISTRY}/${GAME}"
   - date
 
 after_script:
