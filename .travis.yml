@@ -47,7 +47,7 @@ script:
   - date
 
   # Push the image
-  - travis_wait 20 docker push "${REGISTRY_USER}/${GAME}"
+  - travis_wait 30 docker push "${REGISTRY_USER}/${GAME}"
   - date
 
 after_script:
