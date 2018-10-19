@@ -1,6 +1,6 @@
 # Docker-SourceServers [![Build Status](https://travis-ci.org/theohbrothers/docker-sourceservers.svg?branch=github)](https://travis-ci.org/theohbrothers/docker-sourceservers)
 
-Builds up-to-date **Source** / **Goldsource** dedicated server images through use of [`SteamCMD`](https://github.com/theohbrothers/docker-steamcmd).
+Builds up-to-date **Source** / **Goldsource** dedicated server images through use of [`steamcmd`](https://github.com/theohbrothers/docker-steamcmd).
 
 ## Supported Tags
 
