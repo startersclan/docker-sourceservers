@@ -12,5 +12,5 @@ Dedicated servers hosted on **Steam** are usually required to be running the *la
 
 Available games and versions can be found here:
 
-* [sourceservers (Docker Hub)](https://hub.docker.com/u/sourceservers/dashboard/)
-* [goldsourceservers (Docker Hub)](https://hub.docker.com/u/goldsourceservers/dashboard/)
+* [sourceservers](https://hub.docker.com/u/sourceservers/dashboard/) (Docker Hub)
+* [goldsourceservers](https://hub.docker.com/u/goldsourceservers/dashboard/) (Docker Hub)
