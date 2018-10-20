@@ -20,7 +20,7 @@ RUN echo "[SETUP] SERVER_DIR: $SERVER_DIR"; \
     echo "[SETUP] INSTALL_COUNT: $INSTALL_COUNT"; \
     echo "[SETUP] GAME: $GAME"; \
     echo "[SETUP] GAME_VERSION: $GAME_VERSION"; \
-    if [ ! -z "$MOD" ]; then \
+    if [ "$APPID" = 90 ] && [ -n "$MOD" ]; then \
         steamcmdArgs="+login anonymous +force_install_dir $SERVER_DIR +app_set_config $APPID mod $MOD +app_update $APPID validate +quit"; \
     else \
         steamcmdArgs="+login anonymous +force_install_dir $SERVER_DIR +app_update $APPID validate +quit"; \
