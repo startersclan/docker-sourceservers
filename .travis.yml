@@ -4,12 +4,14 @@ services: docker
 env:
   global:
     - BUILD_DIR="build/"
+    - UPDATE_DIR="update/"
 
 before_script:
   - whoami
   - cat /proc/version
   - df -h
 
+  - echo "${STAGE}"
   - echo "${NO_TEST_RUN}"
 
   - echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
@@ -26,18 +28,25 @@ script:
       REGISTRY="${REGISTRY_GOLDSOURCE}";
     else
       REGISTRY="${REGISTRY_SOURCE}";
-    fi;
+    fi
 
   # APPID, MOD, FIX_APPMANIFEST, GAME, GAME_VERSION to be issued as variables for build
-  - docker build
-      --build-arg APPID="${APPID}"
-      --build-arg MOD="${MOD}"
-      --build-arg FIX_APPMANIFEST="${FIX_APPMANIFEST}"
-      --build-arg GAME="${GAME}"
-      --build-arg GAME_VERSION="${GAME_VERSION}"
-      -t "${REGISTRY}/${GAME}:latest"
-      -t "${REGISTRY}/${GAME}:${GAME_VERSION}"
-      "${BUILD_DIR}"
+  - if [ "${STAGE}" = 'build' ]; then
+      docker build
+        --build-arg APPID="${APPID}"
+        --build-arg MOD="${MOD}"
+        --build-arg FIX_APPMANIFEST="${FIX_APPMANIFEST}"
+        --build-arg GAME="${GAME}"
+        --build-arg GAME_VERSION="${GAME_VERSION}"
+        -t "${REGISTRY}/${GAME}:latest"
+        -t "${REGISTRY}/${GAME}:${GAME_VERSION}"
+        "${BUILD_DIR}";
+    elif [ "${STAGE}" = 'update' ]; then
+      docker build
+        --build-arg GAME_IMAGE="${REGISTRY}/${GAME}:latest"
+        -t "${REGISTRY}/${GAME}:latest"
+        "${UPDATE_DIR}";
+    fi
   - docker images
 
   # Test the game image
