@@ -45,10 +45,10 @@ script:
         --label "game_version=${GAME_VERSION}"
         --label "update_count=0"
         "${BUILD_DIR}";
+      docker inspect "${REGISTRY}/${GAME}:${GAME_VERSION}" -f '{{.Config.Labels}}';
       if [ "${LATEST}" = true ]; then
-        docker tag
-          "${REGISTRY}/${GAME}:${GAME_VERSION}"
-          "${REGISTRY}/${GAME}:latest";
+        docker tag "${REGISTRY}/${GAME}:${GAME_VERSION}" "${REGISTRY}/${GAME}:latest";
+        docker inspect "${REGISTRY}/${GAME}:latest" -f '{{.Config.Labels}}';
       fi;
     elif [ "${STAGE}" = 'update' ]; then
       docker build
@@ -57,9 +57,9 @@ script:
         --label "game_version=${GAME_VERSION}"
         --label "update_count=${GAME_UPDATE_COUNT}"
         "${UPDATE_DIR}";
+      docker inspect "${REGISTRY}/${GAME}:latest" -f '{{.Config.Labels}}';
     fi
   - docker images
-  - docker inspect "${REGISTRY}/${GAME}:latest" -f '{{.Config.Labels}}'
 
   # Test the game image
   - if [ "${NO_TEST_RUN}" != true ]; then
