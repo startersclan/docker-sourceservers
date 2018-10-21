@@ -50,6 +50,7 @@ script:
         "${UPDATE_DIR}";
     fi
   - docker images
+  - docker inspect "${REGISTRY}/${GAME}:latest" -f '{{.Config.Labels}}'
 
   # Test the game image
   - if [ "${NO_TEST_RUN}" != true ]; then
