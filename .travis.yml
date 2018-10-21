@@ -30,16 +30,18 @@ script:
       REGISTRY="${REGISTRY_SOURCE}";
     fi
 
-  # APPID, MOD, FIX_APPMANIFEST, GAME, GAME_VERSION to be issued as variables for build
+  # APPID, MOD, FIX_APPMANIFEST to be issued as variables for build
   - if [ "${STAGE}" = 'build' ]; then
       docker build
         --build-arg APPID="${APPID}"
         --build-arg MOD="${MOD}"
         --build-arg FIX_APPMANIFEST="${FIX_APPMANIFEST}"
-        --build-arg GAME="${GAME}"
-        --build-arg GAME_VERSION="${GAME_VERSION}"
         -t "${REGISTRY}/${GAME}:latest"
         -t "${REGISTRY}/${GAME}:${GAME_VERSION}"
+        --label "appid=${APPID}"
+        --label "mod=${MOD}"
+        --label "game=${GAME}"
+        --label "game_version=${GAME_VERSION}"
         "${BUILD_DIR}";
     elif [ "${STAGE}" = 'update' ]; then
       docker build

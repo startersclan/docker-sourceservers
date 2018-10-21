@@ -63,8 +63,3 @@ WORKDIR $SERVER_DIR
 
 ENTRYPOINT ["/bin/bash", "-c"]
 CMD [""]
-
-LABEL appid=$APPID
-LABEL mod=$MOD
-LABEL game=$GAME
-LABEL game_version=$GAME_VERSION
