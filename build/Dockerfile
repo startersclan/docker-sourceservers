@@ -12,40 +12,40 @@ ARG GAME
 ARG GAME_VERSION
 
 # Download game
-RUN echo "[SETUP] SERVER_DIR: $SERVER_DIR"; \
-    echo "[SETUP] APPMANIFEST_AR_URL: $APPMANIFEST_AR_URL"; \
-    echo "[SETUP] APPID: $APPID"; \
-    echo "[SETUP] MOD: $MOD"; \
-    echo "[SETUP] FIX_APPMANIFEST: $FIX_APPMANIFEST"; \
-    echo "[SETUP] INSTALL_COUNT: $INSTALL_COUNT"; \
-    echo "[SETUP] GAME: $GAME"; \
-    echo "[SETUP] GAME_VERSION: $GAME_VERSION"; \
+RUN echo "[BUILD] SERVER_DIR: $SERVER_DIR"; \
+    echo "[BUILD] APPMANIFEST_AR_URL: $APPMANIFEST_AR_URL"; \
+    echo "[BUILD] APPID: $APPID"; \
+    echo "[BUILD] MOD: $MOD"; \
+    echo "[BUILD] FIX_APPMANIFEST: $FIX_APPMANIFEST"; \
+    echo "[BUILD] INSTALL_COUNT: $INSTALL_COUNT"; \
+    echo "[BUILD] GAME: $GAME"; \
+    echo "[BUILD] GAME_VERSION: $GAME_VERSION"; \
     if [ "$APPID" = 90 ] && [ -n "$MOD" ]; then \
         steamcmdArgs="+login anonymous +force_install_dir $SERVER_DIR +app_set_config $APPID mod $MOD +app_update $APPID validate +quit"; \
     else \
         steamcmdArgs="+login anonymous +force_install_dir $SERVER_DIR +app_update $APPID validate +quit"; \
     fi; \
-    echo "[SETUP] steamcmd arguments: $steamcmdArgs"; \
-    echo "[SETUP] Downloading game"; \
+    echo "[BUILD] steamcmd arguments: $steamcmdArgs"; \
+    echo "[BUILD] Downloading game"; \
     if [ "$APPID" = 90 ] && [ "$FIX_APPMANIFEST" = true ]; then \
-        echo "[SETUP] APPID is 90 and FIX_APPMANIFEST is true. Appmanifest fix and install count will apply."; \
+        echo "[BUILD] APPID is 90 and FIX_APPMANIFEST is true. Appmanifest fix and install count will apply."; \
         i=0; \
         while [ "$i" -le $(( $INSTALL_COUNT-1 )) ]; do \
-            echo "[SETUP] Current install count: $(( i+1 ))"; \
+            echo "[BUILD] Current install count: $(( i+1 ))"; \
             steamcmd.sh $steamcmdArgs; \
             i=$(( i+1 )); \
             if [ "$i" -eq 1 ]; then \
-                echo "[SETUP] Downloading and applying appmanifest fix"; \
+                echo "[BUILD] Downloading and applying appmanifest fix"; \
                 curl -sqL "$APPMANIFEST_AR_URL" | tar -zxvf - -C $SERVER_DIR/steamapps --strip-components=1; \
             fi; \
         done; \
     else \
-        echo "[SETUP] Either APPID is not 90 or FIX_APPMANIFEST is not true. Appmanifest fix and install count will be ignored."; \
+        echo "[BUILD] Either APPID is not 90 or FIX_APPMANIFEST is not true. Appmanifest fix and install count will be ignored."; \
         steamcmd.sh $steamcmdArgs; \
     fi
 
 # Apply game fixes
-RUN echo "[SETUP] Applying game fixes"; \
+RUN echo "[BUILD] Applying game fixes"; \
     # Create steam_appid.txt containing the app id to prevent crash on first run
     echo $APPID > $SERVER_DIR/steam_appid.txt \
     # Create a symlink to steamcmd's steamclient.so file to stop the error
