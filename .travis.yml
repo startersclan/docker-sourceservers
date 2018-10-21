@@ -12,6 +12,7 @@ before_script:
   - df -h
 
   - echo "${STAGE}"
+  - echo "${LATEST}"
   - echo "${GAME_UPDATE_COUNT}"
   - echo "${NO_TEST_RUN}"
 
@@ -37,7 +38,6 @@ script:
         --build-arg APPID="${APPID}"
         --build-arg MOD="${MOD}"
         --build-arg FIX_APPMANIFEST="${FIX_APPMANIFEST}"
-        -t "${REGISTRY}/${GAME}:latest"
         -t "${REGISTRY}/${GAME}:${GAME_VERSION}"
         --label "appid=${APPID}"
         --label "mod=${MOD}"
@@ -45,10 +45,16 @@ script:
         --label "game_version=${GAME_VERSION}"
         --label "update_count=0"
         "${BUILD_DIR}";
+      if [ "${LATEST}" = true ]; then
+        docker tag
+          "${REGISTRY}/${GAME}:${GAME_VERSION}"
+          "${REGISTRY}/${GAME}:latest";
+      fi;
     elif [ "${STAGE}" = 'update' ]; then
       docker build
         --build-arg GAME_IMAGE="${REGISTRY}/${GAME}:latest"
         -t "${REGISTRY}/${GAME}:latest"
+        --label "game_version=${GAME_VERSION}"
         --label "update_count=${GAME_UPDATE_COUNT}"
         "${UPDATE_DIR}";
     fi
