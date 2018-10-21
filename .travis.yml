@@ -10,20 +10,11 @@ before_script:
   - whoami
   - cat /proc/version
   - df -h
-
-  - echo "${STAGE}"
-  - echo "${LATEST}"
-  - echo "${GAME_UPDATE_COUNT}"
-  - echo "${NO_TEST_RUN}"
+  - free
 
   - echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
 
 script:
-  - echo "${APPID}"
-    && echo "${MOD}"
-    && echo "${FIX_APPMANIFEST}"
-    && echo "${GAME}"
-    && echo "${GAME_VERSION}"
   - date
 
   - if [ "$APPID" = 90 ]; then
