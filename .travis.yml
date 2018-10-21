@@ -23,7 +23,7 @@ script:
       REGISTRY="${REGISTRY_SOURCE}";
     fi
 
-  # APPID, MOD, FIX_APPMANIFEST to be issued as variables for build
+  # Build / Update the game image
   - if [ "${STAGE}" = 'build' ]; then
       docker build
         --build-arg APPID="${APPID}"
