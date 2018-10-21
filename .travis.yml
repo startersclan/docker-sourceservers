@@ -58,7 +58,6 @@ script:
       else
         GAME_BIN="srcds_linux";
       fi;
-      echo ${GAME_BIN};
       if [ "${STAGE}" = 'build' ]; then
         TEST_IMAGE="${REGISTRY}/${GAME}:${GAME_VERSION}";
       elif [ "${STAGE}" = 'update' ]; then
