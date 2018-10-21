@@ -8,8 +8,6 @@ ARG APPID
 ARG MOD
 ARG FIX_APPMANIFEST=false
 ARG INSTALL_COUNT=3
-ARG GAME
-ARG GAME_VERSION
 
 # Download game
 RUN echo "[BUILD] SERVER_DIR: $SERVER_DIR"; \
@@ -18,8 +16,6 @@ RUN echo "[BUILD] SERVER_DIR: $SERVER_DIR"; \
     echo "[BUILD] MOD: $MOD"; \
     echo "[BUILD] FIX_APPMANIFEST: $FIX_APPMANIFEST"; \
     echo "[BUILD] INSTALL_COUNT: $INSTALL_COUNT"; \
-    echo "[BUILD] GAME: $GAME"; \
-    echo "[BUILD] GAME_VERSION: $GAME_VERSION"; \
     if [ "$APPID" = 90 ] && [ -n "$MOD" ]; then \
         steamcmdArgs="+login anonymous +force_install_dir $SERVER_DIR +app_set_config $APPID mod $MOD +app_update $APPID validate +quit"; \
     else \
