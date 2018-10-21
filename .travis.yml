@@ -39,7 +39,6 @@ script:
       docker inspect "${REGISTRY}/${GAME}:${GAME_VERSION}" -f '{{.Config.Labels}}';
       if [ "${LATEST}" = true ]; then
         docker tag "${REGISTRY}/${GAME}:${GAME_VERSION}" "${REGISTRY}/${GAME}:latest";
-        docker inspect "${REGISTRY}/${GAME}:latest" -f '{{.Config.Labels}}';
       fi;
     elif [ "${STAGE}" = 'update' ]; then
       docker build
