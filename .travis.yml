@@ -60,7 +60,12 @@ script:
         GAME_BIN="srcds_linux";
       fi;
       echo ${GAME_BIN};
-      docker run --rm "${REGISTRY}/${GAME}:latest" "printenv && ls -al && exec ${GAME_BIN} -game ${GAME} +version +exit";
+      if [ "${STAGE}" = 'build' ]; then
+        TEST_IMAGE="${REGISTRY}/${GAME}:${GAME_VERSION}";
+      elif [ "${STAGE}" = 'update' ]; then
+        TEST_IMAGE="${REGISTRY}/${GAME}:latest";
+      fi;
+      docker run --rm "${TEST_IMAGE}" "printenv && ls -al && exec ${GAME_BIN} -game ${GAME} +version +exit";
     fi
   - date
 
