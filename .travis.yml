@@ -34,7 +34,7 @@ script:
         --label "mod=${MOD}"
         --label "game=${GAME}"
         --label "game_version=${GAME_VERSION}"
-        --label "update_count=0"
+        --label "game_update_count=0"
         "${BUILD_DIR}";
       docker inspect "${REGISTRY}/${GAME}:${GAME_VERSION}" -f '{{.Config.Labels}}';
       if [ "${LATEST}" = true ]; then
@@ -46,7 +46,7 @@ script:
         --build-arg GAME_IMAGE="${REGISTRY}/${GAME}:latest"
         -t "${REGISTRY}/${GAME}:latest"
         --label "game_version=${GAME_VERSION}"
-        --label "update_count=${GAME_UPDATE_COUNT}"
+        --label "game_update_count=${GAME_UPDATE_COUNT}"
         "${UPDATE_DIR}";
       docker inspect "${REGISTRY}/${GAME}:latest" -f '{{.Config.Labels}}';
     fi
