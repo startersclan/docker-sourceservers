@@ -10,7 +10,6 @@ RUN echo "[UPDATE] Updating game"; \
     echo "[UPDATE] APPID: $APPID"; \
     echo "[UPDATE] MOD: $MOD"; \
     echo "[UPDATE] install_count: $install_count"; \
-    # For performance, no validate will be used when updating
     if [ ! -z "$MOD" ]; then \
         steamcmdArgs="+login anonymous +force_install_dir $SERVER_DIR +app_set_config $APPID mod $MOD +app_update $APPID validate +quit"; \
     else \
