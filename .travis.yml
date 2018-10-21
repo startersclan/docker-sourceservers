@@ -12,6 +12,7 @@ before_script:
   - df -h
 
   - echo "${STAGE}"
+  - echo "${GAME_UPDATE_COUNT}"
   - echo "${NO_TEST_RUN}"
 
   - echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
@@ -42,11 +43,13 @@ script:
         --label "mod=${MOD}"
         --label "game=${GAME}"
         --label "game_version=${GAME_VERSION}"
+        --label "update_count=0"
         "${BUILD_DIR}";
     elif [ "${STAGE}" = 'update' ]; then
       docker build
         --build-arg GAME_IMAGE="${REGISTRY}/${GAME}:latest"
         -t "${REGISTRY}/${GAME}:latest"
+        --label "update_count=${GAME_UPDATE_COUNT}"
         "${UPDATE_DIR}";
     fi
   - docker images
