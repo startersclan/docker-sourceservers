@@ -1,6 +1,6 @@
 # Builds a base image for the specified game.
 
-FROM theohbrothers/steamcmd
+FROM theohbrothers/steamcmd:latest
 
 ARG SERVER_DIR=/server
 ARG APPMANIFEST_AR_URL=https://github.com/theohbrothers/hlds-appmanifest/archive/v1.0.0.tar.gz
