@@ -42,7 +42,7 @@ RUN echo "[BUILD] SERVER_DIR: $SERVER_DIR"; \
 
 # Apply game fixes
 RUN echo "[BUILD] Applying game fixes"; \
-    # Create steam_appid.txt containing the app id to prevent crash on first run
+    # Create steam_appid.txt containing the appid to prevent crash on first run
     echo $APPID > $SERVER_DIR/steam_appid.txt \
     # Create a symlink to steamcmd's steamclient.so file to stop the error
     && mkdir -p ~/.steam/sdk32 && ln -sf $STEAMCMD_DIR/linux32/steamclient.so ~/.steam/sdk32/steamclient.so
