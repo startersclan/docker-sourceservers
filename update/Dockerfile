@@ -15,7 +15,7 @@ RUN echo "[UPDATE] Updating game"; \
     else \
         steamcmdArgs="+login anonymous +force_install_dir $SERVER_DIR +app_update $APPID validate +quit"; \
     fi; \
-    echo "[UPDATE] steamcmd parameters: $steamcmdArgs"; \
+    echo "[UPDATE] steamcmd arguments: $steamcmdArgs"; \
     echo "[UPDATE] Updating game"; \
     i=0; \
     while [ "$i" -le $(( $install_count-1 )) ]; do \
