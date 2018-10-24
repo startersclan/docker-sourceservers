@@ -63,7 +63,7 @@ script:
       elif [ "${STAGE}" = 'update' ]; then
         TEST_IMAGE="${REGISTRY}/${GAME}:latest";
       fi;
-      docker run --rm "${TEST_IMAGE}" "printenv && ls -al && exec ${GAME_BIN} -game ${GAME} +version +exit";
+      docker run -t --rm "${TEST_IMAGE}" "printenv && ls -al && exec ${GAME_BIN} -game ${GAME} +version +exit";
     fi
   - date
 
