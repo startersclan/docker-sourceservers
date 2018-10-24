@@ -8,7 +8,7 @@ env:
 
 before_script:
   - whoami
-  - cat /proc/version
+  - cat /etc/*release
   - df -h
   - free
 
