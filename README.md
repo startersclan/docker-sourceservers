@@ -4,7 +4,8 @@ Builds up-to-date **Source** / **Goldsource** dedicated server images through us
 
 ## Supported Tags
 
-* `latest`, `<version>`  [(/build/Dockerfile)](https://github.com/theohbrothers/docker-sourceservers/blob/github/build/Dockerfile)
+* `latest` [(/build/Dockerfile)](https://github.com/theohbrothers/docker-sourceservers/blob/github/build/Dockerfile), [(/update/Dockerfile)](https://github.com/theohbrothers/docker-sourceservers/blob/github/update/Dockerfile)
+* `<version>` [(/build/Dockerfile)](https://github.com/theohbrothers/docker-sourceservers/blob/github/build/Dockerfile)
 
 ## Games and Versions
 
