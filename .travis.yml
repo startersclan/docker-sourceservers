@@ -12,6 +12,9 @@ before_script:
   - df -h
   - free
 
+  # Terminate the travis build on any error
+  - set -e
+
   - echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
 
 script:
@@ -73,3 +76,4 @@ script:
 
 after_script:
   - docker logout
+  - set +e
