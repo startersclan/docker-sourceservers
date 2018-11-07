@@ -71,8 +71,10 @@ script:
   - date
 
   # Push the image
-  - travis_wait 30 docker push "${REGISTRY}/${GAME}"
-  - date
+  - if [ "${NO_PUSH}" != true ]; then
+      travis_wait 30 docker push "${REGISTRY}/${GAME}";
+      date;
+    fi
 
 after_script:
   - docker logout
