@@ -12,6 +12,12 @@ before_script:
   - df -h
   - free
 
+  - if [ "$APPID" = 90 ]; then
+      REPOSITORY="${REGISTRY_GOLDSOURCE}/${GAME}";
+    else
+      REPOSITORY="${REGISTRY_SOURCE}/${GAME}";
+    fi
+
   # Terminate the travis build on any error
   - set -e
 
@@ -20,37 +26,31 @@ before_script:
 script:
   - date
 
-  - if [ "$APPID" = 90 ]; then
-      REGISTRY="${REGISTRY_GOLDSOURCE}";
-    else
-      REGISTRY="${REGISTRY_SOURCE}";
-    fi
-
   # Build / Update the game image
   - if [ "${STAGE}" = 'build' ]; then
       docker build
         --build-arg APPID="${APPID}"
         --build-arg MOD="${MOD}"
         --build-arg FIX_APPMANIFEST="${FIX_APPMANIFEST}"
-        -t "${REGISTRY}/${GAME}:${GAME_VERSION}"
+        -t "${REPOSITORY}:${GAME_VERSION}"
         --label "appid=${APPID}"
         --label "mod=${MOD}"
         --label "game=${GAME}"
         --label "game_version=${GAME_VERSION}"
         --label "game_update_count=0"
         "${BUILD_DIR}";
-      docker inspect "${REGISTRY}/${GAME}:${GAME_VERSION}" -f '{{.Config.Labels}}';
+      docker inspect "${REPOSITORY}:${GAME_VERSION}" -f '{{.Config.Labels}}';
       if [ "${LATEST}" = true ]; then
-        docker tag "${REGISTRY}/${GAME}:${GAME_VERSION}" "${REGISTRY}/${GAME}:latest";
+        docker tag "${REPOSITORY}:${GAME_VERSION}" "${REPOSITORY}:latest";
       fi;
     elif [ "${STAGE}" = 'update' ]; then
       docker build
-        --build-arg GAME_IMAGE="${REGISTRY}/${GAME}:latest"
-        -t "${REGISTRY}/${GAME}:latest"
+        --build-arg GAME_IMAGE="${REPOSITORY}:latest"
+        -t "${REPOSITORY}:latest"
         --label "game_version=${GAME_VERSION}"
         --label "game_update_count=${GAME_UPDATE_COUNT}"
         "${UPDATE_DIR}";
-      docker inspect "${REGISTRY}/${GAME}:latest" -f '{{.Config.Labels}}';
+      docker inspect "${REPOSITORY}:latest" -f '{{.Config.Labels}}';
     fi
   - docker images
 
@@ -62,9 +62,9 @@ script:
         GAME_BIN="srcds_linux";
       fi;
       if [ "${STAGE}" = 'build' ]; then
-        TEST_IMAGE="${REGISTRY}/${GAME}:${GAME_VERSION}";
+        TEST_IMAGE="${REPOSITORY}:${GAME_VERSION}";
       elif [ "${STAGE}" = 'update' ]; then
-        TEST_IMAGE="${REGISTRY}/${GAME}:latest";
+        TEST_IMAGE="${REPOSITORY}:latest";
       fi;
       docker run -t --rm "${TEST_IMAGE}" "printenv && ls -al && exec ${GAME_BIN} -game ${GAME} +version +exit";
     fi
@@ -72,7 +72,7 @@ script:
 
   # Push the image
   - if [ "${NO_PUSH}" != true ]; then
-      travis_wait 30 docker push "${REGISTRY}/${GAME}";
+      travis_wait 30 docker push "${REPOSITORY}";
       date;
     fi
 
