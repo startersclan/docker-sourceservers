@@ -55,7 +55,7 @@ script:
   - docker images
 
   # Test the game image
-  - if [ "${NO_TEST_RUN}" != true ]; then
+  - if [ ! "${NO_TEST_RUN}" = true ]; then
       if [ "${APPID}" = 90 ]; then
         GAME_BIN="hlds_linux";
       else
@@ -71,7 +71,7 @@ script:
   - date
 
   # Push the image
-  - if [ "${NO_PUSH}" != true ]; then
+  - if [ ! "${NO_PUSH}" = true ]; then
       travis_wait 30 docker push "${REPOSITORY}";
       date;
     fi
