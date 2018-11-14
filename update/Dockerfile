@@ -10,7 +10,7 @@ RUN echo "[UPDATE] Updating game"; \
     echo "[UPDATE] APPID: $APPID"; \
     echo "[UPDATE] MOD: $MOD"; \
     echo "[UPDATE] INSTALL_COUNT: $INSTALL_COUNT"; \
-    if [ ! -z "$MOD" ]; then \
+    if [ "$APPID" = 90 ] && [ -n "$MOD" ]; then \
         steamcmdArgs="+login anonymous +force_install_dir $SERVER_DIR +app_set_config $APPID mod $MOD +app_update $APPID validate +quit"; \
     else \
         steamcmdArgs="+login anonymous +force_install_dir $SERVER_DIR +app_update $APPID validate +quit"; \
