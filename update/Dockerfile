@@ -5,8 +5,7 @@ FROM $GAME_IMAGE
 
 ARG INSTALL_COUNT=1
 
-RUN echo "[UPDATE] Updating game"; \
-    echo "[UPDATE] SERVER_DIR: $SERVER_DIR"; \
+RUN echo "[UPDATE] SERVER_DIR: $SERVER_DIR"; \
     echo "[UPDATE] APPID: $APPID"; \
     echo "[UPDATE] MOD: $MOD"; \
     echo "[UPDATE] INSTALL_COUNT: $INSTALL_COUNT"; \
