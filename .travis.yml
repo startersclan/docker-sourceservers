@@ -12,7 +12,7 @@ before_script:
   - df -h
   - free
 
-  - if [ "$APPID" = 90 ]; then
+  - if [ "${APPID}" = 90 ]; then
       REPOSITORY="${REGISTRY_GOLDSOURCE}/${GAME}";
     else
       REPOSITORY="${REGISTRY_SOURCE}/${GAME}";
