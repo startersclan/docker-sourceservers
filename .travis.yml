@@ -29,7 +29,7 @@ script:
   # Build / Update the game image
   - if [ "${STAGE}" = 'build' ]; then
       if [ "${CACHE}" = 'true' ]; then
-        docker pull "${REPOSITORY}:${GAME_VERSION}" || true;
+        travis_wait 30 docker pull "${REPOSITORY}:${GAME_VERSION}" || true;
       fi;
       docker build
         --cache-from "${REPOSITORY}:${GAME_VERSION}"
