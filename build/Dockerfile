@@ -43,9 +43,7 @@ RUN echo "[BUILD] SERVER_DIR: $SERVER_DIR"; \
 # Apply game fixes
 RUN echo "[BUILD] Applying game fixes"; \
     # Create steam_appid.txt containing the appid to prevent crash on first run
-    echo $APPID > $SERVER_DIR/steam_appid.txt \
-    # Create a symlink to steamcmd's steamclient.so file to stop the error
-    && mkdir -p ~/.steam/sdk32 && ln -sf $STEAMCMD_DIR/linux32/steamclient.so ~/.steam/sdk32/steamclient.so
+    echo $APPID > $SERVER_DIR/steam_appid.txt
 
 # For directly running the hlds_linux / srcds_linux binary
 ENV LD_LIBRARY_PATH .:bin:$LD_LIBRARY_PATH
