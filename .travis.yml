@@ -28,7 +28,11 @@ script:
 
   # Build / Update the game image
   - if [ "${STAGE}" = 'build' ]; then
+      if [ "${CACHE}" = 'true' ]; then
+        docker pull "${REPOSITORY}:${GAME_VERSION}" || true;
+      fi;
       docker build
+        --cache-from "${REPOSITORY}:${GAME_VERSION}"
         --build-arg APPID="${APPID}"
         --build-arg MOD="${MOD}"
         --build-arg FIX_APPMANIFEST="${FIX_APPMANIFEST}"
