@@ -7,6 +7,7 @@ ARG APPMANIFEST_AR_URL=https://github.com/theohbrothers/hlds-appmanifest/archive
 ARG APPID
 ARG MOD
 ARG FIX_APPMANIFEST=false
+ARG CLIENT_APPID
 ARG INSTALL_COUNT=3
 
 # Download game
@@ -42,14 +43,16 @@ RUN echo "[BUILD] SERVER_DIR: $SERVER_DIR"; \
 
 # Apply game fixes
 RUN echo "[BUILD] Applying game fixes"; \
-    # Create steam_appid.txt containing the appid to prevent crash on first run
-    echo $APPID > $SERVER_DIR/steam_appid.txt
+    # Create steam_appid.txt containing the game's appid to prevent crashes on first run
+    echo "[BUILD] CLIENT_APPID: $CLIENT_APPID"; \
+    echo $CLIENT_APPID > $SERVER_DIR/steam_appid.txt
 
 # For directly running the hlds_linux / srcds_linux binary
 ENV LD_LIBRARY_PATH .:bin:$LD_LIBRARY_PATH
 
 ENV APPID $APPID
 ENV MOD $MOD
+ENV CLIENT_APPID $CLIENT_APPID
 ENV SERVER_DIR $SERVER_DIR
 ENV PATH $PATH:$SERVER_DIR
 

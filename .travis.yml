@@ -36,6 +36,7 @@ script:
         --build-arg APPID="${APPID}"
         --build-arg MOD="${MOD}"
         --build-arg FIX_APPMANIFEST="${FIX_APPMANIFEST}"
+        --build-arg CLIENT_APPID="${CLIENT_APPID}"
         -t "${REPOSITORY}:${GAME_VERSION}"
         --label "appid=${APPID}"
         --label "mod=${MOD}"
