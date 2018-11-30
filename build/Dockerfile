@@ -39,7 +39,9 @@ RUN echo "[BUILD] SERVER_DIR: $SERVER_DIR"; \
     else \
         echo "[BUILD] Either APPID is not 90 or FIX_APPMANIFEST is not true. Appmanifest fix and install count will be ignored."; \
         steamcmd.sh $steamcmdArgs; \
-    fi
+    fi; \
+    cd "$STEAMCMD_DIR" && rm -rf linux64 package public; \
+    rm -rf "~/Steam" && rm -rf "~/.steam";
 
 # Apply game fixes
 RUN echo "[BUILD] Applying game fixes"; \
