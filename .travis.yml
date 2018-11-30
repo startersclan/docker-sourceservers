@@ -14,10 +14,10 @@ before_script:
 
   - if [ "${APPID}" = 90 ]; then
       REPOSITORY="${REGISTRY_GOLDSOURCE}/${GAME}";
-      GAME_ENGINE = 'hlds'
+      GAME_ENGINE = 'hlds';
     else
       REPOSITORY="${REGISTRY_SOURCE}/${GAME}";
-      GAME_ENGINE = 'srcds'
+      GAME_ENGINE = 'srcds';
     fi
 
   # Terminate the travis build on any error
