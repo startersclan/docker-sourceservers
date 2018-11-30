@@ -12,6 +12,8 @@ before_script:
   - df -h
   - free
 
+  # Process variables
+  - PIPELINE="${TRAVIS_BRANCH}"
   - if [ "${APPID}" = 90 ]; then
       REPOSITORY="${REGISTRY_GOLDSOURCE}/${GAME}";
       GAME_ENGINE="hlds";
@@ -29,7 +31,7 @@ script:
   - date
 
   # Build / Update the game image
-  - if [ "${STAGE}" = 'build' ]; then
+  - if [ "${PIPELINE}" = 'build' ]; then
       if [ "${CACHE}" = 'true' ]; then
         docker pull "${REPOSITORY}:${GAME_VERSION}" || true;
       fi;
@@ -52,7 +54,7 @@ script:
       if [ "${LATEST}" = true ]; then
         docker tag "${REPOSITORY}:${GAME_VERSION}" "${REPOSITORY}:latest";
       fi;
-    elif [ "${STAGE}" = 'update' ]; then
+    elif [ "${PIPELINE}" = 'update' ]; then
       docker build
         --build-arg GAME_IMAGE="${REPOSITORY}:latest"
         -t "${REPOSITORY}:latest"
@@ -70,9 +72,9 @@ script:
       else
         GAME_BIN="srcds_linux";
       fi;
-      if [ "${STAGE}" = 'build' ]; then
+      if [ "${PIPELINE}" = 'build' ]; then
         TEST_IMAGE="${REPOSITORY}:${GAME_VERSION}";
-      elif [ "${STAGE}" = 'update' ]; then
+      elif [ "${PIPELINE}" = 'update' ]; then
         TEST_IMAGE="${REPOSITORY}:latest";
       fi;
       docker run -t --rm "${TEST_IMAGE}" "printenv && ls -al && exec ${GAME_BIN} -game ${GAME} +version +exit";
