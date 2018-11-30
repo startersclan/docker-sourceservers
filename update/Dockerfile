@@ -22,4 +22,6 @@ RUN echo "[UPDATE] SERVER_DIR: $SERVER_DIR"; \
         steamcmd.sh $steamcmdArgs; \
         i=$(( i+1 )); \
     done; \
-    fi
+    fi;
+    cd "$STEAMCMD_DIR" && rm -rf linux64 package public; \
+    rm -rf "~/Steam" && rm -rf "~/.steam";
