@@ -50,7 +50,7 @@ RUN echo "[BUILD] SERVER_DIR: $SERVER_DIR"; \
         linux32/steamclient.so \
         linux32/steamconsole.so \
     && rm -rf "~/Steam" \
-    && rm -rf "~/.steam";
+    && rm -rf "~/.steam"
 
 # Apply game fixes
 RUN echo "[BUILD] Applying game fixes"; \
