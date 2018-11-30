@@ -12,6 +12,9 @@ before_script:
   - df -h
   - free
 
+  # Terminate the travis build on any error
+  - set -e
+
   # Process variables
   - PIPELINE="${TRAVIS_BRANCH}"
   - if [ "${APPID}" = 90 ]; then
@@ -21,9 +24,6 @@ before_script:
       REPOSITORY="${REGISTRY_SOURCE}/${GAME}";
       GAME_ENGINE="srcds";
     fi
-
-  # Terminate the travis build on any error
-  - set -e
 
   - echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
 
