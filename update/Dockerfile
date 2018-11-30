@@ -23,5 +23,5 @@ RUN echo "[UPDATE] SERVER_DIR: $SERVER_DIR"; \
         i=$(( i+1 )); \
     done; \
     fi;
-    cd "$STEAMCMD_DIR" && rm -rf linux64 package public; \
+    cd "$STEAMCMD_DIR" && rm -rf linux64 package public linux32/libtier0_s.so linux32/libvstdlib_s.so linux32/steamclient.so linux32/steamconsole.so; \
     rm -rf "~/Steam" && rm -rf "~/.steam";
