@@ -40,7 +40,7 @@ RUN echo "[BUILD] SERVER_DIR: $SERVER_DIR"; \
         echo "[BUILD] Either APPID is not 90 or FIX_APPMANIFEST is not true. Appmanifest fix and install count will be ignored."; \
         steamcmd.sh $steamcmdArgs; \
     fi; \
-    echo "[CLEANUP] Cleaning up Steamcmd" \
+    echo "[BUILD] Performing cleanup" \
     && cd "$STEAMCMD_DIR" && rm -rf \
         linux64 \
         package \

@@ -22,7 +22,7 @@ RUN echo "[UPDATE] SERVER_DIR: $SERVER_DIR"; \
         steamcmd.sh $steamcmdArgs; \
         i=$(( i+1 )); \
     done; \
-    echo "[CLEANUP] Cleaning up Steamcmd" \
+    echo "[UPDATE] Performing cleanup" \
     && cd "$STEAMCMD_DIR" && rm -rf \
         linux64 \
         package \
