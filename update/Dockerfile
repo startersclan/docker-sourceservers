@@ -31,5 +31,5 @@ RUN echo "[UPDATE] SERVER_DIR: $SERVER_DIR"; \
         linux32/libvstdlib_s.so \
         linux32/steamclient.so \
         linux32/steamconsole.so \
-    && rm -rf "~/Steam" \
-    && rm -rf "~/.steam"
+    && rm -rf "~/.steam" \
+    && rm -rf "~/Steam"
