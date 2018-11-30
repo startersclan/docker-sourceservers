@@ -14,8 +14,10 @@ before_script:
 
   - if [ "${APPID}" = 90 ]; then
       REPOSITORY="${REGISTRY_GOLDSOURCE}/${GAME}";
+      GAME_ENGINE = 'hlds'
     else
       REPOSITORY="${REGISTRY_SOURCE}/${GAME}";
+      GAME_ENGINE = 'srcds'
     fi
 
   # Terminate the travis build on any error
@@ -44,6 +46,7 @@ script:
         --label "game=${GAME}"
         --label "game_version=${GAME_VERSION}"
         --label "game_update_count=0"
+        --label "game_engine=${GAME_ENGINE}"
         "${BUILD_DIR}";
       docker inspect "${REPOSITORY}:${GAME_VERSION}" -f '{{.Config.Labels}}';
       if [ "${LATEST}" = true ]; then
