@@ -51,7 +51,7 @@ script:
         --label "game_engine=${GAME_ENGINE}"
         "${BUILD_DIR}";
       docker inspect "${REPOSITORY}:${GAME_VERSION}" -f '{{.Config.Labels}}';
-      if [ "${LATEST}" = true ]; then
+      if [ "${LATEST}" = 'true' ]; then
         docker tag "${REPOSITORY}:${GAME_VERSION}" "${REPOSITORY}:latest";
       fi;
     elif [ "${PIPELINE}" = 'update' ]; then
@@ -66,7 +66,7 @@ script:
   - docker images
 
   # Test the game image
-  - if [ ! "${NO_TEST}" = true ]; then
+  - if [ ! "${NO_TEST}" = 'true' ]; then
       if [ "${APPID}" = 90 ]; then
         GAME_BIN="hlds_linux";
       else
@@ -82,7 +82,7 @@ script:
   - date
 
   # Push the image
-  - if [ ! "${NO_PUSH}" = true ]; then
+  - if [ ! "${NO_PUSH}" = 'true' ]; then
       travis_wait 30 docker push "${REPOSITORY}";
       date;
     fi
