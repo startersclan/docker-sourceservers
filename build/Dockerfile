@@ -24,7 +24,7 @@ RUN echo "[BUILD] SERVER_DIR: $SERVER_DIR"; \
     fi; \
     echo "[BUILD] steamcmd arguments: $steamcmdArgs"; \
     echo "[BUILD] Downloading game"; \
-    if [ "$APPID" = 90 ] && [ "$FIX_APPMANIFEST" = true ]; then \
+    if [ "$APPID" = 90 ] && [ "$FIX_APPMANIFEST" = 'true' ]; then \
         echo "[BUILD] APPID is 90 and FIX_APPMANIFEST is true. Appmanifest fix and install count will apply."; \
         i=0; \
         while [ "$i" -le $(( $INSTALL_COUNT-1 )) ]; do \
