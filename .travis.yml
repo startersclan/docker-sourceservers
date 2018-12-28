@@ -32,16 +32,17 @@ script:
 
   # Build / Update the game image
   - if [ "${PIPELINE}" = 'build' ]; then
+      GAME_IMAGE="${REPOSITORY}:${GAME_VERSION}";
       if [ "${CACHE}" = 'true' ]; then
-        docker pull "${REPOSITORY}:${GAME_VERSION}" || true;
+        docker pull "${GAME_IMAGE}" || true;
       fi;
       docker build
-        --cache-from "${REPOSITORY}:${GAME_VERSION}"
+        --cache-from "${GAME_IMAGE}"
         --build-arg APPID="${APPID}"
         --build-arg MOD="${MOD}"
         --build-arg FIX_APPMANIFEST="${FIX_APPMANIFEST}"
         --build-arg CLIENT_APPID="${CLIENT_APPID}"
-        -t "${REPOSITORY}:${GAME_VERSION}"
+        -t "${GAME_IMAGE}"
         --label "appid=${APPID}"
         --label "mod=${MOD}"
         --label "client_appid=${CLIENT_APPID}"
@@ -50,21 +51,21 @@ script:
         --label "game_update_count=0"
         --label "game_engine=${GAME_ENGINE}"
         "${BUILD_DIR}";
-      docker inspect "${REPOSITORY}:${GAME_VERSION}" -f '{{.Config.Labels}}';
       if [ "${LATEST}" = 'true' ]; then
-        docker tag "${REPOSITORY}:${GAME_VERSION}" "${REPOSITORY}:latest";
+        docker tag "${GAME_IMAGE}" "${REPOSITORY}:latest";
       fi;
     elif [ "${PIPELINE}" = 'update' ]; then
-      travis_wait 40 docker pull "${REPOSITORY}:latest";
+      GAME_IMAGE="${REPOSITORY}:latest";
+      travis_wait 40 docker pull "${GAME_IMAGE}";
       docker build
-        --build-arg GAME_IMAGE="${REPOSITORY}:latest"
-        -t "${REPOSITORY}:latest"
+        --build-arg GAME_IMAGE="${GAME_IMAGE}"
+        -t "${GAME_IMAGE}"
         --label "game_version=${GAME_VERSION}"
         --label "game_update_count=${GAME_UPDATE_COUNT}"
         "${UPDATE_DIR}";
-      docker inspect "${REPOSITORY}:latest" -f '{{.Config.Labels}}';
     fi
   - docker images
+  - docker inspect "${GAME_IMAGE}" -f '{{.Config.Labels}}';
 
   # Test the game image
   - if [ ! "${NO_TEST}" = 'true' ]; then
@@ -73,12 +74,7 @@ script:
       else
         GAME_BIN="srcds_linux";
       fi;
-      if [ "${PIPELINE}" = 'build' ]; then
-        TEST_IMAGE="${REPOSITORY}:${GAME_VERSION}";
-      elif [ "${PIPELINE}" = 'update' ]; then
-        TEST_IMAGE="${REPOSITORY}:latest";
-      fi;
-      docker run -t --rm "${TEST_IMAGE}" "printenv && ls -al && exec ${GAME_BIN} -game ${GAME} +version +exit";
+      docker run -t --rm "${GAME_IMAGE}" "printenv && ls -al && exec ${GAME_BIN} -game ${GAME} +version +exit";
     fi
   - date
 
