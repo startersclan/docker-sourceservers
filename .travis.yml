@@ -20,9 +20,11 @@ before_script:
   - if [ "${APPID}" = 90 ]; then
       REPOSITORY="${REGISTRY_GOLDSOURCE}/${GAME}";
       GAME_ENGINE="hlds";
+      GAME_BIN="hlds_linux";
     else
       REPOSITORY="${REGISTRY_SOURCE}/${GAME}";
       GAME_ENGINE="srcds";
+      GAME_BIN="srcds_linux";
     fi
 
   - echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
@@ -70,11 +72,6 @@ script:
 
   # Test the game image
   - if [ ! "${NO_TEST}" = 'true' ]; then
-      if [ "${APPID}" = 90 ]; then
-        GAME_BIN="hlds_linux";
-      else
-        GAME_BIN="srcds_linux";
-      fi;
       docker run -t --rm "${GAME_IMAGE}" "printenv && ls -al && exec ${GAME_BIN} -game ${GAME} +version +exit";
     fi
   - date
