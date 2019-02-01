@@ -67,7 +67,7 @@ script:
         "${UPDATE_DIR}";
     fi
   - docker images
-  - docker inspect "${GAME_IMAGE}" -f '{{.Config.Labels}}';
+  - docker inspect "${GAME_IMAGE}";
   - docker history "${GAME_IMAGE}";
 
   # Test the game image
