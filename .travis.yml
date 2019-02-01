@@ -67,8 +67,8 @@ script:
         "${UPDATE_DIR}";
     fi
   - docker images
-  - docker inspect "${GAME_IMAGE}";
-  - docker history "${GAME_IMAGE}";
+  - docker inspect "${GAME_IMAGE}"
+  - docker history "${GAME_IMAGE}"
 
   # Test the game image
   - if [ ! "${NO_TEST}" = 'true' ]; then
