@@ -31,7 +31,7 @@ jobs:
       docker version
     displayName: 'System Info'
   - script: |
-      docker login -u "${REGISTRY_USER}" -p "${REGISTRY_PASSWORD}"
+      echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
     env:
       REGISTRY_PASSWORD: $(REGISTRY_PASSWORD)
     displayName: 'Before script'
