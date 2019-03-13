@@ -32,6 +32,8 @@ jobs:
     displayName: 'System Info'
   - script: |
       docker login -u "${REGISTRY_USER}" -p "${REGISTRY_PASSWORD}"
+    env:
+      REGISTRY_PASSWORD: $(REGISTRY_PASSWORD)
     displayName: 'Before script'
   - script: |
       # Terminate the build on any error
