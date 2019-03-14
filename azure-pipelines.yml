@@ -34,7 +34,7 @@ jobs:
       echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
     env:
       REGISTRY_PASSWORD: $(REGISTRY_PASSWORD)
-    displayName: 'Before script'
+    displayName: 'Before Script'
   - script: |
       # Terminate the build on any error
       set -e
@@ -103,8 +103,8 @@ jobs:
           date
       fi
       set +e
-    displayName: 'Build / update - Game: $(GAME), Appid: $(APPID)'
+    displayName: 'Build / Update - GAME: $(GAME), APPID: $(APPID)'
   - script: |
       docker logout
-    displayName: 'After script'
+    displayName: 'After Script'
     condition: always()
