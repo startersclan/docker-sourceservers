@@ -103,7 +103,7 @@ jobs:
           date
       fi
       set +e
-    displayName: 'Build / Update - GAME: $(GAME), APPID: $(APPID)'
+    displayName: 'Build Game Image - GAME: $(GAME), APPID: $(APPID)'
   - script: |
       docker logout
     displayName: 'After Script'
