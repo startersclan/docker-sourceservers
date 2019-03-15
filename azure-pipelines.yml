@@ -13,7 +13,7 @@ variables:
     value: update/
 
 jobs:
-- job: 'Ubuntu_1604_VM'
+- job: Linux
   pool:
     vmImage: 'ubuntu-16.04'
   workspace:
