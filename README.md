@@ -1,4 +1,9 @@
-# Docker-SourceServers [![Build Status (Build)](https://img.shields.io/travis/theohbrothers/docker-sourceservers/build.svg?label=Build&style=flat)](https://travis-ci.org/theohbrothers/docker-sourceservers) [![Build Status (Update)](https://img.shields.io/travis/theohbrothers/docker-sourceservers/update.svg?label=Update&style=flat)](https://travis-ci.org/theohbrothers/docker-sourceservers)
+# Docker-SourceServers [![pipeline-build-image][]][pipeline-build-site] [![pipeline-update-image][]][pipeline-update-site]
+
+[pipeline-build-image]: https://img.shields.io/azure-devops/build/theohbrothers/docker-sourceservers/2/build.svg?label=Build
+[pipeline-build-site]: https://dev.azure.com/theohbrothers/docker-sourceservers/_build?definitionId=2
+[pipeline-update-image]: https://img.shields.io/azure-devops/build/theohbrothers/docker-sourceservers/3/update.svg?label=Update
+[pipeline-update-site]: https://dev.azure.com/theohbrothers/docker-sourceservers/_update?definitionId=3
 
 Builds up-to-date **Source** / **Goldsource** dedicated server images through use of [`steamcmd`](https://github.com/theohbrothers/docker-steamcmd).
 
