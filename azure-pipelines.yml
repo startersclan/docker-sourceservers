@@ -84,6 +84,7 @@ jobs:
           --label "game_version=${GAME_VERSION}" \
           --label "game_update_count=${GAME_UPDATE_COUNT}" \
           "${UPDATE_DIR}"
+          docker tag "${GAME_IMAGE}" "${REPOSITORY}:${GAME_VERSION}-layered"
       fi
       docker images
       docker inspect "${GAME_IMAGE}"
