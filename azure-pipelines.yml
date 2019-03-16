@@ -7,8 +7,8 @@ trigger:
   - none
 
 variables:
-  BUILD_DIR: build/
-  UPDATE_DIR: update/
+  BUILD_DIR: 'build/'
+  UPDATE_DIR: 'update/'
 
 jobs:
 - job: Linux
