@@ -3,7 +3,7 @@
 [pipeline-build-image]: https://img.shields.io/azure-devops/build/theohbrothers/docker-sourceservers/2/build.svg?label=Build&logo=&color=brightgreen&style=flat-square
 [pipeline-build-site]: https://dev.azure.com/theohbrothers/docker-sourceservers/_build?definitionId=2
 [pipeline-update-image]: https://img.shields.io/azure-devops/build/theohbrothers/docker-sourceservers/3/update.svg?label=Update&logo&color=brightgreen&style=flat-square
-[pipeline-update-site]: https://dev.azure.com/theohbrothers/docker-sourceservers/_update?definitionId=3
+[pipeline-update-site]: https://dev.azure.com/theohbrothers/docker-sourceservers/_build?definitionId=3
 
 Builds up-to-date **Source** / **Goldsource** dedicated server images through use of [`steamcmd`](https://github.com/theohbrothers/docker-steamcmd).
 
