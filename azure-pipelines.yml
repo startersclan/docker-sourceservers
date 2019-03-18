@@ -102,7 +102,7 @@ jobs:
           date
       fi
       set +e
-    displayName: 'Build Game Image - GAME: $(GAME), APPID: $(APPID)'
+    displayName: 'Pipeline: $(Build.SourceBranchName), GAME: $(GAME), APPID: $(APPID), GAME_VERSION: $(GAME_VERSION)'
   - script: |
       docker logout
     displayName: 'After Script'
