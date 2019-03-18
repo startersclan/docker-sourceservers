@@ -86,18 +86,27 @@ jobs:
           "${UPDATE_DIR}"
           docker tag "${GAME_IMAGE}" "${REPOSITORY}:${GAME_VERSION}-layered"
       fi
-      docker images
-      docker inspect "${GAME_IMAGE}"
-      docker history "${GAME_IMAGE}"
+      date
+      echo; docker images
+      echo; docker inspect "${GAME_IMAGE}"
+      echo; docker history "${GAME_IMAGE}"
+      echo
 
       # Test the game image
       if [ ! "${NO_TEST}" = 'true' ]; then
-          docker run -t --rm "${GAME_IMAGE}" "printenv && ls -al && exec ${GAME_BIN} -game ${GAME} +version +exit"
+          date
+          docker run \
+              -t \
+              --rm \
+              "${GAME_IMAGE}" \
+              "printenv && ls -al && exec ${GAME_BIN} -game ${GAME} +version +exit"
+          echo; date
+          echo
       fi
-      date
 
       # Push the image
       if [ ! "${NO_PUSH}" = 'true' ]; then
+          date
           docker push "${REPOSITORY}"
           date
       fi
