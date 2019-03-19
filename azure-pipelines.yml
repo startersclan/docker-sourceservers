@@ -108,7 +108,7 @@ jobs:
               --rm \
               "${GAME_IMAGE}" \
               "printenv && echo && ls -al && echo && exec ${GAME_BIN} -game ${GAME} +version +exit"
-          date
+          echo; date
       fi
     displayName: 'Test Game Image'
   - script: |
