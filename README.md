@@ -1,16 +1,16 @@
 # Docker-SourceServers [![pipeline-build-image][]][pipeline-build-site] [![pipeline-update-image][]][pipeline-update-site]
 
-[pipeline-build-image]: https://img.shields.io/azure-devops/build/theohbrothers/docker-sourceservers/2/build.svg?label=Build&logo=&color=brightgreen&style=flat-square
-[pipeline-build-site]: https://dev.azure.com/theohbrothers/docker-sourceservers/_build?definitionId=2
-[pipeline-update-image]: https://img.shields.io/azure-devops/build/theohbrothers/docker-sourceservers/3/update.svg?label=Update&logo&color=brightgreen&style=flat-square
-[pipeline-update-site]: https://dev.azure.com/theohbrothers/docker-sourceservers/_build?definitionId=3
+[pipeline-build-image]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/2/build.svg?label=Build&logo=&color=brightgreen&style=flat-square
+[pipeline-build-site]: https://dev.azure.com/startersclan/docker-sourceservers/_build?definitionId=2
+[pipeline-update-image]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/3/update.svg?label=Update&logo&color=brightgreen&style=flat-square
+[pipeline-update-site]: https://dev.azure.com/startersclan/docker-sourceservers/_build?definitionId=3
 
-Builds up-to-date **Source** / **Goldsource** dedicated server images through use of [`steamcmd`](https://github.com/theohbrothers/docker-steamcmd).
+Builds up-to-date **Source** / **Goldsource** dedicated server images through use of [`steamcmd`](https://github.com/startersclan/docker-steamcmd).
 
 ## Supported Tags
 
-* `latest` [(*/build/Dockerfile*)](https://github.com/theohbrothers/docker-sourceservers/blob/github/build/Dockerfile), [(*/update/Dockerfile*)](https://github.com/theohbrothers/docker-sourceservers/blob/github/update/Dockerfile)
-* `<version>` [(*/build/Dockerfile*)](https://github.com/theohbrothers/docker-sourceservers/blob/github/build/Dockerfile)
+* `latest` [(*/build/Dockerfile*)](https://github.com/startersclan/docker-sourceservers/blob/github/build/Dockerfile), [(*/update/Dockerfile*)](https://github.com/startersclan/docker-sourceservers/blob/github/update/Dockerfile)
+* `<version>` [(*/build/Dockerfile*)](https://github.com/startersclan/docker-sourceservers/blob/github/build/Dockerfile)
 
 ## Games and Versions
 
