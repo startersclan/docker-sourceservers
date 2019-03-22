@@ -27,13 +27,13 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 
 | Game | Image | Tag | Size / Layers |
 |:-:|:-:|:-:|:-:|
-| Counter-Strike: Global Offensive | [`csgo`][srcds-csgo-dockerhub-link] | [![srcds-csgo-version][]][srcds-csgo-link] | [![srcds-csgo-image][]][srcds-csgo-link] |
-| Counter-Strike: Source | [`cstrike`][srcds-cstrike-dockerhub-link] | [![srcds-cstrike-version][]][srcds-cstrike-link] | [![srcds-cstrike-image][]][srcds-cstrike-link] |
-| Day of Defeat: Source | [`dod`][srcds-dod-dockerhub-link] | [![srcds-dod-version][]][srcds-dod-link] | [![srcds-dod-image][]][srcds-dod-link] |
-| Half-Life 2: Deathmatch | [`hl2mp`][srcds-hl2mp-dockerhub-link] | [![srcds-hl2mp-version][]][srcds-hl2mp-link] | [![srcds-hl2mp-image][]][srcds-hl2mp-link] |
-| Left 4 Dead | [`left4dead`][srcds-left4dead-dockerhub-link] | [![srcds-left4dead-version][]][srcds-left4dead-link] | [![srcds-left4dead-image][]][srcds-left4dead-link] |
-| Left 4 Dead 2 | [`left4dead2`][srcds-left4dead2-dockerhub-link] | [![srcds-left4dead2-version][]][srcds-left4dead2-link] | [![srcds-left4dead2-image][]][srcds-left4dead2-link] |
-| Team Fortress 2 | [`tf`][srcds-tf-dockerhub-link] | [![srcds-tf-version][]][srcds-tf-link] | [![srcds-tf-image][]][srcds-tf-link] |
+| Counter-Strike: Global Offensive | [`sourceservers/csgo`][srcds-csgo-dockerhub-link] | [![srcds-csgo-version][]][srcds-csgo-link] | [![srcds-csgo-image][]][srcds-csgo-link] |
+| Counter-Strike: Source | [`sourceservers/cstrike`][srcds-cstrike-dockerhub-link] | [![srcds-cstrike-version][]][srcds-cstrike-link] | [![srcds-cstrike-image][]][srcds-cstrike-link] |
+| Day of Defeat: Source | [`sourceservers/dod`][srcds-dod-dockerhub-link] | [![srcds-dod-version][]][srcds-dod-link] | [![srcds-dod-image][]][srcds-dod-link] |
+| Half-Life 2: Deathmatch | [`sourceservers/hl2mp`][srcds-hl2mp-dockerhub-link] | [![srcds-hl2mp-version][]][srcds-hl2mp-link] | [![srcds-hl2mp-image][]][srcds-hl2mp-link] |
+| Left 4 Dead | [`sourceservers/left4dead`][srcds-left4dead-dockerhub-link] | [![srcds-left4dead-version][]][srcds-left4dead-link] | [![srcds-left4dead-image][]][srcds-left4dead-link] |
+| Left 4 Dead 2 | [`sourceservers/left4dead2`][srcds-left4dead2-dockerhub-link] | [![srcds-left4dead2-version][]][srcds-left4dead2-link] | [![srcds-left4dead2-image][]][srcds-left4dead2-link] |
+| Team Fortress 2 | [`sourceservers/tf`][srcds-tf-dockerhub-link] | [![srcds-tf-version][]][srcds-tf-link] | [![srcds-tf-image][]][srcds-tf-link] |
 
 [srcds-csgo-dockerhub-link]: https://hub.docker.com/r/sourceservers/csgo
 [srcds-csgo-version]: https://images.microbadger.com/badges/version/sourceservers/csgo.svg
@@ -74,14 +74,14 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 
 | Game | Image | Tag | Size / Layers |
 |:-:|:-:|:-:|:-:|
-| Counter-Strike 1.6 | [`cstrike`][hlds-cstrike-dockerhub-link] | [![hlds-cstrike-version][]][hlds-cstrike-link] | [![hlds-cstrike-image][]][hlds-cstrike-link] |
-| Counter-Strike: Condition Zero | [`czero`][hlds-czero-dockerhub-link] | [![hlds-czero-version][]][hlds-czero-link] | [![hlds-czero-image][]][hlds-czero-link] |
-| Deathmatch Classic | [`dmc`][hlds-dmc-dockerhub-link] | [![hlds-dmc-version][]][hlds-dmc-link] | [![hlds-dmc-image][]][hlds-dmc-link] |
-| Day of Defeat | [`dod`][hlds-dod-dockerhub-link] | [![hlds-dod-version][]][hlds-dod-link] | [![hlds-dod-image][]][hlds-dod-link] |
-| Opposing Force | [`gearbox`][hlds-gearbox-dockerhub-link] | [![hlds-gearbox-version][]][hlds-gearbox-link] | [![hlds-gearbox-image][]][hlds-gearbox-link] |
-| Ricochet | [`ricochet`][hlds-ricochet-dockerhub-link] | [![hlds-ricochet-version][]][hlds-ricochet-link] | [![hlds-ricochet-image][]][hlds-ricochet-link] |
-| Team Fortress Classic | [`tfc`][hlds-tfc-dockerhub-link] | [![hlds-tfc-version][]][hlds-tfc-link] | [![hlds-tfc-image][]][hlds-tfc-link] |
-| Half-Life | [`valve`][hlds-valve-dockerhub-link] | [![hlds-valve-version][]][hlds-valve-link] | [![hlds-valve-image][]][hlds-valve-link] |
+| Counter-Strike 1.6 | [`goldsourceservers/cstrike`][hlds-cstrike-dockerhub-link] | [![hlds-cstrike-version][]][hlds-cstrike-link] | [![hlds-cstrike-image][]][hlds-cstrike-link] |
+| Counter-Strike: Condition Zero | [`goldsourceservers/czero`][hlds-czero-dockerhub-link] | [![hlds-czero-version][]][hlds-czero-link] | [![hlds-czero-image][]][hlds-czero-link] |
+| Deathmatch Classic | [`goldsourceservers/dmc`][hlds-dmc-dockerhub-link] | [![hlds-dmc-version][]][hlds-dmc-link] | [![hlds-dmc-image][]][hlds-dmc-link] |
+| Day of Defeat | [`goldsourceservers/dod`][hlds-dod-dockerhub-link] | [![hlds-dod-version][]][hlds-dod-link] | [![hlds-dod-image][]][hlds-dod-link] |
+| Opposing Force | [`goldsourceservers/gearbox`][hlds-gearbox-dockerhub-link] | [![hlds-gearbox-version][]][hlds-gearbox-link] | [![hlds-gearbox-image][]][hlds-gearbox-link] |
+| Ricochet | [`goldsourceservers/ricochet`][hlds-ricochet-dockerhub-link] | [![hlds-ricochet-version][]][hlds-ricochet-link] | [![hlds-ricochet-image][]][hlds-ricochet-link] |
+| Team Fortress Classic | [`goldsourceservers/tfc`][hlds-tfc-dockerhub-link] | [![hlds-tfc-version][]][hlds-tfc-link] | [![hlds-tfc-image][]][hlds-tfc-link] |
+| Half-Life | [`goldsourceservers/valve`][hlds-valve-dockerhub-link] | [![hlds-valve-version][]][hlds-valve-link] | [![hlds-valve-image][]][hlds-valve-link] |
 
 [hlds-cstrike-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/cstrike
 [hlds-cstrike-version]: https://images.microbadger.com/badges/version/goldsourceservers/cstrike.svg
