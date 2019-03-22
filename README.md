@@ -7,14 +7,19 @@
 
 Builds up-to-date **Source** / **Goldsource** dedicated server images through use of [`steamcmd`](https://github.com/startersclan/docker-steamcmd).
 
-## Supported Tags
+## Game Versions and Tags
 
-* `latest` [(*/build/Dockerfile*)](https://github.com/startersclan/docker-sourceservers/blob/github/build/Dockerfile), [(*/update/Dockerfile*)](https://github.com/startersclan/docker-sourceservers/blob/github/update/Dockerfile)
+* `latest`, `<version>-layered` [(*/build/Dockerfile*)](https://github.com/startersclan/docker-sourceservers/blob/github/build/Dockerfile), [(*/update/Dockerfile*)](https://github.com/startersclan/docker-sourceservers/blob/github/update/Dockerfile)
 * `<version>` [(*/build/Dockerfile*)](https://github.com/startersclan/docker-sourceservers/blob/github/build/Dockerfile)
 
-## Games and Versions
+
+Both a new *clean* and *layered* image of a game is built on an available update. Due to the nature of Docker images, an image cannot exactly be *updated*; any modifications to it adds to its existing layers.
+
+The `latest` tag follows a layered approach to updating. Using it prevents the need to pull the newest clean image of a game on each available update. However, layered images gradually grow in size with increasing update layers. To solve this, the `latest` tag will automatically reference to a clean image of a game on the next update upon reaching **1.75x** its initial size.
 
 Dedicated servers hosted on Steam are usually required to be running the *latest version* of the game in order for clients to connect to them. Simply pull a game image by the `latest` tag for the latest version.
+
+## Games Images
 
 [![srcds-dockerhub-logo][]][srcds-dockerhub-link] [![hlds-dockerhub-logo][]][hlds-dockerhub-link]
 
@@ -23,7 +28,7 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 [hlds-dockerhub-logo]: https://img.shields.io/badge/docker%20hub-goldsourceservers-blue.svg?logo=docker&logoColor=2596EC&color=FF6917&label=&labelColor=&style=popout-square
 [hlds-dockerhub-link]: https://hub.docker.com/u/goldsourceservers
 
-### Source
+### Source Engine
 
 | Game | Image | Tag | Size / Layers |
 |:-:|:-:|:-:|:-:|
@@ -70,7 +75,7 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 [srcds-tf-image]: https://images.microbadger.com/badges/image/sourceservers/tf.svg
 [srcds-tf-link]: https://microbadger.com/images/sourceservers/tf
 
-### GoldSource
+### Goldsource Engine
 
 | Game | Image | Tag | Size / Layers |
 |:-:|:-:|:-:|:-:|
