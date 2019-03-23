@@ -13,9 +13,9 @@ Builds up-to-date **Source** / **Goldsource** dedicated server images through us
 * `<version>` [(*/build/Dockerfile*)](https://github.com/startersclan/docker-sourceservers/blob/master/build/Dockerfile)
 * `<version>-layered` [(*/update/Dockerfile*)](https://github.com/startersclan/docker-sourceservers/blob/master/update/Dockerfile)
 
-## Games Images
+## Game Images
 
-Dedicated servers hosted on Steam are usually required to be running the *latest version* of the game in order for clients to connect to them. Simply use the `latest` tag for the latest version of the game.
+Dedicated servers hosted on Steam are usually required to be running the *latest version* of the game in order for clients to connect to them. Simply use the `latest` tag for the latest version of a game.
 
 [![srcds-dockerhub-logo][]][srcds-dockerhub-link] [![hlds-dockerhub-logo][]][hlds-dockerhub-link]
 
@@ -142,4 +142,4 @@ Image sizes shown above or on Docker Hub correspond to an image's *compressed* s
 
 From the moment Valve issues an update, and the time taken before a game's images are updated and available for pulling largely depends on the size of the game. For instance, `Counter-Strike: Global Offensive` layered images take over **20** minutes, and clean images over **40** minutes before availability. For `Counter-Strike 1.6`, the same takes under **5** minutes for each.
 
-While update durations can be cut down tremendously through the use of build cache, this cannot be utilized as the game images are built for public use, and purposefully done so using public machines.
+While the use of build cache can help drastically reduce update durations, it cannot be utilized as the game images are built for public use, purposefully done so using public machines.
