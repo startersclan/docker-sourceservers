@@ -13,15 +13,9 @@ Builds up-to-date **Source** / **Goldsource** dedicated server images through us
 * `<version>` [(*/build/Dockerfile*)](https://github.com/startersclan/docker-sourceservers/blob/master/build/Dockerfile)
 * `<version>-layered` [(*/update/Dockerfile*)](https://github.com/startersclan/docker-sourceservers/blob/master/update/Dockerfile)
 
-## Game updates & versions
-
-Both a new *clean* and *layered* image of a game is built on an available game update. Due to the nature of Docker images, an image cannot exactly be *updated*; any modifications to it adds to its existing layers.
-
-The `latest` tag follows a layered approach to updating. Using it prevents the need to pull the newest clean image of a game on each available update. However, layered images gradually grow in size with increasing update layers. To solve this, the `latest` tag is automatically made to reference the newest clean image of a game on the next update upon reaching **1.75x** its initial size.
-
-Dedicated servers hosted on Steam are usually required to be running the *latest version* of the game in order for clients to connect to them. Simply pull a game image by the `latest` tag for the latest version.
-
 ## Games Images
+
+Dedicated servers hosted on Steam are usually required to be running the *latest version* of the game in order for clients to connect to them. Simply use the `latest` tag for the latest version of the game.
 
 [![srcds-dockerhub-logo][]][srcds-dockerhub-link] [![hlds-dockerhub-logo][]][hlds-dockerhub-link]
 
@@ -129,3 +123,23 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 [hlds-valve-version]: https://images.microbadger.com/badges/version/goldsourceservers/valve.svg
 [hlds-valve-image]: https://images.microbadger.com/badges/image/goldsourceservers/valve.svg
 [hlds-valve-link]: https://microbadger.com/images/goldsourceservers/valve
+
+## Additional Information
+
+### Game Versions & Tags
+
+Both a new *clean* and *layered* image of a game are built on an available game update. Due to the nature of Docker images, an image cannot exactly be *updated*; any modifications to it adds to its existing layers.
+
+The `latest` tag follows a layered approach to updating. Using it prevents the need to pull the newest clean image of a game on each available update. However, layered images gradually grow in size with increasing update layers. To solve this, the `latest` tag is made to automatically reference the clean image of a game on the next update upon reaching **1.75x** its initial size.
+
+Clean images are tagged by `<version>`. Layered images are tagged by `<version>-layered`.
+
+### Image Size
+
+Image sizes shown above or on Docker Hub correspond to an image's *compressed* size. Actual sizes vary, but are approximately **2x** larger after pulling an image.
+
+### Update Duration
+
+From the moment Valve issues an update, and the time taken before a game's images are updated and available for pulling largely depends on the size of the game. For instance, `Counter-Strike: Global Offensive` layered images take over **20** minutes, and clean images over **40** minutes before availability. For `Counter-Strike 1.6`, the same takes under **5** minutes for each.
+
+While update durations can be cut down tremendously through the use of build cache, this cannot be utilized as the game images are built for public use, and purposefully done so using public machines.
