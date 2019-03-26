@@ -1,8 +1,8 @@
 # Docker-SourceServers [![pipeline-build-badge][]][pipeline-build-link] [![pipeline-update-badge][]][pipeline-update-link]
 
-[pipeline-build-badge]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/2/build.svg?label=Build&logo=&color=brightgreen&style=flat-square
+[pipeline-build-badge]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/2/build.svg?label=Build&logo=&style=flat-square
 [pipeline-build-link]: https://dev.azure.com/startersclan/docker-sourceservers/_build?definitionId=2
-[pipeline-update-badge]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/3/update.svg?label=Update&logo&color=brightgreen&style=flat-square
+[pipeline-update-badge]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/3/update.svg?label=Update&logo=&style=flat-square
 [pipeline-update-link]: https://dev.azure.com/startersclan/docker-sourceservers/_build?definitionId=3
 
 Builds up-to-date **Source** / **Goldsource** dedicated server images through use of [`steamcmd`](https://github.com/startersclan/docker-steamcmd).
