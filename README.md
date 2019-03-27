@@ -143,3 +143,14 @@ Image sizes shown above or on Docker Hub correspond to an image's *compressed* s
 From the moment Valve issues an update, and the time taken before a game's images are updated and available for pulling largely depends on the size of the game. For instance, `Counter-Strike: Global Offensive` layered images take over **20** minutes, and clean images over **40** minutes before availability. For `Counter-Strike 1.6`, the same takes under **5** minutes for each.
 
 While the use of build cache can help drastically reduce update durations, it cannot be utilized as the game images are built for public use, purposefully done so using public machines.
+
+## Migration to Azure Pipelines
+
+The project now uses Azure Pipelines for its build jobs. You can find the history of past build jobs performed on Travis through the links below.
+
+[![pipeline-travis-build-badge][]][pipeline-travis-build-link] [![pipeline-travis-update-badge][]][pipeline-travis-update-link]
+
+[pipeline-travis-build-badge]: https://img.shields.io/travis/startersclan/docker-sourceservers/build.svg?label=Build&logo=travis&style=flat-square
+[pipeline-travis-build-link]: https://travis-ci.org/startersclan/docker-sourceservers/builds
+[pipeline-travis-update-badge]: https://img.shields.io/travis/startersclan/docker-sourceservers/build.svg?label=Update&logo=travis&style=flat-square
+[pipeline-travis-update-link]: https://travis-ci.org/startersclan/docker-sourceservers/builds
