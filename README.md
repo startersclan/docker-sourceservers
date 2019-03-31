@@ -9,9 +9,12 @@ Builds up-to-date **Source** / **Goldsource** dedicated server images through us
 
 ## Supported Tags
 
-* `latest` [(*/build/Dockerfile*)](https://github.com/startersclan/docker-sourceservers/blob/master/build/Dockerfile), [(*/update/Dockerfile*)](https://github.com/startersclan/docker-sourceservers/blob/master/update/Dockerfile)
-* `<version>` [(*/build/Dockerfile*)](https://github.com/startersclan/docker-sourceservers/blob/master/build/Dockerfile)
-* `<version>-layered` [(*/update/Dockerfile*)](https://github.com/startersclan/docker-sourceservers/blob/master/update/Dockerfile)
+* `latest` [(*/build/Dockerfile*)][dockerfile-build-link], [(*/update/Dockerfile*)][dockerfile-update-link]
+* `<version>` [(*/build/Dockerfile*)][dockerfile-build-link]
+* `<version>-layered` [(*/update/Dockerfile*)][dockerfile-update-link]
+
+[dockerfile-build-link]: https://github.com/startersclan/docker-sourceservers/blob/master/build/Dockerfile
+[dockerfile-update-link]: https://github.com/startersclan/docker-sourceservers/blob/master/update/Dockerfile
 
 ## Game Images
 
