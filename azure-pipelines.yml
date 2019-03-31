@@ -2,13 +2,13 @@ trigger: none
 pr: none
 
 variables:
-  BUILD_DIR: 'build/'
-  UPDATE_DIR: 'update/'
+  BUILD_DIR: build/
+  UPDATE_DIR: update/
 
 jobs:
 - job: Linux
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: ubuntu-16.04
   workspace:
     clean: all
   continueOnError: false
@@ -22,7 +22,7 @@ jobs:
       free
       docker info
       docker version
-    displayName: 'System Info'
+    displayName: System Info
   - script: |
       set -e
       # Process variables
@@ -46,7 +46,7 @@ jobs:
       echo "##vso[task.setvariable variable=GAME_BIN]${GAME_BIN}"
     env:
       REGISTRY_PASSWORD: $(REGISTRY_PASSWORD)
-    displayName: 'Before Script'
+    displayName: Before Script
   - script: |
       set -e
       date
@@ -105,7 +105,7 @@ jobs:
               "printenv && echo && ls -al && echo && exec ${GAME_BIN} -game ${GAME} +version +exit"
           echo; date
       fi
-    displayName: 'Test Game Image'
+    displayName: Test Game Image
   - script: |
       set -e
       # Push the image
@@ -114,8 +114,8 @@ jobs:
           docker push "${REPOSITORY}"
           date
       fi
-    displayName: 'Push Game Image'
+    displayName: Push Game Image
   - script: |
       docker logout
-    displayName: 'After Script'
+    displayName: After Script
     condition: always()
