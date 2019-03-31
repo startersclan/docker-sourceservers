@@ -15,11 +15,12 @@ jobs:
   timeoutInMinutes: 90
   steps:
   - script: |
+      hostname
       whoami
       cat /etc/*release
       lscpu
-      df -h
       free
+      df -h
       docker info
       docker version
     displayName: System Info
