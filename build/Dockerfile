@@ -1,6 +1,6 @@
 # Builds a base image for the specified game.
 
-FROM startersclan/steamcmd:latest
+FROM startersclan/steamcmd:git-20190605.0.0
 
 ARG SERVER_DIR=/server
 ARG APPMANIFEST_AR_URL=https://github.com/startersclan/hlds-appmanifest/archive/v1.0.0.tar.gz
