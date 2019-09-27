@@ -88,6 +88,7 @@ script:
             "${GAME_IMAGE}" \
             "printenv && echo && ls -al && echo && exec ${GAME_BIN} -game ${GAME} +version +exit"
         echo; date
+    fi
   - |
     # Push the image
     if [ ! "${NO_PUSH}" = 'true' ]; then
