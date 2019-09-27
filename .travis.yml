@@ -65,7 +65,7 @@ script:
         fi
     elif [ "${PIPELINE}" = 'update' ]; then
         GAME_IMAGE="${REPOSITORY}:latest"
-        docker pull "${GAME_IMAGE}"
+        travis_wait 40 docker pull "${GAME_IMAGE}"
         docker build \
         --build-arg GAME_IMAGE="${GAME_IMAGE}" \
         -t "${GAME_IMAGE}" \
@@ -92,7 +92,7 @@ script:
     # Push the image
     if [ ! "${NO_PUSH}" = 'true' ]; then
         date
-        docker push "${REPOSITORY}"
+        travis_wait 30 docker push "${REPOSITORY}"
         date
     fi
 
