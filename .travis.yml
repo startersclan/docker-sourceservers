@@ -90,7 +90,7 @@ script:
         echo; date
     fi
   - |
-    # Push the image
+    # Push the game image
     if [ ! "${NO_PUSH}" = 'true' ]; then
         date
         travis_wait 30 docker push "${REPOSITORY}"

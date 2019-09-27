@@ -109,7 +109,7 @@ jobs:
     displayName: Test Game Image
   - script: |
       set -e
-      # Push the image
+      # Push the game image
       if [ ! "${NO_PUSH}" = 'true' ]; then
           date
           docker push "${REPOSITORY}"
