@@ -8,7 +8,7 @@
 
 [pipeline-travis-build-badge]: https://img.shields.io/travis/startersclan/docker-sourceservers/build.svg?label=&logo=travis&style=flat-square
 [pipeline-travis-build-link]: https://travis-ci.org/startersclan/docker-sourceservers/builds
-[pipeline-travis-update-badge]: https://img.shields.io/travis/startersclan/docker-sourceservers/build.svg?label=&logo=travis&style=flat-square
+[pipeline-travis-update-badge]: https://img.shields.io/travis/startersclan/docker-sourceservers/update.svg?label=&logo=travis&style=flat-square
 [pipeline-travis-update-link]: https://travis-ci.org/startersclan/docker-sourceservers/builds
 
 [pipeline-azurepipelines-build-badge]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/2/build.svg?label=&logo=azure-pipelines&style=flat-square
