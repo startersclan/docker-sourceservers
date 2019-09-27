@@ -34,7 +34,7 @@ before_script:
       GAME_BIN="srcds_linux"
     fi
 
-      echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
+    echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
 
 script:
   - |
