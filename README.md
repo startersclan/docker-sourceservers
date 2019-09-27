@@ -4,17 +4,17 @@
 
 |  Build | Update |
 |:-:|:-:|
-| [![pipeline-travis-build-badge][]][pipeline-travis-build-link] [![pipeline-build-badge][]][pipeline-build-link] | [![pipeline-travis-update-badge][]][pipeline-travis-update-link] [![pipeline-update-badge][]][pipeline-update-link] |
+| [![pipeline-travis-build-badge][]][pipeline-travis-build-link] [![pipeline-azurepipelines-build-badge][]][pipeline-azurepipelines-build-link] | [![pipeline-travis-update-badge][]][pipeline-travis-update-link] [![pipeline-azurepipelines-update-badge][]][pipeline-azurepipelines-update-link] |
 
 [pipeline-travis-build-badge]: https://img.shields.io/travis/startersclan/docker-sourceservers/build.svg?label=&logo=travis&style=flat-square
 [pipeline-travis-build-link]: https://travis-ci.org/startersclan/docker-sourceservers/builds
 [pipeline-travis-update-badge]: https://img.shields.io/travis/startersclan/docker-sourceservers/build.svg?label=&logo=travis&style=flat-square
 [pipeline-travis-update-link]: https://travis-ci.org/startersclan/docker-sourceservers/builds
 
-[pipeline-build-badge]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/2/build.svg?label=&logo=azure-pipelines&style=flat-square
-[pipeline-build-link]: https://dev.azure.com/startersclan/docker-sourceservers/_build?definitionId=2
-[pipeline-update-badge]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/3/update.svg?label=&logo=azure-pipelines&style=flat-square
-[pipeline-update-link]: https://dev.azure.com/startersclan/docker-sourceservers/_build?definitionId=3
+[pipeline-azurepipelines-build-badge]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/2/build.svg?label=&logo=azure-pipelines&style=flat-square
+[pipeline-azurepipelines-build-link]: https://dev.azure.com/startersclan/docker-sourceservers/_build?definitionId=2
+[pipeline-azurepipelines-update-badge]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/3/update.svg?label=&logo=azure-pipelines&style=flat-square
+[pipeline-azurepipelines-update-link]: https://dev.azure.com/startersclan/docker-sourceservers/_build?definitionId=3
 
 ## Supported Tags
 
