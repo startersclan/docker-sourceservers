@@ -75,7 +75,6 @@ script:
         docker tag "${GAME_IMAGE}" "${REPOSITORY}:${GAME_VERSION}-layered"
     fi
     date
-  - |
     echo; docker images
     echo; docker inspect "${GAME_IMAGE}"
     echo; docker history "${GAME_IMAGE}"
