@@ -1,11 +1,20 @@
-# Docker-SourceServers [![pipeline-build-badge][]][pipeline-build-link] [![pipeline-update-badge][]][pipeline-update-link]
+## Docker-SourceServers
 
-[pipeline-build-badge]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/2/build.svg?label=Build&logo=&style=flat-square
+**Source** / **Goldsource** dedicated server images built through use of [`steamcmd`](https://github.com/startersclan/docker-steamcmd).
+
+|  Build | Update |
+|:-:|:-:|
+| [![pipeline-travis-build-badge][]][pipeline-travis-build-link] [![pipeline-build-badge][]][pipeline-build-link] | [![pipeline-travis-update-badge][]][pipeline-travis-update-link] [![pipeline-update-badge][]][pipeline-update-link] |
+
+[pipeline-travis-build-badge]: https://img.shields.io/travis/startersclan/docker-sourceservers/build.svg?label=&logo=travis&style=flat-square
+[pipeline-travis-build-link]: https://travis-ci.org/startersclan/docker-sourceservers/builds
+[pipeline-travis-update-badge]: https://img.shields.io/travis/startersclan/docker-sourceservers/build.svg?label=&logo=travis&style=flat-square
+[pipeline-travis-update-link]: https://travis-ci.org/startersclan/docker-sourceservers/builds
+
+[pipeline-build-badge]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/2/build.svg?label=&logo=azure-pipelines&style=flat-square
 [pipeline-build-link]: https://dev.azure.com/startersclan/docker-sourceservers/_build?definitionId=2
-[pipeline-update-badge]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/3/update.svg?label=Update&logo=&style=flat-square
+[pipeline-update-badge]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/3/update.svg?label=&logo=azure-pipelines&style=flat-square
 [pipeline-update-link]: https://dev.azure.com/startersclan/docker-sourceservers/_build?definitionId=3
-
-Builds up-to-date **Source** / **Goldsource** dedicated server images through use of [`steamcmd`](https://github.com/startersclan/docker-steamcmd).
 
 ## Supported Tags
 
@@ -147,13 +156,6 @@ From the moment Valve issues an update, the time taken before a game's images ar
 
 While the use of build cache can help drastically reduce update durations, it cannot be utilized as the game images are built for public use, purposefully done so using public machines.
 
-## Migration to Azure Pipelines
+## Build history
 
-The project now uses Azure Pipelines for its build jobs. You can find the history of past build jobs performed on Travis through the links below.
-
-[![pipeline-travis-build-badge][]][pipeline-travis-build-link] [![pipeline-travis-update-badge][]][pipeline-travis-update-link]
-
-[pipeline-travis-build-badge]: https://img.shields.io/travis/startersclan/docker-sourceservers/build.svg?label=Build&logo=travis&style=flat-square
-[pipeline-travis-build-link]: https://travis-ci.org/startersclan/docker-sourceservers/builds
-[pipeline-travis-update-badge]: https://img.shields.io/travis/startersclan/docker-sourceservers/build.svg?label=Update&logo=travis&style=flat-square
-[pipeline-travis-update-link]: https://travis-ci.org/startersclan/docker-sourceservers/builds
+The project uses both Travis CI and Azure Pipelines for its build jobs. You can find the history of past build jobs by clicking on the corresponding build badges above.
