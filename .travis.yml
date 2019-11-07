@@ -9,6 +9,9 @@ env:
 
 before_script:
 - |
+  # Terminate the build on errors
+  set -e
+- |
   hostname
   whoami
   cat /etc/*release
@@ -18,8 +21,6 @@ before_script:
   docker info
   docker version
 - |
-  # Terminate the build on errors
-  set -e
   # Process variables
   PIPELINE="${TRAVIS_BRANCH}"
   if [ "${APPID}" = 90 ]; then
