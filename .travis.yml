@@ -43,9 +43,9 @@ script:
     if [ "${PIPELINE}" = 'build' ]; then
         GAME_IMAGE="${REPOSITORY}:${GAME_VERSION}"
         if [ "${CACHE}" = 'true' ]; then
-            docker pull "${GAME_IMAGE}" || true
+            time docker pull "${GAME_IMAGE}" || true
         fi
-        docker build \
+        time docker build \
             --cache-from "${GAME_IMAGE}" \
             --build-arg APPID="${APPID}" \
             --build-arg MOD="${MOD}" \
@@ -65,8 +65,8 @@ script:
         fi
     elif [ "${PIPELINE}" = 'update' ]; then
         GAME_IMAGE="${REPOSITORY}:latest"
-        travis_wait 40 docker pull "${GAME_IMAGE}"
-        docker build \
+        travis_wait 40 time docker pull "${GAME_IMAGE}"
+        time docker build \
         --build-arg GAME_IMAGE="${GAME_IMAGE}" \
         -t "${GAME_IMAGE}" \
         --label "game_version=${GAME_VERSION}" \
@@ -74,7 +74,6 @@ script:
         "${UPDATE_DIR}"
         docker tag "${GAME_IMAGE}" "${REPOSITORY}:${GAME_VERSION}-layered"
     fi
-    date
     echo; docker images
     echo; docker inspect "${GAME_IMAGE}"
     echo; docker history "${GAME_IMAGE}"
@@ -82,19 +81,17 @@ script:
     # Test the game image
     if [ ! "${NO_TEST}" = 'true' ]; then
         date
-        docker run \
+        time docker run \
             -t \
             --rm \
             "${GAME_IMAGE}" \
             "printenv && echo && ls -al && echo && exec ${GAME_BIN} -game ${GAME} +version +exit"
-        echo; date
     fi
   - |
     # Push the game image
     if [ ! "${NO_PUSH}" = 'true' ]; then
         date
-        travis_wait 30 docker push "${REPOSITORY}"
-        date
+        time travis_wait 30 docker push "${REPOSITORY}"
     fi
 
 after_script:
