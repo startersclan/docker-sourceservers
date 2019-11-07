@@ -74,9 +74,9 @@ script:
         "${UPDATE_DIR}"
         docker tag "${GAME_IMAGE}" "${REPOSITORY}:${GAME_VERSION}-layered"
     fi
-    echo; docker images
-    echo; docker inspect "${GAME_IMAGE}"
-    echo; docker history "${GAME_IMAGE}"
+    docker images
+    docker inspect "${GAME_IMAGE}"
+    docker history "${GAME_IMAGE}"
   - |
     # Test the game image
     if [ ! "${NO_TEST}" = 'true' ]; then
