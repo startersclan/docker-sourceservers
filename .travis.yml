@@ -43,7 +43,7 @@ script:
       if [ "${CACHE}" = 'true' ]; then
           time docker pull "${GAME_IMAGE}" || true
       fi
-      time docker build \
+      travis_wait 40 time docker build \
           --cache-from "${GAME_IMAGE}" \
           --build-arg APPID="${APPID}" \
           --build-arg MOD="${MOD}" \
@@ -64,7 +64,7 @@ script:
   elif [ "${PIPELINE}" = 'update' ]; then
       GAME_IMAGE="${REPOSITORY}:latest"
       travis_wait 40 time docker pull "${GAME_IMAGE}"
-      time docker build \
+      travis_wait 40 time docker build \
       --build-arg GAME_IMAGE="${GAME_IMAGE}" \
       -t "${GAME_IMAGE}" \
       --label "game_version=${GAME_VERSION}" \
