@@ -1,0 +1,101 @@
+workflows:
+  version: 2
+  ci:
+    jobs:
+    - build:
+        filters:
+          branches:
+            ignore: /.*/
+version: 2
+jobs:
+  build:
+    machine:
+      image: ubuntu-1604:201903-01
+      docker_layer_caching: false
+    environment:
+      BUILD_DIR: build/
+      UPDATE_DIR: update/
+    steps:
+    - checkout
+    - run:
+        name: System info
+        command: |
+          hostname
+          whoami
+          cat /etc/*release
+          lscpu
+          free
+          df -h
+          pwd
+          docker info
+          docker version
+    - run:
+        name: Build, test, push image
+        no_output_timeout: 40m
+        command: |
+          set -e
+          # Process variables
+          PIPELINE="${CIRCLE_BRANCH}"
+          if [ "${APPID}" = 90 ]; then
+            REPOSITORY="${REGISTRY_GOLDSOURCE}/${GAME}"
+            GAME_ENGINE="hlds"
+            GAME_BIN="hlds_linux"
+          else
+            REPOSITORY="${REGISTRY_SOURCE}/${GAME}"
+            GAME_ENGINE="srcds"
+            GAME_BIN="srcds_linux"
+          fi
+          echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
+          date
+          # Build / Update the game image
+          if [ "${PIPELINE}" = 'build' ]; then
+              GAME_IMAGE="${REPOSITORY}:${GAME_VERSION}"
+              if [ "${CACHE}" = 'true' ]; then
+                  time docker pull "${GAME_IMAGE}" || true
+              fi
+              time docker build \
+                  --cache-from "${GAME_IMAGE}" \
+                  --build-arg APPID="${APPID}" \
+                  --build-arg MOD="${MOD}" \
+                  --build-arg FIX_APPMANIFEST="${FIX_APPMANIFEST}" \
+                  --build-arg CLIENT_APPID="${CLIENT_APPID}" \
+                  -t "${GAME_IMAGE}" \
+                  --label "appid=${APPID}" \
+                  --label "mod=${MOD}" \
+                  --label "client_appid=${CLIENT_APPID}" \
+                  --label "game=${GAME}" \
+                  --label "game_version=${GAME_VERSION}" \
+                  --label "game_update_count=0" \
+                  --label "game_engine=${GAME_ENGINE}" \
+                  "${BUILD_DIR}"
+              if [ "${LATEST}" = 'true' ]; then
+                  docker tag "${GAME_IMAGE}" "${REPOSITORY}:latest"
+              fi
+          elif [ "${PIPELINE}" = 'update' ]; then
+              GAME_IMAGE="${REPOSITORY}:latest"
+              time docker pull "${GAME_IMAGE}"
+              time docker build \
+              --build-arg GAME_IMAGE="${GAME_IMAGE}" \
+              -t "${GAME_IMAGE}" \
+              --label "game_version=${GAME_VERSION}" \
+              --label "game_update_count=${GAME_UPDATE_COUNT}" \
+              "${UPDATE_DIR}"
+              docker tag "${GAME_IMAGE}" "${REPOSITORY}:${GAME_VERSION}-layered"
+          fi
+          docker images
+          docker inspect "${GAME_IMAGE}"
+          docker history "${GAME_IMAGE}"
+          # Test the game image
+          if [ ! "${NO_TEST}" = 'true' ]; then
+              date
+              time docker run \
+                  -t \
+                  --rm \
+                  "${GAME_IMAGE}" \
+                  "printenv && echo && ls -al && echo && exec ${GAME_BIN} -game ${GAME} +version +exit"
+          fi
+          # Push the game image
+          if [ ! "${NO_PUSH}" = 'true' ]; then
+              date
+              time docker push "${REPOSITORY}"
+          fi

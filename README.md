@@ -4,7 +4,7 @@
 
 |  Build | Update |
 |:-:|:-:|
-| [![pipeline-travis-build-badge][]][pipeline-travis-build-link] [![pipeline-azurepipelines-build-badge][]][pipeline-azurepipelines-build-link] | [![pipeline-travis-update-badge][]][pipeline-travis-update-link] [![pipeline-azurepipelines-update-badge][]][pipeline-azurepipelines-update-link] |
+| [![pipeline-travis-build-badge][]][pipeline-travis-build-link] [![pipeline-azurepipelines-build-badge][]][pipeline-azurepipelines-build-link] [![pipeline-circleci-build-badge][]][pipeline-circleci-build-link] | [![pipeline-travis-update-badge][]][pipeline-travis-update-link] [![pipeline-azurepipelines-update-badge][]][pipeline-azurepipelines-update-link] |
 
 [pipeline-travis-build-badge]: https://img.shields.io/travis/startersclan/docker-sourceservers/build.svg?label=&logo=travis&style=flat-square
 [pipeline-travis-build-link]: https://travis-ci.org/startersclan/docker-sourceservers/builds
@@ -15,6 +15,9 @@
 [pipeline-azurepipelines-build-link]: https://dev.azure.com/startersclan/docker-sourceservers/_build?definitionId=2
 [pipeline-azurepipelines-update-badge]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/3/update.svg?label=&logo=azure-pipelines&style=flat-square
 [pipeline-azurepipelines-update-link]: https://dev.azure.com/startersclan/docker-sourceservers/_build?definitionId=3
+
+[pipeline-circleci-build-badge]: https://img.shields.io/circleci/build/gh/startersclan/docker-sourceservers/build.svg?label=&logo=circleci&style=flat-square
+[pipeline-circleci-build-link]: https://circleci.com/gh/startersclan/docker-sourceservers/tree/build
 
 ## Supported Tags
 
@@ -158,4 +161,4 @@ While the use of build cache can help drastically reduce update durations, it ca
 
 ## Build history
 
-The project uses both Travis CI and Azure Pipelines for its build jobs. You can find the history of past build jobs by clicking on the corresponding build badges above.
+The project uses multiple CI services for its build jobs. You can find the history of past build jobs by clicking on their corresponding build status badges.
