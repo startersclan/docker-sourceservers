@@ -99,3 +99,4 @@ jobs:
               date
               time docker push "${REPOSITORY}"
           fi
+          docker logout
