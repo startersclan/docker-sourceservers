@@ -98,5 +98,6 @@ jobs:
           if [ ! "${NO_PUSH}" = 'true' ]; then
               date
               time docker push "${REPOSITORY}"
+              date
           fi
           docker logout
