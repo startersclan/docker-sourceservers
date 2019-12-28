@@ -173,9 +173,9 @@ The following are some guidelines on how to use the provided images with `docker
 
 #### ENTRYPOINT and CMD
 
-Currently, the default `ENTRYPOINT` for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the `CMD` is [`""`](build/Dockerfile#L73). The values make it convenient especially in development environments where the game's command line can simply be appended as the final argument to the `docker run` command for starting the server.
+Currently, the default `ENTRYPOINT` for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the `CMD` is [`""`](build/Dockerfile#L73). These values make it convenient especially in development environments where the game's command line can simply be appended as the final argument to the `docker run` command for starting a server.
 
-Each of the default values can also be overridden at runtime, a feature well supported by container orchestration tools such as [Kubernetes](https://kubernetes.io/) and [Docker Swarm Mode](https://docs.docker.com/engine/swarm/), and the standalone tool, [Docker Compose](https://docs.docker.com/compose/). Alternatively, they can be modified as part of the build steps in custom images.
+Each of the default values can also be overridden at runtime, a feature well supported by container orchestration tools such as [Kubernetes](https://kubernetes.io/docs/home/) and [Docker Swarm Mode](https://docs.docker.com/engine/swarm/), and the standalone tool, [Docker Compose](https://docs.docker.com/compose/). Alternatively, they can be modified as part of the build steps in custom images.
 
 #### WORKDIR
 
@@ -228,7 +228,7 @@ docker rm -f csgo-server
 docker run --name csgo-server -it -p 27015:27015/udp sourceservers/csgo:latest 'srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2'
 ```
 
-There are many ways to detect when a gameserver needs an update but that is out of the scope of the project. Here is an simple [example](https://stackoverflow.com/a/44740429/3891117) for utilizing a `cronjob` for updating a container.
+There are many ways to detect when a gameserver needs an update but that is out of the scope of the project. Here is a simple [example](https://stackoverflow.com/a/44740429/3891117) for utilizing a `cronjob` for updating a container.
 
 ## Important considerations
 
@@ -238,7 +238,7 @@ Due to the variety of SRCDS and HLDS games that can be hosted and the various wa
 
 The game images **do not** include an entrypoint script.
 
-While the conventional `entrypoint.sh` could have been included, having so takes away flexibility for how the images can be used. Operators wishing to utilize their own entrypoint scripts would have to include removal of pre-existing ones as part of their build or initialization processes which increases administrative overhead. Moreover, a generic entrypoint script is unlikely to be adequate for operators given the various possible setups that could differ greatly across games, game modes, mods, and plugins.
+While the conventional `entrypoint.sh` could have been included, having so takes away flexibility for how the images can be used. Operators wishing to utilize their own entrypoint scripts would have to include removal of pre-existing ones as part of their build or initialization processes which increases administrative overhead. Moreover, a generic entrypoint script is unlikely to be adequate for operators given the various possible setups that could differ widely across games, game modes, mods, and plugins.
 
 This brings us to the next but a much related consideration.
 
@@ -246,11 +246,11 @@ This brings us to the next but a much related consideration.
 
 The game images **do not** include support for configuring game instances via environment variables.
 
-Docker images are often packaged with applications designed to comply with the [twelve-factor methodology - Environment as config](https://12factor.net/config) where environment variables are read directly as configuration by the application, a case in point being the [docker registry](https://docs.docker.com/registry/configuration/#override-specific-configuration-options). However, some applications do not read environment variables as configuration but instead accept command line arguments or read from config files, where it is then common for their docker images to include an entrypoint script which maps environment variables onto command line arguments for invocation.
+Docker images are often packaged with applications designed to comply with the [twelve-factor methodology - Environment as config](https://12factor.net/config) where environment variables are read directly as configuration by the application, a case in point being the [docker registry](https://docs.docker.com/registry/configuration/#override-specific-configuration-options). Some applications however do not read environment variables as configuration but instead accept command line arguments or read from config files, where it is then common for their docker images to include an entrypoint script which maps environment variables onto command line arguments for invocation.
 
-Source and Goldsource games belong to the group of applications that do not read from environment variables and that are instead configured via parameters (i.e. flags beginning with `-`, e.g. `-usercon`, see [SRCDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-line_parameters_5) and [HLDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-line_parameters_2)), as well as Cvars (i.e. flags beginning with `+`, e.g. `+sv_lan 0`, see [SRCDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Console_variables) and [HLDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Useful_console_variables)). Although there are many Cvars shared across SRCDS and HLDS games, there are also Cvars that are game-specific (e.g. the many hundreds for `left4dead` and `left4dead2`), as well as mod/plugin-specific (e.g. `garrysmod`, `amxmodx`, `sourcemod`).
+Source and Goldsource games belong to the group of applications that do not read from environment variables and that are instead configured via parameters (i.e. flags beginning with `-`, e.g. `-usercon`, see [SRCDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-line_parameters_5) and [HLDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-line_parameters_6)), as well as Cvars (i.e. flags beginning with `+`, e.g. `+sv_lan 0`, see [SRCDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Console_variables_2) and [HLDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Useful_console_variables_2)). Although there are many Cvars shared across SRCDS and HLDS games, there are also Cvars that are game-specific (e.g. the many hundreds for `left4dead` and `left4dead2`), as well as mod/plugin-specific (e.g. `garrysmod`, `amxmodx`, `sourcemod`).
 
-Because of the malleable nature of how Cvars are used, it does not make sense to map them directly to environment variables for several reasons: First, it introduces an unnecessary layer of abstraction which operators would have to learn on top of the numerous available parameters and Cvars for each game; Second, a single change to any envvar-cvar mapping will require a rebuild of the docker image to contain the new `docker-entrypoint.sh` script, introducing a lot of of unnecessary builds; Third, the very `docker-entrypoint.sh` script providing the envvar-cvar mapping must too be versioned, introducing yet another burden on top of just keeping the images updated.
+Because of the malleable nature of how Cvars are used, it does not make sense to map them directly to environment variables for several reasons: First, it introduces an unnecessary layer of abstraction which operators would have to learn on top of the numerous available parameters and Cvars for each game; Second, a single change to any envvar-cvar mapping will require a rebuild of the docker image to contain the new `docker-entrypoint.sh` script, introducing a lot of unnecessary builds; Third, the very `docker-entrypoint.sh` script providing the envvar-cvar mapping would also require versioning, introducing yet another burden on top of just keeping the images updated.
 
 As such, the provided images do not support configuration via environment variables. The recommended approach would be to specify all necessary launch parameters and Cvars for the game server within the container's command, and all other Cvars including those containing secret values within mounted configuration file(s) such as [`server.cfg`](https://developer.valvesoftware.com/wiki/Server.cfg).
 
