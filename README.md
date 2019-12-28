@@ -266,8 +266,8 @@ The official games from Valve come with an wrapper script and a binary as part o
 
 The wrapper script, commonly used in non-containerized setups:
 
-* `srcds_run.sh` (Source)
-* `hlds_run.sh` (Goldsource)
+* `srcds_run` (Source)
+* `hlds_run` (Goldsource)
 
 The game binary:
 
