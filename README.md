@@ -169,11 +169,11 @@ The project uses multiple CI services for its build jobs. You can find the histo
 
 ### Docker
 
-The following are some guidelines on how to best use the provided images that hopefully is transferrable for use with container orchestration tools should operators wish to utilize them for hosting workloads.
+The following are some guidelines on how to use the provided images with `docker` that should also apply to container orchestration tools should operators wish to use them for hosting container workloads.
 
 #### ENTRYPOINT and CMD
 
-Currently, the default **ENTRYPOINT** for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the **CMD** is [`""`](build/Dockerfile#L73). The values make it convenient especially in development environments where the game's command line can simply be appended as the final argument to the `docker run` command for starting the server.
+Currently, the default `ENTRYPOINT` for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the `CMD` is [`""`](build/Dockerfile#L73). The values make it convenient especially in development environments where the game's command line can simply be appended as the final argument to the `docker run` command for starting the server.
 
 Each of the default values can also be overridden at runtime, a feature well supported by container orchestration tools such as [Kubernetes](https://kubernetes.io/) and [Docker Swarm Mode](https://docs.docker.com/engine/swarm/), and the standalone tool, [Docker Compose](https://docs.docker.com/compose/). Alternatively, they can be modified as part of the build steps in custom images.
 
