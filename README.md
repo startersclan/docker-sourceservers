@@ -171,7 +171,7 @@ The project uses multiple CI services for its build jobs. You can find the histo
 
 The following are some guidelines on how to best use the provided images that hopefully is transferrable for use with container orchestration tools should operators wish to utilize them for hosting workloads.
 
-#### Entrypoint and CMD
+#### ENTRYPOINT and CMD
 
 Currently, the default **ENTRYPOINT** for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the **CMD** is [`""`](build/Dockerfile#L73). The values make it convenient especially in development environments where the game's command line can simply be appended as the final argument to the `docker run` command for starting the server.
 
@@ -238,7 +238,7 @@ Due to the variety of SRCDS and HLDS games that can be hosted and the various wa
 
 The game images **do not** include an entrypoint script.
 
-While the conventional `entrypoint.sh` could have been included, having so also takes away flexibility for how the images can be used. Operators wishing to utilize their own entrypoint scripts would have to include removal of pre-existing ones as part of their build or init processes which likely adds unnecessary confusion. Also, it is unlikely that a generic entrypoint script would be adequate given the various ways server operators could implement container initialization processes for their game servers.
+While the conventional `entrypoint.sh` could have been included, having so takes away flexibility for how the images can be used. Operators wishing to utilize their own entrypoint scripts would have to include removal of pre-existing ones as part of their build or initialization processes which increases administrative overhead. Moreover, a generic entrypoint script is unlikely to be adequate for operators given the various possible setups that could differ greatly across games, game modes, mods, and plugins.
 
 This brings us to the next but a much related consideration.
 
@@ -258,7 +258,7 @@ As such, the provided images do not support configuration via environment variab
 
 The game images **do not** include a non-root user.
 
-The images as aforementioned are meant to be generic. Having a non-root user poses a problem especially when volumes are going to be used by operators. A common `UID` built into the images would unlikely fulfill the requirements of operators whose hosts would then require a matching `UID` in cases where bind mounts are used. A mismatch or missing `UID` within the container and the host would prevent the container user from accessing the data on the volumes, leading to issues pertaining to the game server, rendering the game images useless unless customized.
+The images as aforementioned are meant to be generic. Having a non-root user poses a problem especially when volumes are going to be used by operators. A common `UID` built into the images would unlikely fulfill the requirements of operators whose hosts would then require a matching `UID` in cases where bind mounts are used. A mismatch or missing `UID` within the container or the host would prevent the container user from accessing the data on the volumes, leading to issues pertaining to the game server, rendering the game images useless unless customized.
 
 Operators who wish to run the game servers under a non-root user can customize the provided images with a non-root user with a `UID` of their choice.
 
@@ -280,4 +280,4 @@ The game binary:
 
 Invoking the game binary directly is the recommended choice especially when hosting the game server within containers. Doing allows the game process to run as `PID 1`, which ensures the game's console output are correctly propagated as container logs, and makes attaching of the terminal to the game's console possible for interactive administration.
 
-Some operators may choose to invoke the wrapper script instead as it provides features such as auto-restart and auto-updates. Note that doing so prevents the game process from being run as `PID 1` and introduces unpredictable behavior pertaining to the container, making such an approach an anti-pattern when it comes to containerizing applications. The provided game images being generic however should not prevent operators from adopting such approaches should they wish to.
+Some operators may choose to invoke the wrapper script instead as it provides features such as auto-restart and auto-updates. Note that doing so prevents the game process from being run as `PID 1` and introduces unpredictable behavior pertaining to the container, making such an approach an anti-pattern when it comes to containerizing applications. The provided game images being generic however should not prevent operators from adopting such approaches should they wish to; though such practices are strongly discouraged and support for them will not be a priority in this project.
