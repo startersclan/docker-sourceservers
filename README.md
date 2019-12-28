@@ -165,9 +165,11 @@ The project uses multiple CI services for its build jobs. You can find the histo
 
 ## Usage
 
+**Disclaimer**: The project assumes knowledge concerning the [`docker`](https://docs.docker.com/) runtime. Instructions on customization and orchestration of containerized game server instances are outside the scope the project.
+
 ### Docker
 
-The project assumes knowledge concerning the [`docker`](https://docs.docker.com/) runtime. Instructions on customization and orchestration of containerized game server instances are outside the scope the project.
+The following are some guidelines on how to and best use the provided images that should be transferrable should operators wish to utilize container orchestration tools for hosting their workloads.
 
 #### Entrypoint and CMD
 
@@ -177,7 +179,7 @@ Each of the values can be overridden at runtime which is well supported by conta
 
 #### Workdir
 
-The default working directory for all the images is [`/server`](build/Dockerfile#L70) within which all of a game's dedicated server files reside.
+The default working directory for all the images is [`/server`](build/Dockerfile#L70) within which all of a game's files reside.
 
 #### Command line
 
@@ -218,7 +220,7 @@ docker exec containername bash -c 'printenv && ls -al && ps aux'     # Multiple 
 
 #### Updating gameservers
 
-To update a gameserver, pull the `:latest` docker image again, and then restart the server.
+To update a gameserver, simply initiate a pull for the game image by the `latest` tag and restart the server.
 
 ```sh
 docker pull sourceservers/csgo:latest
@@ -230,7 +232,7 @@ There are many ways to detect when a gameserver needs an update, but this is out
 
 ## Important considerations
 
-Due to the variety of `SRCDS` and `HLDS` games that can be hosted and the various ways each of the games can and/or have to be hosted, the images built using this project are kept to be as generic as possible. The following are important considerations concerning the images provided by the project.
+Due to the variety of `SRCDS` and `HLDS` games that can be hosted and the various ways each of the games can and/or have to be hosted, the images built using this project are kept to be as generic as possible. The following are some important considerations concerning the images provided by the project.
 
 ### Entrypoint script
 
@@ -242,21 +244,21 @@ This brings us to the next but a much related consideration.
 
 ### Environment variables
 
-The game images **do not** include support for environment variables.
+The game images **do not** include support for configuring game instances via environment variables.
 
-Docker images are often packaged with applications designed to comply with the [12 factor methodology - Environment as config](https://12factor.net/config) where environment variables are read directly as configuration by the application, for instance, [docker registry](https://docs.docker.com/registry/configuration/#override-specific-configuration-options). However, some applications do not read environment variables as configuration but instead accept command line arguments or read from config files, where it is then common for their docker image to include an entrypoint script which maps environment variables onto command line arguments to call the application.
+Docker images are often packaged with applications designed to comply with the [twelve-factor methodology - Environment as config](https://12factor.net/config) where environment variables are read directly as configuration by the application, an example being the [docker registry](https://docs.docker.com/registry/configuration/#override-specific-configuration-options). However, some applications do not read environment variables as configuration but instead accept command line arguments or read from config files, where it is then common for their docker images to include an entrypoint script which maps environment variables onto command line arguments for invocation.
 
-`srcds` and `hlds` belong to the group of applications that do not read environment variables, and are configured with parameters (i.e. flags that begin with `-`, e.g. `-console`. See [srcds parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-line_parameters_5) and [`hlds` parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-line_parameters_2)), or with `cvars` (i.e. flags that begin with `+`, e.g. `+sv_lan 0`. See [srcds Console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Console_variables) and [hlds Console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Useful_console_variables)). Although there are many `cvars` common across all `srcds` games as well as across `hlds` games, there are also `cvars` that may be game-specific, for instance. `left4dead` or `left4dead2` which have several hundred of game-specific `cvars`, as well as custom `cvars` created by game mod plugins e.g. `garrysmod`, `amxmodx`, `sourcemod`.
+`SRCDS` and `HLDS` games belong to the group of applications that do not read from environment variables, and are instead configured via parameters (i.e. flags beginning with `-`, e.g. `-usercon`. See [SRCDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-line_parameters_5) and [HLDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-line_parameters_2)), as well as `Cvars` (i.e. flags beginning with `+`, e.g. `+port`. See [SRCDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Console_variables) and [HLDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Useful_console_variables)). Although there are many `Cvars` common across all `SRCDS` and `HLDS` games, there are `Cvars` that are also game-specific (such as those of `csgo`) as well as mod/plugin-specific (e.g. `garrysmod`, `amxmodx`, `sourcemod`).
 
-Because of the malleable nature of how `cvars` are used, it does not make sense to map them directly to environment variables for several reasons: First, it introduces an unnecessary layer of abstraction which all users have to learn, on top of the difficulty in learning `cvars` alone; Second, a single change in any envvar-cvar mapping will require a rebuild of docker image with the new `docker-entrypoint.sh` script, introducing a lot of unnecessary builds; Third, the very `docker-entrypoint.sh` script with envvar-cvar mapping now must be versioned, introducing another burden than just keeping docker images updated.
+Because of the malleable nature of how `Cvars` are used, it does not make sense to map them directly to environment variables for several reasons: First, it introduces an unnecessary layer of abstraction which operators would have to learn on top of the numerous available game parameters and `Cvars`; Second, a single change to any envvar-cvar mapping will require a rebuild of the docker image to contain the new `docker-entrypoint.sh` script, introducing a lot of of unnecessary builds; Third, the very `docker-entrypoint.sh` script providing the envvar-cvar mapping must too be versioned, introducing another burden on top of just keeping the images updated.
 
-As such, there is no support for environment variables mapping onto parameters and `Cvars`. The recommended approach would be to specify all runtime parameters and Cvars for the game server right within the container's command alone and other cvars in a mounted [`server.cfg`](https://developer.valvesoftware.com/wiki/Server.cfg).
+As such, the provided images do not feature support for environment variables mapping onto game parameters and `Cvars`. The recommended approach would be to specify all launch parameters and Cvars for the game server right within the container's command alone, and runtime ones within a mounted configuration file, such as [`server.cfg`](https://developer.valvesoftware.com/wiki/Server.cfg).
 
 ### Non-root user
 
 The game images **do not** include a non-root user.
 
-The game images as aforementioned are meant to be generic. Having a non-root user poses a problem especially when volumes are going to be used by operators. A common `UID` built into the images would unlikely fulfill the requirements of operators whose host's would then require a matching `UID` in cases where bind mounts are used. A mismatch or missing `UID` within the container and the host would prevent the container user access to data on the volumes, leading to issues pertaining to the game server, which would render the game images useless unless customized.
+The images as aforementioned are meant to be generic. Having a non-root user poses a problem especially when volumes are going to be used by operators. A common `UID` built into the images would unlikely fulfill the requirements of operators whose hosts would then require a matching `UID` in cases where bind mounts are used. A mismatch or missing `UID` within the container and the host would prevent the container user access to data on the volumes, leading to issues pertaining to the game server, which would render the game images useless unless customized.
 
 Operators who wish to run the game servers under a non-root user can customize the provided images with a non-root user with a `UID` of their choice.
 
