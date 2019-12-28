@@ -216,6 +216,18 @@ docker exec containername ps aux                                     # Single, s
 docker exec containername bash -c 'printenv && ls -al && ps aux'     # Multiple or advanced commands
 ```
 
+#### Updating gameservers
+
+To update a gameserver, pull the `:latest` docker image again, and then restart the server.
+
+```sh
+docker pull sourceservers/csgo:latest 
+docker rm -f csgo-server 
+docker run --name csgo-server -it -p 27015:27015/udp sourceservers/csgo:latest srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2 
+```
+
+There are many ways to detect when a gameserver needs an update, but this is out of the scope of this repository. However here is an [example](https://stackoverflow.com/a/44740429/3891117) of a `cronjob` you may use to update your server. 
+
 ## Important considerations
 
 Due to the variety of `SRCDS` and `HLDS` games that can be hosted and the various ways each of the games can and/or have to be hosted, the images built using this project are kept to be as generic as possible. The following are important considerations concerning the images provided by the project.
