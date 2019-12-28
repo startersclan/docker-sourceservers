@@ -39,7 +39,7 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 [hlds-dockerhub-badge]: https://img.shields.io/badge/docker%20hub-goldsourceservers-blue.svg?logo=docker&logoColor=2596EC&color=FF6917&label=&labelColor=&style=popout-square
 [hlds-dockerhub-link]: https://hub.docker.com/u/goldsourceservers
 
-### Source Engine
+### Source Engine (SRCDS)
 
 | Game | Image | Tag | Size / Layers |
 |:-:|:-:|:-:|:-:|
@@ -86,7 +86,7 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 [srcds-tf-layers-badge]: https://images.microbadger.com/badges/image/sourceservers/tf.svg
 [srcds-tf-metadata-link]: https://microbadger.com/images/sourceservers/tf
 
-### Goldsource Engine
+### Goldsource Engine (HLDS)
 
 | Game | Image | Tag | Size / Layers |
 |:-:|:-:|:-:|:-:|
@@ -139,9 +139,9 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 [hlds-valve-layers-badge]: https://images.microbadger.com/badges/image/goldsourceservers/valve.svg
 [hlds-valve-metadata-link]: https://microbadger.com/images/goldsourceservers/valve
 
-## Additional Information
+## Image Info
 
-### Game Versions & Tags
+### Game versions & tags
 
 Both a new *clean* and *layered* image of a game are built on an available game update. Due to the nature of Docker images, an image cannot exactly be *updated*; any modifications to it adds to its existing layers.
 
@@ -149,16 +149,119 @@ The `latest` tag follows a layered approach to updating. Using it prevents the n
 
 Clean images are tagged by `<version>`. Layered images are tagged by `<version>-layered`.
 
-### Image Size
+### Image size
 
 Image sizes shown above or on Docker Hub correspond to an image's *compressed* size. Actual sizes vary, but are approximately **2x** larger after pulling an image.
 
-### Update Duration
+### Update duration
 
 From the moment Valve issues an update, the time taken before a game's images are built and available for pulling largely depends on the size of the game. For instance, layered and clean images take over **15** and **40 minutes** respectively for `Counter-Strike: Global Offensive`, but under **5 minutes** each for `Counter-Strike 1.6`.
 
 While the use of build cache can help drastically reduce update durations, it cannot be utilized as the game images are built for public use, purposefully done so using public machines.
 
-## Build history
+### Build history
 
 The project uses multiple CI services for its build jobs. You can find the history of past build jobs by clicking on their corresponding build status badges.
+
+## Usage
+
+### Docker
+
+The project assumes knowledge concerning the [`docker`](https://docs.docker.com/) runtime. Instructions on customization and orchestration of containerized game server instances are outside the scope the project.
+
+#### Entrypoint and CMD
+
+Currently, the default **ENTRYPOINT** for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the **CMD** is [`""`](build/Dockerfile#L73). This makes it convenient especially in development environments in that the game's command line can simply be appended as the final argument of the `docker run` command.
+
+Each of the values can be overridden at runtime which is well supported by container orchestration tools such as [Kubernetes](https://kubernetes.io/) and  [Docker Swarm Mode](https://docs.docker.com/engine/swarm/), and the standalone tool, [Docker Compose](https://docs.docker.com/compose/). Alternatively, they can be modified as part of the build steps in custom images.
+
+#### Workdir
+
+The default working directory for all the images is [`/server`](build/Dockerfile#L70) within which all of a game's dedicated server files reside.
+
+#### Command line
+
+The following are some examples of how the game servers can be run:
+
+```shell
+# Counter-Strike: Global Offensive
+docker run -it -p 27015:27015/udp sourceservers/csgo:latest 'srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2'
+
+# Counter-Strike 1.6
+docker run -it -p 27016:27016/udp goldsourceservers/cstrike:latest 'hlds_linux -game cstrike +port 27016 +maxplayers 10 +map de_dust2'
+```
+
+* `-t` for a pseudo-TTY is mandatory; servers may not run correctly without it
+* `-i` for STDIN for interactive use of the game console
+* `-d` for running the container in detached mode
+
+#### Attaching
+
+If the game process is running as `PID 1` and STDIN is enabled for the container, the game's console can be accessed via:
+
+```shell
+docker attach containername
+```
+
+#### Debugging
+
+To debug a container or its files:
+
+```shell
+# To enter into a container
+docker exec -it containername bash
+
+# To issue detached command(s)
+docker exec containername ps aux                                     # Single, simple command
+docker exec containername bash -c 'printenv && ls -al && ps aux'     # Multiple or advanced commands
+```
+
+## Important considerations
+
+Due to the variety of `SRCDS` and `HLDS` games that can be hosted and the various ways each of the games can and/or have to be hosted, the images built using this project are kept to be as generic as possible. The following are important considerations concerning the images provided by the project.
+
+### Entrypoint script
+
+The game images **do not** include an entrypoint script.
+
+While the conventional `entrypoint.sh` could have been included, having so also takes away flexibility for how the images can be used. Operators wishing to utilize their own entrypoint scripts would have to include removal of pre-existing ones as part of their build or init process, which likely adds unnecessary confusion. It is also unlikely that a generic entrypoint script would be adequate given the various ways server operators could implement the container's initialization process for the game server.
+
+This brings us to the next but a much related consideration.
+
+### Environment variables
+
+The game images **do not** include support for mapped environment variables.
+
+Docker images are often designed with environment variables that are typically mapped onto arguments which are generated within the included entrypoint script as part of the container's initialization process that are then used for invoking the core binary for which the image is built.
+
+While support for them could be made for the provided game images, having so assumes not only the presence of an entrypoint script, but environment variables with names that would likely serve to add only more confusion to server operators due to the sheer number parameters (e.g. `-usercon`) and Cvars (e.g. `+port`) that too differs depending on the game engine (`SRCDS`, `HLDS`) and game. Moreover, the command line of game servers can greatly vary depending on how the servers are hosted, making it difficult to say which parameters or Cvars should be considered mandatory and so be mapped and configurable via environment variables. Such support introduces an unnecessary layer of abstraction that adds more problems than it solves.
+
+As such, the recommended approach would be to specify all runtime parameters and Cvars for the game server right within the container's command alone.
+
+### Non-root user
+
+The game images **do not** include a non-root user.
+
+The game images as aforementioned are meant to be generic. Having a non-root user poses a problem especially when volumes are going to be used by operators. A common `UID` built into the images would unlikely fulfill the requirements of operators whose host's would then require a matching `UID` in cases where bind mounts are used. A mismatch or missing `UID` within the container and the host would prevent the container user access to data on the volumes, leading to issues pertaining to the game server, which would render the game images useless unless customized.
+
+Operators who wish to run the game servers under a non-root user can customize the provided images with a non-root user with a `UID` of their choice.
+
+*Note*: A non-root user could be added to the images in the future if the addition is sufficiently requested with good reasons for its implementation, or it could continue to be left out. Best practices can change depending on features provided by newer versions of container runtimes and/or orchestrators.
+
+### Invocation via wrapper script vs binary
+
+The official games from Valve come with an wrapper script and a binary as part of the game files, both of which reside in the game's root directory.
+
+The wrapper script, commonly used in non-containerized setups:
+
+* `srcds_run.sh` (Source)
+* `hlds_run.sh` (Goldsource)
+
+The game binary:
+
+* `srcds_linux` (Source)
+* `hlds_linux` (Goldsource)
+
+Invoking the game binary directly is the recommended choice especially when hosting the game server within containers. Doing allows the game process to run as `PID 1`, which ensures the game's console output are correctly propagated as container logs, and makes attaching of the terminal to the game's console possible for interactive administration.
+
+Some operators may choose to invoke the wrapper script instead as it provides features such as auto-restart and auto-updates. Note that doing so prevents the game process from being run as `PID 1` and introduces unpredictable behavior pertaining to the container, making such an approach an anti-pattern when it comes to containerizing applications. The provided game images being generic however should not prevent operators from adopting such approaches should they wish to.
