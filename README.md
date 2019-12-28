@@ -236,7 +236,7 @@ Docker images are often designed with environment variables that are typically m
 
 While support for them could be made for the provided game images, having so assumes not only the presence of an entrypoint script, but environment variables with names that would likely serve to add only more confusion to server operators due to the sheer number parameters (e.g. `-usercon`) and Cvars (e.g. `+port`) that too differs depending on the game engine (`SRCDS`, `HLDS`) and game. Moreover, the command line of game servers can greatly vary depending on how the servers are hosted, making it difficult to say which parameters or Cvars should be considered mandatory and so be mapped and configurable via environment variables. Such support introduces an unnecessary layer of abstraction that adds more problems than it solves.
 
-As such, the recommended approach would be to specify all runtime parameters and Cvars for the game server right within the container's command alone.
+As such, the recommended approach would be to specify all runtime parameters and Cvars for the game server right within the container's command alone and other cvars in a mounted [`server.cfg`](https://developer.valvesoftware.com/wiki/Server.cfg).
 
 ### Non-root user
 
