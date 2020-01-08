@@ -175,7 +175,15 @@ jobs:
                   )
                   echo "BODY: $BODY"
                   date
-                  curl -s -X POST -H 'Content-Type: application/json' --data "$BODY" "$NOTIFICATION_WEBHOOK" && exit 0 || exit 1
+                  STATUS=$( curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' --data "$BODY" "$NOTIFICATION_WEBHOOK" && exit 0 || exit 1 )
+                  echo "$STATUS: $STATUS"
+                  if [ $STATUS -eq 200 ]; then
+                      echo "Notification sent"
+                      exit 0
+                  else
+                      echo "Failed to send notification"
+                      exit 1
+                  fi
               else
                   SLEPT=$(($SLEPT+$SLEEP))
                   if [ "$SLEPT" -ge "$SLEEP_THRESHOLD" ]; then
