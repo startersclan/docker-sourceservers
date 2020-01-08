@@ -156,7 +156,7 @@ jobs:
           while true; do
               JOB=$( curl -s -X GET -H "Circle-Token: $CIRCLE_API_TOKEN" -H 'Accept: application/json' "https://circleci.com/api/v2/workflow/$CIRCLE_WORKFLOW_ID/job" | jq -r '.items[] | select(.name == "build-image")' )
               date
-              echo "JOB: $JOB"
+              echo "JOB:" $JOB
               if [ -z "$JOB" ]; then
                   echo "No job name matching 'build-image'"
                   exit 1
