@@ -166,13 +166,13 @@ jobs:
                   echo "Sending notification"
                   JOB_NUMBER=$( echo -n "$JOB" | jq -r '.job_number' )
                   BODY=$( cat - <<EOF
-          {
-            "payload": {
-              "build_num": $JOB_NUMBER
-            }
-          }
-          EOF
-          )
+                  {
+                    "payload": {
+                      "build_num": $JOB_NUMBER
+                    }
+                  }
+                  EOF
+                  )
                   echo "BODY: $BODY"
                   date
                   STATUS=$( curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' --data "$BODY" "$NOTIFICATION_WEBHOOK" && exit 0 || exit 1 )
