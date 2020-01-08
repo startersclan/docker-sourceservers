@@ -230,9 +230,13 @@ docker run --name csgo-server -it -p 27015:27015/udp sourceservers/csgo:latest '
 
 There are many ways to detect when a gameserver needs an update but that is out of the scope of the project. Here is a simple [example](https://stackoverflow.com/a/44740429/3891117) for utilizing a `cronjob` for updating a container.
 
-## Important considerations
+## Important Considerations
 
 Due to the variety of SRCDS and HLDS games that can be hosted and the various ways each of the games can and/or have to be hosted, the images built using this project are kept to be as generic as possible. The following are some important considerations concerning the images provided by the project.
+
+### Base images
+
+The game images are [based on](build/Dockerfile#L3) the images built via the project [`startersclan/steamcmd`](https://github.com/startersclan/docker-steamcmd).
 
 ### Entrypoint script
 
@@ -266,7 +270,7 @@ Operators who wish to run the game servers under a non-root user can customize t
 
 ### Invocation via wrapper script vs binary
 
-The official games from Valve come with an wrapper script and a binary as part of the game files, both of which reside in the game's root directory.
+The official games from Valve come with a wrapper script and a binary as part of the game files, both of which reside in the game's root directory.
 
 The wrapper script, commonly used in non-containerized setups:
 
