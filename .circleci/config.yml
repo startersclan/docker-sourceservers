@@ -18,6 +18,9 @@ parameters:
   FIX_APPMANIFEST:
     type: string
     default: ''
+  GAME_UPDATE_COUNT:
+    type: string
+    default: ''
   LATEST:
     type: string
     default: ''
@@ -47,6 +50,7 @@ jobs:
       CLIENT_APPID: << pipeline.parameters.CLIENT_APPID >>
       GAME: << pipeline.parameters.GAME >>
       MOD: << pipeline.parameters.MOD >>
+      GAME_UPDATE_COUNT: << pipeline.parameters.GAME_UPDATE_COUNT >>
       FIX_APPMANIFEST: << pipeline.parameters.FIX_APPMANIFEST >>
       LATEST: << pipeline.parameters.LATEST >>
       CACHE: << pipeline.parameters.CACHE >>
