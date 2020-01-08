@@ -35,7 +35,7 @@ workflows:
   ci:
     when: << pipeline.parameters.APPID >>       # Disable push builds by enabling 'Only build pull requests' via GUI advanced settings
     jobs:
-    - build
+    - build-image
     - send-notification
 jobs:
   build-image:
