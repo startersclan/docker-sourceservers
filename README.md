@@ -230,15 +230,19 @@ docker run --name csgo-server -it -p 27015:27015/udp sourceservers/csgo:latest '
 
 There are many ways to detect when a gameserver needs an update but that is out of the scope of the project. Here is a simple [example](https://stackoverflow.com/a/44740429/3891117) for utilizing a `cronjob` for updating a container.
 
-## Important considerations
+## Important Considerations
 
 Due to the variety of SRCDS and HLDS games that can be hosted and the various ways each of the games can and/or have to be hosted, the images built using this project are kept to be as generic as possible. The following are some important considerations concerning the images provided by the project.
+
+### Base images
+
+The game images are [based on](build/Dockerfile#L3) the images built via the project [`startersclan/docker-steamcmd`](https://github.com/startersclan/docker-steamcmd). Issues or pull requests that are potentially applicable across the game images such as those pertaining to the OS, administrative tools, or game dependencies are to be directed to that project instead.
 
 ### Entrypoint script
 
 The game images **do not** include an entrypoint script.
 
-While the conventional `entrypoint.sh` could have been included, having so takes away flexibility for how the images can be used. Operators wishing to utilize their own entrypoint scripts would have to include removal of pre-existing ones as part of their build or initialization processes which increases administrative overhead. Moreover, a generic entrypoint script is unlikely to be adequate for operators given the various possible setups that could differ widely across games, game modes, mods, and plugins.
+While the conventional `docker-entrypoint.sh` could have been included in the game images, having so also takes away flexibility in how the images can be used. Operators wishing to utilize their own entrypoint scripts would have to include removal of pre-existing ones as part of their build or initialization processes which increases administrative overhead. Moreover, a generic entrypoint script is unlikely to adequately serve operators given the various possible setups that could differ widely across games, game modes, mods, and plugins.
 
 This brings us to the next but a much related consideration.
 
@@ -248,11 +252,11 @@ The game images **do not** include support for configuring game instances via en
 
 Docker images are often packaged with applications designed to comply with the [twelve-factor methodology - Environment as config](https://12factor.net/config) where environment variables are read directly as configuration by the application, a case in point being the [docker registry](https://docs.docker.com/registry/configuration/#override-specific-configuration-options). Some applications however do not read environment variables as configuration but instead accept command line arguments or read from config files, where it is then common for their docker images to include an entrypoint script which maps environment variables onto command line arguments for invocation.
 
-Source and Goldsource games belong to the group of applications that do not read from environment variables and that are instead configured via parameters (i.e. flags beginning with `-`, e.g. `-usercon`, see [SRCDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-line_parameters_5) and [HLDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-line_parameters_6)), as well as Cvars (i.e. flags beginning with `+`, e.g. `+sv_lan 0`, see [SRCDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Console_variables_2) and [HLDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Useful_console_variables_2)). Although there are many Cvars shared across SRCDS and HLDS games, there are also Cvars that are game-specific (e.g. the many hundreds for `left4dead` and `left4dead2`), as well as mod/plugin-specific (e.g. `garrysmod`, `amxmodx`, `sourcemod`).
+Source and Goldsource games belong to the group of applications that do not read from environment variables and that are instead configured via parameters (i.e. flags beginning with `-`, e.g. `-usercon`, see [SRCDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-line_parameters_5) and [HLDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-line_parameters_6)), as well as Cvars (i.e. flags beginning with `+`, e.g. `+sv_lan 0`, see [SRCDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Console_variables_2) and [HLDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Useful_console_variables_2)). Although there are many Cvars shared across SRCDS and HLDS games, there are also Cvars that are game-specific (e.g. the many hundreds for `left4dead` and `left4dead2`), as well as mod/plugin-specific (e.g. `sourcemod`, `amxmodx`, `garrysmod`).
 
 Because of the malleable nature of how Cvars are used, it does not make sense to map them directly to environment variables for several reasons: First, it introduces an unnecessary layer of abstraction which operators would have to learn on top of the numerous available parameters and Cvars for each game; Second, a single change to any envvar-cvar mapping will require a rebuild of the docker image to contain the new `docker-entrypoint.sh` script, introducing a lot of unnecessary builds; Third, the very `docker-entrypoint.sh` script providing the envvar-cvar mapping would also require versioning, introducing yet another burden on top of just keeping the images updated.
 
-As such, the provided images do not support configuration via environment variables. The recommended approach would be to specify all necessary launch parameters and Cvars for the game server within the container's command, and all other Cvars including those containing secret values within mounted configuration file(s) such as [`server.cfg`](https://developer.valvesoftware.com/wiki/Server.cfg).
+As such, the provided images do not support configuration via environment variables. The recommended approach would be to specify all necessary launch parameters and Cvars for the game server within the container's command, and all other Cvars including those containing secret values within mounted or init-time provisioned configuration file(s), such as [`server.cfg`](https://developer.valvesoftware.com/wiki/Server.cfg).
 
 ### Non-root user
 
@@ -266,7 +270,7 @@ Operators who wish to run the game servers under a non-root user can customize t
 
 ### Invocation via wrapper script vs binary
 
-The official games from Valve come with an wrapper script and a binary as part of the game files, both of which reside in the game's root directory.
+The official games from Valve come with a wrapper script and a binary as part of the game files, both of which reside in the game's root directory.
 
 The wrapper script, commonly used in non-containerized setups:
 
@@ -278,6 +282,8 @@ The game binary:
 * `srcds_linux` (Source)
 * `hlds_linux` (Goldsource)
 
-Invoking the game binary directly is the recommended choice especially when hosting the game server within containers. Doing allows the game process to run as `PID 1`, which ensures the game's console output are correctly propagated as container logs, and makes attaching of the terminal to the game's console possible for interactive administration.
+Invoking the game binary directly is the recommended choice especially when hosting the game server within containers. Doing so allows the game process to run as `PID 1`, which ensures the game's console output are correctly propagated as container logs, and makes attaching of the terminal to the game's console possible for interactive administration.
 
-Some operators may choose to invoke the wrapper script instead as it provides features such as auto-restart and auto-updates. Note that doing so prevents the game process from being run as `PID 1` and introduces unpredictable behavior pertaining to the container, making such an approach an anti-pattern when it comes to containerizing applications. The provided game images being generic however should not prevent operators from adopting such approaches should they wish to; though such practices are strongly discouraged and support for them will not be a priority in this project.
+Some operators may choose to invoke the wrapper script instead as it provides features such as auto-restart and auto-updates. Note that doing so presents several problems related to container infrastucture. First, invoking the wrapper script alone prevents the game process from being run as `PID 1` and in so introduces unpredictable behavior to the container. Second, using the auto-restart feature adds overlapping restart functionalities already provided by container orchestration tools that could potentially introduce conflicting container restart behaviors. Third, using the auto-update feature introduces mutation to the container's supposed game version on available updates, wherein changes would not only be lost upon container deletion, but that would have to be performed for every new container started from outdated game images, contradicting the principle of immutability in container design.
+
+As such, invocation via the wrapper script is strongly discouraged, and support for doing so will not be a priority in this project. The provided game images being generic however should not prevent operators from adopting such approaches should they wish to.
