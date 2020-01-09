@@ -242,7 +242,7 @@ The game images are [based on](build/Dockerfile#L3) the images built via the pro
 
 The game images **do not** include an entrypoint script.
 
-While the conventional `entrypoint.sh` could have been included, having so takes away flexibility for how the images can be used. Operators wishing to utilize their own entrypoint scripts would have to include removal of pre-existing ones as part of their build or initialization processes which increases administrative overhead. Moreover, a generic entrypoint script is unlikely to be adequate for operators given the various possible setups that could differ widely across games, game modes, mods, and plugins.
+While the conventional `docker-entrypoint.sh` could have been included in the game images, having so also takes away flexibility in how the images can be used. Operators wishing to utilize their own entrypoint scripts would have to include removal of pre-existing ones as part of their build or initialization processes which increases administrative overhead. Moreover, a generic entrypoint script is unlikely to adequately serve operators given the various possible setups that could differ widely across games, game modes, mods, and plugins.
 
 This brings us to the next but a much related consideration.
 
