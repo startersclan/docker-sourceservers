@@ -1,3 +1,4 @@
+# Push and pr builds can be disabled via project settings
 language: shell
 dist: xenial
 services: docker
