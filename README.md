@@ -256,7 +256,7 @@ Source and Goldsource games belong to the group of applications that do not read
 
 Because of the malleable nature of how Cvars are used, it does not make sense to map them directly to environment variables for several reasons: First, it introduces an unnecessary layer of abstraction which operators would have to learn on top of the numerous available parameters and Cvars for each game; Second, a single change to any envvar-cvar mapping will require a rebuild of the docker image to contain the new `docker-entrypoint.sh` script, introducing a lot of unnecessary builds; Third, the very `docker-entrypoint.sh` script providing the envvar-cvar mapping would also require versioning, introducing yet another burden on top of just keeping the images updated.
 
-As such, the provided images do not support configuration via environment variables. The recommended approach would be to specify all necessary launch parameters and Cvars for the game server within the container's command, and all other Cvars including those containing secret values within mounted configuration file(s) such as [`server.cfg`](https://developer.valvesoftware.com/wiki/Server.cfg).
+As such, the provided images do not support configuration via environment variables. The recommended approach would be to specify all necessary launch parameters and Cvars for the game server within the container's command, and all other Cvars including those containing secret values within mounted or init-time provisioned configuration file(s), such as [`server.cfg`](https://developer.valvesoftware.com/wiki/Server.cfg).
 
 ### Non-root user
 
