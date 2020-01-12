@@ -82,6 +82,7 @@ jobs:
               "${UPDATE_DIR}"
               docker tag "${GAME_IMAGE}" "${REPOSITORY}:${GAME_VERSION}-layered"
           fi
+          date
           docker images
           docker inspect "${GAME_IMAGE}"
           docker history "${GAME_IMAGE}"
@@ -93,6 +94,7 @@ jobs:
                   --rm \
                   "${GAME_IMAGE}" \
                   "printenv && echo && ls -al && echo && exec ${GAME_BIN} -game ${GAME} +version +exit"
+              echo; date
           fi
           # Push the game image
           if [ ! "${NO_PUSH}" = 'true' ]; then
