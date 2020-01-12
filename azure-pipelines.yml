@@ -7,7 +7,6 @@ jobs:
     vmImage: ubuntu-16.04
   workspace:
     clean: all
-  continueOnError: false
   timeoutInMinutes: 90
   variables:
     BUILD_DIR: build/
