@@ -1,18 +1,16 @@
 trigger: none
 pr: none
 
-variables:
-  BUILD_DIR: build/
-  UPDATE_DIR: update/
-
 jobs:
 - job: Linux
   pool:
     vmImage: ubuntu-16.04
   workspace:
     clean: all
-  continueOnError: false
-  timeoutInMinutes: 90
+  timeoutInMinutes: 80
+  variables:
+    BUILD_DIR: build/
+    UPDATE_DIR: update/
   steps:
   - script: |
       hostname
@@ -21,9 +19,10 @@ jobs:
       lscpu
       free
       df -h
+      pwd
       docker info
       docker version
-    displayName: System Info
+    displayName: System info
   - script: |
       set -e
       # Process variables
@@ -37,9 +36,7 @@ jobs:
           GAME_ENGINE="srcds"
           GAME_BIN="srcds_linux"
       fi
-
       echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
-
       # Set job-scoped variables
       echo "##vso[task.setvariable variable=PIPELINE]${PIPELINE}"
       echo "##vso[task.setvariable variable=REPOSITORY]${REPOSITORY}"
@@ -47,7 +44,7 @@ jobs:
       echo "##vso[task.setvariable variable=GAME_BIN]${GAME_BIN}"
     env:
       REGISTRY_PASSWORD: $(REGISTRY_PASSWORD)
-    displayName: Before Script
+    displayName: Before script
   - script: |
       set -e
       # Build / Update the game image
@@ -91,13 +88,12 @@ jobs:
           docker tag "${GAME_IMAGE}" "${REPOSITORY}:${GAME_VERSION}-layered"
           date
       fi
-      echo; docker images
-      echo; docker inspect "${GAME_IMAGE}"
-      echo; docker history "${GAME_IMAGE}"
-
+      docker images
+      docker inspect "${GAME_IMAGE}"
+      docker history "${GAME_IMAGE}"
       # Set job-scoped variables
       echo "##vso[task.setvariable variable=GAME_IMAGE]${GAME_IMAGE}"
-    displayName: 'Pipeline: $(Build.SourceBranchName), GAME: $(GAME), APPID: $(APPID), GAME_VERSION: $(GAME_VERSION)'
+    displayName: Build image
   - script: |
       set -e
       # Test the game image
@@ -110,7 +106,7 @@ jobs:
               "printenv && echo && ls -al && echo && exec ${GAME_BIN} -game ${GAME} +version +exit"
           echo; date
       fi
-    displayName: Test Game Image
+    displayName: Test image
   - script: |
       set -e
       # Push the game image
@@ -119,8 +115,8 @@ jobs:
           time docker push "${REPOSITORY}"
           date
       fi
-    displayName: Push Game Image
+    displayName: Push image
   - script: |
       docker logout
-    displayName: After Script
+    displayName: After script
     condition: always()
