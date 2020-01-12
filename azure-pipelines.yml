@@ -1,10 +1,6 @@
 trigger: none
 pr: none
 
-variables:
-  BUILD_DIR: build/
-  UPDATE_DIR: update/
-
 jobs:
 - job: Linux
   pool:
@@ -13,6 +9,9 @@ jobs:
     clean: all
   continueOnError: false
   timeoutInMinutes: 90
+  variables:
+    BUILD_DIR: build/
+    UPDATE_DIR: update/
   steps:
   - script: |
       hostname
