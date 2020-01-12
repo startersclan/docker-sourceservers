@@ -55,10 +55,10 @@ jobs:
           GAME_IMAGE="${REPOSITORY}:${GAME_VERSION}"
           if [ "${CACHE}" = 'true' ]; then
               date
-              docker pull "${GAME_IMAGE}" || true
+              time docker pull "${GAME_IMAGE}" || true
           fi
           date
-          docker build \
+          time docker build \
               --cache-from "${GAME_IMAGE}" \
               --build-arg APPID="${APPID}" \
               --build-arg MOD="${MOD}" \
@@ -79,8 +79,8 @@ jobs:
           date
       elif [ "${PIPELINE}" = 'update' ]; then
           GAME_IMAGE="${REPOSITORY}:latest"
-          docker pull "${GAME_IMAGE}"
-          docker build \
+          time docker pull "${GAME_IMAGE}"
+          time docker build \
           --build-arg GAME_IMAGE="${GAME_IMAGE}" \
           -t "${GAME_IMAGE}" \
           --label "game_version=${GAME_VERSION}" \
@@ -101,7 +101,7 @@ jobs:
       # Test the game image
       if [ ! "${NO_TEST}" = 'true' ]; then
           date
-          docker run \
+          time docker run \
               -t \
               --rm \
               "${GAME_IMAGE}" \
@@ -114,7 +114,7 @@ jobs:
       # Push the game image
       if [ ! "${NO_PUSH}" = 'true' ]; then
           date
-          docker push "${REPOSITORY}"
+          time docker push "${REPOSITORY}"
           date
       fi
     displayName: Push Game Image
