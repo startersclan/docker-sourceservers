@@ -1,4 +1,5 @@
 version: 2.1
+
 parameters:
   GAME_VERSION:
     type: string
@@ -30,6 +31,7 @@ parameters:
   NO_PUSH:
     type: string
     default: ''
+
 workflows:
   version: 2
   ci:
@@ -37,6 +39,7 @@ workflows:
     jobs:
     - build-image
     - send-notification
+
 jobs:
   build-image:
     machine:
