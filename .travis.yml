@@ -37,13 +37,14 @@ before_script:
   echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
 script:
 - |
-  date
   # Build / Update the game image
   if [ "${PIPELINE}" = 'build' ]; then
       GAME_IMAGE="${REPOSITORY}:${GAME_VERSION}"
       if [ "${CACHE}" = 'true' ]; then
+          date
           time docker pull "${GAME_IMAGE}" || true
       fi
+      date
       travis_wait 40 time docker build \
           --cache-from "${GAME_IMAGE}" \
           --build-arg APPID="${APPID}" \
@@ -62,9 +63,12 @@ script:
       if [ "${LATEST}" = 'true' ]; then
           docker tag "${GAME_IMAGE}" "${REPOSITORY}:latest"
       fi
+      date
   elif [ "${PIPELINE}" = 'update' ]; then
       GAME_IMAGE="${REPOSITORY}:latest"
+      date
       travis_wait 40 time docker pull "${GAME_IMAGE}"
+      date
       travis_wait 40 time docker build \
       --build-arg GAME_IMAGE="${GAME_IMAGE}" \
       -t "${GAME_IMAGE}" \
@@ -72,6 +76,7 @@ script:
       --label "game_update_count=${GAME_UPDATE_COUNT}" \
       "${UPDATE_DIR}"
       docker tag "${GAME_IMAGE}" "${REPOSITORY}:${GAME_VERSION}-layered"
+      date
   fi
   docker images
   docker inspect "${GAME_IMAGE}"
@@ -85,6 +90,7 @@ script:
           --rm \
           "${GAME_IMAGE}" \
           "printenv && echo && ls -al && echo && exec ${GAME_BIN} -game ${GAME} +version +exit"
+      echo; date
   fi
 - |
   # Push the game image

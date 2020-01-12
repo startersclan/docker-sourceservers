@@ -50,14 +50,15 @@ jobs:
     displayName: Before Script
   - script: |
       set -e
-      date
       # Build / Update the game image
       if [ "${PIPELINE}" = 'build' ]; then
           GAME_IMAGE="${REPOSITORY}:${GAME_VERSION}"
           if [ "${CACHE}" = 'true' ]; then
-              docker pull "${GAME_IMAGE}" || true
+              date
+              time docker pull "${GAME_IMAGE}" || true
           fi
-          docker build \
+          date
+          time docker build \
               --cache-from "${GAME_IMAGE}" \
               --build-arg APPID="${APPID}" \
               --build-arg MOD="${MOD}" \
@@ -75,18 +76,21 @@ jobs:
           if [ "${LATEST}" = 'true' ]; then
               docker tag "${GAME_IMAGE}" "${REPOSITORY}:latest"
           fi
+          date
       elif [ "${PIPELINE}" = 'update' ]; then
           GAME_IMAGE="${REPOSITORY}:latest"
-          docker pull "${GAME_IMAGE}"
-          docker build \
+          date
+          time docker pull "${GAME_IMAGE}"
+          date
+          time docker build \
           --build-arg GAME_IMAGE="${GAME_IMAGE}" \
           -t "${GAME_IMAGE}" \
           --label "game_version=${GAME_VERSION}" \
           --label "game_update_count=${GAME_UPDATE_COUNT}" \
           "${UPDATE_DIR}"
           docker tag "${GAME_IMAGE}" "${REPOSITORY}:${GAME_VERSION}-layered"
+          date
       fi
-      date
       echo; docker images
       echo; docker inspect "${GAME_IMAGE}"
       echo; docker history "${GAME_IMAGE}"
@@ -99,7 +103,7 @@ jobs:
       # Test the game image
       if [ ! "${NO_TEST}" = 'true' ]; then
           date
-          docker run \
+          time docker run \
               -t \
               --rm \
               "${GAME_IMAGE}" \
@@ -112,7 +116,7 @@ jobs:
       # Push the game image
       if [ ! "${NO_PUSH}" = 'true' ]; then
           date
-          docker push "${REPOSITORY}"
+          time docker push "${REPOSITORY}"
           date
       fi
     displayName: Push Game Image
