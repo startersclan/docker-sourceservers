@@ -50,13 +50,14 @@ jobs:
     displayName: Before Script
   - script: |
       set -e
-      date
       # Build / Update the game image
       if [ "${PIPELINE}" = 'build' ]; then
           GAME_IMAGE="${REPOSITORY}:${GAME_VERSION}"
           if [ "${CACHE}" = 'true' ]; then
+              date
               docker pull "${GAME_IMAGE}" || true
           fi
+          date
           docker build \
               --cache-from "${GAME_IMAGE}" \
               --build-arg APPID="${APPID}" \
@@ -75,6 +76,7 @@ jobs:
           if [ "${LATEST}" = 'true' ]; then
               docker tag "${GAME_IMAGE}" "${REPOSITORY}:latest"
           fi
+          date
       elif [ "${PIPELINE}" = 'update' ]; then
           GAME_IMAGE="${REPOSITORY}:latest"
           docker pull "${GAME_IMAGE}"
@@ -85,8 +87,8 @@ jobs:
           --label "game_update_count=${GAME_UPDATE_COUNT}" \
           "${UPDATE_DIR}"
           docker tag "${GAME_IMAGE}" "${REPOSITORY}:${GAME_VERSION}-layered"
+          date
       fi
-      date
       echo; docker images
       echo; docker inspect "${GAME_IMAGE}"
       echo; docker history "${GAME_IMAGE}"
