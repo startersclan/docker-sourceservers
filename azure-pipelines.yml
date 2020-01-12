@@ -79,7 +79,9 @@ jobs:
           date
       elif [ "${PIPELINE}" = 'update' ]; then
           GAME_IMAGE="${REPOSITORY}:latest"
+          date
           time docker pull "${GAME_IMAGE}"
+          date
           time docker build \
           --build-arg GAME_IMAGE="${GAME_IMAGE}" \
           -t "${GAME_IMAGE}" \
