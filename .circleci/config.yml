@@ -1,5 +1,7 @@
 version: 2.1
 
+# 2.1 requires a parameters section and so a mandatory default value for each parameter based on its type. Triggering a pipeline with parameters with values with mismatch in type could prevent pipelines jobs from starting, and propagation of non-string default values for unspecified parameters could influence the outcome of build jobs as validation of parameter values isn't included in the build code in this project. It certainly does not help that the parameters section must be declared within the global scope.
+# For consistency across all CI platforms, all parameters will be of string type, with default values being an empty string, where parameters will be treated more like environment variables. Such would be more consistent across CI environments where jobs are mostly run within shell / container environments.
 parameters:
   GAME_VERSION:
     type: string
