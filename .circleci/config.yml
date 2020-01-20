@@ -180,7 +180,7 @@ jobs:
               export JOB_STATUS=$( echo -n "$JOB" | jq -r '.status' )
               if [ "$JOB_STATUS" == "success" ] || [ "$JOB_STATUS" == "failed" ] || [ "$JOB_STATUS" == "cancelled" ]; then
                   echo "Sending notification"
-                  JOB_NUMBER=$( echo -n "$JOB" | jq -r '.job_number' )
+                  export JOB_NUMBER=$( echo -n "$JOB" | jq -r '.job_number' )
                   BODY=$( echo '{}' | jq '
                   {
                     "build_num": env.JOB_NUMBER,
