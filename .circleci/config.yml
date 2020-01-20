@@ -150,6 +150,17 @@ jobs:
     machine:
       image: ubuntu-1604:201903-01
       docker_layer_caching: false
+    environment:
+      GAME_VERSION: << pipeline.parameters.GAME_VERSION >>
+      APPID: << pipeline.parameters.APPID >>
+      CLIENT_APPID: << pipeline.parameters.CLIENT_APPID >>
+      GAME: << pipeline.parameters.GAME >>
+      MOD: << pipeline.parameters.MOD >>
+      GAME_UPDATE_COUNT: << pipeline.parameters.GAME_UPDATE_COUNT >>
+      FIX_APPMANIFEST: << pipeline.parameters.FIX_APPMANIFEST >>
+      LATEST: << pipeline.parameters.LATEST >>
+      CACHE: << pipeline.parameters.CACHE >>
+      NO_PUSH: << pipeline.parameters.NO_PUSH >>
     steps:
     - run:
         name: Send notification
@@ -166,14 +177,34 @@ jobs:
                   echo "No job name matching 'build-image'"
                   exit 1
               fi
-              JOB_STATUS=$( echo -n "$JOB" | jq -r '.status' )
+              export JOB_STATUS=$( echo -n "$JOB" | jq -r '.status' )
               if [ "$JOB_STATUS" == "success" ] || [ "$JOB_STATUS" == "failed" ] || [ "$JOB_STATUS" == "cancelled" ]; then
                   echo "Sending notification"
                   JOB_NUMBER=$( echo -n "$JOB" | jq -r '.job_number' )
-                  BODY="{ \"payload\": { \"build_num\": $JOB_NUMBER } }"
+                  BODY=$( echo '{}' | jq '
+                  {
+                    "build_num": env.JOB_NUMBER,
+                    "username": env.CIRCLE_USERNAME,
+                    "reponame": env.CIRCLE_PROJECT_REPONAME,
+                    "branch": env.CIRCLE_BRANCH,
+                    "build_parameters": {
+                        "GAME_VERSION": env.GAME_VERSION,
+                        "APPID": env.APPID,
+                        "CLIENT_APPID": env.CLIENT_APPID,
+                        "GAME": env.GAME,
+                        "MOD": env.MOD,
+                        "GAME_UPDATE_COUNT": env.GAME_UPDATE_COUNT,
+                        "FIX_APPMANIFEST": env.FIX_APPMANIFEST,
+                        "LATEST": env.LATEST,
+                        "CACHE": env.CACHE,
+                        "NO_PUSH": env.NO_PUSH
+                    },
+                    "status": env.JOB_STATUS
+                  }
+                  ' )
                   echo "BODY: $BODY"
                   date
-                  STATUS=$( curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' --data "$BODY" "$NOTIFICATION_WEBHOOK" && exit 0 || exit 1 )
+                  STATUS=$( curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' -H "x-circleci-webhook-secret: $X_CIRCLECI_WEBHOOK_SECRET" --data "$BODY" "$NOTIFICATION_WEBHOOK" && exit 0 || exit 1 )
                   echo "STATUS: $STATUS"
                   if [ $STATUS -eq 200 ]; then
                       echo "Notification sent"
