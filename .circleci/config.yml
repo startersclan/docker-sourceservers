@@ -30,6 +30,9 @@ parameters:
   CACHE:
     type: string
     default: ''
+  NO_TEST:
+    type: string
+    default: ''
   NO_PUSH:
     type: string
     default: ''
@@ -59,6 +62,7 @@ jobs:
       FIX_APPMANIFEST: << pipeline.parameters.FIX_APPMANIFEST >>
       LATEST: << pipeline.parameters.LATEST >>
       CACHE: << pipeline.parameters.CACHE >>
+      NO_TEST: << pipeline.parameters.NO_TEST >>
       NO_PUSH: << pipeline.parameters.NO_PUSH >>
     steps:
     - checkout
@@ -160,6 +164,7 @@ jobs:
       FIX_APPMANIFEST: << pipeline.parameters.FIX_APPMANIFEST >>
       LATEST: << pipeline.parameters.LATEST >>
       CACHE: << pipeline.parameters.CACHE >>
+      NO_TEST: << pipeline.parameters.NO_TEST >>
       NO_PUSH: << pipeline.parameters.NO_PUSH >>
     steps:
     - run:
@@ -197,6 +202,7 @@ jobs:
                         "FIX_APPMANIFEST": env.FIX_APPMANIFEST,
                         "LATEST": env.LATEST,
                         "CACHE": env.CACHE,
+                        "NO_TEST": env.NO_TEST,
                         "NO_PUSH": env.NO_PUSH
                     },
                     "status": env.JOB_STATUS
