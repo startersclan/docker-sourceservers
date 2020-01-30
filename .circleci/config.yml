@@ -189,7 +189,7 @@ jobs:
                   BODY=$( echo '{}' | jq '
                   {
                     "build_num": env.JOB_NUMBER,
-                    "username": env.CIRCLE_USERNAME,
+                    "username": env.CIRCLE_PROJECT_USERNAME,
                     "reponame": env.CIRCLE_PROJECT_REPONAME,
                     "branch": env.CIRCLE_BRANCH,
                     "build_parameters": {
