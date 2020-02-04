@@ -2,9 +2,9 @@
 
 **Source** / **Goldsource** dedicated server images built through use of [`steamcmd`](https://github.com/startersclan/docker-steamcmd).
 
-|  Build | Update |
+| Build | Update |
 |:-:|:-:|
-| [![pipeline-travis-build-badge][]][pipeline-travis-build-link] [![pipeline-azurepipelines-build-badge][]][pipeline-azurepipelines-build-link] [![pipeline-circleci-build-badge][]][pipeline-circleci-build-link] | [![pipeline-travis-update-badge][]][pipeline-travis-update-link] [![pipeline-azurepipelines-update-badge][]][pipeline-azurepipelines-update-link] |
+| [![pipeline-travis-build-badge][]][pipeline-travis-build-link] [![pipeline-azurepipelines-build-badge][]][pipeline-azurepipelines-build-link] [![pipeline-circleci-build-badge][]][pipeline-circleci-build-link] | [![pipeline-travis-update-badge][]][pipeline-travis-update-link] [![pipeline-azurepipelines-update-badge][]][pipeline-azurepipelines-update-link] [![pipeline-circleci-update-badge][]][pipeline-circleci-update-link] |
 
 [pipeline-travis-build-badge]: https://img.shields.io/travis/startersclan/docker-sourceservers/build.svg?label=&logo=travis&style=flat-square
 [pipeline-travis-build-link]: https://travis-ci.org/startersclan/docker-sourceservers/builds
@@ -18,6 +18,8 @@
 
 [pipeline-circleci-build-badge]: https://img.shields.io/circleci/build/gh/startersclan/docker-sourceservers/build.svg?label=&logo=circleci&style=flat-square
 [pipeline-circleci-build-link]: https://circleci.com/gh/startersclan/docker-sourceservers/tree/build
+[pipeline-circleci-update-badge]: https://img.shields.io/circleci/build/gh/startersclan/docker-sourceservers/update.svg?label=&logo=circleci&style=flat-square
+[pipeline-circleci-update-link]: https://circleci.com/gh/startersclan/docker-sourceservers/tree/update
 
 ## Supported Tags
 

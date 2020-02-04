@@ -1,20 +1,69 @@
+version: 2.1
+
+# 2.1 requires a parameters section and so a mandatory default value for each parameter based on its type. Triggering a pipeline with parameters whose values mismatch in type could prevent pipelines jobs from starting, and the propagation of non-string default values for unspecified parameters could influence the outcome of build jobs as validation for parameter values is not included in the build code of the project. Also, it certainly does not help that the parameters section must be declared within the global scope of .circleci/config.yml.
+# For consistency across all CI platforms, all parameters will be of string type with default values being empty strings. This way, parameters are treated more like environment variables, consistent across CI environments where jobs are mostly run within shell / container environments.
+parameters:
+  GAME_VERSION:
+    type: string
+    default: ''
+  APPID:
+    type: string
+    default: ''
+  CLIENT_APPID:
+    type: string
+    default: ''
+  GAME:
+    type: string
+    default: ''
+  MOD:
+    type: string
+    default: ''
+  FIX_APPMANIFEST:
+    type: string
+    default: ''
+  GAME_UPDATE_COUNT:
+    type: string
+    default: ''
+  LATEST:
+    type: string
+    default: ''
+  CACHE:
+    type: string
+    default: ''
+  NO_TEST:
+    type: string
+    default: ''
+  NO_PUSH:
+    type: string
+    default: ''
+
 workflows:
   version: 2
   ci:
+    when: << pipeline.parameters.APPID >>       # Push builds can be disabled by enabling 'Only build pull requests' via project settings
     jobs:
-    - build:
-        filters:
-          branches:
-            ignore: /.*/
-version: 2
+    - build-image
+    - send-notification
+
 jobs:
-  build:
+  build-image:
     machine:
       image: ubuntu-1604:201903-01
       docker_layer_caching: false
     environment:
       BUILD_DIR: build/
       UPDATE_DIR: update/
+      GAME_VERSION: << pipeline.parameters.GAME_VERSION >>
+      APPID: << pipeline.parameters.APPID >>
+      CLIENT_APPID: << pipeline.parameters.CLIENT_APPID >>
+      GAME: << pipeline.parameters.GAME >>
+      MOD: << pipeline.parameters.MOD >>
+      GAME_UPDATE_COUNT: << pipeline.parameters.GAME_UPDATE_COUNT >>
+      FIX_APPMANIFEST: << pipeline.parameters.FIX_APPMANIFEST >>
+      LATEST: << pipeline.parameters.LATEST >>
+      CACHE: << pipeline.parameters.CACHE >>
+      NO_TEST: << pipeline.parameters.NO_TEST >>
+      NO_PUSH: << pipeline.parameters.NO_PUSH >>
     steps:
     - checkout
     - run:
@@ -107,3 +156,82 @@ jobs:
               date
           fi
           docker logout
+  send-notification:
+    machine:
+      image: ubuntu-1604:201903-01
+      docker_layer_caching: false
+    environment:
+      GAME_VERSION: << pipeline.parameters.GAME_VERSION >>
+      APPID: << pipeline.parameters.APPID >>
+      CLIENT_APPID: << pipeline.parameters.CLIENT_APPID >>
+      GAME: << pipeline.parameters.GAME >>
+      MOD: << pipeline.parameters.MOD >>
+      GAME_UPDATE_COUNT: << pipeline.parameters.GAME_UPDATE_COUNT >>
+      FIX_APPMANIFEST: << pipeline.parameters.FIX_APPMANIFEST >>
+      LATEST: << pipeline.parameters.LATEST >>
+      CACHE: << pipeline.parameters.CACHE >>
+      NO_TEST: << pipeline.parameters.NO_TEST >>
+      NO_PUSH: << pipeline.parameters.NO_PUSH >>
+    steps:
+    - run:
+        name: Send notification
+        command: |
+          # Keep checking status of my workflow's sibling job. Once it's completed, send a notification.
+          SLEEP=5
+          SLEPT=0
+          SLEEP_THRESHOLD=7200
+          while true; do
+              JOB=$( curl -s -X GET -H "Circle-Token: $CIRCLE_API_TOKEN" -H 'Accept: application/json' "https://circleci.com/api/v2/workflow/$CIRCLE_WORKFLOW_ID/job" | jq -r '.items[] | select(.name == "build-image")' )
+              date
+              echo "JOB:" $JOB
+              if [ -z "$JOB" ]; then
+                  echo "No job name matching 'build-image'"
+                  exit 1
+              fi
+              export JOB_STATUS=$( echo -n "$JOB" | jq -r '.status' )
+              if [ "$JOB_STATUS" == "success" ] || [ "$JOB_STATUS" == "failed" ] || [ "$JOB_STATUS" == "cancelled" ]; then
+                  echo "Sending notification"
+                  export JOB_NUMBER=$( echo -n "$JOB" | jq -r '.job_number' )
+                  BODY=$( echo '{}' | jq '
+                  {
+                    "build_num": env.JOB_NUMBER,
+                    "username": env.CIRCLE_PROJECT_USERNAME,
+                    "reponame": env.CIRCLE_PROJECT_REPONAME,
+                    "branch": env.CIRCLE_BRANCH,
+                    "build_parameters": {
+                        "GAME_VERSION": env.GAME_VERSION,
+                        "APPID": env.APPID,
+                        "CLIENT_APPID": env.CLIENT_APPID,
+                        "GAME": env.GAME,
+                        "MOD": env.MOD,
+                        "GAME_UPDATE_COUNT": env.GAME_UPDATE_COUNT,
+                        "FIX_APPMANIFEST": env.FIX_APPMANIFEST,
+                        "LATEST": env.LATEST,
+                        "CACHE": env.CACHE,
+                        "NO_TEST": env.NO_TEST,
+                        "NO_PUSH": env.NO_PUSH
+                    },
+                    "status": env.JOB_STATUS
+                  }
+                  ' )
+                  echo "BODY: $BODY"
+                  date
+                  STATUS=$( curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' -H "x-circleci-webhook-secret: $X_CIRCLECI_WEBHOOK_SECRET" --data "$BODY" "$NOTIFICATION_WEBHOOK" && exit 0 || exit 1 )
+                  echo "STATUS: $STATUS"
+                  if [ $STATUS -eq 200 ] || [ $STATUS -eq 201 ]; then
+                      echo "Notification sent"
+                      exit 0
+                  else
+                      echo "Failed to send notification"
+                      exit 1
+                  fi
+              else
+                  SLEPT=$(($SLEPT+$SLEEP))
+                  if [ "$SLEPT" -ge "$SLEEP_THRESHOLD" ]; then
+                      echo "Job has been running too long"
+                      exit 1
+                  fi
+                  echo "Sleeping for $SLEEP seconds before checking again"
+                  sleep 5
+              fi
+          done
