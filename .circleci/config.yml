@@ -232,6 +232,6 @@ jobs:
                       exit 1
                   fi
                   echo "Sleeping for $SLEEP seconds before checking again"
-                  sleep 5
+                  sleep $SLEEP
               fi
           done
