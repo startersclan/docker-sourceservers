@@ -17,9 +17,9 @@
 [pipeline-azurepipelines-update-link]: https://dev.azure.com/startersclan/docker-sourceservers/_build?definitionId=3
 
 [pipeline-circleci-build-badge]: https://img.shields.io/circleci/build/gh/startersclan/docker-sourceservers/build.svg?label=&logo=circleci&style=flat-square
-[pipeline-circleci-build-link]: https://circleci.com/gh/startersclan/docker-sourceservers/tree/build
+[pipeline-circleci-build-link]: https://app.circleci.com/pipelines/github/startersclan/docker-sourceservers?branch=build
 [pipeline-circleci-update-badge]: https://img.shields.io/circleci/build/gh/startersclan/docker-sourceservers/update.svg?label=&logo=circleci&style=flat-square
-[pipeline-circleci-update-link]: https://circleci.com/gh/startersclan/docker-sourceservers/tree/update
+[pipeline-circleci-update-link]: https://app.circleci.com/pipelines/github/startersclan/docker-sourceservers?branch=update
 
 ## Supported Tags
 
