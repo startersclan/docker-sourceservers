@@ -36,9 +36,9 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 
 [![srcds-dockerhub-badge][]][srcds-dockerhub-link] [![hlds-dockerhub-badge][]][hlds-dockerhub-link]
 
-[srcds-dockerhub-badge]: https://img.shields.io/badge/docker%20hub-sourceservers-blue.svg?logo=docker&logoColor=2596EC&color=FFA722&label=&labelColor=&style=popout-square
+[srcds-dockerhub-badge]: https://img.shields.io/badge/docker-sourceservers-blue.svg?logo=docker&logoColor=FFFFFF&color=F79A10&label=&labelColor=&style=popout-square
 [srcds-dockerhub-link]: https://hub.docker.com/u/sourceservers
-[hlds-dockerhub-badge]: https://img.shields.io/badge/docker%20hub-goldsourceservers-blue.svg?logo=docker&logoColor=2596EC&color=FF6917&label=&labelColor=&style=popout-square
+[hlds-dockerhub-badge]: https://img.shields.io/badge/docker-goldsourceservers-blue.svg?logo=docker&logoColor=FFFFFF&color=FF6917&label=&labelColor=&style=popout-square
 [hlds-dockerhub-link]: https://hub.docker.com/u/goldsourceservers
 
 ### Source Engine (SRCDS)
