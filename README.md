@@ -43,103 +43,118 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 
 ### Source Engine (SRCDS)
 
-| Game | Image | Tag | Size / Layers |
-|:-:|:-:|:-:|:-:|
-| Counter-Strike: Global Offensive | [`sourceservers/csgo`][srcds-csgo-dockerhub-link] | [![srcds-csgo-version-badge][]][srcds-csgo-metadata-link] | [![srcds-csgo-layers-badge][]][srcds-csgo-metadata-link] |
-| Counter-Strike: Source | [`sourceservers/cstrike`][srcds-cstrike-dockerhub-link] | [![srcds-cstrike-version-badge][]][srcds-cstrike-metadata-link] | [![srcds-cstrike-layers-badge][]][srcds-cstrike-metadata-link] |
-| Day of Defeat: Source | [`sourceservers/dod`][srcds-dod-dockerhub-link] | [![srcds-dod-version-badge][]][srcds-dod-metadata-link] | [![srcds-dod-layers-badge][]][srcds-dod-metadata-link] |
-| Half-Life 2: Deathmatch | [`sourceservers/hl2mp`][srcds-hl2mp-dockerhub-link] | [![srcds-hl2mp-version-badge][]][srcds-hl2mp-metadata-link] | [![srcds-hl2mp-layers-badge][]][srcds-hl2mp-metadata-link] |
-| Left 4 Dead | [`sourceservers/left4dead`][srcds-left4dead-dockerhub-link] | [![srcds-left4dead-version-badge][]][srcds-left4dead-metadata-link] | [![srcds-left4dead-layers-badge][]][srcds-left4dead-metadata-link] |
-| Left 4 Dead 2 | [`sourceservers/left4dead2`][srcds-left4dead2-dockerhub-link] | [![srcds-left4dead2-version-badge][]][srcds-left4dead2-metadata-link] | [![srcds-left4dead2-layers-badge][]][srcds-left4dead2-metadata-link] |
-| Team Fortress 2 | [`sourceservers/tf`][srcds-tf-dockerhub-link] | [![srcds-tf-version-badge][]][srcds-tf-metadata-link] | [![srcds-tf-layers-badge][]][srcds-tf-metadata-link] |
+| Game | Image | Tag | Size | Layers |
+|:-:|:-:|:-:|:-:|:-:|
+| Counter-Strike: Global Offensive | [`sourceservers/csgo`][srcds-csgo-dockerhub-link] | [![srcds-csgo-version-badge][]][srcds-csgo-metadata-link] | [![srcds-csgo-size-badge][]][srcds-csgo-metadata-link] | [![srcds-csgo-layers-badge][]][srcds-csgo-metadata-link] |
+| Counter-Strike: Source | [`sourceservers/cstrike`][srcds-cstrike-dockerhub-link] | [![srcds-cstrike-version-badge][]][srcds-cstrike-metadata-link] | [![srcds-cstrike-size-badge][]][srcds-cstrike-metadata-link] | [![srcds-cstrike-layers-badge][]][srcds-cstrike-metadata-link] |
+| Day of Defeat: Source | [`sourceservers/dod`][srcds-dod-dockerhub-link] | [![srcds-dod-version-badge][]][srcds-dod-metadata-link] | [![srcds-dod-size-badge][]][srcds-dod-metadata-link] | [![srcds-dod-layers-badge][]][srcds-dod-metadata-link] |
+| Half-Life 2: Deathmatch | [`sourceservers/hl2mp`][srcds-hl2mp-dockerhub-link] | [![srcds-hl2mp-version-badge][]][srcds-hl2mp-metadata-link] | [![srcds-hl2mp-size-badge][]][srcds-hl2mp-metadata-link] | [![srcds-hl2mp-layers-badge][]][srcds-hl2mp-metadata-link] |
+| Left 4 Dead | [`sourceservers/left4dead`][srcds-left4dead-dockerhub-link] | [![srcds-left4dead-version-badge][]][srcds-left4dead-metadata-link] | [![srcds-left4dead-size-badge][]][srcds-left4dead-metadata-link] | [![srcds-left4dead-layers-badge][]][srcds-left4dead-metadata-link] |
+| Left 4 Dead 2 | [`sourceservers/left4dead2`][srcds-left4dead2-dockerhub-link] | [![srcds-left4dead2-version-badge][]][srcds-left4dead2-metadata-link] | [![srcds-left4dead2-size-badge][]][srcds-left4dead2-metadata-link] | [![srcds-left4dead2-layers-badge][]][srcds-left4dead2-metadata-link] |
+| Team Fortress 2 | [`sourceservers/tf`][srcds-tf-dockerhub-link] | [![srcds-tf-version-badge][]][srcds-tf-metadata-link] | [![srcds-tf-size-badge][]][srcds-tf-metadata-link] | [![srcds-tf-layers-badge][]][srcds-tf-metadata-link] |
 
 [srcds-csgo-dockerhub-link]: https://hub.docker.com/r/sourceservers/csgo
 [srcds-csgo-version-badge]: https://images.microbadger.com/badges/version/sourceservers/csgo.svg
-[srcds-csgo-layers-badge]: https://images.microbadger.com/badges/image/sourceservers/csgo.svg
-[srcds-csgo-metadata-link]: https://microbadger.com/images/sourceservers/csgo
+[srcds-csgo-size-badge]: https://img.shields.io/docker/image-size/sourceservers/csgo/latest?label=&style=flat-square
+[srcds-csgo-layers-badge]: https://img.shields.io/microbadger/layers/sourceservers/csgo?label=&style=flat-square
+[srcds-csgo-metadata-link]: https://hub.docker.com/r/sourceservers/csgo/tags
 
 [srcds-cstrike-dockerhub-link]: https://hub.docker.com/r/sourceservers/cstrike
 [srcds-cstrike-version-badge]: https://images.microbadger.com/badges/version/sourceservers/cstrike.svg
-[srcds-cstrike-layers-badge]: https://images.microbadger.com/badges/image/sourceservers/cstrike.svg
-[srcds-cstrike-metadata-link]: https://microbadger.com/images/sourceservers/cstrike
+[srcds-cstrike-size-badge]: https://img.shields.io/docker/image-size/sourceservers/cstrike/latest?label=&style=flat-square
+[srcds-cstrike-layers-badge]: https://img.shields.io/microbadger/layers/sourceservers/cstrike?label=&style=flat-square
+[srcds-cstrike-metadata-link]: https://hub.docker.com/r/sourceservers/cstrike/tags
 
 [srcds-dod-dockerhub-link]: https://hub.docker.com/r/sourceservers/dod
 [srcds-dod-version-badge]: https://images.microbadger.com/badges/version/sourceservers/dod.svg
-[srcds-dod-layers-badge]: https://images.microbadger.com/badges/image/sourceservers/dod.svg
-[srcds-dod-metadata-link]: https://microbadger.com/images/sourceservers/dod
+[srcds-dod-size-badge]: https://img.shields.io/docker/image-size/sourceservers/dod/latest?label=&style=flat-square
+[srcds-dod-layers-badge]: https://img.shields.io/microbadger/layers/sourceservers/dod?label=&style=flat-square
+[srcds-dod-metadata-link]: https://hub.docker.com/r/sourceservers/dod/tags
 
 [srcds-hl2mp-dockerhub-link]: https://hub.docker.com/r/sourceservers/hl2mp
 [srcds-hl2mp-version-badge]: https://images.microbadger.com/badges/version/sourceservers/hl2mp.svg
-[srcds-hl2mp-layers-badge]: https://images.microbadger.com/badges/image/sourceservers/hl2mp.svg
-[srcds-hl2mp-metadata-link]: https://microbadger.com/images/sourceservers/hl2mp
+[srcds-hl2mp-size-badge]: https://img.shields.io/docker/image-size/sourceservers/hl2mp/latest?label=&style=flat-square
+[srcds-hl2mp-layers-badge]: https://img.shields.io/microbadger/layers/sourceservers/hl2mp?label=&style=flat-square
+[srcds-hl2mp-metadata-link]: https://hub.docker.com/r/sourceservers/hl2mp/tags
 
 [srcds-left4dead-dockerhub-link]: https://hub.docker.com/r/sourceservers/left4dead
 [srcds-left4dead-version-badge]: https://images.microbadger.com/badges/version/sourceservers/left4dead.svg
-[srcds-left4dead-layers-badge]: https://images.microbadger.com/badges/image/sourceservers/left4dead.svg
-[srcds-left4dead-metadata-link]: https://microbadger.com/images/sourceservers/left4dead
+[srcds-left4dead-size-badge]: https://img.shields.io/docker/image-size/sourceservers/left4dead/latest?label=&style=flat-square
+[srcds-left4dead-layers-badge]: https://img.shields.io/microbadger/layers/sourceservers/left4dead?label=&style=flat-square
+[srcds-left4dead-metadata-link]: https://hub.docker.com/r/sourceservers/left4dead/tags
 
 [srcds-left4dead2-dockerhub-link]: https://hub.docker.com/r/sourceservers/left4dead2
 [srcds-left4dead2-version-badge]: https://images.microbadger.com/badges/version/sourceservers/left4dead2.svg
-[srcds-left4dead2-layers-badge]: https://images.microbadger.com/badges/image/sourceservers/left4dead2.svg
-[srcds-left4dead2-metadata-link]: https://microbadger.com/images/sourceservers/left4dead2
+[srcds-left4dead2-size-badge]: https://img.shields.io/docker/image-size/sourceservers/left4dead2/latest?label=&style=flat-square
+[srcds-left4dead2-layers-badge]: https://img.shields.io/microbadger/layers/sourceservers/left4dead2?label=&style=flat-square
+[srcds-left4dead2-metadata-link]: https://hub.docker.com/r/sourceservers/left4dead2/tags
 
 [srcds-tf-dockerhub-link]: https://hub.docker.com/r/sourceservers/tf
 [srcds-tf-version-badge]: https://images.microbadger.com/badges/version/sourceservers/tf.svg
-[srcds-tf-layers-badge]: https://images.microbadger.com/badges/image/sourceservers/tf.svg
-[srcds-tf-metadata-link]: https://microbadger.com/images/sourceservers/tf
+[srcds-tf-size-badge]: https://img.shields.io/docker/image-size/sourceservers/tf/latest?label=&style=flat-square
+[srcds-tf-layers-badge]: https://img.shields.io/microbadger/layers/sourceservers/tf?label=&style=flat-square
+[srcds-tf-metadata-link]: https://hub.docker.com/r/sourceservers/tf/tags
 
 ### Goldsource Engine (HLDS)
 
-| Game | Image | Tag | Size / Layers |
-|:-:|:-:|:-:|:-:|
-| Counter-Strike 1.6 | [`goldsourceservers/cstrike`][hlds-cstrike-dockerhub-link] | [![hlds-cstrike-version-badge][]][hlds-cstrike-metadata-link] | [![hlds-cstrike-layers-badge][]][hlds-cstrike-metadata-link] |
-| Counter-Strike: Condition Zero | [`goldsourceservers/czero`][hlds-czero-dockerhub-link] | [![hlds-czero-version-badge][]][hlds-czero-metadata-link] | [![hlds-czero-layers-badge][]][hlds-czero-metadata-link] |
-| Deathmatch Classic | [`goldsourceservers/dmc`][hlds-dmc-dockerhub-link] | [![hlds-dmc-version-badge][]][hlds-dmc-metadata-link] | [![hlds-dmc-layers-badge][]][hlds-dmc-metadata-link] |
-| Day of Defeat | [`goldsourceservers/dod`][hlds-dod-dockerhub-link] | [![hlds-dod-version-badge][]][hlds-dod-metadata-link] | [![hlds-dod-layers-badge][]][hlds-dod-metadata-link] |
-| Opposing Force | [`goldsourceservers/gearbox`][hlds-gearbox-dockerhub-link] | [![hlds-gearbox-version-badge][]][hlds-gearbox-metadata-link] | [![hlds-gearbox-layers-badge][]][hlds-gearbox-metadata-link] |
-| Ricochet | [`goldsourceservers/ricochet`][hlds-ricochet-dockerhub-link] | [![hlds-ricochet-version-badge][]][hlds-ricochet-metadata-link] | [![hlds-ricochet-layers-badge][]][hlds-ricochet-metadata-link] |
-| Team Fortress Classic | [`goldsourceservers/tfc`][hlds-tfc-dockerhub-link] | [![hlds-tfc-version-badge][]][hlds-tfc-metadata-link] | [![hlds-tfc-layers-badge][]][hlds-tfc-metadata-link] |
-| Half-Life | [`goldsourceservers/valve`][hlds-valve-dockerhub-link] | [![hlds-valve-version-badge][]][hlds-valve-metadata-link] | [![hlds-valve-layers-badge][]][hlds-valve-metadata-link] |
+| Game | Image | Tag | Size | Layers |
+|:-:|:-:|:-:|:-:|:-:|
+| Counter-Strike 1.6 | [`goldsourceservers/cstrike`][hlds-cstrike-dockerhub-link] | [![hlds-cstrike-version-badge][]][hlds-cstrike-metadata-link] | [![hlds-cstrike-size-badge][]][hlds-cstrike-metadata-link] | [![hlds-cstrike-layers-badge][]][hlds-cstrike-metadata-link] |
+| Counter-Strike: Condition Zero | [`goldsourceservers/czero`][hlds-czero-dockerhub-link] | [![hlds-czero-version-badge][]][hlds-czero-metadata-link] | [![hlds-czero-size-badge][]][hlds-czero-metadata-link] | [![hlds-czero-layers-badge][]][hlds-czero-metadata-link] |
+| Deathmatch Classic | [`goldsourceservers/dmc`][hlds-dmc-dockerhub-link] | [![hlds-dmc-version-badge][]][hlds-dmc-metadata-link] | [![hlds-dmc-size-badge][]][hlds-dmc-metadata-link] | [![hlds-dmc-layers-badge][]][hlds-dmc-metadata-link] |
+| Day of Defeat | [`goldsourceservers/dod`][hlds-dod-dockerhub-link] | [![hlds-dod-version-badge][]][hlds-dod-metadata-link] | [![hlds-dod-size-badge][]][hlds-dod-metadata-link] | [![hlds-dod-layers-badge][]][hlds-dod-metadata-link] |
+| Opposing Force | [`goldsourceservers/gearbox`][hlds-gearbox-dockerhub-link] | [![hlds-gearbox-version-badge][]][hlds-gearbox-metadata-link] | [![hlds-gearbox-size-badge][]][hlds-gearbox-metadata-link] | [![hlds-gearbox-layers-badge][]][hlds-gearbox-metadata-link] |
+| Ricochet | [`goldsourceservers/ricochet`][hlds-ricochet-dockerhub-link] | [![hlds-ricochet-version-badge][]][hlds-ricochet-metadata-link] | [![hlds-ricochet-size-badge][]][hlds-ricochet-metadata-link] | [![hlds-ricochet-layers-badge][]][hlds-ricochet-metadata-link] |
+| Team Fortress Classic | [`goldsourceservers/tfc`][hlds-tfc-dockerhub-link] | [![hlds-tfc-version-badge][]][hlds-tfc-metadata-link] | [![hlds-tfc-size-badge][]][hlds-tfc-metadata-link] | [![hlds-tfc-layers-badge][]][hlds-tfc-metadata-link] |
+| Half-Life | [`goldsourceservers/valve`][hlds-valve-dockerhub-link] | [![hlds-valve-version-badge][]][hlds-valve-metadata-link] | [![hlds-valve-size-badge][]][hlds-valve-metadata-link] | [![hlds-valve-layers-badge][]][hlds-valve-metadata-link] |
 
 [hlds-cstrike-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/cstrike
 [hlds-cstrike-version-badge]: https://images.microbadger.com/badges/version/goldsourceservers/cstrike.svg
-[hlds-cstrike-layers-badge]: https://images.microbadger.com/badges/image/goldsourceservers/cstrike.svg
-[hlds-cstrike-metadata-link]: https://microbadger.com/images/goldsourceservers/cstrike
+[hlds-cstrike-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/cstrike/latest?label=&style=flat-square
+[hlds-cstrike-layers-badge]: https://img.shields.io/microbadger/layers/goldsourceservers/cstrike?label=&style=flat-square
+[hlds-cstrike-metadata-link]: https://hub.docker.com/r/goldsourceservers/cstrike/tags
 
 [hlds-czero-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/czero
 [hlds-czero-version-badge]: https://images.microbadger.com/badges/version/goldsourceservers/czero.svg
-[hlds-czero-layers-badge]: https://images.microbadger.com/badges/image/goldsourceservers/czero.svg
-[hlds-czero-metadata-link]: https://microbadger.com/images/goldsourceservers/czero
+[hlds-czero-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/czero/latest?label=&style=flat-square
+[hlds-czero-layers-badge]: https://img.shields.io/microbadger/layers/goldsourceservers/czero?label=&style=flat-square
+[hlds-czero-metadata-link]: https://hub.docker.com/r/goldsourceservers/czero/tags
 
 [hlds-dmc-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/dmc
 [hlds-dmc-version-badge]: https://images.microbadger.com/badges/version/goldsourceservers/dmc.svg
-[hlds-dmc-layers-badge]: https://images.microbadger.com/badges/image/goldsourceservers/dmc.svg
-[hlds-dmc-metadata-link]: https://microbadger.com/images/goldsourceservers/dmc
+[hlds-dmc-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/dmc/latest?label=&style=flat-square
+[hlds-dmc-layers-badge]: https://img.shields.io/microbadger/layers/goldsourceservers/dmc?label=&style=flat-square
+[hlds-dmc-metadata-link]: https://hub.docker.com/r/goldsourceservers/dmc/tags
 
 [hlds-dod-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/dod
 [hlds-dod-version-badge]: https://images.microbadger.com/badges/version/goldsourceservers/dod.svg
-[hlds-dod-layers-badge]: https://images.microbadger.com/badges/image/goldsourceservers/dod.svg
-[hlds-dod-metadata-link]: https://microbadger.com/images/goldsourceservers/dod
+[hlds-dod-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/dod/latest?label=&style=flat-square
+[hlds-dod-layers-badge]: https://img.shields.io/microbadger/layers/goldsourceservers/dod?label=&style=flat-square
+[hlds-dod-metadata-link]: https://hub.docker.com/r/goldsourceservers/dod/tags
 
 [hlds-gearbox-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/gearbox
 [hlds-gearbox-version-badge]: https://images.microbadger.com/badges/version/goldsourceservers/gearbox.svg
-[hlds-gearbox-layers-badge]: https://images.microbadger.com/badges/image/goldsourceservers/gearbox.svg
-[hlds-gearbox-metadata-link]: https://microbadger.com/images/goldsourceservers/gearbox
+[hlds-gearbox-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/gearbox/latest?label=&style=flat-square
+[hlds-gearbox-layers-badge]: https://img.shields.io/microbadger/layers/goldsourceservers/gearbox?label=&style=flat-square
+[hlds-gearbox-metadata-link]: https://hub.docker.com/r/goldsourceservers/gearbox/tags
 
 [hlds-ricochet-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/ricochet
 [hlds-ricochet-version-badge]: https://images.microbadger.com/badges/version/goldsourceservers/ricochet.svg
-[hlds-ricochet-layers-badge]: https://images.microbadger.com/badges/image/goldsourceservers/ricochet.svg
-[hlds-ricochet-metadata-link]: https://microbadger.com/images/goldsourceservers/ricochet
+[hlds-ricochet-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/ricochet/latest?label=&style=flat-square
+[hlds-ricochet-layers-badge]: https://img.shields.io/microbadger/layers/goldsourceservers/ricochet?label=&style=flat-square
+[hlds-ricochet-metadata-link]: https://hub.docker.com/r/goldsourceservers/ricochet/tags
 
 [hlds-tfc-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/tfc
 [hlds-tfc-version-badge]: https://images.microbadger.com/badges/version/goldsourceservers/tfc.svg
-[hlds-tfc-layers-badge]: https://images.microbadger.com/badges/image/goldsourceservers/tfc.svg
-[hlds-tfc-metadata-link]: https://microbadger.com/images/goldsourceservers/tfc
+[hlds-tfc-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/tfc/latest?label=&style=flat-square
+[hlds-tfc-layers-badge]: https://img.shields.io/microbadger/layers/goldsourceservers/tfc?label=&style=flat-square
+[hlds-tfc-metadata-link]: https://hub.docker.com/r/goldsourceservers/tfc/tags
 
 [hlds-valve-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/valve
 [hlds-valve-version-badge]: https://images.microbadger.com/badges/version/goldsourceservers/valve.svg
-[hlds-valve-layers-badge]: https://images.microbadger.com/badges/image/goldsourceservers/valve.svg
-[hlds-valve-metadata-link]: https://microbadger.com/images/goldsourceservers/valve
+[hlds-valve-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/valve/latest?label=&style=flat-square
+[hlds-valve-layers-badge]: https://img.shields.io/microbadger/layers/goldsourceservers/valve?label=&style=flat-square
+[hlds-valve-metadata-link]: https://hub.docker.com/r/goldsourceservers/valve/tags
 
 ## Image Info
 
