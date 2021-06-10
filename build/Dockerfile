@@ -10,9 +10,6 @@ ARG FIX_APPMANIFEST=false
 ARG CLIENT_APPID
 ARG INSTALL_COUNT=3
 
-# Workaround for +force_install_dir not working properly: https://github.com/ValveSoftware/steam-for-linux/issues/7843#issuecomment-856894946
-RUN mkdir -p "$SERVER_DIR/steamapps"
-
 # Download game
 RUN echo "[BUILD] SERVER_DIR: $SERVER_DIR"; \
     echo "[BUILD] APPMANIFEST_AR_URL: $APPMANIFEST_AR_URL"; \
