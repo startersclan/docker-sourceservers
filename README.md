@@ -190,7 +190,9 @@ The following are some guidelines on how to use the provided images with `docker
 
 #### ENTRYPOINT and CMD
 
-Currently, the default `ENTRYPOINT` for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the `CMD` is [`""`](build/Dockerfile#L73). These values make it convenient especially in development environments where the game's command line can simply be appended as the final argument to the `docker run` command for starting a server.
+Currently, the default `ENTRYPOINT` for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the `CMD` is [`""`](build/Dockerfile#L73). These values make it convenient especially in development environments where the game's command line can simply be appended as the final argument to the `docker run` command for starting a server. However, supplying a shell script containing nested quotes as the `CMD` might be error prone.
+
+Hence, the recommended way is to supply the server binary as the `ENTRYPOINT`, and append any arguments as the `CMD` see an example [here](#starting).
 
 Each of the default values can also be overridden at runtime, a feature well supported by container orchestration tools such as [Kubernetes](https://kubernetes.io/docs/home/) and [Docker Swarm Mode](https://docs.docker.com/engine/swarm/), and the standalone tool, [Docker Compose](https://docs.docker.com/compose/). Alternatively, they can be modified as part of the build steps in custom images.
 
@@ -204,15 +206,21 @@ The following are some examples of how the game servers can be started:
 
 ```shell
 # Counter-Strike: Global Offensive
-docker run -it -p 27015:27015/udp sourceservers/csgo:latest 'srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2'
+docker run -it -p 27015:27015/udp --entrypoint srcds_linux sourceservers/csgo:latest -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
 
 # Counter-Strike 1.6
-docker run -it -p 27016:27016/udp goldsourceservers/cstrike:latest 'hlds_linux -game cstrike +port 27016 +maxplayers 10 +map de_dust2'
+docker run -it -p 27016:27016/udp --entrypoint hlds_linux goldsourceservers/cstrike:latest -game cstrike +port 27016 +maxplayers 10 +map de_dust2
 ```
 
 * `-t` for a pseudo-TTY is mandatory; servers may not run correctly without it
 * `-i` for STDIN for interactive use of the game console
 * `-d` for running the container in detached mode
+
+Alternatively, you may use a [`docker-compose.yml`](docker-compose.yml):
+
+```shell
+docker-compose up -d
+```
 
 #### Attaching
 
