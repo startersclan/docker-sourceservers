@@ -15,8 +15,8 @@ services:
   srcds-hl2mp:
     image: sourceservers/hl2mp:latest
     ports:
-      - 27015:27015/tcp
-      - 27015:27015/udp
+      - 27115:27115/tcp
+      - 27115:27115/udp
     stdin_open: true
     tty: true
     entrypoint:
@@ -27,8 +27,8 @@ services:
   srcds-left4dead2:
     image: sourceservers/left4dead2:latest
     ports:
-      - 27015:27015/tcp
-      - 27015:27015/udp
+      - 27215:27215/tcp
+      - 27215:27215/udp
     stdin_open: true
     tty: true
     entrypoint:
@@ -39,7 +39,7 @@ services:
   hlds-cstrike:
     image: goldsourceservers/cstrike:latest
     ports:
-      - 27015:27015/udp
+      - 28015:28015/udp
     stdin_open: true
     tty: true
     entrypoint:
@@ -50,7 +50,7 @@ services:
   hlds-czero:
     image: goldsourceservers/czero:latest
     ports:
-      - 27015:27015/udp
+      - 28115:28115/udp
     stdin_open: true
     tty: true
     entrypoint:
@@ -61,7 +61,7 @@ services:
   hlds-valve:
     image: goldsourceservers/valve:latest
     ports:
-      - 27015:27015/udp
+      - 28215:28215/udp
     stdin_open: true
     tty: true
     entrypoint:
