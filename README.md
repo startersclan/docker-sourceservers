@@ -190,7 +190,7 @@ The following are some guidelines on how to use the provided images with `docker
 
 #### ENTRYPOINT and CMD
 
-Currently, the default `ENTRYPOINT` for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the `CMD` is [`""`](build/Dockerfile#L73). These values make it convenient especially in development environments where the game's command line can simply be appended as the final argument to the `docker run` command for starting a server. The default entrypoint also allows a string of runtime initialization commands to be executed at runtime, similar to what's typically achieved using entrypoint scripts such as `docker-entrypoint.yml`.
+Currently, the default `ENTRYPOINT` for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the `CMD` is [`""`](build/Dockerfile#L73). These values make it convenient especially in development environments where the game's command line can simply be appended as the final argument to the `docker run` command for starting a server. The default entrypoint also allows a string of runtime initialization commands to be executed at runtime, similar to what's typically achieved using entrypoint scripts such as `docker-entrypoint.sh`.
 
 In environments or container orchestrators where it is possible to use init containers for provisioning containers with their necessary configuration before application startup, the recommended approach would be to set the game binary as the container's `ENTRYPOINT` and its arguments as the container's `CMD`, as is documented [here](#starting).
 
