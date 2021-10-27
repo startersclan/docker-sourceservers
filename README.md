@@ -207,21 +207,21 @@ The following are some examples of how the game servers can be started:
 ```shell
 # Counter-Strike: Global Offensive
 ## Via default entrypoint (/bin/bash -c)
-docker run --rm -it -p 27015:27015/tcp -p 27015:27015/udp sourceservers/csgo:latest 'srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2'
-docker run --rm -it -p 27015:27015/tcp -p 27015:27015/udp sourceservers/csgo:latest 'printenv && ls -al && exec srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2'
+docker run -it -p 27015:27015/tcp -p 27015:27015/udp sourceservers/csgo:latest 'srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2'
+docker run -it -p 27015:27015/tcp -p 27015:27015/udp sourceservers/csgo:latest 'printenv && ls -al && exec srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2'
 ## Via custom entrypoint (game binary srcds_linux)
-docker run --rm -it -p 27015:27015/tcp -p 27015:27015/udp --entrypoint srcds_linux sourceservers/csgo:latest -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
+docker run -it -p 27015:27015/tcp -p 27015:27015/udp --entrypoint srcds_linux sourceservers/csgo:latest -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
 ## Via custom entrypoint (e.g. /bin/sh)
-docker run --rm -it -p 27015:27015/tcp -p 27015:27015/udp --entrypoint /bin/sh sourceservers/csgo:latest -c 'printenv && ls -al && exec srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2'
+docker run -it -p 27015:27015/tcp -p 27015:27015/udp --entrypoint /bin/sh sourceservers/csgo:latest -c 'printenv && ls -al && exec srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2'
 
 # Counter-Strike 1.6
 ## Via default entrypoint (/bin/bash -c)
-docker run --rm -it -p 28015:28015/udp goldsourceservers/cstrike:latest 'hlds_linux -game cstrike +port 28015 +maxplayers 10 +map de_dust2'
-docker run --rm -it -p 28015:28015/udp goldsourceservers/cstrike:latest 'printenv && ls -al && exec hlds_linux -game cstrike +port 28015 +maxplayers 10 +map de_dust2'
+docker run -it -p 28015:28015/udp goldsourceservers/cstrike:latest 'hlds_linux -game cstrike +port 28015 +maxplayers 10 +map de_dust2'
+docker run -it -p 28015:28015/udp goldsourceservers/cstrike:latest 'printenv && ls -al && exec hlds_linux -game cstrike +port 28015 +maxplayers 10 +map de_dust2'
 ## Via custom entrypoint (game binary hlds_linux)
-docker run --rm -it -p 28015:28015/udp --entrypoint hlds_linux goldsourceservers/cstrike:latest -game cstrike +port 28015 +maxplayers 10 +map de_dust2
+docker run -it -p 28015:28015/udp --entrypoint hlds_linux goldsourceservers/cstrike:latest -game cstrike +port 28015 +maxplayers 10 +map de_dust2
 ## Via custom entrypoint (e.g. /bin/sh)
-docker run --rm -it -p 28015:28015/udp --entrypoint /bin/sh goldsourceservers/cstrike:latest -c 'printenv && ls -al && exec hlds_linux -game cstrike +port 28015 +maxplayers 10 +map de_dust2'
+docker run -it -p 28015:28015/udp --entrypoint /bin/sh goldsourceservers/cstrike:latest -c 'printenv && ls -al && exec hlds_linux -game cstrike +port 28015 +maxplayers 10 +map de_dust2'
 ```
 
 * `-t` for a pseudo-TTY is mandatory; servers may not run correctly without it
