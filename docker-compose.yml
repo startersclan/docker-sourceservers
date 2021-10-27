@@ -1,6 +1,6 @@
 version: '2.2'
 services:
-  srcds-csgo:
+  srcds-csgo-1:
     image: sourceservers/csgo:latest
     ports:
       - 27015:27015/tcp
@@ -8,9 +8,24 @@ services:
     stdin_open: true
     tty: true
     entrypoint:
+      - /bin/bash
+      - -c
+    command:
+      - | 
+        printenv
+        ls -al
+        srcds_linux -game csgo -port 27016 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
+  srcds-csgo-2:
+    image: sourceservers/csgo:latest
+    ports:
+      - 27016:27016/tcp
+      - 27016:27016/udp
+    stdin_open: true
+    tty: true
+    entrypoint:
       - srcds_linux
     command:
-      - -game csgo -ip 0.0.0.0 -port 27015 -maxplayers 16 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
+      - -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
 
   srcds-hl2mp:
     image: sourceservers/hl2mp:latest
@@ -22,7 +37,7 @@ services:
     entrypoint:
       - srcds_linux
     command:
-      - -game hl2mp -ip 0.0.0.0 -port 27015 -maxplayers 16 +map dm_lockdown
+      - -game hl2mp -port 27115 -maxplayers 16 +map dm_lockdown
 
   srcds-left4dead2:
     image: sourceservers/left4dead2:latest
@@ -34,18 +49,32 @@ services:
     entrypoint:
       - srcds_linux
     command:
-      - -game left4dead2 -ip 0.0.0.0 -port 27015 +map "c2m1_highway coop"
+      - -game left4dead2 -port 27215 +map "c2m1_highway coop"
 
-  hlds-cstrike:
+  hlds-cstrike-1:
     image: goldsourceservers/cstrike:latest
     ports:
       - 28015:28015/udp
     stdin_open: true
     tty: true
     entrypoint:
+      - /bin/bash
+      - -c
+    command:
+      - | 
+        printenv
+        ls -al
+        hlds_linux -game cstrike +port 28016 +maxplayers 10 +map de_dust2
+  hlds-cstrike-2:
+    image: goldsourceservers/cstrike:latest
+    ports:
+      - 28016:28016/udp
+    stdin_open: true
+    tty: true
+    entrypoint:
       - hlds_linux
     command:
-      - -game cstrike +ip 0.0.0.0 +port 27015 +map de_dust2 +maxplayers 16
+      - -game cstrike +port 28015 +maxplayers 10 +map de_dust2
 
   hlds-czero:
     image: goldsourceservers/czero:latest
@@ -56,7 +85,7 @@ services:
     entrypoint:
       - hlds_linux
     command:
-      - -game czero +ip 0.0.0.0 +port 27015 +map de_dust2_cz +maxplayers 16
+      - -game czero +port 28115 +maxplayers 10 +map de_dust2_cz
 
   hlds-valve:
     image: goldsourceservers/valve:latest
@@ -67,4 +96,4 @@ services:
     entrypoint:
       - hlds_linux
     command:
-      - -game valve +ip 0.0.0.0 +port 27015 +map boot_camp +maxplayers 16
+      - -game valve +port 28215 +maxplayers 16 +map boot_camp
