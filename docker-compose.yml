@@ -11,8 +11,9 @@ services:
       - /bin/bash
       - -c
     command:
-      - | 
-        printenv
+      - |
+        set -e
+        printenvs
         ls -al
         srcds_linux -game csgo -port 27016 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
   srcds-csgo-2:
@@ -61,7 +62,8 @@ services:
       - /bin/bash
       - -c
     command:
-      - | 
+      - |
+        set -e
         printenv
         ls -al
         hlds_linux -game cstrike +port 28016 +maxplayers 10 +map de_dust2
