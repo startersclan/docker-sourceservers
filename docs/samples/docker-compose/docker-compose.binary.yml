@@ -3,14 +3,14 @@ services:
   srcds-csgo:
     image: sourceservers/csgo:latest
     ports:
-      - 27016:27016/tcp
-      - 27016:27016/udp
+      - 27015:27015/tcp
+      - 27015:27015/udp
     stdin_open: true
     tty: true
     entrypoint:
       - srcds_linux
     command:
-      - -game csgo -port 27016 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
+      - -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
 
   srcds-hl2mp:
     image: sourceservers/hl2mp:latest
@@ -39,13 +39,13 @@ services:
   hlds-cstrike:
     image: goldsourceservers/cstrike:latest
     ports:
-      - 28016:28016/udp
+      - 28015:28015/udp
     stdin_open: true
     tty: true
     entrypoint:
       - hlds_linux
     command:
-      - -game cstrike +port 28016 +maxplayers 10 +map de_dust2
+      - -game cstrike +port 28015 +maxplayers 10 +map de_dust2
 
   hlds-czero:
     image: goldsourceservers/czero:latest
