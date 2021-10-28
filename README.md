@@ -228,7 +228,7 @@ docker run -it -p 28015:28015/udp --entrypoint /bin/sh goldsourceservers/cstrike
 * `-i` for STDIN for interactive use of the game console
 * `-d` for running the container in detached mode
 
-For a more declarative approach, opt to use container manifests such as [`docker-compose.yml`](docker-compose.yml):
+For a more declarative approach, opt to use container manifests such as [`docker-compose.yml`](docs/samples/docker-compose):
 
 ```shell
 # Via docker-compose in detached mode
