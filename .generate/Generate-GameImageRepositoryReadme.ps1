@@ -1,75 +1,75 @@
 $gameList = @(
     @{
-        engine = 'srcds'
-        engineFullName = 'Source'
-        namespace = 'sourceservers'
-        game = @(
+        Engine = 'srcds'
+        EngineFullName = 'Source'
+        RepositoryNamespace = 'sourceservers'
+        Game = @(
             @{
-                name = 'csgo'
-                fullName = 'Counter-Strike: Global Offensive'
+                Name = 'csgo'
+                FullName = 'Counter-Strike: Global Offensive'
             }
             @{
-                name = 'cstrike'
-                fullName = 'Counter-Strike: Source'
+                Name = 'cstrike'
+                FullName = 'Counter-Strike: Source'
             }
             @{
-                name = 'dod'
-                fullName = 'Day of Defeat: Source'
+                Name = 'dod'
+                FullName = 'Day of Defeat: Source'
             }
             @{
-                name = 'hl2mp'
-                fullName = 'Half-Life 2: Deathmatch'
+                Name = 'hl2mp'
+                FullName = 'Half-Life 2: Deathmatch'
             }
             @{
-                name = 'left4dead'
-                fullName = 'Left 4 Dead'
+                Name = 'left4dead'
+                FullName = 'Left 4 Dead'
             }
             @{
-                name = 'left4dead2'
-                fullName = 'Left 4 Dead 2'
+                Name = 'left4dead2'
+                FullName = 'Left 4 Dead 2'
             }
             @{
-                name = 'tf'
-                fullName = 'Team Fortress 2'
+                Name = 'tf'
+                FullName = 'Team Fortress 2'
             }
         )
     }
     @{
-        engine = 'hlds'
-        engineFullName = 'Goldsource'
-        namespace = 'goldsourceservers'
-        game = @(
+        Engine = 'hlds'
+        EngineFullName = 'Goldsource'
+        RepositoryNamespace = 'goldsourceservers'
+        Game = @(
             @{
-                name = 'cstrike'
-                fullName = 'Counter-Strike 1.6'
+                Name = 'cstrike'
+                FullName = 'Counter-Strike 1.6'
             }
             @{
-                name = 'czero'
-                fullName = 'Counter-Strike: Condition Zero'
+                Name = 'czero'
+                FullName = 'Counter-Strike: Condition Zero'
             }
             @{
-                name = 'dmc'
-                fullName = 'Deathmatch Classic'
+                Name = 'dmc'
+                FullName = 'Deathmatch Classic'
             }
             @{
-                name = 'dod'
-                fullName = 'Day of Defeat'
+                Name = 'dod'
+                FullName = 'Day of Defeat'
             }
             @{
-                name = 'gearbox'
-                fullName = 'Opposing Force'
+                Name = 'gearbox'
+                FullName = 'Opposing Force'
             }
             @{
-                name = 'ricochet'
-                fullName = 'Ricochet'
+                Name = 'ricochet'
+                FullName = 'Ricochet'
             }
             @{
-                name = 'tfc'
-                fullName = 'Team Fortress Classic'
+                Name = 'tfc'
+                FullName = 'Team Fortress Classic'
             }
             @{
-                name = 'valve'
-                fullName = 'Half-Life'
+                Name = 'valve'
+                FullName = 'Half-Life'
             }
         )
     }
@@ -82,14 +82,14 @@ $readmePath = "$(git rev-parse --show-toplevel)/docs/readme/image"
 
 $gameList | % {
     $environment = $_
-    $engineFullName = $environment['engineFullName']
-    $engine = $environment['engine']
-    $namespace = $environment['namespace']
+    $EngineFullName = $environment['EngineFullName']
+    $Engine = $environment['Engine']
+    $RepositoryNamespace = $environment['RepositoryNamespace']
 
-    $environment['game'].GetEnumerator() | % {
+    $environment['Game'].GetEnumerator() | % {
 
         '--------------------------------------------------------------------------------' | Write-Host -ForegroundColor Yellow
-        "$engine, $namespace/$($_.name):" | Write-Host -ForegroundColor Yellow
+        "$Engine, $RepositoryNamespace/$($_.Name):" | Write-Host -ForegroundColor Yellow
         '--------------------------------------------------------------------------------' | Write-Host -ForegroundColor Yellow
 
         # Generate game image repository readme content
@@ -115,15 +115,15 @@ $gameList | % {
 
 | Game | Image | Tag ``v<tag>`` | Size |
 |:-:|:-:|:-:|:-:|
-| $($_.fullName) | [``$namespace/$($_.name)``][$engine-$($_.name)-dockerhub-link] | [![$engine-$($_.name)-version-badge][]][$engine-$($_.name)-metadata-link] | [![$engine-$($_.name)-size-badge][]][$engine-$($_.name)-metadata-link] | [![$engine-$($_.name)-layers-badge][]][$engine-$($_.name)-metadata-link] |
+| $($_.FullName) | [``$RepositoryNamespace/$($_.Name)``][$engine-$($_.Name)-dockerhub-link] | [![$engine-$($_.Name)-version-badge][]][$engine-$($_.Name)-metadata-link] | [![$engine-$($_.Name)-size-badge][]][$engine-$($_.Name)-metadata-link] | [![$engine-$($_.Name)-layers-badge][]][$engine-$($_.Name)-metadata-link] |
 
-[$engine-$($_.name)-dockerhub-link]: https://hub.docker.com/r/$namespace/$($_.name)
-[$engine-$($_.name)-version-badge]: https://img.shields.io/docker/v/$namespace/$($_.name)/latest?label=&style=flat-square
-[$engine-$($_.name)-size-badge]: https://img.shields.io/docker/image-size/$namespace/$($_.name)/latest?label=&style=flat-square
-[$engine-$($_.name)-metadata-link]: https://hub.docker.com/r/$namespace/$($_.name)/tags
+[$engine-$($_.Name)-dockerhub-link]: https://hub.docker.com/r/$RepositoryNamespace/$($_.Name)
+[$engine-$($_.Name)-version-badge]: https://img.shields.io/docker/v/$RepositoryNamespace/$($_.Name)/latest?label=&style=flat-square
+[$engine-$($_.Name)-size-badge]: https://img.shields.io/docker/image-size/$RepositoryNamespace/$($_.Name)/latest?label=&style=flat-square
+[$engine-$($_.Name)-metadata-link]: https://hub.docker.com/r/$RepositoryNamespace/$($_.Name)/tags
 "@
         $content
-        $outFile = "$readmePath/$engine-$($_.name).md"
+        $outFile = "$readmePath/$engine-$($_.Name).md"
         $content | Out-File $outFile -Encoding utf8 -Force
         if (!$LASTEXITCODE) { "Readme file generated at '$outFile'" | Write-Host -ForegroundColor Yellow }
     }
