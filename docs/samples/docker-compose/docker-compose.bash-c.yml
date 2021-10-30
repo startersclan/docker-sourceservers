@@ -1,0 +1,34 @@
+version: '2.2'
+services:
+  srcds-csgo:
+    image: sourceservers/csgo:latest
+    ports:
+      - 27015:27015/tcp
+      - 27015:27015/udp
+    stdin_open: true
+    tty: true
+    entrypoint:
+      - /bin/bash
+      - -c
+    command:
+      - |
+        set -e
+        printenv
+        ls -al
+        srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
+
+  hlds-cstrike:
+    image: goldsourceservers/cstrike:latest
+    ports:
+      - 28015:28015/udp
+    stdin_open: true
+    tty: true
+    entrypoint:
+      - /bin/bash
+      - -c
+    command:
+      - |
+        set -e
+        printenv
+        ls -al
+        hlds_linux -game cstrike +port 28015 +maxplayers 10 +map de_dust2
