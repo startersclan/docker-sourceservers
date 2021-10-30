@@ -260,12 +260,6 @@ docker exec containername bash -c 'printenv && ls -al && ps aux'     # Multiple 
 
 To update a gameserver, simply initiate a pull for the game image by the `latest` tag and restart the server.
 
-```sh
-docker pull sourceservers/csgo:latest
-docker rm -f srcds-csgo
-docker run --name srcds-csgo -it -p 27015:27015/tcp -p 27015:27015/udp sourceservers/csgo:latest 'srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2'
-```
-
 There are many ways to detect when a gameserver needs an update but that is out of the scope of the project. Here is a simple [example](https://stackoverflow.com/a/44740429/3891117) for utilizing a `cronjob` for updating a container.
 
 ## Important Considerations
