@@ -1,4 +1,4 @@
-# Docker-SourceServers
+# docker-sourceservers
 
 **Source** / **Goldsource** dedicated server images built through use of [`steamcmd`](https://github.com/startersclan/docker-steamcmd).
 
