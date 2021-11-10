@@ -125,7 +125,7 @@ $gameList | % {
         $content
         $outFile = "$readmePath/$engine-$($_.Name).md"
         $content | Out-File $outFile -Encoding utf8 -Force
-        if (!$LASTEXITCODE) { "Readme file generated at '$outFile'" | Write-Host -ForegroundColor Green }
+        if ($?) { "Readme file generated at '$outFile'" | Write-Host -ForegroundColor Green }
     }
 }
 
