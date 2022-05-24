@@ -1,0 +1,162 @@
+stages:
+  - build
+  - post-build
+
+build-image:
+  stage: build
+  image: docker:18.09.2-git
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "trigger"
+    - if: $CI_PIPELINE_SOURCE == "web"
+  variables:
+    DOCKER_DRIVER: overlay2
+    BUILD_DIR: build/
+    UPDATE_DIR: update/
+  timeout: 120m
+  script:
+    - |
+      hostname
+      whoami
+      cat /etc/*release
+      free
+      df -h
+      pwd
+      docker info
+      docker version
+    - |
+      # Terminate the build on errors
+      set -e
+      # Process variables
+      PIPELINE="${CI_COMMIT_BRANCH}"
+      if [ "${APPID}" = 90 ]; then
+        REPOSITORY="${REGISTRY_GOLDSOURCE}/${GAME}"
+        GAME_ENGINE="hlds"
+        GAME_BIN="hlds_linux"
+      else
+        REPOSITORY="${REGISTRY_SOURCE}/${GAME}"
+        GAME_ENGINE="srcds"
+        GAME_BIN="srcds_linux"
+      fi
+    - |
+      echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
+    - |
+      # Build / Update the game image
+      if [ "${PIPELINE}" = 'build' ]; then
+          GAME_IMAGE="${REPOSITORY}:${GAME_VERSION}"
+          if [ "${CACHE}" = 'true' ]; then
+              date
+              time docker pull "${GAME_IMAGE}" || true
+          fi
+          date
+          time docker build \
+              --cache-from "${GAME_IMAGE}" \
+              --build-arg APPID="${APPID}" \
+              --build-arg MOD="${MOD}" \
+              --build-arg FIX_APPMANIFEST="${FIX_APPMANIFEST}" \
+              --build-arg CLIENT_APPID="${CLIENT_APPID}" \
+              -t "${GAME_IMAGE}" \
+              --label "appid=${APPID}" \
+              --label "mod=${MOD}" \
+              --label "client_appid=${CLIENT_APPID}" \
+              --label "game=${GAME}" \
+              --label "game_version=${GAME_VERSION}" \
+              --label "game_update_count=0" \
+              --label "game_engine=${GAME_ENGINE}" \
+              "${BUILD_DIR}"
+          if [ "${LATEST}" = 'true' ]; then
+              docker tag "${GAME_IMAGE}" "${REPOSITORY}:latest"
+          fi
+          date
+      elif [ "${PIPELINE}" = 'update' ]; then
+          GAME_IMAGE="${REPOSITORY}:latest"
+          date
+          time docker pull "${GAME_IMAGE}"
+          date
+          time docker build \
+          --build-arg GAME_IMAGE="${GAME_IMAGE}" \
+          -t "${GAME_IMAGE}" \
+          --label "game_version=${GAME_VERSION}" \
+          --label "game_update_count=${GAME_UPDATE_COUNT}" \
+          "${UPDATE_DIR}"
+          docker tag "${GAME_IMAGE}" "${REPOSITORY}:${GAME_VERSION}-layered"
+          date
+      fi
+      docker images
+      docker inspect "${GAME_IMAGE}"
+      docker history "${GAME_IMAGE}"
+    - |
+      # Test the game image
+      if [ ! "${NO_TEST}" = 'true' ]; then
+          date
+          time docker run \
+              -t \
+              --rm \
+              "${GAME_IMAGE}" \
+              "printenv && echo && ls -al && echo && exec ${GAME_BIN} -game ${GAME} +version +exit"
+          echo; date
+      fi
+    - |
+      # Push the game image
+      if [ ! "${NO_PUSH}" = 'true' ]; then
+          date
+          time docker push "${REPOSITORY}"
+          date
+      fi
+  after_script:
+    - |
+      docker logout
+
+send-notification:
+  stage: post-build
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "trigger"
+    - if: $CI_PIPELINE_SOURCE == "web"
+  when: always
+  image: alpine:3.8
+  script:
+    - |
+      command -v curl || apk add --no-cache curl
+      command -v jq || apk add --no-cache jq
+      JOB=$( curl -s -X GET "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/pipelines/$CI_PIPELINE_ID/jobs" | jq -r '.[] | select(.name == "build-image")' )
+      date
+      echo "JOB:" $JOB
+      if [ -z "$JOB" ]; then
+          echo "No job name matching 'build-image'"
+          exit 1
+      fi
+      export JOB_STATUS=$( echo -n "$JOB" | jq -r '.status' )
+      echo "Sending notification"
+      BODY=$( cat << EOF
+      {
+        "build_num": "$CI_JOB_ID",
+        "username": "$CI_PROJECT_NAMESPACE",
+        "reponame": "$CI_PROJECT_NAME",
+        "branch": "$CI_COMMIT_BRANCH",
+        "build_parameters": {
+            "GAME_VERSION": "$GAME_VERSION",
+            "APPID": "$APPID",
+            "CLIENT_APPID": "$CLIENT_APPID",
+            "GAME": "$GAME",
+            "MOD": "$MOD",
+            "GAME_UPDATE_COUNT": "$GAME_UPDATE_COUNT",
+            "FIX_APPMANIFEST": "$FIX_APPMANIFEST",
+            "LATEST": "$LATEST",
+            "CACHE": "$CACHE",
+            "NO_TEST": "$NO_TEST",
+            "NO_PUSH": "$NO_PUSH"
+        },
+        "status": "$JOB_STATUS"
+      }
+      EOF
+      )
+      echo "BODY: $BODY"
+      date
+      STATUS=$( curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' -H "x-gitlab-webhook-secret: $X_GITLAB_WEBHOOK_SECRET" --data "$BODY" "$NOTIFICATION_WEBHOOK" || true )
+      echo "STATUS: $STATUS"
+      if [ $STATUS -eq 200 ] || [ $STATUS -eq 201 ]; then
+          echo "Notification sent"
+          exit 0
+      else
+          echo "Failed to send notification"
+          exit 1
+      fi
