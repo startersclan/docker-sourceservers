@@ -155,6 +155,10 @@ jobs:
               time docker push "${REPOSITORY}"
               date
           fi
+    - run:
+        name: After script
+        when: always
+        command: |
           docker logout
   send-notification:
     machine:
