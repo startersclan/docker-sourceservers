@@ -150,9 +150,9 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 
 ### Game versions & tags
 
-Both a new *clean* and *layered* image of a game are built on each available game update. Due to the immutable nature of Docker image layers, the files within a given image cannot be *updated* in the conventional sense of the word which assumes the possibility of *deletion* and so reclaimation of storage space. Instead, changes made to an image involve only *modification* with respect to its newest layer and are committed as incremental layer(s) to the image, thus ever only contributing to an increase in image size.
+Both a new *clean* and *layered* image of a game are built on each available game update. Due to the immutable nature of Docker image layers, the files within a given image cannot be *updated* in the conventional sense of the word which assumes the possibility of *deletion* and so reclamation of storage space. Instead, changes made to an image involve only *modification* with respect to its newest layer and are committed as incremental layer(s) to the image, thus ever only contributing to an increase in image size.
 
-By design, the `latest` tag of a game is as far as possible made to point to the game's newest *layered* image. By using the `latest` tag, *layered* images are used, circumventing the need to pull entire *clean* images for obtaining game updates. While  *layered* images grow in size with increasing update layers, the `latest` tag is made to automatically reference the upcoming *clean* image of a game if its referenced *layered* image is found to have reached **1.75x** its initial size on an available game update.
+By design, the `latest` tag of a game is as far as possible made to point to the game's newest *layered* image. By using the `latest` tag, *layered* images are used, circumventing the need to pull entire *clean* images for obtaining game updates. While *layered* images grow in size with increasing update layers, the `latest` tag is made to automatically reference the upcoming *clean* image of a game if its referenced *layered* image is found to have reached **1.75x** its initial size on an available game update.
 
 Clean images are tagged by `<version>`. Layered images are tagged by `<version>-layered`.
 
@@ -180,15 +180,15 @@ The following are some guidelines on usage of the provided images with `docker`.
 
 #### ENTRYPOINT and CMD
 
-Currently, the default `ENTRYPOINT` for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the `CMD` is [`""`](build/Dockerfile#L73). These values make it convenient especially in development environments wherein the game's command line can simply be appended as the final argument to the `docker run` command. The default entrypoint also allows a string of runtime initialization commands to be executed at runtime, similar to what's typically achieved using entrypoint scripts such as `docker-entrypoint.sh`.
+The default `ENTRYPOINT` for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the `CMD` is [`""`](build/Dockerfile#L73). These values make it convenient in development environments wherein the game's command line can simply be appended as the final argument to the `docker run` command. The default entrypoint also allows a string of runtime initialization commands to be executed at runtime, similar to what's typically achieved using entrypoint scripts such as `docker-entrypoint.sh`.
 
-In environments or container orchestrators where it is possible to use init containers for provisioning containers with their necessary configuration before application startup, the recommended approach would be to set the game binary as the container's `ENTRYPOINT` and its arguments as the container's `CMD`, as is documented [here](#starting).
+Each of the default values can also be overridden at runtime, a feature well supported by container orchestration tools. Alternatively, they can be modified as part of the build steps in custom images.
 
-Each of the default values can also be overridden at runtime, a feature also well supported by container orchestration tools. Alternatively, they can be modified as part of the build steps in custom images.
+In environments supporting use of init containers for provisioning game containers with their necessary configuration before application startup, the recommended approach is to set the *game binary* as the container's `ENTRYPOINT` and its *arguments* as the container's `CMD`, as is documented [here](#starting).
 
 #### WORKDIR
 
-The default working directory for all the images is [`/server`](build/Dockerfile#L70) within which all of a game's files reside.
+The default work directory for all the images is [`/server`](build/Dockerfile#L70) within which all of a game's files reside.
 
 #### Starting
 
@@ -218,7 +218,7 @@ docker run -it -p 28015:28015/udp --entrypoint /bin/bash goldsourceservers/cstri
 * `-i` for `STDIN` for interactive use of the game console
 * `-d` for running the container in detached mode
 
-For a more declarative approach, define game server environments within container manifests such as [`docker-compose.yml`](docs/samples/docker-compose) which can be used for managing instances:
+For a declarative approach, define game server environments within container manifests such as [`docker-compose.yml`](docs/samples/docker-compose) which can be used for managing instances:
 
 ```shell
 # Via docker-compose
@@ -248,9 +248,9 @@ docker exec containername bash -c 'printenv && ls -al && ps aux'     # Multiple 
 
 #### Updating
 
-To update a game server, simply initiate a pull for the game image by the `latest` tag and restart the server.
+To update a game server, simply initiate a pull for the game image by the `latest` tag and recreate the container.
 
-There are many ways to detect when a game server needs an update but that is beyond the scope of the project. Here is a simple [example](https://stackoverflow.com/a/44740429/3891117) for utilizing a `cronjob` for updating a container.
+There are many ways to detect when a game server needs an update but which are beyond the scope of the project. Here is [an example](https://stackoverflow.com/a/44740429/3891117) for utilizing a `cronjob` for updating a container.
 
 ## Important Considerations
 
@@ -264,7 +264,7 @@ The game images are [based on](build/Dockerfile#L3) the images built via the pro
 
 The game images **do not** include an entrypoint script.
 
-Including a generic, conventional `docker-entrypoint.sh` entrypoint scripts would unlikely adequately serve operators given the various possible setups that could differ widely across games, game modes, mods, and plugins. Operators would be better off implementing their own custom entrypoint scripts without having to accommodate pre-included ones in the design of their setups.
+Including a generic, conventional `docker-entrypoint.sh` script would unlikely adequately serve operators given the various possible setups that could differ widely across games, game modes, mods, and plugins. Operators would be better off implementing their own custom entrypoint scripts without having to accommodate pre-included ones in the design of their setups.
 
 This leads us to the next and a much related consideration.
 
