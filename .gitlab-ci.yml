@@ -99,7 +99,10 @@ build-image:
       # Push the game image
       if [ ! "${NO_PUSH}" = 'true' ]; then
           date
-          time docker push "${REPOSITORY}"
+          time docker push "${GAME_IMAGE}"
+          if [ "${PIPELINE}" = 'update' ]; then
+              time docker push "${REPOSITORY}:${GAME_VERSION}-layered"
+          fi
           date
       fi
   after_script:
