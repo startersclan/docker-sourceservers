@@ -129,26 +129,26 @@ send-notification:
       fi
       export JOB_STATUS=$( echo -n "$JOB" | jq -r '.status' )
       echo "Sending notification"
-      BODY=$( cat << EOF
+      BODY=$( cat <<EOF
       {
-        "build_num": "$CI_JOB_ID",
-        "username": "$CI_PROJECT_NAMESPACE",
-        "reponame": "$CI_PROJECT_NAME",
-        "branch": "$CI_COMMIT_BRANCH",
-        "build_parameters": {
-            "GAME_VERSION": "$GAME_VERSION",
-            "APPID": "$APPID",
-            "CLIENT_APPID": "$CLIENT_APPID",
-            "GAME": "$GAME",
-            "MOD": "$MOD",
-            "GAME_UPDATE_COUNT": "$GAME_UPDATE_COUNT",
-            "FIX_APPMANIFEST": "$FIX_APPMANIFEST",
-            "LATEST": "$LATEST",
-            "CACHE": "$CACHE",
-            "NO_TEST": "$NO_TEST",
-            "NO_PUSH": "$NO_PUSH"
-        },
-        "status": "$JOB_STATUS"
+          "build_num": "$CI_JOB_ID",
+          "username": "$CI_PROJECT_NAMESPACE",
+          "reponame": "$CI_PROJECT_NAME",
+          "branch": "$CI_COMMIT_BRANCH",
+          "build_parameters": {
+              "GAME_VERSION": "$GAME_VERSION",
+              "APPID": "$APPID",
+              "CLIENT_APPID": "$CLIENT_APPID",
+              "GAME": "$GAME",
+              "MOD": "$MOD",
+              "GAME_UPDATE_COUNT": "$GAME_UPDATE_COUNT",
+              "FIX_APPMANIFEST": "$FIX_APPMANIFEST",
+              "LATEST": "$LATEST",
+              "CACHE": "$CACHE",
+              "NO_TEST": "$NO_TEST",
+              "NO_PUSH": "$NO_PUSH"
+          },
+          "status": "$JOB_STATUS"
       }
       EOF
       )

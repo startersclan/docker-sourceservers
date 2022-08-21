@@ -199,28 +199,29 @@ jobs:
               if [ "$JOB_STATUS" == "success" ] || [ "$JOB_STATUS" == "failed" ] || [ "$JOB_STATUS" == "cancelled" ]; then
                   echo "Sending notification"
                   export JOB_NUMBER=$( echo -n "$JOB" | jq -r '.job_number' )
-                  BODY=$( echo '{}' | jq '
+                  BODY=$( cat <<EOF
                   {
-                    "build_num": env.JOB_NUMBER,
-                    "username": env.CIRCLE_PROJECT_USERNAME,
-                    "reponame": env.CIRCLE_PROJECT_REPONAME,
-                    "branch": env.CIRCLE_BRANCH,
-                    "build_parameters": {
-                        "GAME_VERSION": env.GAME_VERSION,
-                        "APPID": env.APPID,
-                        "CLIENT_APPID": env.CLIENT_APPID,
-                        "GAME": env.GAME,
-                        "MOD": env.MOD,
-                        "GAME_UPDATE_COUNT": env.GAME_UPDATE_COUNT,
-                        "FIX_APPMANIFEST": env.FIX_APPMANIFEST,
-                        "LATEST": env.LATEST,
-                        "CACHE": env.CACHE,
-                        "NO_TEST": env.NO_TEST,
-                        "NO_PUSH": env.NO_PUSH
-                    },
-                    "status": env.JOB_STATUS
+                      "build_num": env.JOB_NUMBER,
+                      "username": env.CIRCLE_PROJECT_USERNAME,
+                      "reponame": env.CIRCLE_PROJECT_REPONAME,
+                      "branch": env.CIRCLE_BRANCH,
+                      "build_parameters": {
+                          "GAME_VERSION": env.GAME_VERSION,
+                          "APPID": env.APPID,
+                          "CLIENT_APPID": env.CLIENT_APPID,
+                          "GAME": env.GAME,
+                          "MOD": env.MOD,
+                          "GAME_UPDATE_COUNT": env.GAME_UPDATE_COUNT,
+                          "FIX_APPMANIFEST": env.FIX_APPMANIFEST,
+                          "LATEST": env.LATEST,
+                          "CACHE": env.CACHE,
+                          "NO_TEST": env.NO_TEST,
+                          "NO_PUSH": env.NO_PUSH
+                      },
+                      "status": env.JOB_STATUS
                   }
-                  ' )
+                  EOF
+                  )
                   echo "BODY: $BODY"
                   date
                   STATUS=$( curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' -H "x-circleci-webhook-secret: $X_CIRCLECI_WEBHOOK_SECRET" --data "$BODY" "$NOTIFICATION_WEBHOOK" && exit 0 || exit 1 )
