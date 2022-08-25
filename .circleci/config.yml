@@ -153,7 +153,11 @@ jobs:
           if [ ! "${NO_PUSH}" = 'true' ]; then
               date
               time docker push "${GAME_IMAGE}"
-              if [ "${PIPELINE}" = 'update' ]; then
+              if [ "${PIPELINE}" = 'build' ]; then
+                  if [ "${LATEST}" = 'true' ]; then
+                      time docker push "${REPOSITORY}:latest"
+                  fi
+              elif [ "${PIPELINE}" = 'update' ]; then
                   time docker push "${REPOSITORY}:${GAME_VERSION}-layered"
               fi
               date

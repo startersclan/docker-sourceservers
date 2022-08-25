@@ -96,9 +96,13 @@ script:
   # Push the game image
   if [ ! "${NO_PUSH}" = 'true' ]; then
       date
-      time travis_wait 30 docker push "${GAME_IMAGE}"
-      if [ "${PIPELINE}" = 'update' ]; then
-          time travis_wait 30 docker push "${REPOSITORY}:${GAME_VERSION}-layered"
+      time docker push "${GAME_IMAGE}"
+      if [ "${PIPELINE}" = 'build' ]; then
+          if [ "${LATEST}" = 'true' ]; then
+              time docker push "${REPOSITORY}:latest"
+          fi
+      elif [ "${PIPELINE}" = 'update' ]; then
+          time docker push "${REPOSITORY}:${GAME_VERSION}-layered"
       fi
       date
   fi
