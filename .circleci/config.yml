@@ -203,7 +203,7 @@ jobs:
               if [ "$JOB_STATUS" == "success" ] || [ "$JOB_STATUS" == "failed" ] || [ "$JOB_STATUS" == "cancelled" ]; then
                   echo "Sending notification"
                   export JOB_NUMBER=$( echo -n "$JOB" | jq -r '.job_number' )
-                  BODY=$( cat <<EOF
+                  BODY=$( echo '{}' | jq '
                   {
                       "build_num": env.JOB_NUMBER,
                       "username": env.CIRCLE_PROJECT_USERNAME,
@@ -224,8 +224,7 @@ jobs:
                       },
                       "status": env.JOB_STATUS
                   }
-                  EOF
-                  )
+                  ' )
                   echo "BODY: $BODY"
                   date
                   STATUS=$( curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' -H "x-circleci-webhook-secret: $X_CIRCLECI_WEBHOOK_SECRET" --data "$BODY" "$NOTIFICATION_WEBHOOK" && exit 0 || exit 1 )
