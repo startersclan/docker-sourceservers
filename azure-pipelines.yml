@@ -7,7 +7,7 @@ jobs:
     vmImage: ubuntu-16.04
   workspace:
     clean: all
-  timeoutInMinutes: 80
+  timeoutInMinutes: 120
   variables:
     BUILD_DIR: build/
     UPDATE_DIR: update/
