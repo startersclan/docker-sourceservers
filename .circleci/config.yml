@@ -86,13 +86,13 @@ jobs:
           # Process variables
           PIPELINE="${CIRCLE_BRANCH}"
           if [ "${APPID}" = 90 ]; then
-            REPOSITORY="${REGISTRY_GOLDSOURCE}/${GAME}"
-            GAME_ENGINE="hlds"
-            GAME_BIN="hlds_linux"
+              REPOSITORY="${REGISTRY_GOLDSOURCE}/${GAME}"
+              GAME_ENGINE="hlds"
+              GAME_BIN="hlds_linux"
           else
-            REPOSITORY="${REGISTRY_SOURCE}/${GAME}"
-            GAME_ENGINE="srcds"
-            GAME_BIN="srcds_linux"
+              REPOSITORY="${REGISTRY_SOURCE}/${GAME}"
+              GAME_ENGINE="srcds"
+              GAME_BIN="srcds_linux"
           fi
           echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
           # Build / Update the game image
