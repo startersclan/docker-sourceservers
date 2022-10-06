@@ -7,12 +7,13 @@ jobs:
     vmImage: ubuntu-20.04
   workspace:
     clean: all
-  timeoutInMinutes: 120
   variables:
     BUILD_DIR: build/
     UPDATE_DIR: update/
+  timeoutInMinutes: 120
   steps:
   - script: |
+      set +e
       hostname
       whoami
       cat /etc/*release
@@ -22,9 +23,10 @@ jobs:
       pwd
       docker info
       docker version
-    displayName: System info
-  - script: |
+
+      # Terminate the build on errors
       set -e
+
       # Process variables
       PIPELINE="${BUILD_SOURCEBRANCHNAME}"
       if [ "${APPID}" = 90 ]; then
@@ -36,17 +38,9 @@ jobs:
           GAME_ENGINE="srcds"
           GAME_BIN="srcds_linux"
       fi
+
       echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
-      # Set job-scoped variables
-      echo "##vso[task.setvariable variable=PIPELINE]${PIPELINE}"
-      echo "##vso[task.setvariable variable=REPOSITORY]${REPOSITORY}"
-      echo "##vso[task.setvariable variable=GAME_ENGINE]${GAME_ENGINE}"
-      echo "##vso[task.setvariable variable=GAME_BIN]${GAME_BIN}"
-    env:
-      REGISTRY_PASSWORD: $(REGISTRY_PASSWORD)
-    displayName: Before script
-  - script: |
-      set -e
+
       # Build / Update the game image
       if [ "${PIPELINE}" = 'build' ]; then
           GAME_IMAGE="${REPOSITORY}:${GAME_VERSION}"
@@ -91,11 +85,7 @@ jobs:
       docker images
       docker inspect "${GAME_IMAGE}"
       docker history "${GAME_IMAGE}"
-      # Set job-scoped variables
-      echo "##vso[task.setvariable variable=GAME_IMAGE]${GAME_IMAGE}"
-    displayName: Build image
-  - script: |
-      set -e
+
       # Test the game image
       if [ ! "${NO_TEST}" = 'true' ]; then
           date
@@ -106,9 +96,7 @@ jobs:
               "printenv && echo && ls -al && echo && exec ${GAME_BIN} -game ${GAME} +version +exit"
           echo; date
       fi
-    displayName: Test image
-  - script: |
-      set -e
+
       # Push the game image
       if [ ! "${NO_PUSH}" = 'true' ]; then
           date
@@ -122,7 +110,9 @@ jobs:
           fi
           date
       fi
-    displayName: Push image
+    env:
+      REGISTRY_PASSWORD: $(REGISTRY_PASSWORD)
+    displayName: Build, test, push image
   - script: |
       docker logout
     displayName: After script

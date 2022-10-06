@@ -67,8 +67,10 @@ jobs:
     steps:
     - checkout
     - run:
-        name: System info
+        name: Build, test, push image
+        no_output_timeout: 40m
         command: |
+          set +e
           hostname
           whoami
           cat /etc/*release
@@ -78,11 +80,10 @@ jobs:
           pwd
           docker info
           docker version
-    - run:
-        name: Build, test, push image
-        no_output_timeout: 40m
-        command: |
+
+          # Terminate the build on errors
           set -e
+
           # Process variables
           PIPELINE="${CIRCLE_BRANCH}"
           if [ "${APPID}" = 90 ]; then
@@ -94,7 +95,9 @@ jobs:
               GAME_ENGINE="srcds"
               GAME_BIN="srcds_linux"
           fi
+
           echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
+
           # Build / Update the game image
           if [ "${PIPELINE}" = 'build' ]; then
               GAME_IMAGE="${REPOSITORY}:${GAME_VERSION}"
@@ -139,6 +142,7 @@ jobs:
           docker images
           docker inspect "${GAME_IMAGE}"
           docker history "${GAME_IMAGE}"
+
           # Test the game image
           if [ ! "${NO_TEST}" = 'true' ]; then
               date
@@ -149,6 +153,7 @@ jobs:
                   "printenv && echo && ls -al && echo && exec ${GAME_BIN} -game ${GAME} +version +exit"
               echo; date
           fi
+
           # Push the game image
           if [ ! "${NO_PUSH}" = 'true' ]; then
               date

@@ -8,11 +8,9 @@ env:
     - BUILD_DIR="build/"
     - UPDATE_DIR="update/"
 
-before_script:
+script:
   - |
-    # Terminate the build on errors
-    set -e
-  - |
+    set +e
     hostname
     whoami
     cat /etc/*release
@@ -22,21 +20,24 @@ before_script:
     pwd
     docker info
     docker version
-  - |
+
+    # Terminate the build on errors
+    set -e
+
     # Process variables
     PIPELINE="${TRAVIS_BRANCH}"
     if [ "${APPID}" = 90 ]; then
-      REPOSITORY="${REGISTRY_GOLDSOURCE}/${GAME}"
-      GAME_ENGINE="hlds"
-      GAME_BIN="hlds_linux"
+        REPOSITORY="${REGISTRY_GOLDSOURCE}/${GAME}"
+        GAME_ENGINE="hlds"
+        GAME_BIN="hlds_linux"
     else
-      REPOSITORY="${REGISTRY_SOURCE}/${GAME}"
-      GAME_ENGINE="srcds"
-      GAME_BIN="srcds_linux"
+        REPOSITORY="${REGISTRY_SOURCE}/${GAME}"
+        GAME_ENGINE="srcds"
+        GAME_BIN="srcds_linux"
     fi
+
     echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
-script:
-  - |
+
     # Build / Update the game image
     if [ "${PIPELINE}" = 'build' ]; then
         GAME_IMAGE="${REPOSITORY}:${GAME_VERSION}"
@@ -81,7 +82,7 @@ script:
     docker images
     docker inspect "${GAME_IMAGE}"
     docker history "${GAME_IMAGE}"
-  - |
+
     # Test the game image
     if [ ! "${NO_TEST}" = 'true' ]; then
         date
@@ -92,7 +93,7 @@ script:
             "printenv && echo && ls -al && echo && exec ${GAME_BIN} -game ${GAME} +version +exit"
         echo; date
     fi
-  - |
+
     # Push the game image
     if [ ! "${NO_PUSH}" = 'true' ]; then
         date
@@ -107,4 +108,5 @@ script:
         date
     fi
 after_script:
-  - docker logout
+  - |
+    docker logout
