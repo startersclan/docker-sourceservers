@@ -4,7 +4,7 @@ pr: none
 jobs:
 - job: Linux
   pool:
-    vmImage: ubuntu-16.04
+    vmImage: ubuntu-20.04
   workspace:
     clean: all
   timeoutInMinutes: 80
