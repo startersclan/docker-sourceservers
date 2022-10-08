@@ -3,7 +3,7 @@
 FROM startersclan/steamcmd:git-20190605.0.0
 
 ARG SERVER_DIR=/server
-ARG APPMANIFEST_AR_URL=https://github.com/startersclan/hlds-appmanifest/archive/v1.0.0.tar.gz
+ARG APPMANIFEST_AR_URL=https://github.com/startersclan/hlds-appmanifest/archive/v1.0.1.tar.gz
 ARG APPID
 ARG MOD
 ARG FIX_APPMANIFEST=false
