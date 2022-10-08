@@ -1,0 +1,140 @@
+Running a benchmark to measure system clock frequency...
+Finished RDTSC test. To prevent the startup delay from this benchmark, set the environment variable RDTSC_FREQUENCY to 2393.000000 on this system. This value is dependent upon the CPU clock speed and architecture and should be determined separately for each server. The use of this mechanism for timing can be disabled by setting RDTSC_FREQUENCY to 'disabled'.
+#Using breakpad minidump system
+Using breakpad crash handler
+#
+#Console initialized.
+Unable to remove /server/left4dead/addonlist.txt!
+#Unable to remove /server/left4dead/addonlist.txt!
+#Game.dll loaded for "L4D - Co-op - Normal"
+#ConVarRef cl_language doesn't point to an existing ConVar
+Server is hibernating
+Queuing heartbeat send to legacy master server.
+Game supporting (2) split screen players
+maxplayers set to 18
+Unable to remove /server/left4dead/addonlist.txt!
+Unable to remove /server/left4dead/addonlist.txt!
+Looking up breakpad interfaces from steamclient
+Calling BreakpadMiniDumpSystemInit
+Version 1.0.4.1 (left4dead)
+Exe build: 15:44:00 Jan 28 2022 (8483) (215)
+Network: IP 172.16.0.2, mode MP, dedicated Yes, ports 27015 SV / 0 CL
+Reference Count for Material __particlesdepthwrite (1) != 0
+Reference Count for Material debug/particleerror (1) != 0
+Reference Count for Material particle/spray1/spray1 (42) != 0
+Reference Count for Material particle/particle_glow_03 (3) != 0
+Reference Count for Material particle/pebble1/particle_pebble_1 (11) != 0
+Reference Count for Material particle/smoke1/smoke1 (23) != 0
+Reference Count for Material particle/blood_core (11) != 0
+Reference Count for Material particle/blood_drop (2) != 0
+Reference Count for Material particle/headshot/headshot (8) != 0
+Reference Count for Material particle/blood_mist/blood_mist (12) != 0
+Reference Count for Material particle/blood_mist/blood_mist_nodepthblend (4) != 0
+Reference Count for Material particle/beam_blood_01 (2) != 0
+Reference Count for Material particle/bleedout_01 (3) != 0
+Reference Count for Material particle/beam_smoke_01_alpha (5) != 0
+Reference Count for Material particle/goo/goo (4) != 0
+Reference Count for Material particle/smoke1/smoke1_nearcull (6) != 0
+Reference Count for Material particle/vistasmokev1/vistasmokev4_addself_nearcull (1) != 0
+Reference Count for Material particle/particle_glow_03_streak (1) != 0
+Reference Count for Material particle/particle_glow_01_streak (1) != 0
+Reference Count for Material particle/blood_core_streak (1) != 0
+Reference Count for Material particle/vistasmokev1/vistasmokev1 (11) != 0
+Reference Count for Material particle/particle_debris_burst/particle_debris_burst_002 (10) != 0
+Reference Count for Material particle/particle_flares/particle_flare_004 (3) != 0
+Reference Count for Material particle/fire_particle_4/fire_particle_4 (49) != 0
+Reference Count for Material particle/particle_flares/particle_flare_004_nodepth (1) != 0
+Reference Count for Material particle/spray1/spray1_streak (3) != 0
+Reference Count for Material particle/vistasmokev1_add_nearcull (2) != 0
+Reference Count for Material particle/star_noz (3) != 0
+Reference Count for Material particle/screenspaceboomervomit (2) != 0
+Reference Count for Material particle/vistasmokev1_min_depth_nearcull (15) != 0
+Reference Count for Material particle/warp_ripple2 (2) != 0
+Reference Count for Material vgui/white (15) != 0
+Reference Count for Material particle/impact/fleks (66) != 0
+Reference Count for Material particle/vistasmokev1/vistasmokev1_nearcull (24) != 0
+Reference Count for Material particle/particle_smokegrenade_sc (19) != 0
+Reference Count for Material particle/particle_spark (20) != 0
+Reference Count for Material particle/particle_debris_burst/particle_debris_burst_001 (6) != 0
+Reference Count for Material particle/water_splash/water_splash (11) != 0
+Reference Count for Material particle/particle_ring_wave_12 (7) != 0
+Reference Count for Material particle/particle_flares/particle_flare_001_nodepth_noz (3) != 0
+Reference Count for Material particle/smoke1/smoke1_fade (3) != 0
+Reference Count for Material particle/leaf/leafdead (2) != 0
+Reference Count for Material particle/impact/fleks2 (10) != 0
+Reference Count for Material particle/warp_ripple (1) != 0
+Reference Count for Material particle/spray1/spray1_addself (1) != 0
+Reference Count for Material particle/particle_glow_04 (3) != 0
+Reference Count for Material effects/bubble (2) != 0
+Reference Count for Material particle/smoker_tongue_beam (4) != 0
+Reference Count for Material particle/particle_glow_04_additive (4) != 0
+Reference Count for Material particle/blood_splatter/blood_splatter (4) != 0
+Reference Count for Material particle/fire_burning_character/fire_screen_crop (4) != 0
+Reference Count for Material particle/warp_ripple3 (2) != 0
+Reference Count for Material particle/particle_modulate_01_noz (1) != 0
+Reference Count for Material particle/smoker_tongue_joint (1) != 0
+Reference Count for Material particle/particle_spore/particle_spore (3) != 0
+Reference Count for Material particle/droplets/droplets_minsize_nodepth (2) != 0
+Reference Count for Material particle/vistasmokev1/vistasmokev4_nearcull (6) != 0
+Reference Count for Material particle/vistasmokev1/vistasmokev4_nocull (3) != 0
+Reference Count for Material particle/droplets/droplets (1) != 0
+Reference Count for Material particle/vistasmokev1_fog_add (1) != 0
+Reference Count for Material particle/particle_ring_wave_8_add_nearcull (1) != 0
+Reference Count for Material particle/particle_glow_01_additive (3) != 0
+Reference Count for Material particle/particle_glow_03_additive (2) != 0
+Reference Count for Material particle/particle_ring_wave_9_add (1) != 0
+Reference Count for Material particle/particle_modulate_01_nearcull (2) != 0
+Reference Count for Material particle/particle_flares/particle_flare_001_nodepth_noz_minsize (2) != 0
+Reference Count for Material particle/particle_flares/particle_flare_007b_nodepth (1) != 0
+Reference Count for Material particle/particle_flares/particle_flare_009_nodepth_noz_minmax (1) != 0
+Reference Count for Material particle/flashlight_glow (3) != 0
+Reference Count for Material particle/particle_flares/particle_flare_003_nodepth (1) != 0
+Reference Count for Material particle/beam_smoke_01 (9) != 0
+Reference Count for Material particle/beam_flashlight (1) != 0
+Reference Count for Material particle/particle_gauze (1) != 0
+Reference Count for Material particle/crackedpavementdecal (1) != 0
+Reference Count for Material particle/particle_ring_wave_10_add (3) != 0
+Reference Count for Material particle/smoke1/smoke1_additive (2) != 0
+Reference Count for Material particle/particle_muzzleflash4 (3) != 0
+Reference Count for Material particle/particle_muzzleflash2 (2) != 0
+Reference Count for Material particle/particle_muzzleflashx (4) != 0
+Reference Count for Material particle/particle_modulate_01 (1) != 0
+Reference Count for Material particle/fire_burning_character/fire_burning_character_nodepth (10) != 0
+Reference Count for Material particle/muzzleflashcloud (4) != 0
+Reference Count for Material particle/particle_glow_05_additive (1) != 0
+Reference Count for Material particle/fire_burning_character/fire_burning_character (4) != 0
+Reference Count for Material particle/vistasmokev1/vistasmokev1_fire (3) != 0
+Reference Count for Material particle/vistasmokev1/vistasmokev1_fire5_noz (1) != 0
+Reference Count for Material particle/particle_flares/particle_flare_004b_mod_ob (2) != 0
+Reference Count for Material particle/particle_ring_wave_2 (1) != 0
+Reference Count for Material particle/particle_glow_02_add_15ob_trail (3) != 0
+Reference Count for Material particle/particle_glow_07_15ob (2) != 0
+Reference Count for Material particle/particle_glow_05_add_15ob_minsize (2) != 0
+Reference Count for Material particle/particle_glow_05_add_5ob (2) != 0
+Reference Count for Material particle/vistasmokev1_add_nearcull_nodepth (1) != 0
+Reference Count for Material particle/particle_debris_02 (1) != 0
+Reference Count for Material particle/particle_glow_05_add_15ob_noz (2) != 0
+Reference Count for Material particle/fire_burning_character/fire_burning_character_noz (1) != 0
+Reference Count for Material particle/particle_flares/particle_flare_001_nodepth_noz_nearfade (1) != 0
+Reference Count for Material particle/particle_muzzleflash2_noz (2) != 0
+Reference Count for Material particle/particle_glow_05_additive_noz_minsize (2) != 0
+Reference Count for Material particle/particle_flares/particle_flare_007b_noz (1) != 0
+Reference Count for Material particle/shells/particle_shells (12) != 0
+Reference Count for Material particle/smoke1/smoke1_nearcull3 (1) != 0
+Reference Count for Material effects/yellowflare_noz (5) != 0
+Reference Count for Material particle/particle_modulate_02 (1) != 0
+Reference Count for Material particle/particle_flares/particle_flare_001_nodepth_noz_alpha (1) != 0
+Reference Count for Material effects/laser1_noz (1) != 0
+Reference Count for Material particle/particle_ring_wave_10_add_noz (2) != 0
+Reference Count for Material particle/particle_glow_02 (2) != 0
+Reference Count for Material particle/particle_sphere_additive_noz_15ob (3) != 0
+Reference Count for Material particle/particle_sphere (4) != 0
+Reference Count for Material particle/particle_ring_wave_additive (2) != 0
+File /server/left4dead/pak01_028.vpk was never closed
+File /server/left4dead/pak01_028.vpk was never closed
+File /server/left4dead_dlc3/pak01_004.vpk was never closed
+File /server/left4dead_dlc3/pak01_004.vpk was never closed
+File /server/left4dead_dlc3/pak01_005.vpk was never closed
+File /server/left4dead_dlc3/pak01_005.vpk was never closed
+File /server/left4dead/pak01_054.vpk was never closed
+File /server/left4dead/pak01_054.vpk was never closed

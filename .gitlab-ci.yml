@@ -97,9 +97,19 @@ build-image:
               -t \
               --rm \
               "${GAME_IMAGE}" \
-              "printenv && echo && ls -al && echo && exec ${GAME_BIN} -game ${GAME} +version +exit"
+              "printenv && echo && ls -al && echo && exec ${GAME_BIN} -game ${GAME} +version +exit" | tee /tmp/test
           echo; date
       fi
+
+      # Test that steamcmd really updated the game
+      TEST_VERSION_LINES=$( cat /tmp/test | grep -iE 'exe|version' | sed 's/[^0-9]//g' )
+      if ! cat /tmp/test | grep -iE 'exe|version' | sed 's/[^0-9]//g' | grep -E "^$GAME_VERSION" > /dev/null; then
+          echo "Game version did not match expected GAME_VERSION=$GAME_VERSION"
+          echo "TEST_VERSION_LINES:"
+          echo "$TEST_VERSION_LINES"
+          exit 1
+      fi
+      rm -f /tmp/test
 
       # Push the game image
       if [ ! "${NO_PUSH}" = 'true' ]; then

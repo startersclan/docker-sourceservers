@@ -1,0 +1,24 @@
+
+Console initialized.
+Using breakpad crash handler
+Setting breakpad minidump AppID = 50
+Forcing breakpad minidump interfaces to load
+dlopen failed trying to load:
+/root/.steam/sdk32/steamclient.so
+with error:
+/root/.steam/sdk32/steamclient.so: cannot open shared object file: No such file or directory
+Looking up breakpad interfaces from steamclient
+Calling BreakpadMiniDumpSystemInit
+Protocol version 48
+Exe version 1.1.2.2/Stdio (valve)
+Exe build: 17:23:32 May 24 2018 (7882)
+STEAM Auth Server
+Protocol version 48
+Exe version 1.1.2.2/Stdio (valve)
+Exe build: 21:47:32 Aug  8 2018 (7882)
+Server IP address 172.16.0.2:27015
+Can't register variable mapcyclefile, already defined
+Can't register variable servercfgfile, already defined
+Can't register variable lservercfgfile, already defined
+couldn't exec listip.cfg
+couldn't exec banned.cfg
