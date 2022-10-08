@@ -1,3 +1,9 @@
+#!/bin/sh
+set -eu
+
+BASE_DIR=$( dirname "$0" | xargs realpath )
+cd "$BASE_DIR"
+
 docker run --rm -it goldsourceservers/cstrike 'hlds_linux -game cstrike +version +exit' > hlds_cstrike
 docker run --rm -it goldsourceservers/czero 'hlds_linux -game czero +version +exit' > hlds_czero
 docker run --rm -it goldsourceservers/dmc 'hlds_linux -game dmc +version +exit' > hlds_dmc
