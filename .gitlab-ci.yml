@@ -20,11 +20,11 @@ build-image:
 
 send-notification:
   stage: post-build
+  image: alpine:3.8
   rules:
     - if: $CI_PIPELINE_SOURCE == "trigger"
     - if: $CI_PIPELINE_SOURCE == "web"
   when: always
-  image: alpine:3.8
   script:
     - |
       command -v curl || apk add --no-cache curl
