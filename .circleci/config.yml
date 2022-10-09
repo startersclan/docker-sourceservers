@@ -58,8 +58,8 @@ jobs:
       CLIENT_APPID: << pipeline.parameters.CLIENT_APPID >>
       GAME: << pipeline.parameters.GAME >>
       MOD: << pipeline.parameters.MOD >>
-      GAME_UPDATE_COUNT: << pipeline.parameters.GAME_UPDATE_COUNT >>
       FIX_APPMANIFEST: << pipeline.parameters.FIX_APPMANIFEST >>
+      GAME_UPDATE_COUNT: << pipeline.parameters.GAME_UPDATE_COUNT >>
       LATEST: << pipeline.parameters.LATEST >>
       CACHE: << pipeline.parameters.CACHE >>
       NO_TEST: << pipeline.parameters.NO_TEST >>
@@ -190,8 +190,8 @@ jobs:
       CLIENT_APPID: << pipeline.parameters.CLIENT_APPID >>
       GAME: << pipeline.parameters.GAME >>
       MOD: << pipeline.parameters.MOD >>
-      GAME_UPDATE_COUNT: << pipeline.parameters.GAME_UPDATE_COUNT >>
       FIX_APPMANIFEST: << pipeline.parameters.FIX_APPMANIFEST >>
+      GAME_UPDATE_COUNT: << pipeline.parameters.GAME_UPDATE_COUNT >>
       LATEST: << pipeline.parameters.LATEST >>
       CACHE: << pipeline.parameters.CACHE >>
       NO_TEST: << pipeline.parameters.NO_TEST >>
@@ -228,8 +228,8 @@ jobs:
                           "CLIENT_APPID": env.CLIENT_APPID,
                           "GAME": env.GAME,
                           "MOD": env.MOD,
-                          "GAME_UPDATE_COUNT": env.GAME_UPDATE_COUNT,
                           "FIX_APPMANIFEST": env.FIX_APPMANIFEST,
+                          "GAME_UPDATE_COUNT": env.GAME_UPDATE_COUNT,
                           "LATEST": env.LATEST,
                           "CACHE": env.CACHE,
                           "NO_TEST": env.NO_TEST,
