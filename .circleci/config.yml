@@ -68,7 +68,7 @@ jobs:
         name: Build, test, push image
         no_output_timeout: 40m
         command: |
-          export PIPELINE="${CIRCLE_BRANCH}"
+          export PIPELINE="$CIRCLE_BRANCH"
           ./build.sh
 
   send-notification:

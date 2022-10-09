@@ -45,7 +45,7 @@ REGISTRY_SOURCE=${REGISTRY_SOURCE:?err}
 
 # Process job variables
 PIPELINE=${PIPELINE:?err}
-if [ "${PIPELINE}" = 'build' ]; then
+if [ "$PIPELINE" = 'build' ]; then
     GAME_VERSION=${GAME_VERSION:?err}
     APPID=${APPID:?err}
     CLIENT_APPID=${CLIENT_APPID:?err}
@@ -56,7 +56,7 @@ if [ "${PIPELINE}" = 'build' ]; then
     CACHE=${CACHE:-}
     NO_TEST=${NO_TEST:-}
     NO_PUSH=${NO_PUSH:-}
-elif [ "${PIPELINE}" = 'update' ]; then
+elif [ "$PIPELINE" = 'update' ]; then
     GAME_VERSION=${GAME_VERSION:?err}
     APPID=${APPID:?err}
     GAME=${GAME:?err}
@@ -68,12 +68,12 @@ fi
 # Process default job variables
 BUILD_DIR='build/'
 UPDATE_DIR='update/'
-if [ "${APPID}" = 90 ]; then
-    REPOSITORY="${REGISTRY_GOLDSOURCE}/${GAME}"
+if [ "$APPID" = 90 ]; then
+    REPOSITORY="$REGISTRY_GOLDSOURCE/$GAME"
     GAME_ENGINE="hlds"
     GAME_BIN="hlds_linux"
 else
-    REPOSITORY="${REGISTRY_SOURCE}/${GAME}"
+    REPOSITORY="$REGISTRY_SOURCE/$GAME"
     GAME_ENGINE="srcds"
     GAME_BIN="srcds_linux"
 fi
@@ -96,59 +96,59 @@ docker version
 set -e
 
 # Docker registry login
-echo "${REGISTRY_PASSWORD}" | docker login -u "${REGISTRY_USER}" --password-stdin
+echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
 
 # Build / Update the game image
-if [ "${PIPELINE}" = 'build' ]; then
+if [ "$PIPELINE" = 'build' ]; then
     GAME_IMAGE="${REPOSITORY}:${GAME_VERSION}"
-    if [ "${CACHE}" = 'true' ]; then
+    if [ "$CACHE" = 'true' ]; then
         date
-        time docker pull "${GAME_IMAGE}" || true
+        time docker pull "$GAME_IMAGE" || true
     fi
     date
     time docker build \
-        --cache-from "${GAME_IMAGE}" \
-        --build-arg APPID="${APPID}" \
-        --build-arg MOD="${MOD}" \
-        --build-arg FIX_APPMANIFEST="${FIX_APPMANIFEST}" \
-        --build-arg CLIENT_APPID="${CLIENT_APPID}" \
-        -t "${GAME_IMAGE}" \
-        --label "appid=${APPID}" \
-        --label "mod=${MOD}" \
-        --label "client_appid=${CLIENT_APPID}" \
-        --label "game=${GAME}" \
-        --label "game_version=${GAME_VERSION}" \
+        --cache-from "$GAME_IMAGE" \
+        --build-arg APPID="$APPID" \
+        --build-arg MOD="$MOD" \
+        --build-arg FIX_APPMANIFEST="$FIX_APPMANIFEST" \
+        --build-arg CLIENT_APPID="$CLIENT_APPID" \
+        -t "$GAME_IMAGE" \
+        --label "appid=$APPID" \
+        --label "mod=$MOD" \
+        --label "client_appid=$CLIENT_APPID" \
+        --label "game=$GAME" \
+        --label "game_version=$GAME_VERSION" \
         --label "game_update_count=0" \
-        --label "game_engine=${GAME_ENGINE}" \
-        "${BUILD_DIR}"
-    if [ "${LATEST}" = 'true' ]; then
-        docker tag "${GAME_IMAGE}" "${REPOSITORY}:latest"
+        --label "game_engine=$GAME_ENGINE" \
+        "$BUILD_DIR"
+    if [ "$LATEST" = 'true' ]; then
+        docker tag "$GAME_IMAGE" "${REPOSITORY}:latest"
     fi
     date
-elif [ "${PIPELINE}" = 'update' ]; then
+elif [ "$PIPELINE" = 'update' ]; then
     GAME_IMAGE="${REPOSITORY}:latest"
     date
-    time docker pull "${GAME_IMAGE}"
+    time docker pull "$GAME_IMAGE"
     date
     time docker build \
-    --build-arg GAME_IMAGE="${GAME_IMAGE}" \
-    -t "${GAME_IMAGE}" \
-    --label "game_version=${GAME_VERSION}" \
-    --label "game_update_count=${GAME_UPDATE_COUNT}" \
-    "${UPDATE_DIR}"
-    docker tag "${GAME_IMAGE}" "${REPOSITORY}:${GAME_VERSION}-layered"
+    --build-arg GAME_IMAGE="$GAME_IMAGE" \
+    -t "$GAME_IMAGE" \
+    --label "game_version=$GAME_VERSION" \
+    --label "game_update_count=$GAME_UPDATE_COUNT" \
+    "$UPDATE_DIR"
+    docker tag "$GAME_IMAGE" "${REPOSITORY}:${GAME_VERSION}-layered"
     date
 fi
 docker images
-docker inspect "${GAME_IMAGE}"
-docker history "${GAME_IMAGE}"
+docker inspect "$GAME_IMAGE"
+docker history "$GAME_IMAGE"
 
 # Test the game image
-if [ ! "${NO_TEST}" = 'true' ]; then
+if [ ! "$NO_TEST" = 'true' ]; then
     date
-    time docker run -t --rm "${GAME_IMAGE}" "printenv && ls -al"
+    time docker run -t --rm "$GAME_IMAGE" "printenv && ls -al"
     date
-    time docker run -t --rm "${GAME_IMAGE}" "${GAME_BIN} -game ${GAME} +version +exit" | tee /tmp/test
+    time docker run -t --rm "$GAME_IMAGE" "$GAME_BIN -game $GAME +version +exit" | tee /tmp/test
     date
 fi
 # Verify game version of the game image matches the value of GAME_VERSION
@@ -163,14 +163,14 @@ fi
 rm -f /tmp/test
 
 # Push the game image
-if [ ! "${NO_PUSH}" = 'true' ]; then
+if [ ! "$NO_PUSH" = 'true' ]; then
     date
-    time docker push "${GAME_IMAGE}"
-    if [ "${PIPELINE}" = 'build' ]; then
-        if [ "${LATEST}" = 'true' ]; then
+    time docker push "$GAME_IMAGE"
+    if [ "$PIPELINE" = 'build' ]; then
+        if [ "$LATEST" = 'true' ]; then
             time docker push "${REPOSITORY}:latest"
         fi
-    elif [ "${PIPELINE}" = 'update' ]; then
+    elif [ "$PIPELINE" = 'update' ]; then
         time docker push "${REPOSITORY}:${GAME_VERSION}-layered"
     fi
     date
