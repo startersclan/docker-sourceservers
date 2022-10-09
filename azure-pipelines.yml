@@ -98,7 +98,7 @@ jobs:
       fi
       # Verify game version of the game image matches the value of GAME_VERSION
       GAME_IMAGE_VERSION_LINES=$( cat /tmp/test | grep -iE '\bexe\b|version' | sed 's/[^0-9]//g' )
-      if ! echo "$GAME_IMAGE_VERSION_LINES" | grep -E "^$GAME_VERSION$" > /dev/null; then
+      if ! echo "$GAME_IMAGE_VERSION_LINES" | grep -E "^$GAME_VERSION" > /dev/null; then
           echo "Game version does not match GAME_VERSION=$GAME_VERSION"
           echo "GAME_IMAGE_VERSION_LINES:"
           echo "$GAME_IMAGE_VERSION_LINES"
