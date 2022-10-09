@@ -10,7 +10,7 @@ jobs:
   timeoutInMinutes: 120
   steps:
   - script: |
-      export PIPELINE="${BUILD_SOURCEBRANCHNAME}"
+      export PIPELINE="$BUILD_SOURCEBRANCHNAME"
       ./build.sh
     env:
       REGISTRY_PASSWORD: $(REGISTRY_PASSWORD)

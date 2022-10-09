@@ -5,5 +5,5 @@ services: docker
 
 script:
   - |
-    export PIPELINE="${TRAVIS_BRANCH}"
+    export PIPELINE="$TRAVIS_BRANCH"
     ./build.sh
