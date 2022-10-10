@@ -19,24 +19,24 @@ date
 echo "Sending notification"
 BODY=$( cat <<EOF
 {
-"build_num": "$CIRCLE_BUILD_NUM",
-"username": "$CIRCLE_PROJECT_USERNAME",
-"reponame": "$CIRCLE_PROJECT_REPONAME",
-"branch": "$CIRCLE_BRANCH",
-"build_parameters": {
-    "GAME_VERSION": "$GAME_VERSION",
-    "APPID": "$APPID",
-    "CLIENT_APPID": "$CLIENT_APPID",
-    "GAME": "$GAME",
-    "MOD": "$MOD",
-    "FIX_APPMANIFEST": "$FIX_APPMANIFEST",
-    "GAME_UPDATE_COUNT": "$GAME_UPDATE_COUNT",
-    "LATEST": "$LATEST",
-    "CACHE": "$CACHE",
-    "NO_TEST": "$NO_TEST",
-    "NO_PUSH": "$NO_PUSH"
-},
-"status": "$BUILD_STATUS"
+    "build_num": "$CIRCLE_BUILD_NUM",
+    "username": "$CIRCLE_PROJECT_USERNAME",
+    "reponame": "$CIRCLE_PROJECT_REPONAME",
+    "branch": "$CIRCLE_BRANCH",
+    "build_parameters": {
+        "GAME_VERSION": "$GAME_VERSION",
+        "APPID": "$APPID",
+        "CLIENT_APPID": "$CLIENT_APPID",
+        "GAME": "$GAME",
+        "MOD": "$MOD",
+        "FIX_APPMANIFEST": "$FIX_APPMANIFEST",
+        "GAME_UPDATE_COUNT": "$GAME_UPDATE_COUNT",
+        "LATEST": "$LATEST",
+        "CACHE": "$CACHE",
+        "NO_TEST": "$NO_TEST",
+        "NO_PUSH": "$NO_PUSH"
+    },
+    "status": "$BUILD_STATUS"
 }
 EOF
 )
