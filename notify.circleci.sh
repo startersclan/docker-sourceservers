@@ -17,26 +17,26 @@ while true; do
         echo "Sending notification"
         export JOB_NUMBER=$( echo -n "$JOB" | jq -r '.job_number' )
         BODY=$( cat <<EOF
-        {
-            "build_num": "$JOB_NUMBER",
-            "username": "$CIRCLE_PROJECT_USERNAME",
-            "reponame": "$CIRCLE_PROJECT_REPONAME",
-            "branch": "$CIRCLE_BRANCH",
-            "build_parameters": {
-                "GAME_VERSION": "$GAME_VERSION",
-                "APPID": "$APPID",
-                "CLIENT_APPID": "$CLIENT_APPID",
-                "GAME": "$GAME",
-                "MOD": "$MOD",
-                "FIX_APPMANIFEST": "$FIX_APPMANIFEST",
-                "GAME_UPDATE_COUNT": "$GAME_UPDATE_COUNT",
-                "LATEST": "$LATEST",
-                "CACHE": "$CACHE",
-                "NO_TEST": "$NO_TEST",
-                "NO_PUSH": "$NO_PUSH"
-            },
-            "status": "$JOB_STATUS"
-        }
+{
+    "build_num": "$JOB_NUMBER",
+    "username": "$CIRCLE_PROJECT_USERNAME",
+    "reponame": "$CIRCLE_PROJECT_REPONAME",
+    "branch": "$CIRCLE_BRANCH",
+    "build_parameters": {
+        "GAME_VERSION": "$GAME_VERSION",
+        "APPID": "$APPID",
+        "CLIENT_APPID": "$CLIENT_APPID",
+        "GAME": "$GAME",
+        "MOD": "$MOD",
+        "FIX_APPMANIFEST": "$FIX_APPMANIFEST",
+        "GAME_UPDATE_COUNT": "$GAME_UPDATE_COUNT",
+        "LATEST": "$LATEST",
+        "CACHE": "$CACHE",
+        "NO_TEST": "$NO_TEST",
+        "NO_PUSH": "$NO_PUSH"
+    },
+    "status": "$JOB_STATUS"
+}
 EOF
         )
         echo "BODY: $BODY"

@@ -88,6 +88,7 @@ jobs:
       NO_TEST: << pipeline.parameters.NO_TEST >>
       NO_PUSH: << pipeline.parameters.NO_PUSH >>
     steps:
+    - checkout
     - run:
         name: Send notification
         command: |
