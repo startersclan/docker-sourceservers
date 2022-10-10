@@ -134,11 +134,11 @@ elif [ "$PIPELINE" = 'update' ]; then
     time docker pull "$GAME_IMAGE"
     date
     time docker build \
-    --build-arg GAME_IMAGE="$GAME_IMAGE" \
-    -t "$GAME_IMAGE" \
-    --label "game_version=$GAME_VERSION" \
-    --label "game_update_count=$GAME_UPDATE_COUNT" \
-    "$DOCKER_BUILD_CONTEXT"
+        --build-arg GAME_IMAGE="$GAME_IMAGE" \
+        -t "$GAME_IMAGE" \
+        --label "game_version=$GAME_VERSION" \
+        --label "game_update_count=$GAME_UPDATE_COUNT" \
+        "$DOCKER_BUILD_CONTEXT"
     docker tag "$GAME_IMAGE" "${REPOSITORY}:${GAME_VERSION}-layered"
     date
 fi
