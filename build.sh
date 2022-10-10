@@ -1,10 +1,10 @@
 #/bin/sh
 
-##############################  CI variables  ##############################
+#################################  CI variables  #################################
 # Use this section for local builds.
-# All types specified in comments are purely for user reference.
 # All variables regardless of type will be processed as strings in builds.
-############################################################################
+# Types specified in comments but serve to aid users in populating said variables.
+##################################################################################
 
 ## User variables ##
 # REGISTRY_USER=          # string - docker hub username - required
@@ -35,7 +35,7 @@
 # NO_TEST=                # bool - optional
 # NO_PUSH=                # bool - optional
 
-##########################  End of CI variables  ###########################
+#############################  End of CI variables  ##############################
 
 # Process user variables
 REGISTRY_USER=${REGISTRY_USER:?err}
