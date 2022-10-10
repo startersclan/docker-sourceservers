@@ -23,17 +23,17 @@
 # MOD=                    # string - required for APPID=90
 # FIX_APPMANIFEST=true    # bool - only applicable to but optional for APPID=90
 # LATEST=true             # bool - optional
-# CACHE=                  # bool - optional
-# NO_TEST=                # bool - optional
-# NO_PUSH=                # bool - optional
+# CACHE=false             # bool - optional
+# NO_TEST=false           # bool - optional
+# NO_PUSH=false           # bool - optional
 
 ## update variables ##
 # GAME_VERSION=           # int - required
 # APPID=                  # int - required
 # GAME=                   # string - required
 # GAME_UPDATE_COUNT=      # int - required
-# NO_TEST=                # bool - optional
-# NO_PUSH=                # bool - optional
+# NO_TEST=false           # bool - optional
+# NO_PUSH=false           # bool - optional
 
 #############################  End of CI variables  ##############################
 
