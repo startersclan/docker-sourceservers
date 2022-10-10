@@ -43,7 +43,6 @@ workflows:
     when: << pipeline.parameters.APPID >>       # Push builds can be disabled by enabling 'Only build pull requests' via project settings
     jobs:
     - build-image
-    - send-notification
 
 jobs:
   build-image:
@@ -69,27 +68,10 @@ jobs:
         no_output_timeout: 40m
         command: |
           export PIPELINE="$CIRCLE_BRANCH"
-          ./build.sh
-
-  send-notification:
-    machine:
-      image: ubuntu-2004:2022.07.1
-      docker_layer_caching: false
-    environment:
-      GAME_VERSION: << pipeline.parameters.GAME_VERSION >>
-      APPID: << pipeline.parameters.APPID >>
-      CLIENT_APPID: << pipeline.parameters.CLIENT_APPID >>
-      GAME: << pipeline.parameters.GAME >>
-      MOD: << pipeline.parameters.MOD >>
-      FIX_APPMANIFEST: << pipeline.parameters.FIX_APPMANIFEST >>
-      GAME_UPDATE_COUNT: << pipeline.parameters.GAME_UPDATE_COUNT >>
-      LATEST: << pipeline.parameters.LATEST >>
-      CACHE: << pipeline.parameters.CACHE >>
-      NO_TEST: << pipeline.parameters.NO_TEST >>
-      NO_PUSH: << pipeline.parameters.NO_PUSH >>
-    steps:
-    - checkout
+          ./build.sh && echo 'success' > build-status || echo 'failed' > build-status
     - run:
         name: Send notification
+        when: always
         command: |
+          export BUILD_STATUS=$( cat build-status )
           ./notify.circleci.sh
