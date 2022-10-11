@@ -16,7 +16,10 @@ build-image:
   script:
     - |
       export PIPELINE="$CI_COMMIT_BRANCH"
-      ./build.sh
+      ./build.sh && echo 'success' > .build-status || ( echo 'failed' > .build-status && exit 1 )
+  artifacts:
+    paths:
+      - .build-status
 
 send-notification:
   stage: post-build
@@ -27,4 +30,6 @@ send-notification:
   when: always
   script:
     - |
+      apk add --no-cache curl
+      export BUILD_STATUS=$( cat .build-status )
       ./notify.sh
