@@ -20,6 +20,8 @@ build-image:
   artifacts:
     paths:
       - .build-status
+    when: always
+    expire_in: never
 
 send-notification:
   stage: post-build
