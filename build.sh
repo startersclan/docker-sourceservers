@@ -11,6 +11,8 @@
 # REGISTRY_PASSWORD=      # string - docker hub password or api key - required
 # REGISTRY_GOLDSOURCE=    # string - docker hub username or organization for goldsource games - required
 # REGISTRY_SOURCE=        # string - docker hub username or organization for source games - required
+# STEAM_USERNAME=         # string - steam username - optional
+# STEAM_PASSWORD=         # string - steam password - optional
 
 ## Job variables ##
 # PIPELINE=               # string - 'build' for clean builds, 'update' for layered builds - required
@@ -26,6 +28,7 @@
 # CACHE=false             # bool - optional
 # NO_TEST=false           # bool - optional
 # NO_PUSH=false           # bool - optional
+# STEAM_LOGIN=false       # bool - optional
 
 ## update variables ##
 # GAME_VERSION=           # int - required
@@ -34,6 +37,7 @@
 # GAME_UPDATE_COUNT=      # int - required
 # NO_TEST=false           # bool - optional
 # NO_PUSH=false           # bool - optional
+# STEAM_LOGIN=false       # bool - optional
 
 #############################  End of CI variables  ##############################
 
@@ -42,6 +46,8 @@ REGISTRY_USER=${REGISTRY_USER:?err}
 REGISTRY_PASSWORD=${REGISTRY_PASSWORD:?err}
 REGISTRY_GOLDSOURCE=${REGISTRY_GOLDSOURCE:?err}
 REGISTRY_SOURCE=${REGISTRY_SOURCE:?err}
+export STEAM_USERNAME=${STEAM_USERNAME:-}
+export STEAM_PASSWORD=${STEAM_PASSWORD:-}
 
 # Process job variables
 PIPELINE=${PIPELINE:?err}
@@ -56,6 +62,7 @@ if [ "$PIPELINE" = 'build' ]; then
     CACHE=${CACHE:-}
     NO_TEST=${NO_TEST:-}
     NO_PUSH=${NO_PUSH:-}
+    STEAM_LOGIN=${STEAM_LOGIN:-}
 elif [ "$PIPELINE" = 'update' ]; then
     GAME_VERSION=${GAME_VERSION:?err}
     APPID=${APPID:?err}
@@ -63,9 +70,11 @@ elif [ "$PIPELINE" = 'update' ]; then
     GAME_UPDATE_COUNT=${GAME_UPDATE_COUNT:?err}
     NO_TEST=${NO_TEST:-}
     NO_PUSH=${NO_PUSH:-}
+    STEAM_LOGIN=${STEAM_LOGIN:-}
 fi
 
 # Process default job variables
+export DOCKER_BUILDKIT=1
 if [ "$PIPELINE" = 'build' ]; then
     DOCKER_BUILD_CONTEXT='build/'
 elif [ "$PIPELINE" = 'update' ]; then
@@ -99,7 +108,9 @@ docker version
 set -e
 
 # Docker registry login
-echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
+if [ ! "$NO_PUSH" = 'true' ]; then
+    echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
+fi
 
 # Build / Update the game image
 if [ "$PIPELINE" = 'build' ]; then
@@ -111,10 +122,13 @@ if [ "$PIPELINE" = 'build' ]; then
     date
     time docker build \
         --cache-from "$GAME_IMAGE" \
+        --secret id=STEAM_USERNAME,env=STEAM_USERNAME \
+        --secret id=STEAM_PASSWORD,env=STEAM_PASSWORD \
         --build-arg APPID="$APPID" \
         --build-arg MOD="$MOD" \
         --build-arg FIX_APPMANIFEST="$FIX_APPMANIFEST" \
         --build-arg CLIENT_APPID="$CLIENT_APPID" \
+        --build-arg STEAM_LOGIN="$STEAM_LOGIN" \
         -t "$GAME_IMAGE" \
         --label "appid=$APPID" \
         --label "mod=$MOD" \
@@ -134,7 +148,10 @@ elif [ "$PIPELINE" = 'update' ]; then
     time docker pull "$GAME_IMAGE"
     date
     time docker build \
+        --secret id=STEAM_USERNAME,env=STEAM_USERNAME \
+        --secret id=STEAM_PASSWORD,env=STEAM_PASSWORD \
         --build-arg GAME_IMAGE="$GAME_IMAGE" \
+        --build-arg STEAM_LOGIN="$STEAM_LOGIN" \
         -t "$GAME_IMAGE" \
         --label "game_version=$GAME_VERSION" \
         --label "game_update_count=$GAME_UPDATE_COUNT" \
@@ -180,4 +197,6 @@ if [ ! "$NO_PUSH" = 'true' ]; then
 fi
 
 # Docker registry logout
-docker logout
+if [ ! "$NO_PUSH" = 'true' ]; then
+    docker logout
+fi

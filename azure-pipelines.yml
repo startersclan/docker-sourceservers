@@ -14,4 +14,6 @@ jobs:
       ./build.sh
     env:
       REGISTRY_PASSWORD: $(REGISTRY_PASSWORD)
+      STEAM_USERNAME: $(STEAM_USERNAME)
+      STEAM_PASSWORD: $(STEAM_PASSWORD)
     displayName: Build, test, push image

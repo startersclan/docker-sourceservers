@@ -11,8 +11,56 @@ on:
     - master
 
 jobs:
-  test:
+  test-build-hlds:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.repository_owner != 'startersclan'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Test
+      run: |
+        . ./test/build-hlds-cstrike.env
+        . ./build.sh
+      env:
+        STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
+        STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
+
+  test-update-hlds:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.repository_owner != 'startersclan'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Test
+      run: |
+        . ./test/update-hlds-cstrike.env
+        . ./build.sh
+      env:
+        STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
+        STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
+
+  test-build-srcds:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Test
+      run: |
+        . ./test/build-srcds-hl2mp.env
+        . ./build.sh
+      env:
+        STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
+        STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
+
+  test-update-srcds:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Test
+      run: |
+        . ./test/update-srcds-hl2mp.env
+        . ./build.sh
+      env:
+        STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
+        STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}

@@ -36,6 +36,9 @@ parameters:
   NO_PUSH:
     type: string
     default: ''
+  STEAM_LOGIN:
+    type: string
+    default: ''
 
 workflows:
   version: 2
@@ -61,6 +64,7 @@ jobs:
       CACHE: << pipeline.parameters.CACHE >>
       NO_TEST: << pipeline.parameters.NO_TEST >>
       NO_PUSH: << pipeline.parameters.NO_PUSH >>
+      STEAM_LOGIN: << pipeline.parameters.STEAM_LOGIN >>
     steps:
     - checkout
     - run:
