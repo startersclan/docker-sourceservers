@@ -44,7 +44,7 @@ EOF
 )
 echo "BODY: $BODY"
 date
-STATUS=$( curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' -H "x-gitlab-webhook-secret: $X_GITLAB_WEBHOOK_SECRET" --data "$BODY" "$NOTIFICATION_WEBHOOK" )
+STATUS=$( curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' -H "$X_CI_WEBHOOK_SECRET_HEADER" --data "$BODY" "$NOTIFICATION_WEBHOOK" )
 echo "STATUS: $STATUS"
 if [ $STATUS -eq 200 ] || [ $STATUS -eq 201 ]; then
     echo "Notification sent"
