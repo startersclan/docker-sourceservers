@@ -72,7 +72,7 @@ jobs:
         no_output_timeout: 40m
         command: |
           export PIPELINE="$CIRCLE_BRANCH"
-          ./build.sh && echo 'success' > build-status || echo 'failed' > build-status
+          ./build.sh && echo 'success' > build-status || ( echo 'failed' > build-status && exit 1 )
     - run:
         name: Send notification
         when: always
