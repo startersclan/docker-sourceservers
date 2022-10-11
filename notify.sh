@@ -1,15 +1,10 @@
 #/bin/sh
 
-command -v curl || apk add --no-cache curl
-command -v jq || apk add --no-cache jq
-JOB=$( curl -s -X GET "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/pipelines/$CI_PIPELINE_ID/jobs" | jq -r '.[] | select(.name == "build-image")' )
+# Process job variables
+BUILD_STATUS=${BUILD_STATUS:?err}
+
+# Send notification
 date
-echo "JOB:" $JOB
-if [ -z "$JOB" ]; then
-    echo "No job name matching 'build-image'"
-    exit 1
-fi
-export JOB_STATUS=$( echo -n "$JOB" | jq -r '.status' )
 echo "Sending notification"
 BODY=$( cat <<EOF
 {
@@ -31,7 +26,7 @@ BODY=$( cat <<EOF
         "NO_PUSH": "$NO_PUSH",
         "STEAM_LOGIN": "$STEAM_LOGIN"
     },
-    "status": "$JOB_STATUS"
+    "status": "$BUILD_STATUS"
 }
 EOF
 )
