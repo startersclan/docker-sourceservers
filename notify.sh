@@ -28,7 +28,8 @@ BODY=$( cat <<EOF
         "LATEST": "$LATEST",
         "CACHE": "$CACHE",
         "NO_TEST": "$NO_TEST",
-        "NO_PUSH": "$NO_PUSH"
+        "NO_PUSH": "$NO_PUSH",
+        "STEAM_LOGIN": "$STEAM_LOGIN"
     },
     "status": "$JOB_STATUS"
 }

@@ -4,9 +4,9 @@ stages:
 
 build-image:
   stage: build
-  image: docker:18.09.2-git
+  image: docker:20.10.18-git
   services:
-    - docker:18.09.2-dind
+    - docker:20.10.18-dind
   rules:
     - if: $CI_PIPELINE_SOURCE == "trigger"
     - if: $CI_PIPELINE_SOURCE == "web"

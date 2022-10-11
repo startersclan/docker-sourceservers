@@ -1,28 +1,40 @@
+# syntax=docker/dockerfile:1
+
 # Builds a base image for the specified game.
 
 FROM startersclan/steamcmd:git-20190605.0.0
 
 ARG SERVER_DIR=/server
-ARG APPMANIFEST_AR_URL=https://github.com/startersclan/hlds-appmanifest/archive/v1.0.0.tar.gz
+ARG APPMANIFEST_AR_URL=https://github.com/startersclan/hlds-appmanifest/archive/refs/tags/v2.0.0.tar.gz
 ARG APPID
 ARG MOD
 ARG FIX_APPMANIFEST=false
 ARG CLIENT_APPID
 ARG INSTALL_COUNT=3
+ARG STEAM_LOGIN
 
 # Download game
-RUN echo "[BUILD] SERVER_DIR: $SERVER_DIR"; \
+RUN --mount=type=secret,id=STEAM_USERNAME \
+    --mount=type=secret,id=STEAM_PASSWORD \
+    STEAM_USERNAME=$( cat /run/secrets/STEAM_USERNAME ); \
+    STEAM_PASSWORD=$( cat /run/secrets/STEAM_PASSWORD ); \
+    echo "[BUILD] SERVER_DIR: $SERVER_DIR"; \
     echo "[BUILD] APPMANIFEST_AR_URL: $APPMANIFEST_AR_URL"; \
     echo "[BUILD] APPID: $APPID"; \
     echo "[BUILD] MOD: $MOD"; \
     echo "[BUILD] FIX_APPMANIFEST: $FIX_APPMANIFEST"; \
     echo "[BUILD] INSTALL_COUNT: $INSTALL_COUNT"; \
-    if [ "$APPID" = 90 ] && [ -n "$MOD" ]; then \
-        steamcmdArgs="+login anonymous +force_install_dir $SERVER_DIR +app_set_config $APPID mod $MOD +app_update $APPID validate +quit"; \
+    echo "[BUILD] STEAM_LOGIN: $STEAM_LOGIN"; \
+    if ( [ "$STEAM_LOGIN" = 'true' ] && [ -n "$STEAM_USERNAME" ] && [ -n "$STEAM_PASSWORD" ] || [ "$APPID" = 90 ] ); then \
+        steamcmdLoginArgs="$STEAM_USERNAME $STEAM_PASSWORD"; \
     else \
-        steamcmdArgs="+login anonymous +force_install_dir $SERVER_DIR +app_update $APPID validate +quit"; \
+        steamcmdLoginArgs='anonymous'; \
     fi; \
-    echo "[BUILD] steamcmd arguments: $steamcmdArgs"; \
+    if [ "$APPID" = 90 ] && [ -n "$MOD" ]; then \
+        steamcmdArgs="+force_install_dir $SERVER_DIR +login $steamcmdLoginArgs +app_set_config $APPID mod $MOD +app_update $APPID validate +quit"; \
+    else \
+        steamcmdArgs="+force_install_dir $SERVER_DIR +login $steamcmdLoginArgs +app_update $APPID validate +quit"; \
+    fi; \
     echo "[BUILD] Downloading game"; \
     if [ "$APPID" = 90 ] && [ "$FIX_APPMANIFEST" = 'true' ]; then \
         echo "[BUILD] APPID is 90 and FIX_APPMANIFEST is true. Appmanifest fix and install count will apply."; \
@@ -33,8 +45,10 @@ RUN echo "[BUILD] SERVER_DIR: $SERVER_DIR"; \
             i=$(( i+1 )); \
             if [ "$i" -eq 1 ]; then \
                 echo "[BUILD] Downloading and applying appmanifest fix"; \
-                curl -sqL "$APPMANIFEST_AR_URL" | tar -zxvf - -C $SERVER_DIR/steamapps --strip-components=1; \
+                ls -al $SERVER_DIR/steamapps; \
+                curl -sqL "$APPMANIFEST_AR_URL" | tar -zxvf - -C $SERVER_DIR/steamapps --wildcards "$GAME/*" --strip-components=2; \
             fi; \
+            ls -al $SERVER_DIR/steamapps; \
         done; \
     else \
         echo "[BUILD] Either APPID is not 90 or FIX_APPMANIFEST is not true. Appmanifest fix and install count will be ignored."; \
@@ -45,12 +59,15 @@ RUN echo "[BUILD] SERVER_DIR: $SERVER_DIR"; \
         linux64 \
         package \
         public \
+        siteserverui \
         linux32/libtier0_s.so \
         linux32/libvstdlib_s.so \
         linux32/steamclient.so \
         linux32/steamconsole.so \
-    && rm -rf "~/.steam" \
-    && rm -rf "~/Steam"
+        update_hosts_cached.vdf \
+        /root/.steam \
+        /root/Steam
+
 
 # Apply game fixes
 RUN echo "[BUILD] Applying game fixes"; \
