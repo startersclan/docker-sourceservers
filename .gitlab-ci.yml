@@ -34,4 +34,5 @@ send-notification:
     - |
       apk add --no-cache curl
       export BUILD_STATUS=$( cat .build-status )
+      export X_CI_WEBHOOK_SECRET_HEADER="x-gitlab-webhook-secret: $X_GITLAB_WEBHOOK_SECRET"
       ./notify.sh
