@@ -25,7 +25,7 @@ build-image:
 
 send-notification:
   stage: post-build
-  image: alpine:3.8
+  image: alpine:3.14.8
   rules:
     - if: $CI_PIPELINE_SOURCE == "trigger"
     - if: $CI_PIPELINE_SOURCE == "web"
