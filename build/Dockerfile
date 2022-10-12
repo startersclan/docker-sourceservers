@@ -68,7 +68,6 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
         /root/.steam \
         /root/Steam
 
-
 # Apply game fixes
 RUN echo "[BUILD] Applying game fixes"; \
     # Create steam_appid.txt containing the game's appid to prevent crashes on first run
