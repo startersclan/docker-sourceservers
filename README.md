@@ -153,11 +153,9 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 
 ### Game versions & tags
 
-Both a new *clean* and *layered* image of a game are built on each available game update. Due to the immutable nature of Docker image layers, the files within a given image cannot be *updated* in the conventional sense of the word which assumes the possibility of *deletion* and so reclamation of storage space. Instead, changes made to an image involve only *modification* with respect to its newest layer and are committed as incremental layer(s) to the image, thus ever only contributing to an increase in image size.
+A *layered* image of a game is but a *clean* image compounded with game update layers. *Clean* images are tagged by `<version>`, while *layered* images are tagged by `<version>-layered`.
 
-By design, the `latest` tag of a game is as far as possible made to point to the game's newest *layered* image. By using the `latest` tag, *layered* images are used, circumventing the need to pull entire *clean* images for obtaining game updates. While *layered* images grow in size with increasing update layers, the `latest` tag is made to automatically reference the upcoming *clean* image of a game if its referenced *layered* image is found to have reached **1.75x** its initial size on an available game update.
-
-Clean images are tagged by `<version>`. Layered images are tagged by `<version>-layered`.
+The `latest` tag of each game points to the game's newest *layered* image unless a newer *clean* image has been built with the `latest` tag. Thus, by using the `latest` tag, *layered* images are used, circumventing the need to pull entire *clean* images for obtaining game updates.
 
 ### Image size
 
@@ -183,11 +181,9 @@ The following are some guidelines on usage of the provided images with `docker`.
 
 #### ENTRYPOINT and CMD
 
-The default `ENTRYPOINT` for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the `CMD` is [`""`](build/Dockerfile#L73). These values make it convenient in development environments wherein the game's command line can simply be appended as the final argument to the `docker run` command. The default entrypoint also allows a string of runtime initialization commands to be executed at runtime, similar to what's typically achieved using entrypoint scripts such as `docker-entrypoint.sh`.
+The default `ENTRYPOINT` for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the `CMD` is [`""`](build/Dockerfile#L73). These values allow a string of initialization commands to be executed before invocation of the game binary, similar to what is commonly achieved with `docker-entrypoint.sh` or multi-line commands in `docker-compose.yml`.
 
-Each of the default values can also be overridden at runtime, a feature well supported by container orchestration tools. Alternatively, they can be modified as part of the build steps in custom images.
-
-In environments supporting use of init containers for provisioning game containers with their necessary configuration before application startup, the recommended approach is to set the *game binary* as the container's `ENTRYPOINT` and its *arguments* as the container's `CMD`, as is documented [here](#starting).
+While the default values may not always be intuitive, they can be overridden with `docker run --entrypoint`, or with container manifests such as `docker-compose.yml`. Alternatively, they can be modified with custom built images.
 
 #### WORKDIR
 
@@ -221,7 +217,7 @@ docker run -it -p 28015:28015/udp --entrypoint /bin/bash goldsourceservers/cstri
 * `-i` for `STDIN` for interactive use of the game console
 * `-d` for running the container in detached mode
 
-For a declarative approach, define game server environments within container manifests such as [`docker-compose.yml`](docs/samples/docker-compose) which can be used for managing instances:
+For a declarative approach, game server environments can be defined within container manifests such as [`docker-compose.yml`](docs/samples/docker-compose) which can then be used for managing instances:
 
 ```shell
 # Via docker-compose
@@ -275,7 +271,7 @@ This leads us to the next and a much related consideration.
 
 The game images **do not** include support for configuring game instances via environment variables.
 
-Docker images are often packaged with applications designed to comply with the [twelve-factor methodology - Store config in the environment](https://12factor.net/config) where environment variables are read directly as configuration by the application, a case in point being the [Docker Registry](https://docs.docker.com/registry/configuration/#override-specific-configuration-options). Some applications however do not read environment variables as configuration but instead accept command line arguments or read from config files wherein it is common for their docker images to include an entrypoint script which maps environment variables onto command line arguments for invocation.
+Docker images are often packaged with applications designed to comply with [twelve-factor methodology - Config](https://12factor.net/config) where environment variables are read directly as configuration by the application, a case in point being the [Docker Registry](https://docs.docker.com/registry/configuration/#override-specific-configuration-options). Some applications however do not read environment variables as configuration but instead accept command line arguments or read from config files wherein it is common for their docker images to include an entrypoint script which maps environment variables onto command line arguments for invocation.
 
 Source and Goldsource games belong to the group of applications that do not read from environment variables but that are instead configured via parameters (i.e. flags beginning with `-`, e.g. `-usercon`, see [SRCDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-Line_Parameters_6) and [HLDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-Line_Parameters_7)), as well as Cvars (i.e. flags beginning with `+`, e.g. `+sv_lan 0`, see [SRCDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Console_Variables_2) and [HLDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Useful_Console_Variables_2)). Although there are many Cvars shared across SRCDS and HLDS games, there are also Cvars that are game-specific (e.g. the many hundreds for `left4dead` and `left4dead2`), as well as mod/plugin-specific (e.g. `sourcemod`, `amxmodx`, `garrysmod`).
 
