@@ -6,6 +6,9 @@
 |:-:|:-:|:-:|
 [![pipeline-github-master-badge][]][pipeline-github-master-link] | [![pipeline-travis-build-badge][]][pipeline-travis-build-link] [![pipeline-azurepipelines-build-badge][]][pipeline-azurepipelines-build-link] [![pipeline-circleci-build-badge][]][pipeline-circleci-build-link] [![pipeline-gitlab-build-badge][]][pipeline-gitlab-build-link] | [![pipeline-travis-update-badge][]][pipeline-travis-update-link] [![pipeline-azurepipelines-update-badge][]][pipeline-azurepipelines-update-link] [![pipeline-circleci-update-badge][]][pipeline-circleci-update-link] [![pipeline-gitlab-update-badge][]][pipeline-gitlab-update-link]
 
+[pipeline-github-master-badge]: https://img.shields.io/github/workflow/status/startersclan/docker-sourceservers/ci-master-pr/master?&label=&logo=github&style=flat-square
+[pipeline-github-master-link]: https://github.com/startersclan/docker-sourceservers/actions?query=branch%3Amaster
+
 [pipeline-travis-build-badge]: https://img.shields.io/travis/com/startersclan/docker-sourceservers/build.svg?label=&logo=travis&style=flat-square
 [pipeline-travis-build-link]: https://app.travis-ci.com/startersclan/docker-sourceservers/builds
 [pipeline-travis-update-badge]: https://img.shields.io/travis/com/startersclan/docker-sourceservers/update.svg?label=&logo=travis&style=flat-square
@@ -25,9 +28,6 @@
 [pipeline-gitlab-build-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=build
 [pipeline-gitlab-update-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=update&label=&logo=gitlab&style=flat-square
 [pipeline-gitlab-update-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=update
-
-[pipeline-github-master-badge]: https://img.shields.io/github/workflow/status/startersclan/docker-sourceservers/ci-master-pr/master?&label=&logo=github&style=flat-square
-[pipeline-github-master-link]: https://github.com/startersclan/docker-sourceservers/actions?query=branch%3Amaster
 
 ## Supported Tags
 
@@ -155,7 +155,7 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 
 A *layered* image of a game is but a *clean* image compounded with game update layers. *Clean* images are tagged by `<version>`, while *layered* images are tagged by `<version>-layered`.
 
-The `latest` tag of each game points to the game's newest *layered* image unless a newer *clean* image has been built with the `latest` tag. Thus, by using the `latest` tag, *layered* images are used, circumventing the need to pull entire *clean* images for obtaining game updates.
+The `latest` tag of each game points to the game's newest *layered* image unless a newer *clean* image has been built with the `latest` tag. Thus, by using the `latest` tag, *layered* images are almost always used, circumventing the need to pull entire *clean* images for obtaining game updates.
 
 ### Image size
 
