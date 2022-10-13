@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-# Updates the specified game image.
+# Builds a layered image containing the latest game version based upon the specified game image.
 
 ARG GAME_IMAGE
 FROM $GAME_IMAGE

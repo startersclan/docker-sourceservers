@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-# Builds a base image for the specified game.
+# Builds a clean image containing the latest version of the specified game.
 
 FROM startersclan/steamcmd:git-20190605.0.0
 
