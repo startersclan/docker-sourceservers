@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 # Process job variables
 BUILD_STATUS=${BUILD_STATUS:?err}
