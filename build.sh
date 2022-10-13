@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 #################################  CI variables  #################################
 # Use this section for local builds.
