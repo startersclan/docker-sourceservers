@@ -257,7 +257,7 @@ Due to the variety of SRCDS and HLDS games and the various ways each of them can
 
 ### Base images
 
-The game images are [based on](build/Dockerfile#L3) the images built via the project [`startersclan/docker-steamcmd`](https://github.com/startersclan/docker-steamcmd). Issues or pull requests that are potentially applicable across the game images such as those pertaining to the OS, administrative tools, or game dependencies are to be directed to that project instead.
+The game images are [based on](build/Dockerfile#L5) the images built via the project [`startersclan/docker-steamcmd`](https://github.com/startersclan/docker-steamcmd). Issues or pull requests that are potentially applicable across the game images such as those pertaining to the OS, administrative tools, or game dependencies are to be directed to that project instead.
 
 ### Entrypoint script
 
