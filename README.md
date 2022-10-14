@@ -181,9 +181,9 @@ The following are some guidelines on usage of the provided images with `docker`.
 
 #### ENTRYPOINT and CMD
 
-The default `ENTRYPOINT` for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the `CMD` is [`""`](build/Dockerfile#L73). These values allow a string of initialization commands to be executed before invocation of the game binary, similar to what is commonly achieved with `docker-entrypoint.sh` or multi-line commands in `docker-compose.yml`.
+The default `ENTRYPOINT` for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the `CMD` is [`""`](build/Dockerfile#L73). These values allow a string of initialization commands to be executed before invocation of the game binary, similar to what is commonly achieved with `docker-entrypoint.sh`, or through [multi-line commands](docs/samples/docker-compose/docker-compose.bash-c.yml#L10-L18) in container manifests.
 
-While the default values may not always be intuitive, they can be overridden with `docker run --entrypoint`, or with container manifests such as `docker-compose.yml`. Alternatively, they can be modified with custom built images.
+While the default values may not always be intuitive, they can be overridden with the `docker run` `--entrypoint` parameter, or through their respective [configuration options](docs/samples/docker-compose/docker-compose.binary.yml#L10-L13) in container manifests. Alternatively, they can be modified with custom built images.
 
 #### WORKDIR
 
