@@ -17,7 +17,7 @@ STEAM_LOGIN=${STEAM_LOGIN:-}
 
 # Send notification
 date
-echo "Sending notification"
+echo 'Sending notification'
 BODY=$( cat <<EOF
 {
     "build_num": "$CI_JOB_ID",
@@ -47,9 +47,9 @@ date
 STATUS=$( curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' -H "$X_CI_WEBHOOK_SECRET_HEADER" --data "$BODY" "$NOTIFICATION_WEBHOOK" )
 echo "STATUS: $STATUS"
 if [ $STATUS -eq 200 ] || [ $STATUS -eq 201 ]; then
-    echo "Notification sent"
+    echo 'Notification sent'
     exit 0
 else
-    echo "Failed to send notification"
+    echo 'Failed to send notification'
     exit 1
 fi
