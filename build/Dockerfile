@@ -46,7 +46,12 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
             if [ "$i" -eq 1 ]; then \
                 echo "[BUILD] Downloading and applying appmanifest fix"; \
                 ls -al $SERVER_DIR/steamapps; \
-                curl -sqL "$APPMANIFEST_AR_URL" | tar -zxvf - -C $SERVER_DIR/steamapps --wildcards "$GAME/*" --strip-components=2; \
+                if [ -n "$MOD" ]; then \
+                    WILDCARD_PATTERN="*/$MOD/*"; \
+                else \
+                    WILDCARD_PATTERN="*/valve/*"; \
+                fi; \
+                curl -sqL "$APPMANIFEST_AR_URL" | tar -zxvf - -C $SERVER_DIR/steamapps --wildcards "$WILDCARD_PATTERN" --strip-components=2; \
             fi; \
             ls -al $SERVER_DIR/steamapps; \
         done; \
