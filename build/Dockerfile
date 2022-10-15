@@ -36,24 +36,29 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
         steamcmdArgs="+force_install_dir $SERVER_DIR +login $steamcmdLoginArgs +app_update $APPID validate +quit"; \
     fi; \
     echo "[BUILD] Downloading game"; \
-    if [ "$APPID" = 90 ] && [ "$FIX_APPMANIFEST" = 'true' ]; then \
-        echo "[BUILD] APPID is 90 and FIX_APPMANIFEST is true. Appmanifest fix and install count will apply."; \
+    if [ "$APPID" = 90 ]; then \
+        echo "[BUILD] APPID is 90. INSTALL_COUNT will apply."; \
+        if [ "$FIX_APPMANIFEST" = 'true' ]; then \
+            echo "[BUILD] FIX_APPMANIFEST is true. Appmanifest fix will apply."; \
+        fi; \
         i=0; \
         while [ "$i" -le $(( $INSTALL_COUNT-1 )) ]; do \
             echo "[BUILD] Current install count: $(( i+1 ))"; \
             steamcmd.sh $steamcmdArgs; \
             i=$(( i+1 )); \
-            if [ "$i" -eq 1 ]; then \
-                echo "[BUILD] Downloading and applying appmanifest fix"; \
-                ls -al $SERVER_DIR/steamapps; \
-                if [ -n "$MOD" ]; then \
-                    WILDCARD_PATTERN="*/$MOD/*"; \
-                else \
-                    WILDCARD_PATTERN="*/valve/*"; \
-                fi; \
-                curl -sqL "$APPMANIFEST_AR_URL" | tar -zxvf - -C $SERVER_DIR/steamapps --wildcards "$WILDCARD_PATTERN" --strip-components=2; \
-            fi; \
             ls -al $SERVER_DIR/steamapps; \
+            if [ "$i" -eq 1 ]; then \
+                if [ "$FIX_APPMANIFEST" = 'true' ]; then \
+                    echo "[BUILD] Downloading and applying appmanifest fix"; \
+                    if [ -n "$MOD" ]; then \
+                        WILDCARD_PATTERN="*/$MOD/*"; \
+                    else \
+                        WILDCARD_PATTERN="*/valve/*"; \
+                    fi; \
+                    curl -sqL "$APPMANIFEST_AR_URL" | tar -zxvf - -C $SERVER_DIR/steamapps --wildcards "$WILDCARD_PATTERN" --strip-components=2; \
+                    ls -al $SERVER_DIR/steamapps; \
+                fi; \
+            fi; \
         done; \
     else \
         echo "[BUILD] Either APPID is not 90 or FIX_APPMANIFEST is not true. Appmanifest fix and install count will be ignored."; \
