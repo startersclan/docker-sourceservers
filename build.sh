@@ -46,8 +46,6 @@ REGISTRY_USER=${REGISTRY_USER:?err}
 REGISTRY_PASSWORD=${REGISTRY_PASSWORD:?err}
 REGISTRY_GOLDSOURCE=${REGISTRY_GOLDSOURCE:?err}
 REGISTRY_SOURCE=${REGISTRY_SOURCE:?err}
-export STEAM_USERNAME=${STEAM_USERNAME:-}
-export STEAM_PASSWORD=${STEAM_PASSWORD:-}
 
 # Process job variables
 PIPELINE=${PIPELINE:?err}
@@ -71,6 +69,13 @@ elif [ "$PIPELINE" = 'update' ]; then
     NO_TEST=${NO_TEST:-}
     NO_PUSH=${NO_PUSH:-}
     STEAM_LOGIN=${STEAM_LOGIN:-}
+fi
+if [ "$STEAM_LOGIN" = 'true' ]; then
+    export STEAM_USERNAME=${STEAM_USERNAME:?err}
+    export STEAM_PASSWORD=${STEAM_PASSWORD:?err}
+else
+    export STEAM_USERNAME=${STEAM_USERNAME:-}
+    export STEAM_PASSWORD=${STEAM_PASSWORD:-}
 fi
 
 # Process default job variables
