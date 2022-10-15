@@ -114,7 +114,7 @@ fi
 
 # Build / Update the game image
 if [ "$PIPELINE" = 'build' ]; then
-    GAME_IMAGE="${REPOSITORY}:${GAME_VERSION}"
+    GAME_IMAGE="$REPOSITORY:$GAME_VERSION"
     if [ "$CACHE" = 'true' ]; then
         date
         time docker pull "$GAME_IMAGE" || true
@@ -139,11 +139,11 @@ if [ "$PIPELINE" = 'build' ]; then
         --label "game_engine=$GAME_ENGINE" \
         "$DOCKER_BUILD_CONTEXT"
     if [ "$LATEST" = 'true' ]; then
-        docker tag "$GAME_IMAGE" "${REPOSITORY}:latest"
+        docker tag "$GAME_IMAGE" "$REPOSITORY:latest"
     fi
     date
 elif [ "$PIPELINE" = 'update' ]; then
-    GAME_IMAGE="${REPOSITORY}:latest"
+    GAME_IMAGE="$REPOSITORY:latest"
     date
     time docker pull "$GAME_IMAGE"
     date
@@ -156,7 +156,7 @@ elif [ "$PIPELINE" = 'update' ]; then
         --label "game_version=$GAME_VERSION" \
         --label "game_update_count=$GAME_UPDATE_COUNT" \
         "$DOCKER_BUILD_CONTEXT"
-    docker tag "$GAME_IMAGE" "${REPOSITORY}:${GAME_VERSION}-layered"
+    docker tag "$GAME_IMAGE" "$REPOSITORY:$GAME_VERSION-layered"
     date
 fi
 docker images
@@ -188,10 +188,10 @@ if [ ! "$NO_PUSH" = 'true' ]; then
     time docker push "$GAME_IMAGE"
     if [ "$PIPELINE" = 'build' ]; then
         if [ "$LATEST" = 'true' ]; then
-            time docker push "${REPOSITORY}:latest"
+            time docker push "$REPOSITORY:latest"
         fi
     elif [ "$PIPELINE" = 'update' ]; then
-        time docker push "${REPOSITORY}:${GAME_VERSION}-layered"
+        time docker push "$REPOSITORY:$GAME_VERSION-layered"
     fi
     date
 fi
