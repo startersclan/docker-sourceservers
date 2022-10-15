@@ -10,7 +10,7 @@ ARG APPID
 ARG MOD
 ARG FIX_APPMANIFEST=false
 ARG CLIENT_APPID
-ARG INSTALL_COUNT=3
+ARG INSTALL_COUNT
 ARG STEAM_LOGIN
 
 # Download game
@@ -18,6 +18,14 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
     --mount=type=secret,id=STEAM_PASSWORD \
     STEAM_USERNAME=$( cat /run/secrets/STEAM_USERNAME ); \
     STEAM_PASSWORD=$( cat /run/secrets/STEAM_PASSWORD ); \
+    if [ -z "$INSTALL_COUNT" ]; then \
+        echo "[BUILD] INSTALL_COUNT is null. Using default values"; \
+        if [ "$APPID" = 90 ]; then \
+            INSTALL_COUNT=3; \
+        else \
+            INSTALL_COUNT=1; \
+        fi; \
+    fi; \
     echo "[BUILD] SERVER_DIR: $SERVER_DIR"; \
     echo "[BUILD] APPMANIFEST_AR_URL: $APPMANIFEST_AR_URL"; \
     echo "[BUILD] APPID: $APPID"; \
@@ -26,8 +34,10 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
     echo "[BUILD] INSTALL_COUNT: $INSTALL_COUNT"; \
     echo "[BUILD] STEAM_LOGIN: $STEAM_LOGIN"; \
     if [ "$STEAM_LOGIN" = 'true' ] ; then \
+        echo "[BUILD] STEAM_LOGIN is true. Will log in via user"; \
         steamcmdLoginArgs="$STEAM_USERNAME $STEAM_PASSWORD"; \
     else \
+        echo "[BUILD] STEAM_LOGIN is null or not true. Will connect anonymously"; \
         steamcmdLoginArgs='anonymous'; \
     fi; \
     if [ "$APPID" = 90 ] && [ -n "$MOD" ]; then \
@@ -35,35 +45,33 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
     else \
         steamcmdArgs="+force_install_dir $SERVER_DIR +login $steamcmdLoginArgs +app_update $APPID validate +quit"; \
     fi; \
-    echo "[BUILD] Downloading game"; \
     if [ "$APPID" = 90 ]; then \
-        echo "[BUILD] APPID is 90. INSTALL_COUNT will apply."; \
         if [ "$FIX_APPMANIFEST" = 'true' ]; then \
-            echo "[BUILD] FIX_APPMANIFEST is true. Appmanifest fix will apply."; \
+            echo "[BUILD] APPID is 90 and FIX_APPMANIFEST is true. Will apply appmanifest fix"; \
+        else \
+            echo "[BUILD] APPID is 90 but FIX_APPMANIFEST is null or not true. Will not apply appmanifest fix"; \
         fi; \
-        i=0; \
-        while [ "$i" -le $(( $INSTALL_COUNT-1 )) ]; do \
-            echo "[BUILD] Current install count: $(( i+1 ))"; \
-            steamcmd.sh $steamcmdArgs; \
-            i=$(( i+1 )); \
-            ls -al $SERVER_DIR/steamapps; \
-            if [ "$i" -eq 1 ]; then \
-                if [ "$FIX_APPMANIFEST" = 'true' ]; then \
-                    echo "[BUILD] Downloading and applying appmanifest fix"; \
-                    if [ -n "$MOD" ]; then \
-                        WILDCARD_PATTERN="*/$MOD/*"; \
-                    else \
-                        WILDCARD_PATTERN="*/valve/*"; \
-                    fi; \
-                    curl -sqL "$APPMANIFEST_AR_URL" | tar -zxvf - -C $SERVER_DIR/steamapps --wildcards "$WILDCARD_PATTERN" --strip-components=2; \
-                    ls -al $SERVER_DIR/steamapps; \
-                fi; \
-            fi; \
-        done; \
     else \
-        echo "[BUILD] Either APPID is not 90 or FIX_APPMANIFEST is not true. Appmanifest fix and install count will be ignored."; \
-        steamcmd.sh $steamcmdArgs; \
+        echo "[BUILD] APPID is not 90. Will not apply appmanifest fix"; \
     fi; \
+    echo "[BUILD] Downloading game"; \
+    i=0; \
+    while [ "$i" -le $(( $INSTALL_COUNT-1 )) ]; do \
+        echo "[BUILD] Install count: [$(( i+1 ))/$INSTALL_COUNT]"; \
+        steamcmd.sh $steamcmdArgs; \
+        ls -al $SERVER_DIR/steamapps; \
+        i=$(( i+1 )); \
+        if [ "$i" -eq 1 ] && [ "$APPID" = 90 ] && [ "$FIX_APPMANIFEST" = 'true' ]; then \
+            if [ -n "$MOD" ]; then \
+                WILDCARD_PATTERN="*/$MOD/*"; \
+            else \
+                WILDCARD_PATTERN="*/valve/*"; \
+            fi; \
+            echo "[BUILD] Applying appmanifest fix"; \
+            curl -sqL "$APPMANIFEST_AR_URL" | tar -zxvf - -C $SERVER_DIR/steamapps --wildcards "$WILDCARD_PATTERN" --strip-components=2; \
+            ls -al $SERVER_DIR/steamapps; \
+        fi; \
+    done; \
     echo "[BUILD] Performing cleanup" \
     && cd "$STEAMCMD_DIR" && rm -rf \
         linux64 \
