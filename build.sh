@@ -82,12 +82,12 @@ elif [ "$PIPELINE" = 'update' ]; then
 fi
 if [ "$APPID" = 90 ]; then
     REPOSITORY="$REGISTRY_GOLDSOURCE/$GAME"
-    GAME_ENGINE="hlds"
-    GAME_BIN="hlds_linux"
+    GAME_ENGINE='hlds'
+    GAME_BIN='hlds_linux'
 else
     REPOSITORY="$REGISTRY_SOURCE/$GAME"
-    GAME_ENGINE="srcds"
-    GAME_BIN="srcds_linux"
+    GAME_ENGINE='srcds'
+    GAME_BIN='srcds_linux'
 fi
 
 # Display pipeline
@@ -135,7 +135,7 @@ if [ "$PIPELINE" = 'build' ]; then
         --label "client_appid=$CLIENT_APPID" \
         --label "game=$GAME" \
         --label "game_version=$GAME_VERSION" \
-        --label "game_update_count=0" \
+        --label 'game_update_count=0' \
         --label "game_engine=$GAME_ENGINE" \
         "$DOCKER_BUILD_CONTEXT"
     if [ "$LATEST" = 'true' ]; then
@@ -166,7 +166,7 @@ docker history "$GAME_IMAGE"
 # Test the game image
 if [ ! "$NO_TEST" = 'true' ]; then
     date
-    time docker run -t --rm "$GAME_IMAGE" "printenv && ls -al"
+    time docker run -t --rm "$GAME_IMAGE" 'printenv && ls -al'
     date
     time docker run -t --rm "$GAME_IMAGE" "$GAME_BIN -game $GAME +version +exit" | tee /tmp/test
     date
@@ -176,7 +176,7 @@ echo 'Verifying game image game version'
 GAME_IMAGE_VERSION_LINES=$( cat /tmp/test | grep -iE '\bexe\b|version' | sed 's/[^0-9]//g' )
 if ! echo "$GAME_IMAGE_VERSION_LINES" | grep -E "^$GAME_VERSION" > /dev/null; then
     echo "Game version does not match GAME_VERSION=$GAME_VERSION"
-    echo "GAME_IMAGE_VERSION_LINES:"
+    echo 'GAME_IMAGE_VERSION_LINES:'
     echo "$GAME_IMAGE_VERSION_LINES"
     exit 1
 fi
