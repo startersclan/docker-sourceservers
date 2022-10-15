@@ -25,7 +25,7 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
     echo "[BUILD] FIX_APPMANIFEST: $FIX_APPMANIFEST"; \
     echo "[BUILD] INSTALL_COUNT: $INSTALL_COUNT"; \
     echo "[BUILD] STEAM_LOGIN: $STEAM_LOGIN"; \
-    if ( [ "$STEAM_LOGIN" = 'true' ] && [ -n "$STEAM_USERNAME" ] && [ -n "$STEAM_PASSWORD" ] || [ "$APPID" = 90 ] ); then \
+    if [ "$STEAM_LOGIN" = 'true' ] ; then \
         steamcmdLoginArgs="$STEAM_USERNAME $STEAM_PASSWORD"; \
     else \
         steamcmdLoginArgs='anonymous'; \
