@@ -18,7 +18,7 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
     echo "[UPDATE] MOD: $MOD"; \
     echo "[UPDATE] INSTALL_COUNT: $INSTALL_COUNT"; \
     echo "[UPDATE] STEAM_LOGIN: $STEAM_LOGIN"; \
-    if [ "$STEAM_LOGIN" = 'true' ] ; then \
+    if [ "$STEAM_LOGIN" = 'true' ]; then \
         echo "[BUILD] STEAM_LOGIN is true. Will log in via user"; \
         steamcmdLoginArgs="$STEAM_USERNAME $STEAM_PASSWORD"; \
     else \
