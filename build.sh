@@ -81,9 +81,9 @@ fi
 # Process default job variables
 export DOCKER_BUILDKIT=1
 if [ "$PIPELINE" = 'build' ]; then
-    DOCKER_BUILD_CONTEXT='build/'
+    BUILD_CONTEXT='build/'
 elif [ "$PIPELINE" = 'update' ]; then
-    DOCKER_BUILD_CONTEXT='update/'
+    BUILD_CONTEXT='update/'
 fi
 if [ "$APPID" = 90 ]; then
     REPOSITORY="$REGISTRY_GOLDSOURCE/$GAME"
@@ -142,7 +142,7 @@ if [ "$PIPELINE" = 'build' ]; then
         --label "game_version=$GAME_VERSION" \
         --label 'game_update_count=0' \
         --label "game_engine=$GAME_ENGINE" \
-        "$DOCKER_BUILD_CONTEXT"
+        "$BUILD_CONTEXT"
     if [ "$LATEST" = 'true' ]; then
         docker tag "$GAME_IMAGE" "$REPOSITORY:latest"
     fi
@@ -160,7 +160,7 @@ elif [ "$PIPELINE" = 'update' ]; then
         -t "$GAME_IMAGE" \
         --label "game_version=$GAME_VERSION" \
         --label "game_update_count=$GAME_UPDATE_COUNT" \
-        "$DOCKER_BUILD_CONTEXT"
+        "$BUILD_CONTEXT"
     docker tag "$GAME_IMAGE" "$REPOSITORY:$GAME_VERSION-layered"
     date
 fi
