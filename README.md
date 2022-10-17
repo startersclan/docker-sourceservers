@@ -159,13 +159,13 @@ The `latest` tag of each game points to the game's newest *layered* image unless
 
 ### Image size
 
-Image sizes shown above or on [Docker Hub](https://hub.docker.com/) correspond to their *compressed* size. Actual sizes after pulling the images vary, but are approximately **2x** the compressed size.
+Image sizes shown above or on [Docker Hub](https://hub.docker.com/) correspond to their *compressed* size. Actual sizes after pulling are approximately **2x** the compressed size.
 
 ### Update duration
 
-From the moment Valve issues an update, the time taken before a game's images are built and available for pulling largely depends on the size of the game. For instance, layered and clean images take about **15** and over **40 minutes** respectively for `Counter-Strike: Global Offensive`, but under **5 minutes** each for `Counter-Strike 1.6`.
+From the moment Valve issues an update, the time taken before a game's images are built and available for pulling largely depends on the size of the game. For instance, layered and clean images typically take *below* **10** and *over* **40 minutes** respectively for `Counter-Strike: Global Offensive`, but *under* **5 minutes** each for `Counter-Strike 1.6`.
 
-Build cache is strategically used where possible to minimize update durations.
+Build cache is used where possible to minimize update durations.
 
 ### Build history
 
@@ -173,7 +173,7 @@ The project uses multiple CI services for its build jobs. You can find the histo
 
 ## Usage
 
-**Disclaimer**: The project assumes knowledge concerning the [`docker`](https://docs.docker.com/) runtime. Instructions on customization and orchestration of containerized game instances are beyond the scope the project.
+**Disclaimer**: The project assumes knowledge concerning use of the [`docker`](https://docs.docker.com/) runtime. Also, instructions on customization and orchestration of containerized game instances are beyond the scope the project.
 
 ### Docker
 
@@ -181,17 +181,17 @@ The following are some guidelines on usage of the provided images with `docker`.
 
 #### ENTRYPOINT and CMD
 
-The default `ENTRYPOINT` for all game images is [`"bash", "-c"`](build/Dockerfile#L72), and the `CMD` is [`""`](build/Dockerfile#L73). These values allow a string of initialization commands to be executed before invocation of the game binary, similar to what is commonly achieved with `docker-entrypoint.sh`, or through [multi-line commands](docs/samples/docker-compose/docker-compose.bash-c.yml#L10-L18) in container manifests.
+The default `ENTRYPOINT` for all game images is [`"bash", "-c"`](build/Dockerfile#L107), and the `CMD` is [`""`](build/Dockerfile#L108). These values allow a string of initialization commands to be executed before invocation of the game binary, similar to what is commonly achieved with `docker-entrypoint.sh`, or through [multi-line commands](docs/samples/docker-compose/docker-compose.bash-c.yml#L13-L18) in container manifests.
 
 While the default values may not always be intuitive, they can be overridden with the `docker run` `--entrypoint` parameter, or through their respective [configuration options](docs/samples/docker-compose/docker-compose.binary.yml#L10-L13) in container manifests. Alternatively, they can be modified with custom built images.
 
 #### WORKDIR
 
-The default work directory for all the images is [`/server`](build/Dockerfile#L70) within which all of a game's files reside.
+The default [work directory](build/Dockerfile#L105) for all the images is [`/server`](build/Dockerfile#L7) within which all of a game's files reside.
 
 #### Starting
 
-The following are some examples of how the game servers can be started:
+##### Via command-line
 
 ```shell
 # Counter-Strike: Global Offensive
@@ -215,7 +215,8 @@ docker run -it -p 28015:28015/udp --entrypoint /bin/bash goldsourceservers/cstri
 
 * `-t` for a pseudo-TTY is mandatory; servers may not run correctly without it
 * `-i` for `STDIN` for interactive use of the game console
-* `-d` for running the container in detached mode
+
+##### Via manifests
 
 For a declarative approach, game server environments can be defined within container manifests such as [`docker-compose.yml`](docs/samples/docker-compose) which can then be used for managing instances:
 
@@ -249,7 +250,7 @@ docker exec containername bash -c 'printenv && ls -al && ps aux'     # Multiple 
 
 To update a game server, simply initiate a pull for the game image by the `latest` tag and recreate the container.
 
-There are many ways to detect when a game server needs an update but which are beyond the scope of the project. Here is [an example](https://stackoverflow.com/a/44740429/3891117) for utilizing a `cronjob` for updating a container.
+There are many ways to detect when a game server needs an update but which are beyond the scope of the project. Here is an example for utilizing a [`cronjob` for updating a container](https://stackoverflow.com/a/44740429/3891117).
 
 ## Important Considerations
 
@@ -273,9 +274,9 @@ The game images **do not** include support for configuring game instances via en
 
 Docker images are often packaged with applications designed to comply with [twelve-factor methodology - Config](https://12factor.net/config) where environment variables are read directly as configuration by the application, a case in point being the [Docker Registry](https://docs.docker.com/registry/configuration/#override-specific-configuration-options). Some applications however do not read environment variables as configuration but instead accept command line arguments or read from config files wherein it is common for their docker images to include an entrypoint script which maps environment variables onto command line arguments for invocation.
 
-Source and Goldsource games belong to the group of applications that do not read from environment variables but that are instead configured via parameters (i.e. flags beginning with `-`, e.g. `-usercon`, see [SRCDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-Line_Parameters_6) and [HLDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-Line_Parameters_7)), as well as Cvars (i.e. flags beginning with `+`, e.g. `+sv_lan 0`, see [SRCDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Console_Variables_2) and [HLDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Useful_Console_Variables_2)). Although there are many Cvars shared across SRCDS and HLDS games, there are also Cvars that are game-specific (e.g. the many hundreds for `left4dead` and `left4dead2`), as well as mod/plugin-specific (e.g. `sourcemod`, `amxmodx`, `garrysmod`).
+Source and Goldsource games belong to the group of applications that do not read from environment variables but that are instead configured via parameters (i.e. flags beginning with `-`, e.g. `-usercon`, see [SRCDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-Line_Parameters_6) and [HLDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-Line_Parameters_7)), as well as Cvars (i.e. flags beginning with `+`, e.g. `+sv_lan 0`, see [SRCDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Console_Variables_2) and [HLDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Useful_Console_Variables_2)). Although there are many Cvars shared across SRCDS and HLDS games, there are also Cvars that are game-specific (e.g. the many hundreds for `left4dead` and `left4dead2`), as well as mod/plugin-specific (e.g. `sourcemod`, `amxmodx`).
 
-Because of the many parameters and Cvars that exist for each game and mod/plugin setup, it does not make sense to map them directly to environment variables for several reasons: First, doing so introduces an unnecessary layer of abstraction which operators would have to learn on top of the numerous available parameters and Cvars; Second, a single change to any envvar-cvar mapping will require a rebuild of the docker image to contain the new `docker-entrypoint.sh` script, introducing a lot of unnecessary builds; Third, the very `docker-entrypoint.sh` script providing the envvar-cvar mapping would also require versioning, introducing yet another burden on top of just keeping the images updated.
+Because of the many parameters and Cvars that exist for each game and mod/plugin setup, it does not make sense to map them directly to environment variables for several reasons: First, doing so introduces an unnecessary layer of abstraction which operators would have to learn on top of the numerous available parameters and Cvars. Second, a single change to any envvar-cvar mapping will require a rebuild of the docker image to contain the new `docker-entrypoint.sh` script, introducing a lot of unnecessary builds. Third, the very `docker-entrypoint.sh` script providing the envvar-cvar mapping would also require versioning, introducing yet another burden on top of just keeping the images updated.
 
 As such, the provided images do not support configuration via environment variables. The recommended approach would be to specify all necessary launch parameters and Cvars for a given game server within the container's command, and all other Cvars including those containing secret values within mounted or init-time provisioned configuration file(s) such as [`server.cfg`](https://developer.valvesoftware.com/wiki/Server.cfg).
 
@@ -283,11 +284,9 @@ As such, the provided images do not support configuration via environment variab
 
 The game images **do not** include a non-root user.
 
-The images as aforementioned are meant to be generic. Having a non-root user poses a problem especially when volumes are going to be used by operators. A common `UID` built into the images would unlikely fulfill the requirements of operators whose hosts would then require a matching `UID` in cases where bind mounts are used. A mismatch or missing `UID` within the container or the host would prevent the container user from accessing the data on the volumes, leading to issues pertaining to the game server, and rendering the game images useless unless customized.
+Building a non-root user into the images poses a problem especially when volumes are going to be used by operators. A common `UID` built into the images would unlikely fulfill the requirements of operators whose hosts would then require a matching `UID` in cases where bind mounts are used. A mismatch or missing `UID` within the container or the host would prevent the container user from accessing the data on the volumes, leading to issues pertaining to the game server, and rendering the images useless unless customized.
 
 Operators who wish to run the game servers under a non-root user can customize the provided images with a non-root user with a `UID` of their choice.
-
-*Note*: A non-root user could be added to the images in the future if the addition is sufficiently requested with good reasons for its implementation. Best practices can change depending on features provided by newer versions of container runtimes and/or orchestrators.
 
 ### Invocation via wrapper script vs binary
 
@@ -303,8 +302,8 @@ The game binary:
 * `srcds_linux` (Source)
 * `hlds_linux` (Goldsource)
 
-Invoking the game binary directly is the recommended choice especially when hosting the game server within containers. Doing so allows the game process to run as `PID 1` which ensures the game's console output is correctly propagated as container logs, and makes attaching of the terminal to the game's console possible for interactive administration.
+Invoking the game binary directly is the recommended choice especially when hosting the game server within containers. Doing so ensures the *game process* is [run as `PID 1`](https://devops.stackexchange.com/questions/447/why-it-is-recommended-to-run-only-one-process-in-a-container) which in turn ensures the game process functions optimally within a container.
 
-Some operators may choose to invoke the wrapper script instead as it provides features such as auto-restart and auto-updates. Doing so presents several problems related to container infrastucture: First, invoking the wrapper script alone prevents the game process from being run as `PID 1` which potentially introduces unpredictable behavior pertaining to the container. Second, using the wrapper script auto-restart feature overlaps with restart functionalities already provided by container orchestration tools, introducing the issue of unpredictable restarts to the container. Third, using the wrapper script auto-update feature introduces mutation to the container's supposed game version on available updates, wherein changes would not only be lost upon container deletion, but that would have to be performed for every new container started from outdated game images, contradicting the principle of immutability in container design.
+Some operators may choose to invoke the wrapper script instead as it provides features such as *auto-restart* and *auto-update*. Doing so presents several problems related to container infrastucture: First, invoking the wrapper script prevents the game process from being run as `PID 1` which introduces unpredictable behavior pertaining to the container. Second, using the wrapper script *auto-restart* feature overlaps with restart functionalities already provided by container orchestration tools, introducing the issue of unpredictable restarts to the container. Third, using the wrapper script *auto-update* feature introduces mutation to the container's supposed game version on available updates wherein changes would not only be lost upon container deletion but that have to be performed for every new container started from outdated game images, contradicting the principle of immutability in container design.
 
-As such, invocation via the wrapper script is strongly discouraged, and support for doing so will not be a priority in this project. The provided game images being generic however should not prevent operators from adopting such approaches should they wish to.
+As such, invocation via the wrapper script is discouraged, and support for doing so will not be a priority in this project. The provided game images being generic however should not prevent operators from adopting such approaches should they wish to.
