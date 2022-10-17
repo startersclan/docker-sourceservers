@@ -80,11 +80,6 @@ fi
 
 # Process default job variables
 export DOCKER_BUILDKIT=1
-if [ "$PIPELINE" = 'build' ]; then
-    BUILD_CONTEXT='build/'
-elif [ "$PIPELINE" = 'update' ]; then
-    BUILD_CONTEXT='update/'
-fi
 if [ "$APPID" = 90 ]; then
     REPOSITORY="$REGISTRY_GOLDSOURCE/$GAME"
     GAME_ENGINE='hlds'
@@ -93,6 +88,11 @@ else
     REPOSITORY="$REGISTRY_SOURCE/$GAME"
     GAME_ENGINE='srcds'
     GAME_BIN='srcds_linux'
+fi
+if [ "$PIPELINE" = 'build' ]; then
+    BUILD_CONTEXT='build/'
+elif [ "$PIPELINE" = 'update' ]; then
+    BUILD_CONTEXT='update/'
 fi
 
 # Display pipeline
