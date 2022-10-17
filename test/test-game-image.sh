@@ -1,8 +1,8 @@
 #!/bin/sh
 set -eu
 
-BASE_DIR=$( dirname "$0" | xargs realpath )
-cd "$BASE_DIR"
+SCRIPT_DIR=$( cd  $( dirname "$0" ) && pwd )
+cd "$SCRIPT_DIR"
 
 docker run --rm -it goldsourceservers/cstrike 'hlds_linux -game cstrike +version +exit' > hlds-cstrike
 docker run --rm -it goldsourceservers/czero 'hlds_linux -game czero +version +exit' > hlds-czero
