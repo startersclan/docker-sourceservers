@@ -90,10 +90,13 @@ else
     GAME_BIN='srcds_linux'
 fi
 if [ "$PIPELINE" = 'build' ]; then
+    GAME_IMAGE_CLEAN="$REPOSITORY:$GAME_VERSION"
     BUILD_CONTEXT='build/'
 elif [ "$PIPELINE" = 'update' ]; then
+    GAME_IMAGE_LAYERED="$REPOSITORY:$GAME_VERSION-layered"
     BUILD_CONTEXT='update/'
 fi
+GAME_IMAGE_LATEST="$REPOSITORY:latest"
 
 # Display pipeline
 echo "PIPELINE: $PIPELINE"
@@ -119,7 +122,7 @@ fi
 
 # Build / Update the game image
 if [ "$PIPELINE" = 'build' ]; then
-    GAME_IMAGE="$REPOSITORY:$GAME_VERSION"
+    GAME_IMAGE="$GAME_IMAGE_CLEAN"
     if [ "$CACHE" = 'true' ]; then
         date
         time docker pull "$GAME_IMAGE" || true
@@ -144,11 +147,11 @@ if [ "$PIPELINE" = 'build' ]; then
         --label "game_engine=$GAME_ENGINE" \
         "$BUILD_CONTEXT"
     if [ "$LATEST" = 'true' ]; then
-        docker tag "$GAME_IMAGE" "$REPOSITORY:latest"
+        docker tag "$GAME_IMAGE" "$GAME_IMAGE_LATEST"
     fi
     date
 elif [ "$PIPELINE" = 'update' ]; then
-    GAME_IMAGE="$REPOSITORY:latest"
+    GAME_IMAGE="$GAME_IMAGE_LATEST"
     date
     time docker pull "$GAME_IMAGE"
     date
@@ -161,7 +164,7 @@ elif [ "$PIPELINE" = 'update' ]; then
         --label "game_version=$GAME_VERSION" \
         --label "game_update_count=$GAME_UPDATE_COUNT" \
         "$BUILD_CONTEXT"
-    docker tag "$GAME_IMAGE" "$REPOSITORY:$GAME_VERSION-layered"
+    docker tag "$GAME_IMAGE" "$GAME_IMAGE_LAYERED"
     date
 fi
 docker images
@@ -193,10 +196,10 @@ if [ ! "$NO_PUSH" = 'true' ]; then
     time docker push "$GAME_IMAGE"
     if [ "$PIPELINE" = 'build' ]; then
         if [ "$LATEST" = 'true' ]; then
-            time docker push "$REPOSITORY:latest"
+            time docker push "$GAME_IMAGE_LATEST"
         fi
     elif [ "$PIPELINE" = 'update' ]; then
-        time docker push "$REPOSITORY:$GAME_VERSION-layered"
+        time docker push "$GAME_IMAGE_LAYERED"
     fi
     date
 fi
