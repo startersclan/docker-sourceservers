@@ -35,7 +35,7 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
     while [ "$i" -le $(( $INSTALL_COUNT-1 )) ]; do \
         echo "[BUILD] Install count: [$(( i+1 ))/$INSTALL_COUNT]"; \
         steamcmd.sh $steamcmdArgs; \
-        ls -al $SERVER_DIR/steamapps; \
+        ls -al "$SERVER_DIR/steamapps"; \
         i=$(( i+1 )); \
     done; \
     echo "[UPDATE] Performing cleanup" \

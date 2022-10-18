@@ -59,7 +59,7 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
     while [ "$i" -le $(( $INSTALL_COUNT-1 )) ]; do \
         echo "[BUILD] Install count: [$(( i+1 ))/$INSTALL_COUNT]"; \
         steamcmd.sh $steamcmdArgs; \
-        ls -al $SERVER_DIR/steamapps; \
+        ls -al "$SERVER_DIR/steamapps"; \
         i=$(( i+1 )); \
         if [ "$i" -eq 1 ] && [ "$APPID" = 90 ] && [ "$FIX_APPMANIFEST" = 'true' ]; then \
             if [ -n "$MOD" ]; then \
@@ -68,8 +68,8 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
                 WILDCARD_PATTERN="*/valve/*"; \
             fi; \
             echo "[BUILD] Applying appmanifest fix"; \
-            curl -sqL "$APPMANIFEST_AR_URL" | tar -zxvf - -C $SERVER_DIR/steamapps --wildcards "$WILDCARD_PATTERN" --strip-components=2; \
-            ls -al $SERVER_DIR/steamapps; \
+            curl -sqL "$APPMANIFEST_AR_URL" | tar -zxvf - -C "$SERVER_DIR/steamapps" --wildcards "$WILDCARD_PATTERN" --strip-components=2; \
+            ls -al "$SERVER_DIR/steamapps"; \
         fi; \
     done; \
     echo "[BUILD] Performing cleanup" \
@@ -91,7 +91,7 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
 RUN echo "[BUILD] Applying game fixes"; \
     # Create steam_appid.txt containing the game's appid to prevent crashes on first run
     echo "[BUILD] CLIENT_APPID: $CLIENT_APPID"; \
-    echo $CLIENT_APPID > $SERVER_DIR/steam_appid.txt
+    echo "$CLIENT_APPID" > "$SERVER_DIR/steam_appid.txt"
 
 # For directly running the hlds_linux / srcds_linux binary
 ENV LD_LIBRARY_PATH .:bin:$LD_LIBRARY_PATH
