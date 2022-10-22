@@ -129,7 +129,6 @@ if [ "$PIPELINE" = 'build' ]; then
     fi
     date
     time docker build \
-        --cache-from "$GAME_IMAGE" \
         --secret id=STEAM_USERNAME,env=STEAM_USERNAME \
         --secret id=STEAM_PASSWORD,env=STEAM_PASSWORD \
         --build-arg APPID="$APPID" \
