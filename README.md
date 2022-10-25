@@ -1,6 +1,6 @@
 # docker-sourceservers
 
-**Source** / **Goldsource** dedicated server images built through use of [`steamcmd`](https://github.com/startersclan/docker-steamcmd).
+[**Source**](https://developer.valvesoftware.com/wiki/Source) / [**Goldsource**](https://developer.valvesoftware.com/wiki/GoldSrc) dedicated server images built through use of [`steamcmd`](https://github.com/startersclan/docker-steamcmd).
 
 | `master` | `build` | `update` |
 |:-:|:-:|:-:|
