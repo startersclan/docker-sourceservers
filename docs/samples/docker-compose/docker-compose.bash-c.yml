@@ -15,7 +15,7 @@ services:
         set -e
         printenv
         ls -al
-        srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
+        srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2
 
   hlds-cstrike:
     image: goldsourceservers/cstrike:latest
