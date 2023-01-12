@@ -196,12 +196,12 @@ The default [work directory](build/Dockerfile#L105) for all the images is [`/ser
 ```shell
 # Counter-Strike: Global Offensive
 ## Via default entrypoint (/bin/bash -c)
-docker run -it -p 27015:27015/tcp -p 27015:27015/udp sourceservers/csgo:latest 'srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2'
-docker run -it -p 27015:27015/tcp -p 27015:27015/udp sourceservers/csgo:latest 'printenv && ls -al && exec srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2'
+docker run -it -p 27015:27015/tcp -p 27015:27015/udp sourceservers/csgo:latest 'srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2'
+docker run -it -p 27015:27015/tcp -p 27015:27015/udp sourceservers/csgo:latest 'printenv && ls -al && exec srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2'
 ## Via custom entrypoint (game binary)
-docker run -it -p 27015:27015/tcp -p 27015:27015/udp --entrypoint srcds_linux sourceservers/csgo:latest -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
+docker run -it -p 27015:27015/tcp -p 27015:27015/udp --entrypoint srcds_linux sourceservers/csgo:latest -game csgo -port 27015 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2
 ## Via custom entrypoint (/bin/bash)
-docker run -it -p 27015:27015/tcp -p 27015:27015/udp --entrypoint /bin/bash sourceservers/csgo:latest -c 'printenv && ls -al && exec srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2'
+docker run -it -p 27015:27015/tcp -p 27015:27015/udp --entrypoint /bin/bash sourceservers/csgo:latest -c 'printenv && ls -al && exec srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2'
 
 # Counter-Strike 1.6
 ## Via default entrypoint (/bin/bash -c)

@@ -10,7 +10,7 @@ services:
     entrypoint:
       - srcds_linux
     command:
-      - -game csgo -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
+      - -game csgo -port 27015 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2
 
   srcds-hl2mp:
     image: sourceservers/hl2mp:latest
