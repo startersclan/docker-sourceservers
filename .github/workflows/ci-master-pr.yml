@@ -68,3 +68,86 @@ jobs:
       env:
         STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
         STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
+
+  dockerhub-description-hlds:
+    runs-on: ubuntu-20.04
+    needs: [test-build-hlds, test-update-hlds]
+    if: github.ref == 'refs/heads/master'
+    strategy:
+      matrix:
+        ENGINE: [hlds]
+        GAME: [cstrike, czero, dmc, dod, gearbox, ricochet, tfc, valve]
+        include:
+        - ENGINE: hlds
+          GAME: cstrike
+          GAME_FULLNAME: 'Counter-Strike 1.6'
+        - ENGINE: hlds
+          GAME: czero
+          GAME_FULLNAME: 'Counter-Strike: Condition Zero'
+        - ENGINE: hlds
+          GAME: dmc
+          GAME_FULLNAME: 'Deathmatch Classic'
+        - ENGINE: hlds
+          GAME: dod
+          GAME_FULLNAME: 'Day of Defeat'
+        - ENGINE: hlds
+          GAME: gearbox
+          GAME_FULLNAME: 'Opposing Force'
+        - ENGINE: hlds
+          GAME: ricochet
+          GAME_FULLNAME: 'Ricochet'
+        - ENGINE: hlds
+          GAME: tfc
+          GAME_FULLNAME: 'Team Fortress Classic'
+        - ENGINE: hlds
+          GAME: valve
+          GAME_FULLNAME: 'Half-Life'
+    steps:
+    - uses: actions/checkout@v3
+    - uses: peter-evans/dockerhub-description@v3
+      with:
+        username: ${{ secrets.REGISTRY_USER }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+        repository: ${{ vars.REGISTRY_GOLDSOURCE }}/${{ matrix.GAME }}
+        short-description: ${{ matrix.GAME_FULLNAME }} (${{ matrix.ENGINE }}) 🐳
+        readme-filepath: docs/readme/image/${{ matrix.ENGINE }}-${{ matrix.GAME }}.md
+
+  dockerhub-description-srcds:
+    runs-on: ubuntu-20.04
+    needs: [test-build-srcds, test-update-srcds]
+    if: github.ref == 'refs/heads/master'
+    strategy:
+      matrix:
+        ENGINE: [srcds]
+        GAME: [csgo, cstrike, dod, hl2mp, left4dead, left4dead2, tf]
+        include:
+        - ENGINE: srcds
+          GAME: csgo
+          GAME_FULLNAME: 'Counter-Strike: Global Offensive'
+        - ENGINE: srcds
+          GAME: cstrike
+          GAME_FULLNAME: 'Counter-Strike: Source'
+        - ENGINE: srcds
+          GAME: dod
+          GAME_FULLNAME: 'Day of Defeat: Source'
+        - ENGINE: srcds
+          GAME: hl2mp
+          GAME_FULLNAME: 'Half-Life 2: Deathmatch'
+        - ENGINE: srcds
+          GAME: left4dead
+          GAME_FULLNAME: 'Left 4 Dead'
+        - ENGINE: srcds
+          GAME: left4dead2
+          GAME_FULLNAME: 'Left 4 Dead 2'
+        - ENGINE: srcds
+          GAME: tf
+          GAME_FULLNAME: 'Team Fortress 2'
+    steps:
+    - uses: actions/checkout@v3
+    - uses: peter-evans/dockerhub-description@v3
+      with:
+        username: ${{ secrets.REGISTRY_USER }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+        repository: ${{ vars.REGISTRY_SOURCE }}/${{ matrix.GAME }}
+        short-description: ${{ matrix.GAME_FULLNAME }} (${{ matrix.ENGINE }}) 🐳
+        readme-filepath: docs/readme/image/${{ matrix.ENGINE }}-${{ matrix.GAME }}.md
