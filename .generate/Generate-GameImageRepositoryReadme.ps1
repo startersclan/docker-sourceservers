@@ -2,7 +2,7 @@ $gameList = @(
     @{
         Engine = 'srcds'
         EngineFullName = 'Source'
-        RepositoryNamespace = 'sourceservers'
+        RegistryNamespace = 'sourceservers'
         Game = @(
             @{
                 Name = 'csgo'
@@ -37,7 +37,7 @@ $gameList = @(
     @{
         Engine = 'hlds'
         EngineFullName = 'Goldsource'
-        RepositoryNamespace = 'goldsourceservers'
+        RegistryNamespace = 'goldsourceservers'
         Game = @(
             @{
                 Name = 'cstrike'
@@ -84,12 +84,12 @@ $gameList | % {
     $environment = $_
     $EngineFullName = $environment['EngineFullName']
     $Engine = $environment['Engine']
-    $RepositoryNamespace = $environment['RepositoryNamespace']
+    $RegistryNamespace = $environment['RegistryNamespace']
 
     $environment['Game'].GetEnumerator() | % {
 
         '--------------------------------------------------------------------------------' | Write-Host -ForegroundColor Yellow
-        "$Engine, $RepositoryNamespace/$($_.Name):" | Write-Host -ForegroundColor Yellow
+        "$Engine, $RegistryNamespace/$($_.Name):" | Write-Host -ForegroundColor Yellow
         '--------------------------------------------------------------------------------' | Write-Host -ForegroundColor Yellow
 
         # Generate game image repository readme content
@@ -123,12 +123,12 @@ $gameList | % {
 
 | Game | Image | Tag ``v<tag>`` | Size |
 |:-:|:-:|:-:|:-:|
-| $($_.FullName) | [``$RepositoryNamespace/$($_.Name)``][$engine-$($_.Name)-dockerhub-link] | [![$engine-$($_.Name)-version-badge][]][$engine-$($_.Name)-metadata-link] | [![$engine-$($_.Name)-size-badge][]][$engine-$($_.Name)-metadata-link] | [![$engine-$($_.Name)-layers-badge][]][$engine-$($_.Name)-metadata-link] |
+| $($_.FullName) | [``$RegistryNamespace/$($_.Name)``][$engine-$($_.Name)-dockerhub-link] | [![$engine-$($_.Name)-version-badge][]][$engine-$($_.Name)-metadata-link] | [![$engine-$($_.Name)-size-badge][]][$engine-$($_.Name)-metadata-link] | [![$engine-$($_.Name)-layers-badge][]][$engine-$($_.Name)-metadata-link] |
 
-[$engine-$($_.Name)-dockerhub-link]: https://hub.docker.com/r/$RepositoryNamespace/$($_.Name)
-[$engine-$($_.Name)-version-badge]: https://img.shields.io/docker/v/$RepositoryNamespace/$($_.Name)/latest?label=&style=flat-square
-[$engine-$($_.Name)-size-badge]: https://img.shields.io/docker/image-size/$RepositoryNamespace/$($_.Name)/latest?label=&style=flat-square
-[$engine-$($_.Name)-metadata-link]: https://hub.docker.com/r/$RepositoryNamespace/$($_.Name)/tags
+[$engine-$($_.Name)-dockerhub-link]: https://hub.docker.com/r/$RegistryNamespace/$($_.Name)
+[$engine-$($_.Name)-version-badge]: https://img.shields.io/docker/v/$RegistryNamespace/$($_.Name)/latest?label=&style=flat-square
+[$engine-$($_.Name)-size-badge]: https://img.shields.io/docker/image-size/$RegistryNamespace/$($_.Name)/latest?label=&style=flat-square
+[$engine-$($_.Name)-metadata-link]: https://hub.docker.com/r/$RegistryNamespace/$($_.Name)/tags
 "@
         $content
         $outFile = "$readmePath/$engine-$($_.Name).md"
