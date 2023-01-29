@@ -78,7 +78,7 @@ $gameList = @(
 ################################################################
 
 Push-Location $PSScriptRoot
-$readmePath = "$(git rev-parse --show-toplevel)/docs/readme/image"
+$readmePath = "$(git rev-parse --show-toplevel)/docs/image/readme"
 
 $gameList | % {
     $environment = $_

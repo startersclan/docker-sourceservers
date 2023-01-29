@@ -106,7 +106,7 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
         repository: ${{ vars.REGISTRY_GOLDSOURCE }}/${{ matrix.GAME }}
         short-description: ${{ matrix.GAME_FULLNAME }} (${{ matrix.ENGINE }}) 🐳
-        readme-filepath: docs/readme/image/${{ matrix.ENGINE }}-${{ matrix.GAME }}.md
+        readme-filepath: docs/image/readme/${{ matrix.ENGINE }}-${{ matrix.GAME }}.md
 
   dockerhub-description-srcds:
     runs-on: ubuntu-20.04
@@ -146,4 +146,4 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
         repository: ${{ vars.REGISTRY_SOURCE }}/${{ matrix.GAME }}
         short-description: ${{ matrix.GAME_FULLNAME }} (${{ matrix.ENGINE }}) 🐳
-        readme-filepath: docs/readme/image/${{ matrix.ENGINE }}-${{ matrix.GAME }}.md
+        readme-filepath: docs/image/readme/${{ matrix.ENGINE }}-${{ matrix.GAME }}.md
