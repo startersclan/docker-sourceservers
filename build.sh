@@ -142,6 +142,7 @@ if [ "$PIPELINE" = 'build' ]; then
         --label "client_appid=$CLIENT_APPID" \
         --label "game=$GAME" \
         --label "game_version=$GAME_VERSION" \
+        --label "game_version_base=$GAME_VERSION" \
         --label 'game_update_count=0' \
         --label "game_engine=$GAME_ENGINE" \
         "$BUILD_CONTEXT"
