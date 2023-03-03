@@ -7,6 +7,7 @@ FROM $GAME_IMAGE
 
 ARG INSTALL_COUNT=1
 ARG STEAM_LOGIN
+ARG CACHE_KEY
 
 # Update game
 RUN --mount=type=secret,id=STEAM_USERNAME \

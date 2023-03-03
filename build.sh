@@ -136,6 +136,7 @@ if [ "$PIPELINE" = 'build' ]; then
         --build-arg FIX_APPMANIFEST="$FIX_APPMANIFEST" \
         --build-arg CLIENT_APPID="$CLIENT_APPID" \
         --build-arg STEAM_LOGIN="$STEAM_LOGIN" \
+        --build-arg CACHE_KEY="$GAME_VERSION" \
         -t "$GAME_IMAGE" \
         --label "appid=$APPID" \
         --label "mod=$MOD" \
@@ -160,6 +161,7 @@ elif [ "$PIPELINE" = 'update' ]; then
         --secret id=STEAM_PASSWORD,env=STEAM_PASSWORD \
         --build-arg GAME_IMAGE="$GAME_IMAGE" \
         --build-arg STEAM_LOGIN="$STEAM_LOGIN" \
+        --build-arg CACHE_KEY="$GAME_VERSION" \
         -t "$GAME_IMAGE" \
         --label "game_version=$GAME_VERSION" \
         --label "game_update_count=$GAME_UPDATE_COUNT" \
