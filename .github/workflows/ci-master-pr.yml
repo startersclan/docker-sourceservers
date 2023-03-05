@@ -16,7 +16,7 @@ jobs:
     if: github.event_name != 'pull_request' || github.repository_owner != 'startersclan'
     steps:
     - uses: actions/checkout@v3
-    - name: Test
+    - name: Test build
       run: |
         set -a
         . ./test/build-hlds-cstrike.env
@@ -24,13 +24,7 @@ jobs:
       env:
         STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
         STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
-
-  test-update-hlds:
-    runs-on: ubuntu-20.04
-    if: github.event_name != 'pull_request' || github.repository_owner != 'startersclan'
-    steps:
-    - uses: actions/checkout@v3
-    - name: Test
+    - name: Test update
       run: |
         set -a
         . ./test/update-hlds-cstrike.env
@@ -43,7 +37,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
-    - name: Test
+    - name: Test build
       run: |
         set -a
         . ./test/build-srcds-hl2mp.env
@@ -51,12 +45,7 @@ jobs:
       env:
         STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
         STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
-
-  test-update-srcds:
-    runs-on: ubuntu-20.04
-    steps:
-    - uses: actions/checkout@v3
-    - name: Test
+    - name: Test update
       run: |
         set -a
         . ./test/update-srcds-hl2mp.env
@@ -67,7 +56,7 @@ jobs:
 
   dockerhub-description-hlds:
     runs-on: ubuntu-20.04
-    needs: [test-build-hlds, test-update-hlds]
+    needs: [test-build-hlds]
     if: github.ref == 'refs/heads/master'
     strategy:
       matrix:
@@ -110,7 +99,7 @@ jobs:
 
   dockerhub-description-srcds:
     runs-on: ubuntu-20.04
-    needs: [test-build-srcds, test-update-srcds]
+    needs: [test-build-srcds]
     if: github.ref == 'refs/heads/master'
     strategy:
       matrix:

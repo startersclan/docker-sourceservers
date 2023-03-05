@@ -26,6 +26,7 @@
 # FIX_APPMANIFEST=        # bool - optional and only applicable to APPID=90
 # LATEST=true             # bool - optional
 # CACHE=                  # bool - optional
+# NO_PULL=                # bool - optional
 # NO_TEST=                # bool - optional
 # NO_PUSH=                # bool - optional
 # STEAM_LOGIN=            # bool - optional
@@ -66,6 +67,7 @@ elif [ "$PIPELINE" = 'update' ]; then
     APPID=${APPID:?err}
     GAME=${GAME:?err}
     GAME_UPDATE_COUNT=${GAME_UPDATE_COUNT:?err}
+    NO_PULL=${NO_PULL:-}
     NO_TEST=${NO_TEST:-}
     NO_PUSH=${NO_PUSH:-}
     STEAM_LOGIN=${STEAM_LOGIN:-}
@@ -154,7 +156,9 @@ if [ "$PIPELINE" = 'build' ]; then
 elif [ "$PIPELINE" = 'update' ]; then
     GAME_IMAGE="$GAME_IMAGE_LATEST"
     date
-    time docker pull "$GAME_IMAGE"
+    if [ ! "$NO_PULL" = 'true' ]; then
+        time docker pull "$GAME_IMAGE"
+    fi
     date
     time docker build \
         --secret id=STEAM_USERNAME,env=STEAM_USERNAME \
