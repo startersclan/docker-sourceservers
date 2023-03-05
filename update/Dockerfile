@@ -39,8 +39,8 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
         ls -al "$SERVER_DIR/steamapps"; \
         i=$(( i+1 )); \
     done; \
-    echo "[UPDATE] Performing cleanup" \
-    && cd "$STEAMCMD_DIR" && rm -rf \
+    echo "[UPDATE] Performing cleanup"; \
+    cd "$STEAMCMD_DIR" && rm -rf \
         linux64 \
         package \
         public \
@@ -50,6 +50,11 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
         linux32/libvstdlib_s.so \
         linux32/steamclient.so \
         linux32/steamconsole.so \
-        update_hosts_cached.vdf \
-        /root/.steam \
-        /root/Steam
+        update_hosts_cached.vdf; \
+    rm -rf /root/.steam; \
+    if [ "$APPID" = 90 ]; then \
+        # Retain `/root/Steam/appcache` to prevent `steamcmd` from re-downloading `hlds` game entirely on game updates
+        rm -rf $( find /root/Steam -mindepth 1 -maxdepth 1 | grep -v '^/root/Steam/appcache' ); \
+    else \
+        rm -rf /root/Steam; \
+    fi;
