@@ -16,10 +16,17 @@ build-image:
   script:
     - |
       export PIPELINE="$CI_COMMIT_BRANCH"
-      ./build.sh && echo 'success' > .build-status || ( echo 'failed' > .build-status && exit 1 )
+      set +e
+      ./build.sh
+      if [ $? = 0 ]; then
+          echo BUILD_STATUS=success >> .build.state
+      else
+          echo BUILD_STATUS=failed >> .build.state
+          exit 1
+      fi
   artifacts:
     paths:
-      - .build-status
+      - .build.state
     when: always
     expire_in: never
 
@@ -33,6 +40,5 @@ send-notification:
   script:
     - |
       apk add --no-cache curl
-      export BUILD_STATUS=$( cat .build-status )
       export X_CI_WEBHOOK_SECRET_HEADER="x-gitlab-webhook-secret: $X_GITLAB_WEBHOOK_SECRET"
       ./notify.sh

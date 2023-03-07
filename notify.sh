@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # Process job variables
-BUILD_STATUS=${BUILD_STATUS:?err}
 GAME_VERSION=${GAME_VERSION:-}
 APPID=${APPID:-}
 CLIENT_APPID=${CLIENT_APPID:-}
@@ -14,6 +13,15 @@ CACHE=${CACHE:-}
 NO_TEST=${NO_TEST:-}
 NO_PUSH=${NO_PUSH:-}
 STEAM_LOGIN=${STEAM_LOGIN:-}
+
+# Read build state file
+echo "Reading .build.state file"
+. ./.build.state
+
+# Process build state variables
+BUILD_STATUS=${BUILD_STATUS:?err}
+BASE_SIZE=${BASE_SIZE:-0}
+LAYERED_SIZE=${LAYERED_SIZE:-0}
 
 # Send notification
 date
@@ -38,7 +46,12 @@ BODY=$( cat <<EOF
         "NO_PUSH": "$NO_PUSH",
         "STEAM_LOGIN": "$STEAM_LOGIN"
     },
-    "status": "$BUILD_STATUS"
+    "status": "$BUILD_STATUS",
+    "state": {
+        "BUILD_STATUS": "$BUILD_STATUS",
+        "BASE_SIZE": "$BASE_SIZE",
+        "LAYERED_SIZE": "$LAYERED_SIZE"
+    }
 }
 EOF
 )
