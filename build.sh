@@ -131,6 +131,7 @@ if [ "$PIPELINE" = 'build' ]; then
     fi
     date
     time docker build \
+        --progress plain \
         --secret id=STEAM_USERNAME,env=STEAM_USERNAME \
         --secret id=STEAM_PASSWORD,env=STEAM_PASSWORD \
         --build-arg APPID="$APPID" \
@@ -161,6 +162,7 @@ elif [ "$PIPELINE" = 'update' ]; then
     fi
     date
     time docker build \
+        --progress plain \
         --secret id=STEAM_USERNAME,env=STEAM_USERNAME \
         --secret id=STEAM_PASSWORD,env=STEAM_PASSWORD \
         --build-arg GAME_IMAGE="$GAME_IMAGE" \
