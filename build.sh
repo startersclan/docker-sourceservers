@@ -26,7 +26,6 @@
 # FIX_APPMANIFEST=        # bool - optional and only applicable to APPID=90
 # LATEST=true             # bool - optional
 # CACHE=                  # bool - optional
-# NO_PULL=                # bool - optional
 # NO_TEST=                # bool - optional
 # NO_PUSH=                # bool - optional
 # STEAM_LOGIN=            # bool - optional
@@ -36,6 +35,7 @@
 # APPID=                  # int - required
 # GAME=                   # string - required
 # GAME_UPDATE_COUNT=      # int - required
+# NO_PULL=                # bool - optional
 # NO_TEST=                # bool - optional
 # NO_PUSH=                # bool - optional
 # STEAM_LOGIN=            # bool - optional
