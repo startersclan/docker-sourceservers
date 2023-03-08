@@ -99,6 +99,7 @@ elif [ "$PIPELINE" = 'update' ]; then
     BUILD_CONTEXT='update/'
 fi
 GAME_IMAGE_LATEST="$REPOSITORY:latest"
+COMMIT_SHA=$( git rev-parse HEAD )
 
 # Display pipeline
 echo "PIPELINE: $PIPELINE"
@@ -148,6 +149,7 @@ if [ "$PIPELINE" = 'build' ]; then
         --label "game_version_base=$GAME_VERSION" \
         --label 'game_update_count=0' \
         --label "game_engine=$GAME_ENGINE" \
+        --label "commit_sha=$COMMIT_SHA" \
         "$BUILD_CONTEXT"
     if [ "$LATEST" = 'true' ]; then
         docker tag "$GAME_IMAGE" "$GAME_IMAGE_LATEST"
@@ -169,6 +171,7 @@ elif [ "$PIPELINE" = 'update' ]; then
         -t "$GAME_IMAGE" \
         --label "game_version=$GAME_VERSION" \
         --label "game_update_count=$GAME_UPDATE_COUNT" \
+        --label "commit_sha=$COMMIT_SHA" \
         "$BUILD_CONTEXT"
     docker tag "$GAME_IMAGE" "$GAME_IMAGE_LAYERED"
     date
