@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -u
+set -eu
 
 usage() {
     echo "build.sh: Builds a docker image. Requires docker and git"
@@ -179,18 +179,17 @@ COMMIT_SHA=$( git rev-parse HEAD )
 echo "PIPELINE: $PIPELINE"
 
 # Display system info
-hostname
-whoami
-cat /etc/*release
-lscpu
-free
-df -h || true
-pwd
-docker info
-docker version
-
-# Terminate the build on errors
-set -e
+(
+    hostname
+    whoami
+    cat /etc/*release
+    lscpu
+    free
+    df -h
+    pwd
+    docker info
+    docker version
+) || true
 
 # Docker registry login
 if [ ! "$NO_PUSH" = 'true' ]; then
