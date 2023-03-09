@@ -18,17 +18,13 @@ jobs:
     - uses: actions/checkout@v3
     - name: Test build
       run: |
-        set -a
-        . ./test/build-hlds-cstrike.env
-        ./build.sh
+        ./build.sh --env-file ./test/build-hlds-cstrike.env
       env:
         STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
         STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
     - name: Test update
       run: |
-        set -a
-        . ./test/update-hlds-cstrike.env
-        ./build.sh
+        ./build.sh --env-file ./test/update-hlds-cstrike.env
       env:
         STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
         STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
@@ -39,17 +35,13 @@ jobs:
     - uses: actions/checkout@v3
     - name: Test build
       run: |
-        set -a
-        . ./test/build-srcds-hl2mp.env
-        ./build.sh
+        ./build.sh --env-file ./test/build-srcds-hl2mp.env
       env:
         STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
         STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
     - name: Test update
       run: |
-        set -a
-        . ./test/update-srcds-hl2mp.env
-        ./build.sh
+        ./build.sh --env-file ./test/update-srcds-hl2mp.env
       env:
         STEAM_USERNAME: ${{ secrets.STEAM_USERNAME }}
         STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
