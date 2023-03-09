@@ -42,6 +42,24 @@
 
 #############################  End of CI variables  ##############################
 
+# Get some options
+while test $# -gt 0; do
+    case "$1" in
+        -f|--env-file)
+            shift
+            ENV_FILE=$1
+            shift
+            ;;
+    esac
+done
+
+ENV_FILE=${ENV_FILE:-.env}
+if [ -f "$ENV_FILE" ]; then
+    ENV_FILE="$( cd "$( dirname "$ENV_FILE" )" && pwd )/$( basename "$ENV_FILE" )"
+    echo "Reading env file $ENV_FILE"
+    . "$ENV_FILE"
+fi
+
 # Process user variables
 REGISTRY_USER=${REGISTRY_USER:?err}
 REGISTRY_PASSWORD=${REGISTRY_PASSWORD:?err}
