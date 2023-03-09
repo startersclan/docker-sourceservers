@@ -20,10 +20,10 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
     echo "[UPDATE] INSTALL_COUNT: $INSTALL_COUNT"; \
     echo "[UPDATE] STEAM_LOGIN: $STEAM_LOGIN"; \
     if [ "$STEAM_LOGIN" = 'true' ]; then \
-        echo "[BUILD] STEAM_LOGIN is true. Will log in via user"; \
+        echo "[UPDATE] STEAM_LOGIN is true. Will log in via user"; \
         steamcmdLoginArgs="$STEAM_USERNAME $STEAM_PASSWORD"; \
     else \
-        echo "[BUILD] STEAM_LOGIN is null or not true. Will connect anonymously"; \
+        echo "[UPDATE] STEAM_LOGIN is null or not true. Will connect anonymously"; \
         steamcmdLoginArgs='anonymous'; \
     fi; \
     if [ "$APPID" = 90 ] && [ -n "$MOD" ]; then \
@@ -34,7 +34,7 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
     echo "[UPDATE] Updating game"; \
     i=0; \
     while [ "$i" -le $(( $INSTALL_COUNT-1 )) ]; do \
-        echo "[BUILD] Install count: [$(( i+1 ))/$INSTALL_COUNT]"; \
+        echo "[UPDATE] Install count: [$(( i+1 ))/$INSTALL_COUNT]"; \
         steamcmd.sh $steamcmdArgs; \
         ls -al "$SERVER_DIR/steamapps"; \
         i=$(( i+1 )); \
