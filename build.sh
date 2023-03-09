@@ -189,17 +189,18 @@ if [ ! "$NO_TEST" = 'true' ]; then
     date
     time docker run -t --rm "$GAME_IMAGE" "$GAME_BIN -game $GAME +version +exit" | tee /tmp/test
     date
+
+    # Verify game version of the game image matches the value of GAME_VERSION
+    echo 'Verifying game image game version'
+    GAME_IMAGE_VERSION_LINES=$( cat /tmp/test | grep -iE '\bexe\b|version' | sed 's/[^0-9]//g' )
+    if ! echo "$GAME_IMAGE_VERSION_LINES" | grep -E "^$GAME_VERSION" > /dev/null; then
+        echo "Game version does not match GAME_VERSION=$GAME_VERSION"
+        echo 'GAME_IMAGE_VERSION_LINES:'
+        echo "$GAME_IMAGE_VERSION_LINES"
+        exit 1
+    fi
+    rm -f /tmp/test
 fi
-# Verify game version of the game image matches the value of GAME_VERSION
-echo 'Verifying game image game version'
-GAME_IMAGE_VERSION_LINES=$( cat /tmp/test | grep -iE '\bexe\b|version' | sed 's/[^0-9]//g' )
-if ! echo "$GAME_IMAGE_VERSION_LINES" | grep -E "^$GAME_VERSION" > /dev/null; then
-    echo "Game version does not match GAME_VERSION=$GAME_VERSION"
-    echo 'GAME_IMAGE_VERSION_LINES:'
-    echo "$GAME_IMAGE_VERSION_LINES"
-    exit 1
-fi
-rm -f /tmp/test
 
 # Push the game image
 if [ ! "$NO_PUSH" = 'true' ]; then
