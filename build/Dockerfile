@@ -32,6 +32,7 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
     echo "[BUILD] APPID: $APPID"; \
     echo "[BUILD] MOD: $MOD"; \
     echo "[BUILD] FIX_APPMANIFEST: $FIX_APPMANIFEST"; \
+    echo "[BUILD] CLIENT_APPID: $CLIENT_APPID"; \
     echo "[BUILD] INSTALL_COUNT: $INSTALL_COUNT"; \
     echo "[BUILD] STEAM_LOGIN: $STEAM_LOGIN"; \
     if [ "$STEAM_LOGIN" = 'true' ]; then \
