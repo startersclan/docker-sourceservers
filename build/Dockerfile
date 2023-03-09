@@ -10,15 +10,16 @@ ARG APPID
 ARG MOD
 ARG FIX_APPMANIFEST=false
 ARG CLIENT_APPID
-ARG INSTALL_COUNT
+ARG INSTALL_COUNT=
 ARG STEAM_LOGIN
 ARG CACHE_KEY
 
 # Download game
 RUN --mount=type=secret,id=STEAM_USERNAME \
     --mount=type=secret,id=STEAM_PASSWORD \
-    STEAM_USERNAME=$( cat /run/secrets/STEAM_USERNAME ); \
-    STEAM_PASSWORD=$( cat /run/secrets/STEAM_PASSWORD ); \
+    set -eu; \
+    STEAM_USERNAME=$( cat /run/secrets/STEAM_USERNAME || true ); \
+    STEAM_PASSWORD=$( cat /run/secrets/STEAM_PASSWORD || true ); \
     if [ -z "$INSTALL_COUNT" ]; then \
         echo "[BUILD] INSTALL_COUNT is null. Using default values"; \
         if [ "$APPID" = 90 ]; then \
@@ -59,7 +60,11 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
     i=0; \
     while [ "$i" -le $(( $INSTALL_COUNT-1 )) ]; do \
         echo "[BUILD] Install count: [$(( i+1 ))/$INSTALL_COUNT]"; \
-        steamcmd.sh $steamcmdArgs; \
+        if [ "$i" -le $(( $INSTALL_COUNT-1 )) ]; then \
+            steamcmd.sh $steamcmdArgs || true; \
+        else \
+            steamcmd.sh $steamcmdArgs; \
+        fi; \
         ls -al "$SERVER_DIR/steamapps"; \
         i=$(( i+1 )); \
         if [ "$i" -eq 1 ] && [ "$APPID" = 90 ] && [ "$FIX_APPMANIFEST" = 'true' ]; then \

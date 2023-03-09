@@ -12,8 +12,9 @@ ARG CACHE_KEY
 # Update game
 RUN --mount=type=secret,id=STEAM_USERNAME \
     --mount=type=secret,id=STEAM_PASSWORD \
-    STEAM_USERNAME=$( cat /run/secrets/STEAM_USERNAME ); \
-    STEAM_PASSWORD=$( cat /run/secrets/STEAM_PASSWORD ); \
+    set -eu; \
+    STEAM_USERNAME=$( cat /run/secrets/STEAM_USERNAME || true ); \
+    STEAM_PASSWORD=$( cat /run/secrets/STEAM_PASSWORD || true ); \
     echo "[UPDATE] SERVER_DIR: $SERVER_DIR"; \
     echo "[UPDATE] APPID: $APPID"; \
     echo "[UPDATE] MOD: $MOD"; \
@@ -34,8 +35,12 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
     echo "[UPDATE] Updating game"; \
     i=0; \
     while [ "$i" -le $(( $INSTALL_COUNT-1 )) ]; do \
-        echo "[BUILD] Install count: [$(( i+1 ))/$INSTALL_COUNT]"; \
-        steamcmd.sh $steamcmdArgs; \
+        echo "[UPDATE] Install count: [$(( i+1 ))/$INSTALL_COUNT]"; \
+        if [ "$i" -le $(( $INSTALL_COUNT-1 )) ]; then \
+            steamcmd.sh $steamcmdArgs || true; \
+        else \
+            steamcmd.sh $steamcmdArgs; \
+        fi; \
         ls -al "$SERVER_DIR/steamapps"; \
         i=$(( i+1 )); \
     done; \
