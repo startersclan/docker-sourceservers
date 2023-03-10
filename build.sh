@@ -6,14 +6,6 @@
 # Types specified in comments but serve to aid users in populating said variables.
 ##################################################################################
 
-## User variables ##
-# REGISTRY_USER=          # string - docker hub username - required
-# REGISTRY_PASSWORD=      # string - docker hub password or api key - required
-# REGISTRY_GOLDSOURCE=    # string - docker hub username or organization for goldsource games - required
-# REGISTRY_SOURCE=        # string - docker hub username or organization for source games - required
-# STEAM_USERNAME=         # string - steam username - optional
-# STEAM_PASSWORD=         # string - steam password - optional
-
 ## Job variables ##
 # PIPELINE=               # string - 'build' for clean builds, 'update' for layered builds - required
 
@@ -40,6 +32,14 @@
 # NO_PUSH=                # bool - optional
 # STEAM_LOGIN=            # bool - optional
 
+## User variables ##
+# REGISTRY_USER=          # string - docker hub username - required unless NO_PUSH=true
+# REGISTRY_PASSWORD=      # string - docker hub password or api key - required unless NO_PUSH=true
+# REGISTRY_GOLDSOURCE=    # string - docker hub username or organization for goldsource games - required
+# REGISTRY_SOURCE=        # string - docker hub username or organization for source games - required
+# STEAM_USERNAME=         # string - steam username - optional
+# STEAM_PASSWORD=         # string - steam password - optional
+
 #############################  End of CI variables  ##############################
 
 # Get some options
@@ -59,12 +59,6 @@ if [ -f "$ENV_FILE" ]; then
     echo "Reading env file $ENV_FILE"
     . "$ENV_FILE"
 fi
-
-# Process user variables
-REGISTRY_USER=${REGISTRY_USER:?err}
-REGISTRY_PASSWORD=${REGISTRY_PASSWORD:?err}
-REGISTRY_GOLDSOURCE=${REGISTRY_GOLDSOURCE:?err}
-REGISTRY_SOURCE=${REGISTRY_SOURCE:?err}
 
 # Process job variables
 PIPELINE=${PIPELINE:?err}
@@ -90,6 +84,17 @@ elif [ "$PIPELINE" = 'update' ]; then
     NO_PUSH=${NO_PUSH:-}
     STEAM_LOGIN=${STEAM_LOGIN:-}
 fi
+
+# Process user variables
+if [ ! "$NO_PUSH" = 'true' ]; then
+    REGISTRY_USER=${REGISTRY_USER:?err}
+    REGISTRY_PASSWORD=${REGISTRY_PASSWORD:?err}
+else
+    REGISTRY_USER=${REGISTRY_USER:-}
+    REGISTRY_PASSWORD=${REGISTRY_PASSWORD:-}
+fi
+REGISTRY_GOLDSOURCE=${REGISTRY_GOLDSOURCE:?err}
+REGISTRY_SOURCE=${REGISTRY_SOURCE:?err}
 if [ "$STEAM_LOGIN" = 'true' ]; then
     export STEAM_USERNAME=${STEAM_USERNAME:?err}
     export STEAM_PASSWORD=${STEAM_PASSWORD:?err}
