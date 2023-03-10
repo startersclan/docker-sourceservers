@@ -1,46 +1,69 @@
 #!/bin/sh
 
-#################################  CI variables  #################################
-# Use this section for local builds.
-# All variables regardless of type will be processed as strings in builds.
-# Types specified in comments but serve to aid users in populating said variables.
-##################################################################################
+usage() {
 
-## Job variables ##
-# PIPELINE=               # string - 'build' for clean builds, 'update' for layered builds - required
+    echo "build.sh: Builds a docker image"
+    echo "Configuration (environment variables):"
+    echo "#################################  CI variables  #################################"
+    echo "# Use this section for local builds."
+    echo "# All variables regardless of type will be processed as strings in builds."
+    echo "# Types specified in comments but serve to aid users in populating said variables."
+    echo "##################################################################################"
 
-## build variables ##
-# GAME_VERSION=           # int - required
-# APPID=                  # int - required
-# CLIENT_APPID=           # int - required
-# GAME=                   # string - required
-# MOD=                    # string - required for APPID=90
-# FIX_APPMANIFEST=        # bool - optional and only applicable to APPID=90
-# LATEST=true             # bool - optional
-# CACHE=                  # bool - optional
-# NO_TEST=                # bool - optional
-# NO_PUSH=                # bool - optional
-# STEAM_LOGIN=            # bool - optional
-
-## update variables ##
-# GAME_VERSION=           # int - required
-# APPID=                  # int - required
-# GAME=                   # string - required
-# GAME_UPDATE_COUNT=      # int - required
-# NO_PULL=                # bool - optional
-# NO_TEST=                # bool - optional
-# NO_PUSH=                # bool - optional
-# STEAM_LOGIN=            # bool - optional
-
-## User variables ##
-# REGISTRY_USER=          # string - docker hub username - required unless NO_PUSH=true
-# REGISTRY_PASSWORD=      # string - docker hub password or api key - required unless NO_PUSH=true
-# REGISTRY_GOLDSOURCE=    # string - docker hub username or organization for goldsource games - required
-# REGISTRY_SOURCE=        # string - docker hub username or organization for source games - required
-# STEAM_USERNAME=         # string - steam username - optional
-# STEAM_PASSWORD=         # string - steam password - optional
-
-#############################  End of CI variables  ##############################
+    echo "## Job variables ##"
+    echo "PIPELINE=               # string - 'build' for clean builds, 'update' for layered builds - required"
+    echo
+    echo "## build variables ##"
+    echo "GAME_VERSION=           # int - required"
+    echo "APPID=                  # int - required"
+    echo "CLIENT_APPID=           # int - required"
+    echo "GAME=                   # string - required"
+    echo "MOD=                    # string - required for APPID=90"
+    echo "FIX_APPMANIFEST=        # bool - optional and only applicable to APPID=90"
+    echo "LATEST=true             # bool - optional"
+    echo "CACHE=                  # bool - optional"
+    echo "NO_TEST=                # bool - optional"
+    echo "NO_PUSH=                # bool - optional"
+    echo "STEAM_LOGIN=            # bool - optional"
+    echo
+    echo "## update variables ##"
+    echo "GAME_VERSION=           # int - required"
+    echo "APPID=                  # int - required"
+    echo "GAME=                   # string - required"
+    echo "GAME_UPDATE_COUNT=      # int - required"
+    echo "NO_PULL=                # bool - optional"
+    echo "NO_TEST=                # bool - optional"
+    echo "NO_PUSH=                # bool - optional"
+    echo "STEAM_LOGIN=            # bool - optional"
+    echo
+    echo "## User variables ##"
+    echo "REGISTRY_USER=          # string - docker hub username - required unless NO_PUSH=true"
+    echo "REGISTRY_PASSWORD=      # string - docker hub password or api key - required unless NO_PUSH=true"
+    echo "REGISTRY_GOLDSOURCE=    # string - docker hub username or organization for goldsource games - required"
+    echo "REGISTRY_SOURCE=        # string - docker hub username or organization for source games - required"
+    echo "STEAM_USERNAME=         # string - steam username - optional"
+    echo "STEAM_PASSWORD=         # string - steam password - optional"
+    echo
+    echo "Examples:"
+    echo "  # Build hlds/cstrike image and push"
+    echo "  PIPELINE=build GAME_VERSION=1127 APPID=90 CLIENT_APPID=10 GAME=cstrike MOD=cstrike FIX_APPMANIFEST=true LATEST=true STEAM_LOGIN=true REGISTRY_GOLDSOURCE=docker.io/mynamespace/cstrike REGISTRY_USER=xxx REGISTRY_PASSWORD=xxx STEAM_USERNAME=xxx STEAM_PASSWORD=xxx ./build.sh"
+    echo
+    echo "  # Update hlds/cstrike image and push"
+    echo "  PIPELINE=update GAME_UPDATE_COUNT=1 GAME_VERSION=1127 APPID=90 CLIENT_APPID=10 GAME=cstrike MOD=cstrike FIX_APPMANIFEST=true STEAM_LOGIN=true REGISTRY_GOLDSOURCE=docker.io/mynamespace/cstrike REGISTRY_USER=xxx REGISTRY_PASSWORD=xxx STEAM_USERNAME=xxx STEAM_PASSWORD=xxx ./build.sh"
+    echo
+    echo "  # Build srcds/csgo image and push"
+    echo "  PIPELINE=build GAME_VERSION=13840 APPID=740 CLIENT_APPID=730 GAME=csgo LATEST=true REGISTRY_SOURCE=docker.io/mynamespace/csgo REGISTRY_USER=xxx REGISTRY_PASSWORD=xxx ./build.sh"
+    echo
+    echo "  # Update srcds/csgo image and push"
+    echo "  PIPELINE=update GAME_UPDATE_COUNT=1 GAME_VERSION=13840 APPID=740 CLIENT_APPID=730 GAME=csgo REGISTRY_SOURCE=docker.io/mynamespace/csgo REGISTRY_USER=xxx REGISTRY_PASSWORD=xxx ./build.sh"
+    echo
+    echo "  # Build using an .env file in the same directory as build.sh"
+    echo "  ./build.sh"
+    echo
+    echo "  # Build using a custom .env file in the same directory as build.sh"
+    echo "  ./build.sh --env-file path/to/.env"
+    echo
+}
 
 # Get some options
 while test $# -gt 0; do
@@ -49,6 +72,15 @@ while test $# -gt 0; do
             shift
             ENV_FILE=$1
             shift
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        *)
+            echo "Invalid option '$1'" 1>&2
+            usage
+            exit 1
             ;;
     esac
 done
