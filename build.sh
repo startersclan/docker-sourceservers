@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -u
+
 usage() {
 
     echo "build.sh: Builds a docker image"
