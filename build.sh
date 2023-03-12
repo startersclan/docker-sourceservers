@@ -198,7 +198,7 @@ if [ "$PIPELINE" = 'build' ]; then
         --build-arg CLIENT_APPID="$CLIENT_APPID" \
         --build-arg STEAM_LOGIN="$STEAM_LOGIN" \
         --build-arg CACHE_KEY="$GAME_VERSION" \
-        -t "$GAME_IMAGE" \
+        --tag "$GAME_IMAGE" \
         --label "appid=$APPID" \
         --label "mod=$MOD" \
         --label "client_appid=$CLIENT_APPID" \
@@ -227,12 +227,12 @@ elif [ "$PIPELINE" = 'update' ]; then
         --build-arg GAME_IMAGE="$GAME_IMAGE" \
         --build-arg STEAM_LOGIN="$STEAM_LOGIN" \
         --build-arg CACHE_KEY="$GAME_VERSION" \
-        -t "$GAME_IMAGE" \
+        --tag "$GAME_IMAGE" \
+        --tag "$GAME_IMAGE_LAYERED" \
         --label "game_version=$GAME_VERSION" \
         --label "game_update_count=$GAME_UPDATE_COUNT" \
         --label "commit_sha=$COMMIT_SHA" \
         "$BUILD_CONTEXT"
-    docker tag "$GAME_IMAGE" "$GAME_IMAGE_LAYERED"
     date
 fi
 docker images
