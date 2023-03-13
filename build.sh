@@ -130,11 +130,11 @@ fi
 REGISTRY_GOLDSOURCE=${REGISTRY_GOLDSOURCE:?err}
 REGISTRY_SOURCE=${REGISTRY_SOURCE:?err}
 if [ "$STEAM_LOGIN" = 'true' ]; then
-    export STEAM_USERNAME=${STEAM_USERNAME:?err}
-    export STEAM_PASSWORD=${STEAM_PASSWORD:?err}
+    STEAM_USERNAME=${STEAM_USERNAME:?err}
+    STEAM_PASSWORD=${STEAM_PASSWORD:?err}
 else
-    export STEAM_USERNAME=${STEAM_USERNAME:-}
-    export STEAM_PASSWORD=${STEAM_PASSWORD:-}
+    STEAM_USERNAME=${STEAM_USERNAME:-}
+    STEAM_PASSWORD=${STEAM_PASSWORD:-}
 fi
 
 # Process default job variables
@@ -188,7 +188,7 @@ if [ "$PIPELINE" = 'build' ]; then
         time docker pull "$GAME_IMAGE" || true
     fi
     date
-    time docker build \
+    STEAM_USERNAME="$STEAM_USERNAME" STEAM_PASSWORD="$STEAM_PASSWORD" time docker build \
         --progress plain \
         --secret id=STEAM_USERNAME,env=STEAM_USERNAME \
         --secret id=STEAM_PASSWORD,env=STEAM_PASSWORD \
@@ -220,7 +220,7 @@ elif [ "$PIPELINE" = 'update' ]; then
         time docker pull "$GAME_IMAGE"
     fi
     date
-    time docker build \
+    STEAM_USERNAME="$STEAM_USERNAME" STEAM_PASSWORD="$STEAM_PASSWORD" time docker build \
         --progress plain \
         --secret id=STEAM_USERNAME,env=STEAM_USERNAME \
         --secret id=STEAM_PASSWORD,env=STEAM_PASSWORD \
