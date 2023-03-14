@@ -154,6 +154,9 @@ if [ "$PIPELINE" = 'build' ]; then
 elif [ "$PIPELINE" = 'update' ]; then
     GAME_IMAGE_LAYERED="$REPOSITORY:$GAME_VERSION-layered"
     BUILD_CONTEXT='update/'
+else
+    echo "Invalid PIPELINE '$PIPELINE'"
+    exit 1
 fi
 GAME_IMAGE_LATEST="$REPOSITORY:latest"
 COMMIT_SHA=$( git rev-parse HEAD )
