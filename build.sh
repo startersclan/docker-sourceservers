@@ -39,10 +39,10 @@ usage() {
     echo "STEAM_LOGIN=            # bool - optional"
     echo
     echo "## User variables ##"
-    echo "REGISTRY_USER=          # string - docker hub username - required unless NO_PUSH=true"
-    echo "REGISTRY_PASSWORD=      # string - docker hub password or api key - required unless NO_PUSH=true"
     echo "REGISTRY_GOLDSOURCE=    # string - docker hub username or organization for goldsource games - required"
     echo "REGISTRY_SOURCE=        # string - docker hub username or organization for source games - required"
+    echo "REGISTRY_USER=          # string - docker hub username - required unless NO_PUSH=true"
+    echo "REGISTRY_PASSWORD=      # string - docker hub password or api key - required unless NO_PUSH=true"
     echo "STEAM_USERNAME=         # string - steam username - optional"
     echo "STEAM_PASSWORD=         # string - steam password - optional"
     echo
@@ -120,22 +120,12 @@ elif [ "$PIPELINE" = 'update' ]; then
 fi
 
 # Process user variables
-if [ ! "$NO_PUSH" = 'true' ]; then
-    REGISTRY_USER=${REGISTRY_USER:?err}
-    REGISTRY_PASSWORD=${REGISTRY_PASSWORD:?err}
-else
-    REGISTRY_USER=${REGISTRY_USER:-}
-    REGISTRY_PASSWORD=${REGISTRY_PASSWORD:-}
-fi
 REGISTRY_GOLDSOURCE=${REGISTRY_GOLDSOURCE:?err}
 REGISTRY_SOURCE=${REGISTRY_SOURCE:?err}
-if [ "$STEAM_LOGIN" = 'true' ]; then
-    STEAM_USERNAME=${STEAM_USERNAME:?err}
-    STEAM_PASSWORD=${STEAM_PASSWORD:?err}
-else
-    STEAM_USERNAME=${STEAM_USERNAME:-}
-    STEAM_PASSWORD=${STEAM_PASSWORD:-}
-fi
+REGISTRY_USER=${REGISTRY_USER:-}
+REGISTRY_PASSWORD=${REGISTRY_PASSWORD:-}
+STEAM_USERNAME=${STEAM_USERNAME:-}
+STEAM_PASSWORD=${STEAM_PASSWORD:-}
 
 # Process default job variables
 export DOCKER_BUILDKIT=1
