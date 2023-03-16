@@ -120,6 +120,7 @@ elif [ "$PIPELINE" = 'update' ]; then
 fi
 
 # Process user variables
+DOCKER_REPOSITORY=${DOCKER_REPOSITORY:-}
 if [ ! "$NO_PUSH" = 'true' ]; then
     REGISTRY_USER=${REGISTRY_USER:?err}
     REGISTRY_PASSWORD=${REGISTRY_PASSWORD:?err}
@@ -127,8 +128,6 @@ else
     REGISTRY_USER=${REGISTRY_USER:-}
     REGISTRY_PASSWORD=${REGISTRY_PASSWORD:-}
 fi
-REGISTRY_GOLDSOURCE=${REGISTRY_GOLDSOURCE:?err}
-REGISTRY_SOURCE=${REGISTRY_SOURCE:?err}
 if [ "$STEAM_LOGIN" = 'true' ]; then
     STEAM_USERNAME=${STEAM_USERNAME:?err}
     STEAM_PASSWORD=${STEAM_PASSWORD:?err}
@@ -140,25 +139,25 @@ fi
 # Process default job variables
 export DOCKER_BUILDKIT=1
 if [ "$APPID" = 90 ]; then
-    REPOSITORY="$REGISTRY_GOLDSOURCE/$GAME"
+    DOCKER_REPOSITORY="${DOCKER_REPOSITORY:-${REGISTRY_GOLDSOURCE:?err}/$GAME}"
     GAME_ENGINE='hlds'
     GAME_BIN='hlds_linux'
 else
-    REPOSITORY="$REGISTRY_SOURCE/$GAME"
+    DOCKER_REPOSITORY="${DOCKER_REPOSITORY:-${REGISTRY_SOURCE:?err}/$GAME}"
     GAME_ENGINE='srcds'
     GAME_BIN='srcds_linux'
 fi
 if [ "$PIPELINE" = 'build' ]; then
-    GAME_IMAGE_CLEAN="$REPOSITORY:$GAME_VERSION"
+    GAME_IMAGE_CLEAN="$DOCKER_REPOSITORY:$GAME_VERSION"
     BUILD_CONTEXT='build/'
 elif [ "$PIPELINE" = 'update' ]; then
-    GAME_IMAGE_LAYERED="$REPOSITORY:$GAME_VERSION-layered"
+    GAME_IMAGE_LAYERED="$DOCKER_REPOSITORY:$GAME_VERSION-layered"
     BUILD_CONTEXT='update/'
 else
     echo "Invalid PIPELINE '$PIPELINE'"
     exit 1
 fi
-GAME_IMAGE_LATEST="$REPOSITORY:latest"
+GAME_IMAGE_LATEST="$DOCKER_REPOSITORY:latest"
 COMMIT_SHA=$( git rev-parse HEAD )
 
 # Display pipeline
@@ -287,9 +286,9 @@ fi
 # Create .build.state artifact
 echo "Creating .build.state artifact"
 # Searching for 'WORKDIR /server' is a reliable way to locate the base image layers
-BASE_SIZE=0; for i in $( docker history "$REPOSITORY:latest" --format='{{.Size}} {{.CreatedAt}} {{.CreatedBy}}' --no-trunc --human=false | grep 'WORKDIR /server' -A99999 | awk '{print $1}' ); do BASE_SIZE=$(( $BASE_SIZE + $i )); done
+BASE_SIZE=0; for i in $( docker history "$DOCKER_REPOSITORY:latest" --format='{{.Size}} {{.CreatedAt}} {{.CreatedBy}}' --no-trunc --human=false | grep 'WORKDIR /server' -A99999 | awk '{print $1}' ); do BASE_SIZE=$(( $BASE_SIZE + $i )); done
 # Searching for 'UPDATE' is a reliable way to determine the incremental image layers
-LAYERS_SIZE=0; for i in $( docker history "$REPOSITORY:latest" --format='{{.Size}} {{.CreatedAt}} {{.CreatedBy}}' --no-trunc --human=false | grep UPDATE | awk '{print $1}' ); do LAYERS_SIZE=$(( $LAYERS_SIZE + $i )); done
+LAYERS_SIZE=0; for i in $( docker history "$DOCKER_REPOSITORY:latest" --format='{{.Size}} {{.CreatedAt}} {{.CreatedBy}}' --no-trunc --human=false | grep UPDATE | awk '{print $1}' ); do LAYERS_SIZE=$(( $LAYERS_SIZE + $i )); done
 LAYERED_SIZE=$(( $BASE_SIZE + $LAYERS_SIZE ))
 cat - > .build.state <<EOF
 BASE_SIZE=$BASE_SIZE
