@@ -179,17 +179,15 @@ COMMIT_SHA=$( git rev-parse HEAD )
 echo "PIPELINE: $PIPELINE"
 
 # Display system info
-(
-    hostname
-    whoami
-    cat /etc/*release
-    lscpu
-    free
-    df -h
-    pwd
-    docker info
-    docker version
-) || true
+hostname || true
+whoami || true
+cat /etc/*release || true
+lscpu || true
+free || true
+df -h || true
+pwd || true
+docker info
+docker version
 
 # Docker registry login
 if [ ! "$NO_PUSH" = 'true' ]; then
