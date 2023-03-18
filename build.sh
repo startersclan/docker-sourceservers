@@ -231,21 +231,21 @@ if [ "$PIPELINE" = 'build' ]; then
     fi
     date
 elif [ "$PIPELINE" = 'update' ]; then
-    GAME_IMAGE="$GAME_IMAGE_LATEST"
+    GAME_IMAGE="$GAME_IMAGE_LAYERED"
     date
     if [ ! "$NO_PULL" = 'true' ]; then
-        time docker pull "$GAME_IMAGE"
+        time docker pull "$GAME_IMAGE_LATEST"
     fi
     date
     STEAM_USERNAME="$STEAM_USERNAME" STEAM_PASSWORD="$STEAM_PASSWORD" time docker build \
         --progress plain \
         --secret id=STEAM_USERNAME,env=STEAM_USERNAME \
         --secret id=STEAM_PASSWORD,env=STEAM_PASSWORD \
-        --build-arg GAME_IMAGE="$GAME_IMAGE" \
+        --build-arg GAME_IMAGE="$GAME_IMAGE_LATEST" \
         --build-arg STEAM_LOGIN="$STEAM_LOGIN" \
         --build-arg CACHE_KEY="$GAME_VERSION" \
         -t "$GAME_IMAGE" \
-        -t "$GAME_IMAGE_LAYERED" \
+        -t "$GAME_IMAGE_LATEST" \
         --label "game_version=$GAME_VERSION" \
         --label "game_update_count=$GAME_UPDATE_COUNT" \
         --label "commit_sha=$COMMIT_SHA" \
@@ -288,7 +288,7 @@ if [ ! "$NO_PUSH" = 'true' ]; then
             time docker push "$GAME_IMAGE_LATEST"
         fi
     elif [ "$PIPELINE" = 'update' ]; then
-        time docker push "$GAME_IMAGE_LAYERED"
+        time docker push "$GAME_IMAGE_LATEST"
     fi
     date
 fi
