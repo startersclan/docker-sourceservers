@@ -132,6 +132,9 @@ elif [ "$PIPELINE" = 'update' ]; then
     NO_TEST=${NO_TEST:-}
     NO_PUSH=${NO_PUSH:-}
     STEAM_LOGIN=${STEAM_LOGIN:-}
+else
+    echo "Invalid PIPELINE '$PIPELINE'"
+    exit 1
 fi
 
 # Process user variables
@@ -168,9 +171,6 @@ if [ "$PIPELINE" = 'build' ]; then
 elif [ "$PIPELINE" = 'update' ]; then
     GAME_IMAGE_LAYERED="$DOCKER_REPOSITORY:$GAME_VERSION-layered"
     BUILD_CONTEXT='update/'
-else
-    echo "Invalid PIPELINE '$PIPELINE'"
-    exit 1
 fi
 GAME_IMAGE_LATEST="$DOCKER_REPOSITORY:latest"
 COMMIT_SHA=$( git rev-parse HEAD )
