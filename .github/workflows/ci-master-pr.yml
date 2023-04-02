@@ -48,7 +48,8 @@ jobs:
 
   dockerhub-description-hlds:
     runs-on: ubuntu-20.04
-    needs: [test-build-hlds]
+    needs:
+    - test-build-hlds
     if: github.ref == 'refs/heads/master'
     strategy:
       matrix:
@@ -91,7 +92,8 @@ jobs:
 
   dockerhub-description-srcds:
     runs-on: ubuntu-20.04
-    needs: [test-build-srcds]
+    needs:
+    - test-build-srcds
     if: github.ref == 'refs/heads/master'
     strategy:
       matrix:
