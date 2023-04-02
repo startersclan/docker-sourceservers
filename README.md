@@ -163,7 +163,7 @@ Image sizes shown above or on [Docker Hub](https://hub.docker.com/) correspond t
 
 ### Update duration
 
-From the moment Valve issues an update, the time taken before a game's images are built and available for pulling largely depends on the size of the game. For instance, layered and clean images typically take *under* **15** and *over* **40 minutes** respectively for `Counter-Strike: Global Offensive`, but *under* **5 minutes** each for `Counter-Strike 1.6`.
+From the moment a game update is released, the time taken before the game's images are built and available for pulling largely depends on the size of the game. For instance, layered and clean images typically take *under* **15** and *over* **40 minutes** respectively for `Counter-Strike: Global Offensive`, but *under* **5 minutes** each for `Counter-Strike 1.6`.
 
 Build cache is used where possible to minimize update durations.
 
