@@ -12,7 +12,7 @@ on:
 
 jobs:
   test-build-hlds:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     if: github.event_name != 'pull_request' || github.repository_owner != 'startersclan'
     steps:
     - uses: actions/checkout@v3
@@ -30,7 +30,7 @@ jobs:
         STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
 
   test-build-srcds:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Test build
@@ -47,7 +47,7 @@ jobs:
         STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
 
   dockerhub-description-hlds:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     needs:
     - test-build-hlds
     if: github.ref == 'refs/heads/master'
@@ -91,7 +91,7 @@ jobs:
         readme-filepath: docs/image/readme/${{ matrix.ENGINE }}-${{ matrix.GAME }}.md
 
   dockerhub-description-srcds:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     needs:
     - test-build-srcds
     if: github.ref == 'refs/heads/master'
