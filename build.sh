@@ -184,7 +184,7 @@ whoami
 cat /etc/*release
 lscpu
 free
-df -h || true
+df -h
 pwd
 docker info
 docker version
