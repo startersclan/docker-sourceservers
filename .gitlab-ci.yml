@@ -5,8 +5,11 @@ stages:
 build-image:
   stage: build
   image: docker:20.10.18-git
-  services:
-    - docker:20.10.18-dind
+  # See: https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#use-docker-in-docker
+  # For stateless builds, a sidecar dockerd service is needed
+  # For stateful builds (i.e. DOCKER_HOST=unix:///var/run/docker.sock mounted from the host), a sidecar dockerd service is not needed
+  # services:
+  #   - docker:20.10.18-dind
   rules:
     - if: $CI_PIPELINE_SOURCE == "trigger"
     - if: $CI_PIPELINE_SOURCE == "web"
