@@ -50,7 +50,7 @@ try {
         if ($existingBranch) {
             "Updating branch '$branch'" | Write-Host -ForegroundColor Green
             if ($Pull) {
-                git fetch origin $branch
+                git fetch origin
                 if ($LASTEXITCODE) { throw }
                 git branch -f $branch origin/$branch
                 if ($LASTEXITCODE) { throw }
