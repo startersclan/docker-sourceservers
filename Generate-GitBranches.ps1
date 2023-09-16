@@ -13,6 +13,9 @@ param(
     # Whether to pull changes from remote repo before creating / updating branches
     [switch]$Pull
 ,
+    # Whether to push changes after creating / updating branches
+    [switch]$Push
+,
     # E.g. 'steam'
     [string]$GamePlatform
 ,
@@ -165,6 +168,10 @@ LAYERED_SIZE=$( if ($kv.Contains('LAYERED_SIZE')) { $kv['LAYERED_SIZE'] } else {
             if ($LASTEXITCODE) { throw }
         }else {
             "Nothing to commit" | Write-Host -ForegroundColor Green
+        }
+
+        if ($Push) {
+            git push origin "$branch"
         }
     }
 }catch {
