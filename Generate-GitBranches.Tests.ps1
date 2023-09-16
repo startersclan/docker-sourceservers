@@ -27,7 +27,7 @@ Describe "Generate-GitBranches.ps1" {
     }
 
     It "Creates branches of a target repo" {
-        ./Generate-GitBranches.ps1 -TargetRepoPath $destinationRepo -ErrorAction Stop
+        ./Generate-GitBranches.ps1 -TargetRepoPath $destinationRepo -Pull -ErrorAction Stop
 
         $branches = git branch | % { $_.Trim() } | ? { $_ -match '^steam-' }
         $branches.Count | Should -Be $games.Count
@@ -56,7 +56,7 @@ Describe "Generate-GitBranches.ps1" {
         git checkout "$currentBranch"
         if ($LASTEXITCODE) { throw }
 
-        ./Generate-GitBranches.ps1 -TargetRepoPath $destinationRepo -ErrorAction Stop
+        ./Generate-GitBranches.ps1 -TargetRepoPath $destinationRepo -Pull -ErrorAction Stop
 
         $branches = git branch | % { $_.Trim() } | ? { $_ -match '^steam-' }
         $branches.Count | Should -Be $games.Count
