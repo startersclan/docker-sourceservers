@@ -1,3 +1,5 @@
+Get-Module Pester
+
 Describe "Generate-GitBranches.ps1" {
 
     BeforeEach {
