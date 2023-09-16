@@ -52,8 +52,11 @@ try {
             if ($Pull) {
                 git fetch origin
                 if ($LASTEXITCODE) { throw }
-                git branch -f $branch origin/$branch
-                if ($LASTEXITCODE) { throw }
+                $existingRemoteBranch = git rev-parse --verify origin/$branch 2>$null
+                if ($existingRemoteBranch) {
+                    git branch -f $branch origin/$branch
+                    if ($LASTEXITCODE) { throw }
+                }
             }
             git checkout -f $branch
             if ($LASTEXITCODE) { throw }
