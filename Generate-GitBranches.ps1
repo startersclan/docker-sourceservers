@@ -1,6 +1,9 @@
 # 1. This script create / updates git branches (named <game_platform>-<game_engine>-<game>) based on games.json
 # 2. By default it creates a git branch for each game found in games.json. To limit to one game, specify -GamePlatform, -GameEngine, and -Game
 # 3. To build a game, checkout to its branch, edit .env, mutate .trigger, commit and push
+# Examples:
+#   ./ Generate-GitBranches.ps1 -TargetRepoPath <path> -Pull
+#   ./ Generate-GitBranches.ps1 -TargetRepoPath <path> -Pull -GamePlatform steam -GameEngine srcds -Game csgo
 param(
     [string]$TargetRepoPath, # Target repo path
     [switch]$Pull, # Whether to pull changes from remote repo before creating / updating branches
@@ -62,7 +65,6 @@ try {
             git pull origin master
             if ($LASTEXITCODE) { throw }
         }
-        $masterTrackedFiles = git ls-files
         if ($LASTEXITCODE) { throw }
         $existingBranch = git rev-parse --verify $branch 2>$null
         if ($existingBranch) {
@@ -85,7 +87,6 @@ try {
         }
 
         "Removing all files" | Write-Host -ForegroundColor Green
-        $repoDir = git rev-parse --show-toplevel
         if ($LASTEXITCODE) { throw }
         Get-ChildItem . -Exclude '.git' -Force | Remove-Item -Recurse -Force
 
@@ -108,7 +109,7 @@ try {
         if ($kv.Keys.Count) {
             "Updating '.env" | Write-Host -ForegroundColor Green
         }else {
-            "Creating '.env'"| Write-Host -ForegroundColor Green
+            "Creating '.env'" | Write-Host -ForegroundColor Green
         }
         @"
 PIPELINE=build
