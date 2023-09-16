@@ -64,7 +64,7 @@ try {
         }
 
         "Checking out files" | Write-Host -ForegroundColor Green
-        $masterTrackedFiles | Get-Item -Force | Remove-Item -Recurse -Force
+        Get-ChildItem . -Exclude '.git', 'build/Dockerfile', 'update/Dockerfile', 'build.sh', 'notify.sh', '.gitlab-ci.yml', '.env', '.state' -Force | Remove-Item -Recurse -Force
         git checkout master -- build
         if ($LASTEXITCODE) { throw }
         git checkout master -- update
