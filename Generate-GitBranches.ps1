@@ -46,7 +46,7 @@ try {
         }
         $masterTrackedFiles = git ls-files
         if ($LASTEXITCODE) { throw }
-        $existingBranch = git rev-parse --verify $branch
+        $existingBranch = git rev-parse --verify $branch 2>$null
         if ($existingBranch) {
             "Updating branch '$branch'" | Write-Host -ForegroundColor Green
             if ($Pull) {
@@ -63,6 +63,7 @@ try {
             if ($LASTEXITCODE) { throw }
         }
 
+        "Checking out files" | Write-Host -ForegroundColor Green
         $masterTrackedFiles | Get-Item -Force | Remove-Item -Recurse -Force
         git checkout master -- build
         if ($LASTEXITCODE) { throw }
@@ -98,6 +99,7 @@ BASE_SIZE=0
 LAYERED_SIZE=0
 '@ | Out-File .state -Encoding utf8 -Force
 
+        "Committing files" | Write-Host -ForegroundColor Green
         git add .
         if ($LASTEXITCODE) { throw }
         $msg = if ($existingBranch) { "Update files" } else { "Add files" }
