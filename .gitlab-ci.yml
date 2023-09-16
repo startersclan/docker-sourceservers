@@ -1,6 +1,6 @@
 stages:
   - build
-  - post-build
+  - notify
 
 build-image:
   stage: build
@@ -10,15 +10,16 @@ build-image:
   # For stateful builds (i.e. DOCKER_HOST=unix:///var/run/docker.sock mounted from the host), a sidecar dockerd service is not needed
   # services:
   #   - docker:20.10.18-dind
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "trigger"
-    - if: $CI_PIPELINE_SOURCE == "web"
   variables:
     DOCKER_DRIVER: overlay2
+  rules:
+    # Run on all branches except master, when .trigger is added or modified
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master"
+      changes:
+        - .trigger
   timeout: 120m
   script:
     - |
-      export PIPELINE="$CI_COMMIT_BRANCH"
       set +e
       ./build.sh
       if [ $? = 0 ]; then
@@ -28,20 +29,22 @@ build-image:
           exit 1
       fi
   artifacts:
+    name: .build.state-$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHA
     paths:
       - .build.state
     when: always
     expire_in: never
 
-send-notification:
-  stage: post-build
-  image: alpine:3.14.8
+notify:
+  stage: notify
+  image: alpine:3.15
   rules:
-    - if: $CI_PIPELINE_SOURCE == "trigger"
-    - if: $CI_PIPELINE_SOURCE == "web"
+    # Run on all branches except master, when .trigger is added or modified
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master"
+      changes:
+        - .trigger
   when: always
+  timeout: 5m
   script:
-    - |
-      apk add --no-cache curl
-      export X_CI_WEBHOOK_SECRET_HEADER="x-gitlab-webhook-secret: $X_GITLAB_WEBHOOK_SECRET"
-      ./notify.sh
+    - apk add --no-cache curl
+    - ./notify.sh

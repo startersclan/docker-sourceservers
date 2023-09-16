@@ -71,6 +71,8 @@ try {
         if ($LASTEXITCODE) { throw }
         git checkout master -- notify.sh
         if ($LASTEXITCODE) { throw }
+        git checkout master -- .gitlab-ci.yml
+        if ($LASTEXITCODE) { throw }
 
         @"
 PIPELINE=build
@@ -94,54 +96,6 @@ BUILD_EPOCH=0
 BASE_SIZE=0
 LAYERED_SIZE=0
 '@ | Out-File .state -Encoding utf8 -Force
-
-        @'
-stages:
-  - build
-  - notify
-
-build-image:
-  stage: build
-  image: docker:20.10.18-git
-  services:
-    - docker:20.10.18-dind
-  variables:
-    DOCKER_DRIVER: overlay2
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master" # Run on all branches except master
-      changes:
-        - .trigger # Run only when .trigger is added or modified
-  timeout: 120m
-  script:
-    - |
-      set +e
-      ./build.sh
-      if [ $? = 0 ]; then
-          echo BUILD_STATUS=success >> .build.state
-      else
-          echo BUILD_STATUS=failed >> .build.state
-          exit 1
-      fi
-  artifacts:
-    name: .build.state-$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHA
-    paths:
-      - .build.state
-    expire_in: never
-    when: always
-
-notify:
-  stage: notify
-  image: alpine:3.15
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master" # Run on all branches except master
-      changes:
-        - .trigger # Run only when .trigger is added or modified
-      when: always
-  timeout: 60m
-  script:
-    - apk add --no-cache curl
-    - ./notify.sh
-'@ | Out-File .gitlab-ci.yml -Encoding utf8 -Force
 
         git add .
         if ($existingBranch) {
