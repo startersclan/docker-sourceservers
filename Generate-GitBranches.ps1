@@ -2,7 +2,7 @@
 # 2. By default it creates a git branch for each game found in games.json. To limit to one game, specify -GamePlatform, -GameEngine, and -Game
 # 3. To build a game, checkout to its branch, edit .env, mutate .trigger, commit and push
 param(
-    [string]$TargetRepoPath, # Specifies a target git repo
+    [string]$TargetRepoPath, # Target repo path
     [switch]$Pull, # Whether to pull changes from remote repo before creating / updating branches
     [string]$GamePlatform,
     [string]$GameEngine,
@@ -51,9 +51,10 @@ try {
             "Updating branch '$branch'" | Write-Host -ForegroundColor Green
             if ($Pull) {
                 git fetch origin
+                if ($LASTEXITCODE) { throw }
                 git branch -f $branch origin/$branch
+                if ($LASTEXITCODE) { throw }
             }
-            if ($LASTEXITCODE) { throw }
             git checkout -f $branch
             if ($LASTEXITCODE) { throw }
         }else {
@@ -98,11 +99,10 @@ LAYERED_SIZE=0
 '@ | Out-File .state -Encoding utf8 -Force
 
         git add .
-        if ($existingBranch) {
-            git commit -m "Update files"
-        }else {
-            git commit -m "Add files"
-        }
+        if ($LASTEXITCODE) { throw }
+        $msg = if ($existingBranch) { "Update files" } else { "Add files" }
+        git commit -m "$msg"
+        if ($LASTEXITCODE) { throw }
     }
 }catch {
     throw
