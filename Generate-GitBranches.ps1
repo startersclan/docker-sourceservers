@@ -2,13 +2,24 @@
 # 2. By default it creates a git branch for each game found in games.json. To limit to one game, specify -GamePlatform, -GameEngine, and -Game
 # 3. To build a game, checkout to its branch, edit .env, mutate .trigger, commit and push
 # Examples:
+#   # Create branches for all games
 #   ./ Generate-GitBranches.ps1 -TargetRepoPath <path> -Pull
+#   # Create branches for specific game
 #   ./ Generate-GitBranches.ps1 -TargetRepoPath <path> -Pull -GamePlatform steam -GameEngine srcds -Game csgo
 param(
-    [string]$TargetRepoPath, # Target repo path
-    [switch]$Pull, # Whether to pull changes from remote repo before creating / updating branches
-    [string]$GamePlatform,
-    [string]$GameEngine,
+    # Target repo path
+    [string]$TargetRepoPath
+,
+    # Whether to pull changes from remote repo before creating / updating branches
+    [switch]$Pull
+,
+    # E.g. 'steam'
+    [string]$GamePlatform
+,
+    # E.g. 'hlds' or 'srcds'
+    [string]$GameEngine
+,
+    # E.g. 'cstrike'
     [string]$Game
 )
 Set-StrictMode -Version Latest
