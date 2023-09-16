@@ -1,4 +1,4 @@
-Get-Module Pester
+Get-Module Pester -ListAvailable
 
 Describe "Generate-GitBranches.ps1" {
 
