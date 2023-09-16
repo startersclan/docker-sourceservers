@@ -11,6 +11,8 @@ Describe "Generate-GitBranches.ps1" {
         $destinationRepo = "$testDrive/$( (Get-Item $sourceRepo).Name )"
         Copy-Item $sourceRepo $destinationRepo -Recurse -Force
         cd $destinationRepo
+        git config user.name "bot"
+        git config user.email "bot@example.com"
     }
 
     AfterEach {
