@@ -19,7 +19,7 @@ if (!$TargetRepoPath) {
 }
 
 # Get games
-$games = Get-Content $PSScriptRoot/games.json -Encoding utf8 -Force | ConvertFrom-Json -Depth 100 -AsHashtable
+$games = Get-Content $PSScriptRoot/games.json -Encoding utf8 -Force | ConvertFrom-Json -AsHashtable
 if ($GamePlatform) {
     $games = $games | ? { $_['game_platform'] -eq $GamePlatform }
 }
