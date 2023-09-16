@@ -30,6 +30,24 @@ if ($games.Count -eq 0) {
     throw "No games found"
 }
 
+function Get-EnvFileKv ($file, $branch) {
+    $kv = [ordered]@{}
+    $branchFiles = git ls-tree -r --name-only $branch
+    if ($LASTEXITCODE) { throw }
+    if ($branchFiles -contains $file) {
+        $content = git --no-pager show "${branch}:${file}"
+        if ($LASTEXITCODE) { throw }
+        $content | % {
+            if ($_ -match '^(\w+)=(.*)$') {
+                $kv[$matches[1]] = $matches[2]
+            }else {
+                throw "File '$file' is not in a valid k=v format. Invalid line: $_"
+            }
+        }
+    }
+    $kv
+}
+
 # Create new branch, remove all files except .git, create .trigger file, create .gitlab-ci.yml, commit files
 try {
     Push-Location $TargetRepoPath
@@ -66,10 +84,11 @@ try {
             if ($LASTEXITCODE) { throw }
         }
 
-        "Removing files" | Write-Host -ForegroundColor Green
+        "Removing all files" | Write-Host -ForegroundColor Green
         $repoDir = git rev-parse --show-toplevel
         if ($LASTEXITCODE) { throw }
-        Get-ChildItem . -Exclude '.git', '.env', '.state', '.trigger' -Force | Remove-Item -Recurse -Force
+        Get-ChildItem . -Exclude '.git' -Force | Remove-Item -Recurse -Force
+
         "Checking out files" | Write-Host -ForegroundColor Green
         git checkout master -- build
         if ($LASTEXITCODE) { throw }
@@ -82,9 +101,18 @@ try {
         git checkout master -- .gitlab-ci.yml
         if ($LASTEXITCODE) { throw }
 
+        $branchFiles = git ls-tree -r --name-only $branch
+        if ($LASTEXITCODE) { throw }
+
+        $kv = Get-EnvFileKv '.env' $branch
+        if ($kv.Keys.Count) {
+            "Updating '.env" | Write-Host -ForegroundColor Green
+        }else {
+            "Creating '.env'"| Write-Host -ForegroundColor Green
+        }
         @"
 PIPELINE=build
-GAME_UPDATE_COUNT=$( $g['game_update_count'] )
+GAME_UPDATE_COUNT=$( if ($kv.Contains('GAME_UPDATE_COUNT')) { $kv['GAME_UPDATE_COUNT'] } else { $g['game_update_count'] } )
 GAME_VERSION=$( $g['game_version'] )
 GAME_PLATFORM=$( $g['game_platform'] )
 GAME_ENGINE=$( $g['game_engine'] )
@@ -98,19 +126,34 @@ DOCKER_REPOSITORY=$( $g['docker_repository'] )
 STEAM_LOGIN=
 "@ | Out-File .env -Encoding utf8 -Force
 
-        @'
-BUILD_STATUS=
-BUILD_EPOCH=0
-BASE_SIZE=0
-LAYERED_SIZE=0
-'@ | Out-File .state -Encoding utf8 -Force
+        $kv = Get-EnvFileKv '.state' $branch
+        if ($kv.Keys.Count) {
+            "Updating '.state" | Write-Host -ForegroundColor Green
+        }else {
+            "Creating '.state'" | Write-Host -ForegroundColor Green
+        }
+        @"
+BUILD_STATUS=$( if ($kv.Contains('BUILD_STATUS')) { $kv['BUILD_STATUS'] } else { '' } )
+BUILD_EPOCH=$( if ($kv.Contains('BUILD_EPOCH')) { $kv['BUILD_EPOCH'] } else { '0' } )
+BASE_SIZE=$( if ($kv.Contains('BASE_SIZE')) { $kv['BASE_SIZE'] } else { '0' } )
+LAYERED_SIZE=$( if ($kv.Contains('LAYERED_SIZE')) { $kv['LAYERED_SIZE'] } else { '0' } )
+"@ | Out-File .state -Encoding utf8 -Force
 
-        "Committing files" | Write-Host -ForegroundColor Green
-        git add .
-        if ($LASTEXITCODE) { throw }
-        $msg = if ($existingBranch) { "Update files" } else { "Add files" }
-        git commit -m "$msg"
-        if ($LASTEXITCODE) { throw }
+        if ($branchFiles -contains '.trigger') {
+            "Using existing '.trigger'" | Write-Host -ForegroundColor Green
+            git checkout "$branch" -- .trigger
+        }
+
+        if (git status --porcelain 2>$null) {
+            "Committing files" | Write-Host -ForegroundColor Green
+            git add .
+            if ($LASTEXITCODE) { throw }
+            $msg = if ($existingBranch) { "Update files" } else { "Add files" }
+            git commit -m "$msg"
+            if ($LASTEXITCODE) { throw }
+        }else {
+            "Nothing to commit" | Write-Host -ForegroundColor Green
+        }
     }
 }catch {
     throw

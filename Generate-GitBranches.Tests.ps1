@@ -22,41 +22,17 @@ Describe "Generate-GitBranches.ps1" {
 
     It "Parameter validation" {
         {
-            ./Generate-GitBranches.ps1 -ErrorAction Stop
+            & "$PSScriptRoot/Generate-GitBranches.ps1" -ErrorAction Stop
         } | Should -Throw "-Path cannot be empty"
     }
 
-    It "Creates branches of a target repo" {
-        ./Generate-GitBranches.ps1 -TargetRepoPath $destinationRepo -Pull -ErrorAction Stop
-
-        $branches = git branch | % { $_.Trim() } | ? { $_ -match '^steam-' }
-        $branches.Count | Should -Be $games.Count
-        foreach ($b in $branches) {
-            git ls-tree -r --name-only $b | Should -Be @(
-                '.env'
-                '.gitlab-ci.yml'
-                '.state'
-                'build.sh'
-                'build/Dockerfile'
-                'notify.sh'
-                'update/Dockerfile'
-            )
-        }
-    }
-
-    It "Updates branches of a target repo" {
-        # Create branches first
+    It "Creates and updates branches of a target repo" {
         $currentBranch = git rev-parse --abbrev-ref HEAD
         if ($LASTEXITCODE) { throw }
-        foreach ($g in $games) {
-            $branch = "$( $g['game_platform'] )-$( $g['game_engine'] )-$( $g['game'] )"
-            git checkout -b "$branch"
-            if ($LASTEXITCODE) { throw }
-        }
-        git checkout "$currentBranch"
-        if ($LASTEXITCODE) { throw }
 
-        ./Generate-GitBranches.ps1 -TargetRepoPath $destinationRepo -Pull -ErrorAction Stop
+        & "$PSScriptRoot/Generate-GitBranches.ps1" -TargetRepoPath $destinationRepo -Pull -ErrorAction Stop # Create
+        git checkout $currentBranch
+        & "$PSScriptRoot/Generate-GitBranches.ps1" -TargetRepoPath $destinationRepo -Pull -ErrorAction Stop # Update
 
         $branches = git branch | % { $_.Trim() } | ? { $_ -match '^steam-' }
         $branches.Count | Should -Be $games.Count
