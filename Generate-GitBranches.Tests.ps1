@@ -22,8 +22,8 @@ Describe "Generate-GitBranches.ps1" {
 
     It "Parameter validation" {
         {
-            & "$PSScriptRoot/Generate-GitBranches.ps1" -ErrorAction Stop
-        } | Should -Throw "-Path cannot be empty"
+            & "$PSScriptRoot/Generate-GitBranches.ps1" -TargetRepoPath '' -ErrorAction Stop
+        } | Should -Throw
     }
 
     It "Creates and updates branches of a target repo" {

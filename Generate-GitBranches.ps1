@@ -6,8 +6,11 @@
 #   ./ Generate-GitBranches.ps1 -TargetRepoPath <path> -Pull
 #   # Create branches for specific game
 #   ./ Generate-GitBranches.ps1 -TargetRepoPath <path> -Pull -GamePlatform steam -GameEngine srcds -Game csgo
+[CmdletBinding()]
 param(
     # Target repo path
+    [Parameter(Mandatory)]
+    [ValidateNotNullOrEmpty()]
     [string]$TargetRepoPath
 ,
     # Whether to pull changes from remote repo before creating / updating branches
@@ -27,10 +30,6 @@ param(
 )
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
-
-if (!$TargetRepoPath) {
-    throw "-Path cannot be empty"
-}
 
 # Get games
 $games = Get-Content $PSScriptRoot/games.json -Encoding utf8 -Force | ConvertFrom-Json -AsHashtable
