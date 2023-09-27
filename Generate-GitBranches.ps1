@@ -147,9 +147,9 @@ try {
 
         $kv = Get-EnvFileKv '.env' $branch
         if ($kv.Keys.Count) {
-            "Updating '.env" | Write-Host -ForegroundColor Green
+            "Updating .env" | Write-Host -ForegroundColor Green
         }else {
-            "Creating '.env'" | Write-Host -ForegroundColor Green
+            "Creating .env'" | Write-Host -ForegroundColor Green
         }
         @"
 PIPELINE=build
@@ -169,9 +169,9 @@ STEAM_LOGIN=
 
         $kv = Get-EnvFileKv '.state' $branch
         if ($kv.Keys.Count) {
-            "Updating '.state" | Write-Host -ForegroundColor Green
+            "Updating .state" | Write-Host -ForegroundColor Green
         }else {
-            "Creating '.state'" | Write-Host -ForegroundColor Green
+            "Creating .state'" | Write-Host -ForegroundColor Green
         }
         @"
 BUILD_STATUS=$( if ($kv.Contains('BUILD_STATUS')) { $kv['BUILD_STATUS'] } else { '' } )
