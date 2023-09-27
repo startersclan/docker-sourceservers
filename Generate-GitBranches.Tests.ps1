@@ -28,10 +28,10 @@ Describe "Generate-GitBranches.ps1" {
         git config user.name "bot"
         git config user.email "bot@example.com"
 
-        $currentBranch = git rev-parse --abbrev-ref HEAD
+        $currentRef = git rev-parse --short HEAD
         if ($LASTEXITCODE) { throw }
         & ./Generate-GitBranches.ps1 -TargetRepo $sameRepo -Pull -ErrorAction Stop 6>$null # Create
-        git checkout $currentBranch
+        git checkout $currentRef
         & ./Generate-GitBranches.ps1 -TargetRepo $sameRepo -Pull -ErrorAction Stop 6>$null # Update
 
         cd $sameRepo
