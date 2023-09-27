@@ -3,9 +3,17 @@
 # 3. To build a game, checkout to its branch, edit .env, mutate .trigger, commit and push
 # Examples:
 #   # Create branches for all games
-#   ./ Generate-GitBranches.ps1 -TargetRepo <path> -Pull
+#   ./ Generate-GitBranches.ps1 -TargetRepo . -Pull
+#
 #   # Create branches for specific game
-#   ./ Generate-GitBranches.ps1 -TargetRepo <path> -Pull -GamePlatform steam -GameEngine srcds -Game csgo
+#   ./ Generate-GitBranches.ps1 -TargetRepo . -Pull -GameEngine srcds -Game csgo
+#
+#   # Update branches for all games
+#   ./ Generate-GitBranches.ps1 -TargetRepo . -Pull -Push
+#
+#   # Update branches for specific game
+#   ./ Generate-GitBranches.ps1 -TargetRepo . -Pull -Push -GameEngine srcds -Game csgo
+#
 [CmdletBinding()]
 param(
     # Target repo path
