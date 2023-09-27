@@ -16,7 +16,8 @@ Describe "Generate-GitBranches.ps1" {
 
     It "Parameter validation" {
         {
-            & "$PSScriptRoot/Generate-GitBranches.ps1" -TargetRepo '' -ErrorAction Stop
+            cd $PSScriptRoot
+            & ./Generate-GitBranches.ps1 -TargetRepo '' -ErrorAction Stop
         } | Should -Throw
     }
 
@@ -29,9 +30,9 @@ Describe "Generate-GitBranches.ps1" {
 
         $currentBranch = git rev-parse --abbrev-ref HEAD
         if ($LASTEXITCODE) { throw }
-        & ./Generate-GitBranches.ps1 -TargetRepo $sameRepo -Pull -ErrorAction Stop # Create
+        & ./Generate-GitBranches.ps1 -TargetRepo $sameRepo -Pull -ErrorAction Stop 6>$null # Create
         git checkout $currentBranch
-        & ./Generate-GitBranches.ps1 -TargetRepo $sameRepo -Pull -ErrorAction Stop # Update
+        & ./Generate-GitBranches.ps1 -TargetRepo $sameRepo -Pull -ErrorAction Stop 6>$null # Update
 
         cd $sameRepo
         $branches = git branch | % { $_.Trim() } | ? { $_ -match '^steam-' }
@@ -58,8 +59,8 @@ Describe "Generate-GitBranches.ps1" {
         git config user.email "bot@example.com"
         git commit --allow-empty -m 'Init'
 
-        & $sourceRepo/Generate-GitBranches.ps1 -TargetRepo $differentRepo -ErrorAction Stop # Create
-        & $sourceRepo/Generate-GitBranches.ps1 -TargetRepo $differentRepo -ErrorAction Stop # Update
+        & $sourceRepo/Generate-GitBranches.ps1 -TargetRepo $differentRepo -ErrorAction Stop 6>$null # Create
+        & $sourceRepo/Generate-GitBranches.ps1 -TargetRepo $differentRepo -ErrorAction Stop 6>$null # Update
 
         cd $differentRepo
         $branches = git branch | % { $_.Trim() } | ? { $_ -match '^steam-' }
