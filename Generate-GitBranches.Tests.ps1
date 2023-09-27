@@ -30,9 +30,9 @@ Describe "Generate-GitBranches.ps1" {
 
         $currentRef = git rev-parse --short HEAD
         if ($LASTEXITCODE) { throw }
-        & ./Generate-GitBranches.ps1 -TargetRepo $sameRepo -Pull -ErrorAction Stop 6>$null # Create
+        & ./Generate-GitBranches.ps1 -TargetRepo . -Pull -ErrorAction Stop 6>$null # Create
         git checkout $currentRef
-        & ./Generate-GitBranches.ps1 -TargetRepo $sameRepo -Pull -ErrorAction Stop 6>$null # Update
+        & ./Generate-GitBranches.ps1 -TargetRepo . -Pull -ErrorAction Stop 6>$null # Update
 
         cd $sameRepo
         $branches = git branch | % { $_.Trim() } | ? { $_ -match '^steam-' }
