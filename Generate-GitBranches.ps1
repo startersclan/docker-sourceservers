@@ -115,18 +115,20 @@ function Get-EnvFileKv ($file, $branch) {
     $kv
 }
 
+$sourceRef = ''
+$isSameRepo = $false
 try {
     try {
         $sourceRepo = { cd $PSScriptRoot; git rev-parse --show-toplevel; cd - } | Execute-Command -WhatIf:$false  # Execute this even if -WhatIf is passed
     }catch {
         throw "$PSScriptRoot is not a git repo"
     }
+    $sourceRef = { git rev-parse --abbrev-ref HEAD } | Execute-Command
     try {
         $TargetRepo = { cd $TargetRepo; git rev-parse --show-toplevel; cd - } | Execute-Command -WhatIf:$false  # Execute this even if -WhatIf is passed
     }catch {
         throw "$TargetRepo is not a git repo"
     }
-
     $isSameRepo = if ($TargetRepo -eq $sourceRepo) { $true } else { $false }
 
     Push-Location $TargetRepo
@@ -231,6 +233,8 @@ LAYERED_SIZE=$( if ($kv.Contains('LAYERED_SIZE')) { $kv['LAYERED_SIZE'] } else {
 }catch {
     throw
 }finally {
-    { git checkout master } | Execute-Command
+    if ($isSameRepo) {
+        { git checkout $sourceRef } | Execute-Command   # Restore the source repo's ref
+    }
     Pop-Location
 }
