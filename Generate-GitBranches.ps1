@@ -165,6 +165,8 @@ FIX_APPMANIFEST=$( $g['fix_app_manifest'].ToString().ToLower() )
 LATEST=true
 DOCKER_REPOSITORY=$( $g['docker_repository'] )
 STEAM_LOGIN=
+NO_PUSH=
+NO_PULL=
 "@ | Out-File .env -Encoding utf8 -Force
 
         $kv = Get-EnvFileKv '.state' $branch
