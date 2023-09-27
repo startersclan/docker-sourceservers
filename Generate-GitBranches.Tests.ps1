@@ -47,7 +47,7 @@ Describe "Generate-GitBranches.ps1" {
             $branches.Count | Should -Be 0
         }
 
-        It "Creates and updates branches of this same repo" {
+        It "Creates and updates branches of a same repo" {
             $currentRef = git rev-parse --short HEAD
             if ($LASTEXITCODE) { throw }
             & ./Generate-GitBranches.ps1 -TargetRepo . -Pull -ErrorAction Stop 6>$null # Create

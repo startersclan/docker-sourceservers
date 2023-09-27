@@ -117,11 +117,16 @@ function Get-EnvFileKv ($file, $branch) {
 
 # Create new branch, remove all files except .git, create .trigger file, create .gitlab-ci.yml, commit files
 try {
-    $sourceRepo = { cd $PSScriptRoot; git rev-parse --show-toplevel; cd - } | Execute-Command -ErrorAction SilentlyContinue -WhatIf:$false
-    if ($LASTEXITCODE) { throw "$PSScriptRoot is not a git repo" }
-
-    $TargetRepo = { cd $TargetRepo; git rev-parse --show-toplevel; cd - } | Execute-Command -ErrorAction SilentlyContinue -WhatIf:$false
-    if ($LASTEXITCODE) { throw "$TargetRepo is not a git repo" }
+    try {
+        $sourceRepo = { cd $PSScriptRoot; git rev-parse --show-toplevel; cd - } | Execute-Command -WhatIf:$false  # -WhatIf:$false means execute this even if -WhatIf is passed
+    }catch {
+        throw "$PSScriptRoot is not a git repo"
+    }
+    try {
+        $TargetRepo = { cd $TargetRepo; git rev-parse --show-toplevel; cd - } | Execute-Command -WhatIf:$false  # -WhatIf:$false means execute this even if -WhatIf is passed
+    }catch {
+        throw "$TargetRepo is not a git repo"
+    }
 
     $isSameRepo = if ($TargetRepo -eq $sourceRepo) { $true } else { $false }
 
@@ -129,14 +134,9 @@ try {
     foreach ($g in $games) {
         $branch = "$( $g['game_platform'] )-$( $g['game_engine'] )-$( $g['game'] )"
 
-        if ($isSameRepo) {
-            { git checkout -f master } | Execute-Command
-            if ($Pull) {
-                { git pull origin master } | Execute-Command
-            }
-        }else {
-            { git rev-parse --verify master } | Execute-Command -ErrorAction SilentlyContinue
-            if ($LASTEXITCODE) { throw "No 'master' branch in the target repo: $TargetRepo. Create it using: git commit --allow-empty -m 'Init'" }
+        { git checkout -f master } | Execute-Command
+        if ($Pull) {
+            { git pull origin master } | Execute-Command
         }
         $existingBranch = { git rev-parse --verify $branch 2>$null } | Execute-Command -ErrorAction SilentlyContinue
         if ($existingBranch) {
