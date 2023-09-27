@@ -67,7 +67,7 @@ function Get-EnvFileKv ($file, $branch) {
 # Create new branch, remove all files except .git, create .trigger file, create .gitlab-ci.yml, commit files
 try {
     $sourceRepo = & { cd $PSScriptRoot; git rev-parse --show-toplevel; cd - }
-    if ($LASTEXITCODE) { throw }
+    if ($LASTEXITCODE) { throw "$PSScriptRoot is not a git repo" }
 
     $TargetRepo = & { cd $TargetRepo; git rev-parse --show-toplevel; cd - }
     if ($LASTEXITCODE) { throw "$TargetRepo is not a git repo" }
