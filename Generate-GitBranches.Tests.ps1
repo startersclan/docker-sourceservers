@@ -29,7 +29,7 @@ Describe "Generate-GitBranches.ps1" {
             cd $sameRepo
             git config user.name "bot"
             git config user.email "bot@example.com"
-            $branches = git branch | % { $_.Trim() } | ? { $_ -match '^steam-' }
+            $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
             foreach ($b in $branches) {
                 git branch -D $b
             }
@@ -43,7 +43,7 @@ Describe "Generate-GitBranches.ps1" {
             & ./Generate-GitBranches.ps1 -TargetRepo . -Pull -ErrorAction Stop -WhatIf 6>$null # Update
 
             cd $sameRepo
-            $branches = git branch | % { $_.Trim() } | ? { $_ -match '^steam-' }
+            $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
             $branches.Count | Should -Be 0
         }
 
@@ -55,7 +55,7 @@ Describe "Generate-GitBranches.ps1" {
             & ./Generate-GitBranches.ps1 -TargetRepo . -Pull -ErrorAction Stop 6>$null # Update
 
             cd $sameRepo
-            $branches = git branch | % { $_.Trim() } | ? { $_ -match '^steam-' }
+            $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
             $branches.Count | Should -Be $games.Count
             foreach ($b in $branches) {
                 git ls-tree -r --name-only $b | Should -Be @(
@@ -82,7 +82,7 @@ Describe "Generate-GitBranches.ps1" {
             git config user.name "bot"
             git config user.email "bot@example.com"
             git commit --allow-empty -m 'Init'
-            $branches = git branch | % { $_.Trim() } | ? { $_ -match '^steam-' }
+            $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
             foreach ($b in $branches) {
                 git branch -D $b
             }
@@ -93,7 +93,7 @@ Describe "Generate-GitBranches.ps1" {
             & $sourceRepo/Generate-GitBranches.ps1 -TargetRepo $differentRepo -ErrorAction Stop 6>$null -WhatIf # Update
 
             cd $differentRepo
-            $branches = git branch | % { $_.Trim() } | ? { $_ -match '^steam-' }
+            $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
             $branches.Count | Should -Be 0
         }
 
@@ -102,7 +102,7 @@ Describe "Generate-GitBranches.ps1" {
             & $sourceRepo/Generate-GitBranches.ps1 -TargetRepo $differentRepo -ErrorAction Stop 6>$null # Update
 
             cd $differentRepo
-            $branches = git branch | % { $_.Trim() } | ? { $_ -match '^steam-' }
+            $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
             $branches.Count | Should -Be $games.Count
             foreach ($b in $branches) {
                 git ls-tree -r --name-only $b | Should -Be @(
