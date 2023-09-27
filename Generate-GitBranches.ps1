@@ -87,7 +87,7 @@ try {
             }
         }else {
             git rev-parse --verify master
-            if ($LASTEXITCODE) { throw "Please create a 'master' branch in the target repo: $TargetRepo" }
+            if ($LASTEXITCODE) { throw "No 'master' branch in the target repo: $TargetRepo. Create it using: git commit --allow-empty -m 'Init'" }
         }
         if ($LASTEXITCODE) { throw }
         $existingBranch = git rev-parse --verify $branch 2>$null
