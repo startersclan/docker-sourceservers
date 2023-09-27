@@ -66,17 +66,28 @@ function Get-EnvFileKv ($file, $branch) {
 
 # Create new branch, remove all files except .git, create .trigger file, create .gitlab-ci.yml, commit files
 try {
-    Push-Location $TargetRepoPath
-    git status 2>&1 > $null
+    $sourceRepoPath = & { cd $PSScriptRoot; git rev-parse --show-toplevel; cd - }
+    if ($LASTEXITCODE) { throw }
+
+    $TargetRepoPath = & { cd $TargetRepoPath; git rev-parse --show-toplevel; cd - }
     if ($LASTEXITCODE) { throw "$TargetRepoPath is not a git repo" }
+
+    $isSameRepo = if ($TargetRepoPath -eq $sourceRepoPath) { $true } else { $false }
+
+    Push-Location $TargetRepoPath
     foreach ($g in $games) {
         $branch = "$( $g['game_platform'] )-$( $g['game_engine'] )-$( $g['game'] )"
 
-        git checkout -f master
-        if ($LASTEXITCODE) { throw }
-        if ($Pull) {
-            git pull origin master
+        if ($isSameRepo) {
+            git checkout -f master
             if ($LASTEXITCODE) { throw }
+            if ($Pull) {
+                git pull origin master
+                if ($LASTEXITCODE) { throw }
+            }
+        }else {
+            git rev-parse --verify master
+            if ($LASTEXITCODE) { throw "Please create a 'master' branch in the target repo: $TargetRepoPath" }
         }
         if ($LASTEXITCODE) { throw }
         $existingBranch = git rev-parse --verify $branch 2>$null
@@ -104,16 +115,24 @@ try {
         Get-ChildItem . -Exclude '.git' -Force | Remove-Item -Recurse -Force
 
         "Checking out files" | Write-Host -ForegroundColor Green
-        git checkout master -- build
-        if ($LASTEXITCODE) { throw }
-        git checkout master -- update
-        if ($LASTEXITCODE) { throw }
-        git checkout master -- build.sh
-        if ($LASTEXITCODE) { throw }
-        git checkout master -- notify.sh
-        if ($LASTEXITCODE) { throw }
-        git checkout master -- .gitlab-ci.yml
-        if ($LASTEXITCODE) { throw }
+        if ($isSameRepo) {
+            git checkout master -- build
+            if ($LASTEXITCODE) { throw }
+            git checkout master -- update
+            if ($LASTEXITCODE) { throw }
+            git checkout master -- build.sh
+            if ($LASTEXITCODE) { throw }
+            git checkout master -- notify.sh
+            if ($LASTEXITCODE) { throw }
+            git checkout master -- .gitlab-ci.yml
+            if ($LASTEXITCODE) { throw }
+        }else {
+            Copy-Item $sourceRepoPath/build . -Recurse -Force
+            Copy-Item $sourceRepoPath/update . -Recurse -Force
+            Copy-Item $sourceRepoPath/build.sh . -Force
+            Copy-Item $sourceRepoPath/notify.sh . -Force
+            Copy-Item $sourceRepoPath/.gitlab-ci.yml . -Force
+        }
 
         $branchFiles = git ls-tree -r --name-only $branch
         if ($LASTEXITCODE) { throw }

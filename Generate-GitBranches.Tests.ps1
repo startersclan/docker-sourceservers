@@ -5,14 +5,8 @@ Describe "Generate-GitBranches.ps1" {
     BeforeEach {
         $games = Get-Content $PSScriptRoot/games.json -Encoding utf8 | ConvertFrom-Json -AsHashtable
 
-        # Copy the git repository
-        $testDrive = "TestDrive:\"
+        $testDrive = "TestDrive:"
         $sourceRepo = $PSScriptRoot
-        $destinationRepo = "$testDrive/$( (Get-Item $sourceRepo).Name )"
-        Copy-Item $sourceRepo $destinationRepo -Recurse -Force
-        cd $destinationRepo
-        git config user.name "bot"
-        git config user.email "bot@example.com"
     }
 
     AfterEach {
@@ -26,14 +20,48 @@ Describe "Generate-GitBranches.ps1" {
         } | Should -Throw
     }
 
-    It "Creates and updates branches of a target repo" {
+    It "Creates and updates branches of a target repo (same repo)" {
+        $sameRepo = "$testDrive/$( (Get-Item $sourceRepo).Name )"
+        Copy-Item $sourceRepo $sameRepo -Recurse -Force
+        cd $sameRepo
+        git config user.name "bot"
+        git config user.email "bot@example.com"
+
         $currentBranch = git rev-parse --abbrev-ref HEAD
         if ($LASTEXITCODE) { throw }
-
-        & "$PSScriptRoot/Generate-GitBranches.ps1" -TargetRepoPath $destinationRepo -Pull -ErrorAction Stop # Create
+        & ./Generate-GitBranches.ps1 -TargetRepoPath $sameRepo -Pull -ErrorAction Stop # Create
         git checkout $currentBranch
-        & "$PSScriptRoot/Generate-GitBranches.ps1" -TargetRepoPath $destinationRepo -Pull -ErrorAction Stop # Update
+        & ./Generate-GitBranches.ps1 -TargetRepoPath $sameRepo -Pull -ErrorAction Stop # Update
 
+        cd $sameRepo
+        $branches = git branch | % { $_.Trim() } | ? { $_ -match '^steam-' }
+        $branches.Count | Should -Be $games.Count
+        foreach ($b in $branches) {
+            git ls-tree -r --name-only $b | Should -Be @(
+                '.env'
+                '.gitlab-ci.yml'
+                '.state'
+                'build.sh'
+                'build/Dockerfile'
+                'notify.sh'
+                'update/Dockerfile'
+            )
+        }
+    }
+
+    It "Creates and updates branches of a target repo (different repo)" {
+        $differentRepo = "$testDrive/$( (Get-Item $sourceRepo).Name )"
+        New-Item $differentRepo -ItemType Directory > $null
+        cd $differentRepo
+        git init
+        git config user.name "bot"
+        git config user.email "bot@example.com"
+        git commit --allow-empty -m 'Init'
+
+        & $sourceRepo/Generate-GitBranches.ps1 -TargetRepoPath $differentRepo -ErrorAction Stop # Create
+        & $sourceRepo/Generate-GitBranches.ps1 -TargetRepoPath $differentRepo -ErrorAction Stop # Update
+
+        cd $differentRepo
         $branches = git branch | % { $_.Trim() } | ? { $_ -match '^steam-' }
         $branches.Count | Should -Be $games.Count
         foreach ($b in $branches) {
