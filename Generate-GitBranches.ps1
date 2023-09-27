@@ -3,15 +3,15 @@
 # 3. To build a game, checkout to its branch, edit .env, mutate .trigger, commit and push
 # Examples:
 #   # Create branches for all games
-#   ./ Generate-GitBranches.ps1 -TargetRepoPath <path> -Pull
+#   ./ Generate-GitBranches.ps1 -TargetRepo <path> -Pull
 #   # Create branches for specific game
-#   ./ Generate-GitBranches.ps1 -TargetRepoPath <path> -Pull -GamePlatform steam -GameEngine srcds -Game csgo
+#   ./ Generate-GitBranches.ps1 -TargetRepo <path> -Pull -GamePlatform steam -GameEngine srcds -Game csgo
 [CmdletBinding()]
 param(
     # Target repo path
     [Parameter(Mandatory)]
     [ValidateNotNullOrEmpty()]
-    [string]$TargetRepoPath
+    [string]$TargetRepo
 ,
     # Whether to pull changes from remote repo before creating / updating branches
     [switch]$Pull
@@ -66,15 +66,15 @@ function Get-EnvFileKv ($file, $branch) {
 
 # Create new branch, remove all files except .git, create .trigger file, create .gitlab-ci.yml, commit files
 try {
-    $sourceRepoPath = & { cd $PSScriptRoot; git rev-parse --show-toplevel; cd - }
+    $sourceRepo = & { cd $PSScriptRoot; git rev-parse --show-toplevel; cd - }
     if ($LASTEXITCODE) { throw }
 
-    $TargetRepoPath = & { cd $TargetRepoPath; git rev-parse --show-toplevel; cd - }
-    if ($LASTEXITCODE) { throw "$TargetRepoPath is not a git repo" }
+    $TargetRepo = & { cd $TargetRepo; git rev-parse --show-toplevel; cd - }
+    if ($LASTEXITCODE) { throw "$TargetRepo is not a git repo" }
 
-    $isSameRepo = if ($TargetRepoPath -eq $sourceRepoPath) { $true } else { $false }
+    $isSameRepo = if ($TargetRepo -eq $sourceRepo) { $true } else { $false }
 
-    Push-Location $TargetRepoPath
+    Push-Location $TargetRepo
     foreach ($g in $games) {
         $branch = "$( $g['game_platform'] )-$( $g['game_engine'] )-$( $g['game'] )"
 
@@ -87,7 +87,7 @@ try {
             }
         }else {
             git rev-parse --verify master
-            if ($LASTEXITCODE) { throw "Please create a 'master' branch in the target repo: $TargetRepoPath" }
+            if ($LASTEXITCODE) { throw "Please create a 'master' branch in the target repo: $TargetRepo" }
         }
         if ($LASTEXITCODE) { throw }
         $existingBranch = git rev-parse --verify $branch 2>$null
@@ -127,11 +127,11 @@ try {
             git checkout master -- .gitlab-ci.yml
             if ($LASTEXITCODE) { throw }
         }else {
-            Copy-Item $sourceRepoPath/build . -Recurse -Force
-            Copy-Item $sourceRepoPath/update . -Recurse -Force
-            Copy-Item $sourceRepoPath/build.sh . -Force
-            Copy-Item $sourceRepoPath/notify.sh . -Force
-            Copy-Item $sourceRepoPath/.gitlab-ci.yml . -Force
+            Copy-Item $sourceRepo/build . -Recurse -Force
+            Copy-Item $sourceRepo/update . -Recurse -Force
+            Copy-Item $sourceRepo/build.sh . -Force
+            Copy-Item $sourceRepo/notify.sh . -Force
+            Copy-Item $sourceRepo/.gitlab-ci.yml . -Force
         }
 
         $branchFiles = git ls-tree -r --name-only $branch
