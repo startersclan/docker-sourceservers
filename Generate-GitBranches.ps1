@@ -2,6 +2,9 @@
 # 2. By default it creates a git branch for each game found in games.json. To limit to one game, specify -GamePlatform, -GameEngine, and -Game
 # 3. To build a game, checkout to its branch, edit .env, mutate .trigger, commit and push
 # Examples:
+#   # Create branches for all games (dry-run)
+#   ./Generate-GitBranches.ps1 -TargetRepo . -Pull -WhatIf
+#
 #   # Create branches for all games
 #   ./Generate-GitBranches.ps1 -TargetRepo . -Pull
 #
@@ -14,7 +17,7 @@
 #   # Update branches for specific game
 #   ./Generate-GitBranches.ps1 -TargetRepo . -Pull -Push -GameEngine srcds -Game csgo
 #
-[CmdletBinding()]
+[CmdletBinding(SupportsShouldProcess)]
 param(
     # Target repo path
     [Parameter(Mandatory)]
@@ -54,13 +57,53 @@ if ($games.Count -eq 0) {
     throw "No games found"
 }
 
+function Execute-Command {
+    [CmdletBinding(DefaultParameterSetName='Default',SupportsShouldProcess)]
+    param (
+        [Parameter(Mandatory,ParameterSetName='Default',Position=0)]
+        [ValidateNotNull()]
+        [object]$Command
+    ,
+        [Parameter(ValueFromPipeline,ParameterSetName='Pipeline')]
+        [object]$InputObject
+    )
+
+    process {
+        if ($InputObject) {
+            $Command = $InputObject
+        }
+        $scriptBlock = if ($Command -is [scriptblock]) {
+            $Command
+        }else {
+            # This is like Invoke-Expression, dangerous
+            [scriptblock]::Create($Command)
+        }
+        try {
+            "Command: $scriptBlock" | Write-Verbose
+            if ($PSCmdlet.ShouldProcess("$scriptBlock")) {
+                Invoke-Command $scriptBlock
+            }
+            "LASTEXITCODE: $global:LASTEXITCODE" | Write-Verbose
+            if ($ErrorActionPreference -eq 'Stop' -and $global:LASTEXITCODE) {
+                throw "Command exit code was $global:LASTEXITCODE. Command: $scriptBlock"
+            }
+        }catch {
+            if ($ErrorActionPreference -eq 'Stop') {
+                throw
+            }
+            if ($ErrorActionPreference -eq 'Continue') {
+                $_ | Write-Error -ErrorAction Continue
+            }
+        }
+    }
+}
+
 function Get-EnvFileKv ($file, $branch) {
+    $ErrorActionPreference = 'Stop'
     $kv = [ordered]@{}
-    $branchFiles = git ls-tree -r --name-only $branch
-    if ($LASTEXITCODE) { throw }
+    $branchFiles = { git ls-tree -r --name-only $branch } | Execute-Command
     if ($branchFiles -contains $file) {
-        $content = git --no-pager show "${branch}:${file}"
-        if ($LASTEXITCODE) { throw }
+        $content = { git --no-pager show "${branch}:${file}" } | Execute-Command
         $content | % {
             if ($_ -match '^(\w+)=(.*)$') {
                 $kv[$matches[1]] = $matches[2]
@@ -74,10 +117,10 @@ function Get-EnvFileKv ($file, $branch) {
 
 # Create new branch, remove all files except .git, create .trigger file, create .gitlab-ci.yml, commit files
 try {
-    $sourceRepo = & { cd $PSScriptRoot; git rev-parse --show-toplevel; cd - }
+    $sourceRepo = { cd $PSScriptRoot; git rev-parse --show-toplevel; cd - } | Execute-Command -ErrorAction SilentlyContinue -WhatIf:$false
     if ($LASTEXITCODE) { throw "$PSScriptRoot is not a git repo" }
 
-    $TargetRepo = & { cd $TargetRepo; git rev-parse --show-toplevel; cd - }
+    $TargetRepo = { cd $TargetRepo; git rev-parse --show-toplevel; cd - } | Execute-Command -ErrorAction SilentlyContinue -WhatIf:$false
     if ($LASTEXITCODE) { throw "$TargetRepo is not a git repo" }
 
     $isSameRepo = if ($TargetRepo -eq $sourceRepo) { $true } else { $false }
@@ -87,53 +130,40 @@ try {
         $branch = "$( $g['game_platform'] )-$( $g['game_engine'] )-$( $g['game'] )"
 
         if ($isSameRepo) {
-            git checkout -f master
-            if ($LASTEXITCODE) { throw }
+            { git checkout -f master } | Execute-Command
             if ($Pull) {
-                git pull origin master
-                if ($LASTEXITCODE) { throw }
+                { git pull origin master } | Execute-Command
             }
         }else {
-            git rev-parse --verify master
+            { git rev-parse --verify master } | Execute-Command -ErrorAction SilentlyContinue
             if ($LASTEXITCODE) { throw "No 'master' branch in the target repo: $TargetRepo. Create it using: git commit --allow-empty -m 'Init'" }
         }
-        if ($LASTEXITCODE) { throw }
-        $existingBranch = git rev-parse --verify $branch 2>$null
+        $existingBranch = { git rev-parse --verify $branch 2>$null } | Execute-Command -ErrorAction SilentlyContinue
         if ($existingBranch) {
             "Updating branch '$branch'" | Write-Host -ForegroundColor Green
             if ($Pull) {
-                git fetch origin
-                if ($LASTEXITCODE) { throw }
-                $existingRemoteBranch = git rev-parse --verify origin/$branch 2>$null
+                { git fetch origin } | Execute-Command
+                $existingRemoteBranch = { git rev-parse --verify origin/$branch 2>$null } | Execute-Command -ErrorAction SilentlyContinue
                 if ($existingRemoteBranch) {
-                    git branch -f $branch origin/$branch
-                    if ($LASTEXITCODE) { throw }
+                    { git branch -f $branch origin/$branch } | Execute-Command
                 }
             }
-            git checkout -f $branch
-            if ($LASTEXITCODE) { throw }
+            { git checkout -f $branch } | Execute-Command
         }else {
             "Creating new branch '$branch'" | Write-Host -ForegroundColor Green
-            git checkout -b $branch
-            if ($LASTEXITCODE) { throw }
+            { git checkout -b $branch } | Execute-Command
         }
 
         "Removing all files" | Write-Host -ForegroundColor Green
-        if ($LASTEXITCODE) { throw }
         Get-ChildItem . -Exclude '.git' -Force | Remove-Item -Recurse -Force
 
         "Checking out files" | Write-Host -ForegroundColor Green
         if ($isSameRepo) {
-            git checkout master -- build
-            if ($LASTEXITCODE) { throw }
-            git checkout master -- update
-            if ($LASTEXITCODE) { throw }
-            git checkout master -- build.sh
-            if ($LASTEXITCODE) { throw }
-            git checkout master -- notify.sh
-            if ($LASTEXITCODE) { throw }
-            git checkout master -- .gitlab-ci.yml
-            if ($LASTEXITCODE) { throw }
+            { git checkout master -- build } | Execute-Command
+            { git checkout master -- update } | Execute-Command
+            { git checkout master -- build.sh } | Execute-Command
+            { git checkout master -- notify.sh } | Execute-Command
+            { git checkout master -- .gitlab-ci.yml } | Execute-Command
         }else {
             Copy-Item $sourceRepo/build . -Recurse -Force
             Copy-Item $sourceRepo/update . -Recurse -Force
@@ -142,8 +172,7 @@ try {
             Copy-Item $sourceRepo/.gitlab-ci.yml . -Force
         }
 
-        $branchFiles = git ls-tree -r --name-only $branch
-        if ($LASTEXITCODE) { throw }
+        $branchFiles = { git ls-tree -r --name-only $branch } | Execute-Command
 
         $kv = Get-EnvFileKv '.env' $branch
         if ($kv.Keys.Count) {
@@ -184,27 +213,25 @@ LAYERED_SIZE=$( if ($kv.Contains('LAYERED_SIZE')) { $kv['LAYERED_SIZE'] } else {
 
         if ($branchFiles -contains '.trigger') {
             "Using existing '.trigger'" | Write-Host -ForegroundColor Green
-            git checkout "$branch" -- .trigger
+            { git checkout "$branch" -- .trigger } | Execute-Command
         }
 
         if (git status --porcelain 2>$null) {
             "Committing files" | Write-Host -ForegroundColor Green
-            git add .
-            if ($LASTEXITCODE) { throw }
+            { git add . } | Execute-Command
             $msg = if ($existingBranch) { "Update files" } else { "Add files" }
-            git commit -m "$msg"
-            if ($LASTEXITCODE) { throw }
+            { git commit -m "$msg" } | Execute-Command
         }else {
             "Nothing to commit" | Write-Host -ForegroundColor Green
         }
 
         if ($Push) {
-            git push origin "$branch"
+            { git push origin "$branch" } | Execute-Command
         }
     }
 }catch {
     throw
 }finally {
-    git checkout master
+    { git checkout master } | Execute-Command
     Pop-Location
 }
