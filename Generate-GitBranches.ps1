@@ -194,7 +194,11 @@ MOD=$( $g['mod'] )
 FIX_APPMANIFEST=$( $g['fix_app_manifest'].ToString().ToLower() )
 LATEST=true
 DOCKER_REPOSITORY=$( $g['docker_repository'] )
+REGISTRY_USER=
+REGISTRY_PASSWORD=
 STEAM_LOGIN=
+STEAM_USERNAME=
+STEAM_PASSWORD=
 NO_PUSH=
 NO_PULL=
 "@ | Out-File .env -Encoding utf8 -Force
