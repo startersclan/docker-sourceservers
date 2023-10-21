@@ -193,14 +193,16 @@ GAME=$( $g['game'] )
 MOD=$( $g['mod'] )
 FIX_APPMANIFEST=$( $g['fix_app_manifest'].ToString().ToLower() )
 LATEST=true
+CACHE=
+NO_PULL=
+NO_TEST=
+NO_PUSH=
 DOCKER_REPOSITORY=$( $g['docker_repository'] )
 REGISTRY_USER=
 REGISTRY_PASSWORD=
 STEAM_LOGIN=
 STEAM_USERNAME=
 STEAM_PASSWORD=
-NO_PUSH=
-NO_PULL=
 "@ | Out-File .env -Encoding utf8 -Force
 
         $kv = Get-EnvFileKv '.state' $branch
