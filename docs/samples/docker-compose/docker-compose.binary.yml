@@ -9,8 +9,7 @@ services:
     tty: true
     entrypoint:
       - srcds_linux
-    command:
-      - -game csgo -port 27015 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2
+    command: -game csgo -port 27015 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2
 
   srcds-hl2mp:
     image: sourceservers/hl2mp:latest
@@ -21,8 +20,7 @@ services:
     tty: true
     entrypoint:
       - srcds_linux
-    command:
-      - -game hl2mp -port 27115 -maxplayers 16 +map dm_lockdown
+    command: -game hl2mp -port 27115 -maxplayers 16 +map dm_lockdown
 
   srcds-left4dead2:
     image: sourceservers/left4dead2:latest
@@ -33,8 +31,7 @@ services:
     tty: true
     entrypoint:
       - srcds_linux
-    command:
-      - -game left4dead2 -port 27215 +map "c2m1_highway coop"
+    command: -game left4dead2 -port 27215 +map "c2m1_highway coop"
 
   hlds-cstrike:
     image: goldsourceservers/cstrike:latest
@@ -44,8 +41,7 @@ services:
     tty: true
     entrypoint:
       - hlds_linux
-    command:
-      - -game cstrike +port 28015 +maxplayers 10 +map de_dust2
+    command: -game cstrike +port 28015 +maxplayers 10 +map de_dust2
 
   hlds-czero:
     image: goldsourceservers/czero:latest
@@ -55,8 +51,7 @@ services:
     tty: true
     entrypoint:
       - hlds_linux
-    command:
-      - -game czero +port 28115 +maxplayers 10 +map de_dust2_cz
+    command: -game czero +port 28115 +maxplayers 10 +map de_dust2_cz
 
   hlds-valve:
     image: goldsourceservers/valve:latest
@@ -66,5 +61,4 @@ services:
     tty: true
     entrypoint:
       - hlds_linux
-    command:
-      - -game valve +port 28215 +maxplayers 16 +map boot_camp
+    command: -game valve +port 28215 +maxplayers 16 +map boot_camp
