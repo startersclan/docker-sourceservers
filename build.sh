@@ -279,7 +279,7 @@ if [ ! "$NO_TEST" = 'true' ]; then
             i=$(($i + 1))
         done
         docker logs "$CONTAINER_ID"
-        docker exec -it "$CONTAINER_ID" bash -c 'printf "\\xff\\xff\\xff\\xffTSource Engine Query\\x00" | nc -w1 -u 127.0.0.1 27015 | tr "[:cntrl:]" "\\n"' | tee "$TEST_DIR/test"
+        docker exec "$CONTAINER_ID" bash -c 'printf "\\xff\\xff\\xff\\xffTSource Engine Query\\x00" | nc -w1 -u 127.0.0.1 27015 | tr "[:cntrl:]" "\\n"' | tee "$TEST_DIR/test"
         docker rm -f "$CONTAINER_ID" > /dev/null
     else
         time docker run -t --rm "$GAME_IMAGE" "$GAME_BIN -game $GAME +version +exit" | tee "$TEST_DIR/test"
