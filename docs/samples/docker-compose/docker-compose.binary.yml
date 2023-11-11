@@ -1,5 +1,16 @@
 version: '2.2'
 services:
+  srcds-cs2:
+    image: sourceservers/cs2:latest
+    ports:
+      - 27015:27015/tcp
+      - 27015:27015/udp
+    stdin_open: true
+    tty: true
+    entrypoint:
+      - game/bin/linuxsteamrt64/cs2
+    command: -dedicated -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
+
   srcds-csgo:
     image: sourceservers/csgo:latest
     ports:

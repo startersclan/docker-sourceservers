@@ -5,6 +5,10 @@ $gameList = @(
         RegistryNamespace = 'sourceservers'
         Game = @(
             @{
+                Name = 'cs2'
+                FullName = 'Counter-Strike 2'
+            }
+            @{
                 Name = 'csgo'
                 FullName = 'Counter-Strike: Global Offensive'
             }

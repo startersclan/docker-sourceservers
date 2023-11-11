@@ -53,6 +53,7 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 
 | Game | Image | Tag `v<tag>` | Size |
 |:-:|:-:|:-:|:-:|
+| Counter-Strike 2 | [`sourceservers/cs2`][srcds-cs2-dockerhub-link] | [![srcds-cs2-version-badge][]][srcds-cs2-metadata-link] | [![srcds-cs2-size-badge][]][srcds-cs2-metadata-link] | [![srcds-cs2-layers-badge][]][srcds-cs2-metadata-link] |
 | Counter-Strike: Global Offensive | [`sourceservers/csgo`][srcds-csgo-dockerhub-link] | [![srcds-csgo-version-badge][]][srcds-csgo-metadata-link] | [![srcds-csgo-size-badge][]][srcds-csgo-metadata-link] | [![srcds-csgo-layers-badge][]][srcds-csgo-metadata-link] |
 | Counter-Strike: Source | [`sourceservers/cstrike`][srcds-cstrike-dockerhub-link] | [![srcds-cstrike-version-badge][]][srcds-cstrike-metadata-link] | [![srcds-cstrike-size-badge][]][srcds-cstrike-metadata-link] | [![srcds-cstrike-layers-badge][]][srcds-cstrike-metadata-link] |
 | Day of Defeat: Source | [`sourceservers/dod`][srcds-dod-dockerhub-link] | [![srcds-dod-version-badge][]][srcds-dod-metadata-link] | [![srcds-dod-size-badge][]][srcds-dod-metadata-link] | [![srcds-dod-layers-badge][]][srcds-dod-metadata-link] |
@@ -60,6 +61,11 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 | Left 4 Dead | [`sourceservers/left4dead`][srcds-left4dead-dockerhub-link] | [![srcds-left4dead-version-badge][]][srcds-left4dead-metadata-link] | [![srcds-left4dead-size-badge][]][srcds-left4dead-metadata-link] | [![srcds-left4dead-layers-badge][]][srcds-left4dead-metadata-link] |
 | Left 4 Dead 2 | [`sourceservers/left4dead2`][srcds-left4dead2-dockerhub-link] | [![srcds-left4dead2-version-badge][]][srcds-left4dead2-metadata-link] | [![srcds-left4dead2-size-badge][]][srcds-left4dead2-metadata-link] | [![srcds-left4dead2-layers-badge][]][srcds-left4dead2-metadata-link] |
 | Team Fortress 2 | [`sourceservers/tf`][srcds-tf-dockerhub-link] | [![srcds-tf-version-badge][]][srcds-tf-metadata-link] | [![srcds-tf-size-badge][]][srcds-tf-metadata-link] | [![srcds-tf-layers-badge][]][srcds-tf-metadata-link] |
+
+[srcds-cs2-dockerhub-link]: https://hub.docker.com/r/sourceservers/cs2
+[srcds-cs2-version-badge]: https://img.shields.io/docker/v/sourceservers/cs2/latest?label=&style=flat-square
+[srcds-cs2-size-badge]: https://img.shields.io/docker/image-size/sourceservers/cs2/latest?label=&style=flat-square
+[srcds-cs2-metadata-link]: https://hub.docker.com/r/sourceservers/cs2/tags
 
 [srcds-csgo-dockerhub-link]: https://hub.docker.com/r/sourceservers/csgo
 [srcds-csgo-version-badge]: https://img.shields.io/docker/v/sourceservers/csgo/latest?label=&style=flat-square
@@ -194,6 +200,15 @@ The default [work directory](build/Dockerfile#L112) for all the images is [`/ser
 ##### Via command-line
 
 ```shell
+# Counter-Strike 2
+## Via default entrypoint (/bin/bash -c)
+docker run -it --rm -p 27015:27015/tcp -p 27015:27015/udp sourceservers/cs2:latest 'game/bin/linuxsteamrt64/cs2 -dedicated -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2'
+docker run -it --rm -p 27015:27015/tcp -p 27015:27015/udp sourceservers/cs2:latest 'printenv && ls -al && exec game/bin/linuxsteamrt64/cs2 -dedicated -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2'
+## Via custom entrypoint (game binary)
+docker run -it --rm -p 27015:27015/tcp -p 27015:27015/udp --entrypoint game/bin/linuxsteamrt64/cs2 sourceservers/cs2:latest -dedicated -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
+## Via custom entrypoint (/bin/bash)
+docker run -it --rm -p 27015:27015/tcp -p 27015:27015/udp --entrypoint /bin/bash sourceservers/cs2:latest -c 'printenv && ls -al && exec game/bin/linuxsteamrt64/cs2 -dedicated -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2'
+
 # Counter-Strike: Global Offensive
 ## Via default entrypoint (/bin/bash -c)
 docker run -it --rm -p 27015:27015/tcp -p 27015:27015/udp sourceservers/csgo:latest 'srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2'
