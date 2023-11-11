@@ -12,6 +12,7 @@ docker run --rm -it goldsourceservers/gearbox 'hlds_linux -game gearbox +version
 docker run --rm -it goldsourceservers/ricochet 'hlds_linux -game ricochet +version +exit' > hlds-ricochet
 docker run --rm -it goldsourceservers/tfc 'hlds_linux -game tfc +version +exit' > hlds-tfc
 docker run --rm -it goldsourceservers/valve 'hlds_linux -game valve +version +exit' > hlds-valve
+docker run --rm -it sourceservers/cs2 'game/bin/linuxsteamrt64/cs2 -dedicated +quit' > srcds-cs2
 docker run --rm -it sourceservers/csgo 'srcds_linux -game csgo +version +exit' > srcds-csgo
 docker run --rm -it sourceservers/cstrike 'srcds_linux -game cstrike +version +exit' > srcds-cstrike
 docker run --rm -it sourceservers/dod 'srcds_linux -game dod +version +exit' > srcds-dod

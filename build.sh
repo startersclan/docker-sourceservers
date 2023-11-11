@@ -163,7 +163,12 @@ if [ "$APPID" = 90 ]; then
 else
     DOCKER_REPOSITORY="${DOCKER_REPOSITORY:-${REGISTRY_SOURCE:?err}/$GAME}"
     GAME_ENGINE='srcds'
-    GAME_BIN='srcds_linux'
+    # srcds/cs2
+    if [ "$APPID" = 730 ]; then
+        GAME_BIN='game/bin/linuxsteamrt64/cs2'
+    else
+        GAME_BIN='srcds_linux'
+    fi
 fi
 if [ "$PIPELINE" = 'build' ]; then
     GAME_IMAGE_CLEAN="$DOCKER_REPOSITORY:$GAME_VERSION"
@@ -264,16 +269,38 @@ if [ ! "$NO_TEST" = 'true' ]; then
     date
     time docker run -t --rm "$GAME_IMAGE" 'printenv && ls -al'
     date
-    time docker run -t --rm "$GAME_IMAGE" "$GAME_BIN -game $GAME +version +exit" | tee "$TEST_DIR/test"
+    # srcds/cs2
+    if  [ "$APPID" = 730 ]; then
+        CONTAINER_ID=$( docker run -itd "$GAME_IMAGE" "$GAME_BIN -dedicated -port 27015 +map de_dust2" )
+        i=0; while [ "$i" -lt 30 ]; do
+            echo "Waiting for server to start"
+            docker container inspect -f '{{.State.Running}}' "$CONTAINER_ID" | grep '^true$' > /dev/null || break
+            docker logs "$CONTAINER_ID" | grep 'VAC secure mode is activated' && break || sleep 1
+            i=$(($i + 1))
+        done
+        docker logs "$CONTAINER_ID"
+        docker exec -it "$CONTAINER_ID" bash -c 'printf "\\xff\\xff\\xff\\xffTSource Engine Query\\x00" | nc -w1 -u 127.0.0.1 27015 | tr "[:cntrl:]" "\\n"' | tee "$TEST_DIR/test"
+        docker rm -f "$CONTAINER_ID" > /dev/null
+    else
+        time docker run -t --rm "$GAME_IMAGE" "$GAME_BIN -game $GAME +version +exit" | tee "$TEST_DIR/test"
+    fi
     date
 
     # Verify game version of the game image matches the value of GAME_VERSION
     echo 'Verifying game image game version'
-    GAME_IMAGE_VERSION_LINES=$( cat "$TEST_DIR/test" | grep -iE '\bexe\b|version' | sed 's/[^0-9]//g' )
-    if ! echo "$GAME_IMAGE_VERSION_LINES" | grep -E "^$GAME_VERSION" > /dev/null; then
+    GAME_IMAGE_VERSION_LINES=$(
+        if  [ "$APPID" = 730 ]; then
+            cat "$TEST_DIR/test" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+'
+        else
+            cat "$TEST_DIR/test" | grep -iE '\bexe\b|version'
+        fi
+    )
+    echo 'GAME_IMAGE_VERSION_LINES:'
+    echo "$GAME_IMAGE_VERSION_LINES"
+    if echo "$GAME_IMAGE_VERSION_LINES" | sed 's/[^0-9]//g' | grep -E "^$GAME_VERSION" > /dev/null; then
+        echo "Game version matches GAME_VERSION=$GAME_VERSION"
+    else
         echo "Game version does not match GAME_VERSION=$GAME_VERSION"
-        echo 'GAME_IMAGE_VERSION_LINES:'
-        echo "$GAME_IMAGE_VERSION_LINES"
         exit 1
     fi
     rm -f "$TEST_DIR/test"

@@ -2,7 +2,7 @@
 
 # Builds a clean image containing the latest version of the specified game.
 
-FROM startersclan/steamcmd:git-20190605.0.0
+FROM startersclan/steamcmd:git-20231109.0.0
 
 ARG SERVER_DIR=/server
 ARG APPMANIFEST_AR_URL=https://github.com/startersclan/hlds-appmanifest/archive/refs/tags/v2.0.0.tar.gz
@@ -75,22 +75,36 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
         fi; \
     done; \
     echo "[BUILD] Performing cleanup"; \
-    cd "$STEAMCMD_DIR" && rm -rf \
-        linux64 \
-        package \
-        public \
-        siteserverui \
-        steam \
-        linux32/libtier0_s.so \
-        linux32/libvstdlib_s.so \
-        linux32/steamclient.so \
-        linux32/steamconsole.so \
-        update_hosts_cached.vdf; \
-    rm -rf /root/.steam; \
+    # Clean up a different set of files for srcds/cs2
+    if  [ "$APPID" = 730 ]; then \
+        cd "$STEAMCMD_DIR" && rm -rf \
+            package \
+            public \
+            siteserverui \
+            steam \
+            linux32/libtier0_s.so \
+            linux32/libvstdlib_s.so \
+            linux32/steamconsole.so \
+            update_hosts_cached.vdf; \
+    else \
+        cd "$STEAMCMD_DIR" && rm -rf \
+            linux64 \
+            package \
+            public \
+            siteserverui \
+            steam \
+            linux32/libtier0_s.so \
+            linux32/libvstdlib_s.so \
+            linux32/steamclient.so \
+            linux32/steamconsole.so \
+            update_hosts_cached.vdf; \
+        rm -rf /root/.steam; \
+    fi; \
     if [ "$APPID" = 90 ]; then \
         # Retain `/root/Steam/appcache` to prevent `steamcmd` from re-downloading `hlds` game entirely on game updates
         rm -rf $( find /root/Steam -mindepth 1 -maxdepth 1 | grep -v '^/root/Steam/appcache' ); \
     else \
+        # Cleanup. This also cleans up user data
         rm -rf /root/Steam; \
     fi;
 
@@ -98,7 +112,14 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
 RUN echo "[BUILD] Applying game fixes"; \
     # Create steam_appid.txt containing the game's appid to prevent crashes on first run
     echo "[BUILD] CLIENT_APPID: $CLIENT_APPID"; \
-    echo "$CLIENT_APPID" > "$SERVER_DIR/steam_appid.txt"
+    echo "$CLIENT_APPID" > "$SERVER_DIR/steam_appid.txt"; \
+    # Create necessary symlinks for srcds/cs2
+    if  [ "$APPID" = 730 ]; then \
+        mkdir -p /root/.steam/sdk64; \
+        mkdir -p /root/.steam/sdk32; \
+        ln -sf "/$STEAMCMD_DIR/linux64/steamclient.so" /root/.steam/sdk64/steamclient.so; \
+        ln -sf "/$STEAMCMD_DIR/linux32/steamclient.so" /root/.steam/sdk32/steamclient.so; \
+    fi;
 
 # For directly running the hlds_linux / srcds_linux binary
 ENV LD_LIBRARY_PATH .:bin:$LD_LIBRARY_PATH
