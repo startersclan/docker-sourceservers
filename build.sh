@@ -271,7 +271,7 @@ if [ ! "$NO_TEST" = 'true' ]; then
     date
     # srcds/cs2
     if  [ "$APPID" = 730 ]; then
-        CONTAINER_ID=$( docker run -itd "$GAME_IMAGE" "$GAME_BIN -dedicated -port 27015 +map de_dust2" )
+        CONTAINER_ID=$( docker run -td "$GAME_IMAGE" "$GAME_BIN -dedicated -port 27015 +map de_dust2" )
         i=0; while [ "$i" -lt 30 ]; do
             echo "Waiting for server to start"
             docker container inspect -f '{{.State.Running}}' "$CONTAINER_ID" | grep '^true$' > /dev/null || break
