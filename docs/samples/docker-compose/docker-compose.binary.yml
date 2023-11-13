@@ -7,8 +7,7 @@ services:
       - 27015:27015/udp
     stdin_open: true
     tty: true
-    entrypoint:
-      - game/bin/linuxsteamrt64/cs2
+    entrypoint: game/bin/linuxsteamrt64/cs2
     command: -dedicated -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
 
   srcds-csgo:
@@ -18,8 +17,7 @@ services:
       - 27015:27015/udp
     stdin_open: true
     tty: true
-    entrypoint:
-      - srcds_linux
+    entrypoint: srcds_linux
     command: -game csgo -port 27015 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2
 
   srcds-hl2mp:
@@ -29,8 +27,7 @@ services:
       - 27115:27115/udp
     stdin_open: true
     tty: true
-    entrypoint:
-      - srcds_linux
+    entrypoint: srcds_linux
     command: -game hl2mp -port 27115 -maxplayers 16 +map dm_lockdown
 
   srcds-left4dead2:
@@ -40,8 +37,7 @@ services:
       - 27215:27215/udp
     stdin_open: true
     tty: true
-    entrypoint:
-      - srcds_linux
+    entrypoint: srcds_linux
     command: -game left4dead2 -port 27215 +map "c2m1_highway coop"
 
   hlds-cstrike:
@@ -50,8 +46,7 @@ services:
       - 28015:28015/udp
     stdin_open: true
     tty: true
-    entrypoint:
-      - hlds_linux
+    entrypoint: hlds_linux
     command: -game cstrike +port 28015 +maxplayers 10 +map de_dust2
 
   hlds-czero:
@@ -60,8 +55,7 @@ services:
       - 28115:28115/udp
     stdin_open: true
     tty: true
-    entrypoint:
-      - hlds_linux
+    entrypoint: hlds_linux
     command: -game czero +port 28115 +maxplayers 10 +map de_dust2_cz
 
   hlds-valve:
@@ -70,6 +64,5 @@ services:
       - 28215:28215/udp
     stdin_open: true
     tty: true
-    entrypoint:
-      - hlds_linux
+    entrypoint: hlds_linux
     command: -game valve +port 28215 +maxplayers 16 +map boot_camp
