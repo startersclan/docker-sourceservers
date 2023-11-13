@@ -32,6 +32,40 @@ services:
         ls -al
         exec srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2
 
+  srcds-hl2mp:
+    image: sourceservers/hl2mp:latest
+    ports:
+      - 27115:27115/tcp
+      - 27115:27115/udp
+    stdin_open: true
+    tty: true
+    entrypoint:
+      - /bin/bash
+      - -c
+    command:
+      - |
+        set -e
+        printenv
+        ls -al
+        exec srcds_linux -game hl2mp -port 27115 -maxplayers 16 +map dm_lockdown
+
+  srcds-left4dead2:
+    image: sourceservers/left4dead2:latest
+    ports:
+      - 27215:27215/tcp
+      - 27215:27215/udp
+    stdin_open: true
+    tty: true
+    entrypoint:
+      - /bin/bash
+      - -c
+    command:
+      - |
+        set -e
+        printenv
+        ls -al
+        exec srcds_linux -game left4dead2 -port 27215 +map "c2m1_highway coop"
+
   hlds-cstrike:
     image: goldsourceservers/cstrike:latest
     ports:
@@ -47,3 +81,35 @@ services:
         printenv
         ls -al
         exec hlds_linux -game cstrike +port 28015 +maxplayers 10 +map de_dust2
+
+  hlds-czero:
+    image: goldsourceservers/czero:latest
+    ports:
+      - 28115:28115/udp
+    stdin_open: true
+    tty: true
+    entrypoint:
+      - /bin/bash
+      - -c
+    command:
+      - |
+        set -e
+        printenv
+        ls -al
+        exec hlds_linux -game czero +port 28115 +maxplayers 10 +map de_dust2_cz
+
+  hlds-valve:
+    image: goldsourceservers/valve:latest
+    ports:
+      - 28215:28215/udp
+    stdin_open: true
+    tty: true
+    entrypoint:
+      - /bin/bash
+      - -c
+    command:
+      - |
+        set -e
+        printenv
+        ls -al
+        exec hlds_linux -game valve +port 28215 +maxplayers 16 +map boot_camp
