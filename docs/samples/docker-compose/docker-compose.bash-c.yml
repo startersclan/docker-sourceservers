@@ -13,6 +13,8 @@ services:
     command:
       - |
         set -e
+        printenv
+        ls -al
         exec game/bin/linuxsteamrt64/cs2 -dedicated -port 27015 +game_type 0 +game_mode 1 +mapgroup mg_active +map de_dust2
 
   srcds-csgo:
