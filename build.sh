@@ -296,9 +296,9 @@ if [ ! "$NO_TEST" = 'true' ]; then
     echo 'Verifying game image game version'
     GAME_IMAGE_VERSION_LINES=$(
         if  [ "$APPID" = 730 ]; then
-            cat "$TEST_DIR/test" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+'
+            cat "$TEST_DIR/test" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' || true
         else
-            cat "$TEST_DIR/test" | grep -iE '\bexe\b|version'
+            cat "$TEST_DIR/test" | grep -iE '\bexe\b|version' || true
         fi
     )
     echo 'GAME_IMAGE_VERSION_LINES:'
