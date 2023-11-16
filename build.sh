@@ -168,7 +168,7 @@ else
     DOCKER_REPOSITORY="${DOCKER_REPOSITORY:-${REGISTRY_SOURCE:?err}/$GAME}"
     GAME_ENGINE='srcds'
     # srcds/cs2
-    if [ "$APPID" = 730 ]; then
+    if [ "$APPID" = 730 ] && [ "$GAME" = 'cs2' ]; then
         GAME_BIN='game/bin/linuxsteamrt64/cs2'
     else
         GAME_BIN='srcds_linux'
@@ -276,7 +276,7 @@ if [ ! "$NO_TEST" = 'true' ]; then
     time docker run -t --rm "$GAME_IMAGE" 'printenv && ls -al'
     date
     # srcds/cs2
-    if  [ "$APPID" = 730 ]; then
+    if  [ "$APPID" = 730 ] && [ "$GAME" = 'cs2' ]; then
         CONTAINER_ID=$( docker run -td "$GAME_IMAGE" "$GAME_BIN -dedicated -port 27015 +map de_dust2" )
         i=0; while [ "$i" -lt 30 ]; do
             echo "Waiting for server to start"
@@ -295,7 +295,7 @@ if [ ! "$NO_TEST" = 'true' ]; then
     # Verify game version of the game image matches the value of GAME_VERSION
     echo 'Verifying game image game version'
     GAME_IMAGE_VERSION_LINES=$(
-        if  [ "$APPID" = 730 ]; then
+        if  [ "$APPID" = 730 ] && [ "$GAME" = 'cs2' ]; then
             cat "$TEST_DIR/test" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+'
         else
             cat "$TEST_DIR/test" | grep -iE '\bexe\b|version'
