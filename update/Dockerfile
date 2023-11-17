@@ -14,6 +14,9 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
     --mount=type=secret,id=STEAM_PASSWORD \
     STEAM_USERNAME=$( cat /run/secrets/STEAM_USERNAME ); \
     STEAM_PASSWORD=$( cat /run/secrets/STEAM_PASSWORD ); \
+    if [ -z "$INSTALL_COUNT" ]; then \
+        INSTALL_COUNT=1; \
+    fi; \
     echo "[UPDATE] SERVER_DIR: $SERVER_DIR"; \
     echo "[UPDATE] APPID: $APPID"; \
     echo "[UPDATE] MOD: $MOD"; \

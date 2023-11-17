@@ -28,6 +28,8 @@ usage() {
     echo "  FIX_APPMANIFEST         Whether to apply appmanifest fixes on builds. Applies only to PIPELINE=build and APPID=90"
     echo "                          Type: bool, optional"
     echo "                          Possible values: 'true', 'false'"
+    echo "  INSTALL_COUNT           Number of install attempts"
+    echo "                          Type: int, optional"
     echo "  LATEST                  Whether to tag the successfully built game image with the :latest tag. Applies only to PIPELINE=build"
     echo "                          Type: bool, optional"
     echo "                          Possible values: 'true', 'false'"
@@ -118,6 +120,7 @@ if [ "$PIPELINE" = 'build' ]; then
     GAME=${GAME:?err}
     MOD=${MOD:-}
     FIX_APPMANIFEST=${FIX_APPMANIFEST:-}
+    INSTALL_COUNT=${INSTALL_COUNT:-}
     LATEST=${LATEST:-}
     CACHE=${CACHE:-}
     NO_TEST=${NO_TEST:-}
@@ -128,6 +131,7 @@ elif [ "$PIPELINE" = 'update' ]; then
     APPID=${APPID:?err}
     GAME=${GAME:?err}
     GAME_UPDATE_COUNT=${GAME_UPDATE_COUNT:?err}
+    INSTALL_COUNT=${INSTALL_COUNT:-}
     NO_PULL=${NO_PULL:-}
     NO_TEST=${NO_TEST:-}
     NO_PUSH=${NO_PUSH:-}
@@ -218,6 +222,7 @@ if [ "$PIPELINE" = 'build' ]; then
         --build-arg MOD="$MOD" \
         --build-arg FIX_APPMANIFEST="$FIX_APPMANIFEST" \
         --build-arg CLIENT_APPID="$CLIENT_APPID" \
+        --build-arg INSTALL_COUNT="$INSTALL_COUNT" \
         --build-arg STEAM_LOGIN="$STEAM_LOGIN" \
         --build-arg CACHE_KEY="$GAME_VERSION" \
         -t "$GAME_IMAGE" \
@@ -247,6 +252,7 @@ elif [ "$PIPELINE" = 'update' ]; then
         --secret id=STEAM_USERNAME,env=STEAM_USERNAME \
         --secret id=STEAM_PASSWORD,env=STEAM_PASSWORD \
         --build-arg GAME_IMAGE="$GAME_IMAGE_LATEST" \
+        --build-arg INSTALL_COUNT="$INSTALL_COUNT" \
         --build-arg STEAM_LOGIN="$STEAM_LOGIN" \
         --build-arg CACHE_KEY="$GAME_VERSION" \
         -t "$GAME_IMAGE" \
