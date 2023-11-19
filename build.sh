@@ -109,6 +109,13 @@ if [ -f "$ENV_FILE" ]; then
     ENV_FILE="$( cd "$( dirname "$ENV_FILE" )" && pwd )/$( basename "$ENV_FILE" )"
     echo "Reading env file $ENV_FILE"
     . "$ENV_FILE"
+else
+    if [ "$ENV_FILE" = '.env' ]; then
+        echo "Not reading from .env because it does not exist"
+    else
+        echo "env file does not exist: $ENV_FILE"
+        exit 1
+    fi
 fi
 
 # Process job variables
