@@ -1,7 +1,7 @@
 [
   {
     "game_version": 1127,
-    "game_update_count": 0,
+    "game_update_count": 1,
     "game_platform": "steam",
     "game_engine": "hlds",
     "game": "cstrike",
@@ -13,7 +13,7 @@
   },
   {
     "game_version": 1003,
-    "game_update_count": 0,
+    "game_update_count": 1,
     "game_platform": "steam",
     "game_engine": "hlds",
     "game": "czero",
@@ -25,7 +25,7 @@
   },
   {
     "game_version": 1123,
-    "game_update_count": 0,
+    "game_update_count": 1,
     "game_platform": "steam",
     "game_engine": "hlds",
     "game": "dmc",
@@ -37,7 +37,7 @@
   },
   {
     "game_version": 1126,
-    "game_update_count": 0,
+    "game_update_count": 1,
     "game_platform": "steam",
     "game_engine": "hlds",
     "game": "dod",
@@ -49,7 +49,7 @@
   },
   {
     "game_version": 1122,
-    "game_update_count": 0,
+    "game_update_count": 1,
     "game_platform": "steam",
     "game_engine": "hlds",
     "game": "gearbox",
@@ -61,7 +61,7 @@
   },
   {
     "game_version": 1121,
-    "game_update_count": 0,
+    "game_update_count": 1,
     "game_platform": "steam",
     "game_engine": "hlds",
     "game": "ricochet",
@@ -73,7 +73,7 @@
   },
   {
     "game_version": 1122,
-    "game_update_count": 0,
+    "game_update_count": 1,
     "game_platform": "steam",
     "game_engine": "hlds",
     "game": "tfc",
@@ -85,7 +85,7 @@
   },
   {
     "game_version": 1122,
-    "game_update_count": 0,
+    "game_update_count": 1,
     "game_platform": "steam",
     "game_engine": "hlds",
     "game": "valve",
@@ -96,8 +96,8 @@
     "fix_app_manifest": true
   },
   {
-    "game_version": 13879,
-    "game_update_count": 4,
+    "game_version": 99999,
+    "game_update_count": 5,
     "game_platform": "steam",
     "game_engine": "srcds",
     "game": "csgo",
@@ -108,8 +108,8 @@
     "fix_app_manifest": false
   },
   {
-    "game_version": 99999,
-    "game_update_count": 4,
+    "game_version": 13973,
+    "game_update_count": 5,
     "game_platform": "steam",
     "game_engine": "srcds",
     "game": "cs2",
@@ -180,8 +180,8 @@
     "fix_app_manifest": false
   },
   {
-    "game_version": 8308684,
-    "game_update_count": 11,
+    "game_version": 8453904,
+    "game_update_count": 6,
     "game_platform": "steam",
     "game_engine": "srcds",
     "game": "tf",
