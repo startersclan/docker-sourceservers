@@ -132,6 +132,12 @@ try {
     $isSameRepo = if ($TargetRepo -eq $sourceRepo) { $true } else { $false }
 
     Push-Location $TargetRepo
+    if ($PSCmdlet.ShouldProcess("Check that 'master' branch has commits")) {
+        $log = { git log master -1 } | Execute-Command -ErrorAction SilentlyContinue
+        if (!$log) {
+            throw "No commits on 'master'. Please create the master branch first: git commit -m 'Init' --allow-empty"
+        }
+    }
     foreach ($g in $games) {
         $branch = "$( $g['game_platform'] )-$( $g['game_engine'] )-$( $g['game'] )"
 
