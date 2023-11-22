@@ -36,12 +36,9 @@ date -Iseconds
 echo "Sending notification"
 BODY=$( cat <<EOF
 {
-    "build_num": "$CI_JOB_ID",
     "username": "$CI_PROJECT_NAMESPACE",
     "reponame": "$CI_PROJECT_NAME",
     "branch": "$CI_COMMIT_BRANCH",
-    "commit_sha": "$CI_COMMIT_SHORT_SHA",
-    "status": "$BUILD_STATUS",
     "state": {
         "BUILD_STATUS": "$BUILD_STATUS",
         "BASE_SIZE": "$BASE_SIZE",
@@ -55,9 +52,9 @@ date -Iseconds
 STATUS=$( curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' -H "x-gitlab-webhook-secret: $X_GITLAB_WEBHOOK_SECRET" --data "$BODY" "$NOTIFICATION_WEBHOOK" || true )
 echo "STATUS: $STATUS"
 if [ "$STATUS" -eq 200 ] || [ "$STATUS" -eq 201 ]; then
-    echo "Notification sent"
+    echo 'Notification sent'
     exit 0
 else
-    echo "Failed to send notification"
+    echo 'Failed to send notification'
     exit 1
 fi
