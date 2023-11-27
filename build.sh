@@ -191,6 +191,8 @@ fi
 GAME_IMAGE_LATEST="$DOCKER_REPOSITORY:latest"
 COMMIT_SHA=$( git rev-parse HEAD )
 
+date -Iseconds
+
 # Display pipeline
 echo "PIPELINE: $PIPELINE"
 
@@ -217,10 +219,10 @@ fi
 if [ "$PIPELINE" = 'build' ]; then
     GAME_IMAGE="$GAME_IMAGE_CLEAN"
     if [ "$CACHE" = 'true' ]; then
-        date
+        date -Iseconds
         time docker pull "$GAME_IMAGE" || true
     fi
-    date
+    date -Iseconds
     STEAM_USERNAME="$STEAM_USERNAME" STEAM_PASSWORD="$STEAM_PASSWORD" time docker build \
         --progress plain \
         --secret id=STEAM_USERNAME,env=STEAM_USERNAME \
@@ -246,14 +248,14 @@ if [ "$PIPELINE" = 'build' ]; then
     if [ "$LATEST" = 'true' ]; then
         docker tag "$GAME_IMAGE" "$GAME_IMAGE_LATEST"
     fi
-    date
+    date -Iseconds
 elif [ "$PIPELINE" = 'update' ]; then
     GAME_IMAGE="$GAME_IMAGE_LAYERED"
-    date
+    date -Iseconds
     if [ ! "$NO_PULL" = 'true' ]; then
         time docker pull "$GAME_IMAGE_LATEST"
     fi
-    date
+    date -Iseconds
     STEAM_USERNAME="$STEAM_USERNAME" STEAM_PASSWORD="$STEAM_PASSWORD" time docker build \
         --progress plain \
         --secret id=STEAM_USERNAME,env=STEAM_USERNAME \
@@ -268,7 +270,7 @@ elif [ "$PIPELINE" = 'update' ]; then
         --label "game_update_count=$GAME_UPDATE_COUNT" \
         --label "commit_sha=$COMMIT_SHA" \
         "$BUILD_CONTEXT"
-    date
+    date -Iseconds
 fi
 docker images
 docker inspect "$GAME_IMAGE"
@@ -279,9 +281,9 @@ if [ ! "$NO_TEST" = 'true' ]; then
     TEST_DIR=$( mktemp -d )
 
     echo "Testing image"
-    date
+    date -Iseconds
     time docker run -t --rm "$GAME_IMAGE" 'printenv && ls -al'
-    date
+    date -Iseconds
     # srcds/cs2
     if  [ "$APPID" = 730 ]; then
         CONTAINER_ID=$( docker run -td "$GAME_IMAGE" "$GAME_BIN -dedicated -port 27015 +map de_dust2" )
@@ -297,7 +299,7 @@ if [ ! "$NO_TEST" = 'true' ]; then
     else
         time docker run -t --rm "$GAME_IMAGE" "$GAME_BIN -game $GAME +version +exit" | tee "$TEST_DIR/test"
     fi
-    date
+    date -Iseconds
 
     # Verify game version of the game image matches the value of GAME_VERSION
     echo 'Verifying game image game version'
@@ -321,7 +323,7 @@ fi
 
 # Push the game image
 if [ ! "$NO_PUSH" = 'true' ]; then
-    date
+    date -Iseconds
     time docker push "$GAME_IMAGE"
     if [ "$PIPELINE" = 'build' ]; then
         if [ "$LATEST" = 'true' ]; then
@@ -330,7 +332,7 @@ if [ ! "$NO_PUSH" = 'true' ]; then
     elif [ "$PIPELINE" = 'update' ]; then
         time docker push "$GAME_IMAGE_LATEST"
     fi
-    date
+    date -Iseconds
 fi
 
 # Docker registry logout
@@ -352,3 +354,4 @@ DIFF=$LAYERS_SIZE
 EOF
 cat .build.state
 ls -al .build.state
+date -Iseconds
