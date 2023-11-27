@@ -9,13 +9,23 @@
 #   ./Generate-GitBranches.ps1 -Repo . -Pull
 #
 #   # Create branches for specific game
+#   ./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine hlds -Game valve
 #   ./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine srcds -Game csgo
+#
+#   # Create branches for specific game(s)
+#   ./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine hlds -Game valve,cstrike
+#   ./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine srcds -Game cs2,csgo
 #
 #   # Update branches for all games
 #   ./Generate-GitBranches.ps1 -Repo . -Pull -Push
 #
 #   # Update branches for specific game
+#   ./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine hlds -Game valve
 #   ./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine srcds -Game csgo
+#
+#   # Update branches for specific game(s)
+#   ./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine hlds -Game valve,cstrike
+#   ./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine srcds -Game cs2,csgo
 #
 [CmdletBinding(SupportsShouldProcess)]
 param(

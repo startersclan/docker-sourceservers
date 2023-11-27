@@ -70,6 +70,25 @@ Describe "Generate-GitBranches.ps1" {
             }
         }
 
+        It "Creates and updates branches of a same repo of (one game)" {
+            & $sourceRepo/Generate-GitBranches.ps1 -Repo . -GamePlatform steam -GameEngine hlds -Game valve -ErrorAction Stop 6>$null # Create
+            & $sourceRepo/Generate-GitBranches.ps1 -Repo . -GamePlatform steam -GameEngine hlds -Game valve -ErrorAction Stop 6>$null # Update
+
+            cd $sameRepo
+            $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
+            $branches.Count | Should -Be 1
+            foreach ($b in $branches) {
+                git ls-tree -r --name-only $b | Should -Be @(
+                    '.env'
+                    '.gitlab-ci.yml'
+                    '.state'
+                    'build.sh'
+                    'build/Dockerfile'
+                    'notify.sh'
+                    'update/Dockerfile'
+                )
+            }
+        }
     }
 
     Context 'Different repo' {
@@ -104,6 +123,26 @@ Describe "Generate-GitBranches.ps1" {
             cd $differentRepo
             $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
             $branches.Count | Should -Be $games.Count
+            foreach ($b in $branches) {
+                git ls-tree -r --name-only $b | Should -Be @(
+                    '.env'
+                    '.gitlab-ci.yml'
+                    '.state'
+                    'build.sh'
+                    'build/Dockerfile'
+                    'notify.sh'
+                    'update/Dockerfile'
+                )
+            }
+        }
+
+        It "Creates and updates branches of a different repo (one game)" {
+            & $sourceRepo/Generate-GitBranches.ps1 -Repo $differentRepo -GamePlatform steam -GameEngine hlds -Game valve -ErrorAction Stop 6>$null # Create
+            & $sourceRepo/Generate-GitBranches.ps1 -Repo $differentRepo -GamePlatform steam -GameEngine hlds -Game valve -ErrorAction Stop 6>$null # Update
+
+            cd $differentRepo
+            $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
+            $branches.Count | Should -Be 1
             foreach ($b in $branches) {
                 git ls-tree -r --name-only $b | Should -Be @(
                     '.env'
