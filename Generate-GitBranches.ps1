@@ -195,6 +195,7 @@ FIX_APPMANIFEST=$( $g['fix_app_manifest'].ToString().ToLower() )
 LATEST=true
 CACHE=
 NO_PULL=
+NO_CACHE=
 NO_TEST=
 NO_PUSH=
 DOCKER_REPOSITORY=$( $g['docker_repository'] )
