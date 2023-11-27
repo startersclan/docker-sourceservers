@@ -1,32 +1,35 @@
+<#
+.SYNOPSIS
 # 1. This script create / updates git branches (named <game_platform>-<game_engine>-<game>) based on games.json
 # 2. By default it creates a git branch for each game found in games.json. To limit to one game, specify -GamePlatform, -GameEngine, and -Game
 # 3. To build a game, checkout to its branch, edit .env, mutate .trigger, commit and push
-# Examples:
-#   # Create branches for all games (dry-run)
-#   ./Generate-GitBranches.ps1 -Repo . -Pull -WhatIf
-#
-#   # Create branches for all games
-#   ./Generate-GitBranches.ps1 -Repo . -Pull
-#
-#   # Create branches for specific game
-#   ./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine hlds -Game valve
-#   ./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine srcds -Game csgo
-#
-#   # Create branches for specific game(s)
-#   ./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine hlds -Game valve,cstrike
-#   ./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine srcds -Game cs2,csgo
-#
-#   # Update branches for all games
-#   ./Generate-GitBranches.ps1 -Repo . -Pull -Push
-#
-#   # Update branches for specific game
-#   ./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine hlds -Game valve
-#   ./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine srcds -Game csgo
-#
-#   # Update branches for specific game(s)
-#   ./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine hlds -Game valve,cstrike
-#   ./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine srcds -Game cs2,csgo
-#
+
+.EXAMPLE
+# Create branches for all games (dry-run)
+./Generate-GitBranches.ps1 -Repo . -Pull -WhatIf
+
+# Create branches for all games
+./Generate-GitBranches.ps1 -Repo . -Pull
+
+# Create branches for specific game
+./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine hlds -Game valve
+./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine srcds -Game csgo
+
+# Create branches for specific game(s)
+./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine hlds -Game valve,cstrike
+./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine srcds -Game cs2,csgo
+
+# Update branches for all games
+./Generate-GitBranches.ps1 -Repo . -Pull -Push
+
+# Update branches for specific game
+./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine hlds -Game valve
+./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine srcds -Game csgo
+
+# Update branches for specific game(s)
+./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine hlds -Game valve,cstrike
+./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine srcds -Game cs2,csgo
+#>
 [CmdletBinding(SupportsShouldProcess)]
 param(
     # Target repo path
