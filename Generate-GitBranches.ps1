@@ -3,26 +3,26 @@
 # 3. To build a game, checkout to its branch, edit .env, mutate .trigger, commit and push
 # Examples:
 #   # Create branches for all games (dry-run)
-#   ./Generate-GitBranches.ps1 -TargetRepo . -Pull -WhatIf
+#   ./Generate-GitBranches.ps1 -Repo . -Pull -WhatIf
 #
 #   # Create branches for all games
-#   ./Generate-GitBranches.ps1 -TargetRepo . -Pull
+#   ./Generate-GitBranches.ps1 -Repo . -Pull
 #
 #   # Create branches for specific game
-#   ./Generate-GitBranches.ps1 -TargetRepo . -Pull -GameEngine srcds -Game csgo
+#   ./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine srcds -Game csgo
 #
 #   # Update branches for all games
-#   ./Generate-GitBranches.ps1 -TargetRepo . -Pull -Push
+#   ./Generate-GitBranches.ps1 -Repo . -Pull -Push
 #
 #   # Update branches for specific game
-#   ./Generate-GitBranches.ps1 -TargetRepo . -Pull -Push -GameEngine srcds -Game csgo
+#   ./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine srcds -Game csgo
 #
 [CmdletBinding(SupportsShouldProcess)]
 param(
     # Target repo path
     [Parameter(Mandatory)]
     [ValidateNotNullOrEmpty()]
-    [string]$TargetRepo
+    [string]$Repo
 ,
     # Whether to pull changes from remote repo before creating / updating branches
     [switch]$Pull
@@ -125,13 +125,13 @@ try {
     }
     $sourceRef = { git rev-parse --abbrev-ref HEAD } | Execute-Command
     try {
-        $TargetRepo = { cd $TargetRepo; git rev-parse --show-toplevel; cd - } | Execute-Command -WhatIf:$false  # Execute this even if -WhatIf is passed
+        $Repo = { cd $Repo; git rev-parse --show-toplevel; cd - } | Execute-Command -WhatIf:$false  # Execute this even if -WhatIf is passed
     }catch {
-        throw "$TargetRepo is not a git repo. Create a repo using: git init -b master"
+        throw "$Repo is not a git repo. Create a repo using: git init -b master"
     }
-    $isSameRepo = if ($TargetRepo -eq $sourceRepo) { $true } else { $false }
+    $isSameRepo = if ($Repo -eq $sourceRepo) { $true } else { $false }
 
-    Push-Location $TargetRepo
+    Push-Location $Repo
     foreach ($g in $games) {
         $branch = "$( $g['game_platform'] )-$( $g['game_engine'] )-$( $g['game'] )"
 
