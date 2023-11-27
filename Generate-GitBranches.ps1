@@ -31,25 +31,24 @@
 ./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine srcds -Game cs2,csgo
 #>
 [CmdletBinding(SupportsShouldProcess)]
-param(
-    # Target repo path
-    [Parameter(Mandatory)]
+param (
+    [Parameter(Mandatory,HelpMessage="Target repo path")]
     [ValidateNotNullOrEmpty()]
     [string]$Repo
 ,
-    # Whether to pull changes from remote repo before creating / updating branches
+    [Parameter(HelpMessage="Whether to pull changes from remote repo before creating / updating branches")]
     [switch]$Pull
 ,
-    # Whether to push changes after creating / updating branches
+    [Parameter(HelpMessage="Whether to push changes after creating / updating branches")]
     [switch]$Push
 ,
-    # E.g. 'steam'
+    [Parameter(HelpMessage="Game platform. E.g. 'steam'")]
     [string[]]$GamePlatform
 ,
-    # E.g. 'hlds' or 'srcds'
+    [Parameter(HelpMessage="Game engine. E.g. 'hlds' or 'srcds'")]
     [string[]]$GameEngine
 ,
-    # E.g. 'cstrike'
+    [Parameter(HelpMessage="Game. E.g. 'cstrike'")]
     [string[]]$Game
 )
 Set-StrictMode -Version Latest
