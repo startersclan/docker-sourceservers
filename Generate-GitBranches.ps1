@@ -51,6 +51,7 @@ param(
 )
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+# $ErrorView = 'NormalView'
 
 # Get games
 $games = Get-Content $PSScriptRoot/games.json -Encoding utf8 -Force | ConvertFrom-Json -AsHashtable
@@ -131,13 +132,13 @@ try {
     try {
         $sourceRepo = { cd $PSScriptRoot; git rev-parse --show-toplevel; cd - } | Execute-Command -WhatIf:$false  # Execute this even if -WhatIf is passed
     }catch {
-        throw "$PSScriptRoot is not a git repo. Create a repo using: git init -b master"
+        throw "$PSScriptRoot is not a git repo. Create a repo using: git init -b master; git commit -m 'Init' --allow-empty"
     }
     $sourceRef = { git rev-parse --abbrev-ref HEAD } | Execute-Command
     try {
         $Repo = { cd $Repo; git rev-parse --show-toplevel; cd - } | Execute-Command -WhatIf:$false  # Execute this even if -WhatIf is passed
     }catch {
-        throw "$Repo is not a git repo. Create a repo using: git init -b master"
+        throw "$Repo is not a git repo. Create a repo using: git init -b master; git commit -m 'Init' --allow-empty"
     }
     $isSameRepo = if ($Repo -eq $sourceRepo) { $true } else { $false }
 
