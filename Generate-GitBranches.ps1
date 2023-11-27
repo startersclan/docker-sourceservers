@@ -121,13 +121,13 @@ try {
     try {
         $sourceRepo = { cd $PSScriptRoot; git rev-parse --show-toplevel; cd - } | Execute-Command -WhatIf:$false  # Execute this even if -WhatIf is passed
     }catch {
-        throw "$PSScriptRoot is not a git repo"
+        throw "$PSScriptRoot is not a git repo. Create a repo using: git init -b master"
     }
     $sourceRef = { git rev-parse --abbrev-ref HEAD } | Execute-Command
     try {
         $TargetRepo = { cd $TargetRepo; git rev-parse --show-toplevel; cd - } | Execute-Command -WhatIf:$false  # Execute this even if -WhatIf is passed
     }catch {
-        throw "$TargetRepo is not a git repo"
+        throw "$TargetRepo is not a git repo. Create a repo using: git init -b master"
     }
     $isSameRepo = if ($TargetRepo -eq $sourceRepo) { $true } else { $false }
 
