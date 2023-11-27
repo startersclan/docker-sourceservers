@@ -39,6 +39,9 @@ usage() {
     echo "  NO_PULL                 Whether to skip pulling the game image by the :latest image before build. Applies only to PIPELINE=update"
     echo "                          Type: bool, optional"
     echo "                          Possible values: 'true', 'false'"
+    echo "  NO_CACHE                Whether to use --no-cache for docker build"
+    echo "                          Type: bool, optional"
+    echo "                          Possible values: 'true', 'false'"
     echo "  NO_TEST                 Whether to skip testing of the successfully built game image"
     echo "                          Type: bool, optional"
     echo "                          Possible values: 'true', 'false'"
@@ -130,6 +133,7 @@ if [ "$PIPELINE" = 'build' ]; then
     INSTALL_COUNT=${INSTALL_COUNT:-}
     LATEST=${LATEST:-}
     CACHE=${CACHE:-}
+    NO_CACHE=${NO_CACHE:-false}
     NO_TEST=${NO_TEST:-}
     NO_PUSH=${NO_PUSH:-}
     STEAM_LOGIN=${STEAM_LOGIN:-}
@@ -140,6 +144,7 @@ elif [ "$PIPELINE" = 'update' ]; then
     GAME_UPDATE_COUNT=${GAME_UPDATE_COUNT:?err}
     INSTALL_COUNT=${INSTALL_COUNT:-}
     NO_PULL=${NO_PULL:-}
+    NO_CACHE=${NO_CACHE:-false}
     NO_TEST=${NO_TEST:-}
     NO_PUSH=${NO_PUSH:-}
     STEAM_LOGIN=${STEAM_LOGIN:-}
@@ -227,6 +232,7 @@ if [ "$PIPELINE" = 'build' ]; then
         --progress plain \
         --secret id=STEAM_USERNAME,env=STEAM_USERNAME \
         --secret id=STEAM_PASSWORD,env=STEAM_PASSWORD \
+        --no-cache="$NO_CACHE" \
         --build-arg APPID="$APPID" \
         --build-arg MOD="$MOD" \
         --build-arg FIX_APPMANIFEST="$FIX_APPMANIFEST" \
@@ -260,6 +266,7 @@ elif [ "$PIPELINE" = 'update' ]; then
         --progress plain \
         --secret id=STEAM_USERNAME,env=STEAM_USERNAME \
         --secret id=STEAM_PASSWORD,env=STEAM_PASSWORD \
+        --no-cache="$NO_CACHE" \
         --build-arg GAME_IMAGE="$GAME_IMAGE_LATEST" \
         --build-arg INSTALL_COUNT="$INSTALL_COUNT" \
         --build-arg STEAM_LOGIN="$STEAM_LOGIN" \
