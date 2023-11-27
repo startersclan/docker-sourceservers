@@ -31,13 +31,13 @@ param(
     [switch]$Push
 ,
     # E.g. 'steam'
-    [string]$GamePlatform
+    [string[]]$GamePlatform
 ,
     # E.g. 'hlds' or 'srcds'
-    [string]$GameEngine
+    [string[]]$GameEngine
 ,
     # E.g. 'cstrike'
-    [string]$Game
+    [string[]]$Game
 )
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
@@ -45,13 +45,13 @@ $ErrorActionPreference = 'Stop'
 # Get games
 $games = Get-Content $PSScriptRoot/games.json -Encoding utf8 -Force | ConvertFrom-Json -AsHashtable
 if ($GamePlatform) {
-    $games = $games | ? { $_['game_platform'] -eq $GamePlatform }
+    $games = $games | ? { $_['game_platform'] -in $GamePlatform }
 }
 if ($GameEngine) {
-    $games = $games | ? { $_['game_engine'] -eq $GameEngine }
+    $games = $games | ? { $_['game_engine'] -in $GameEngine }
 }
 if ($Game) {
-    $games = $games | ? { $_['game'] -eq $Game }
+    $games = $games | ? { $_['game'] -in $Game }
 }
 if ($games.Count -eq 0) {
     throw "No games found"
