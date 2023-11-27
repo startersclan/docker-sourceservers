@@ -42,6 +42,13 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
         ls -al "$SERVER_DIR/steamapps"; \
         i=$(( i+1 )); \
     done; \
+    if [ "$APPID" = 90 ]; then \
+        echo "[UPDATE] Applying hotfixes for hlds"; \
+        # Hotfix "Error:./libstdc++.so.6: version CXXABI_1.3.8' not found"
+        ln -sfnv /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 /server/libgcc_s.so.1; \
+        ln -sfnv /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /server/libstdc++.so.6; \
+        ln -sfnv /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /steamcmd/linux32/libstdc++.so.6; \
+    fi; \
     echo "[UPDATE] Performing cleanup"; \
     # Clean up a different set of files for srcds/cs2
     if  [ "$APPID" = 730 ]; then \
