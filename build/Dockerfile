@@ -113,6 +113,14 @@ RUN echo "[BUILD] Applying game fixes"; \
     # Create steam_appid.txt containing the game's appid to prevent crashes on first run
     echo "[BUILD] CLIENT_APPID: $CLIENT_APPID"; \
     echo "$CLIENT_APPID" > "$SERVER_DIR/steam_appid.txt"; \
+    # Create necessary symlinks for hlds
+    if [ "$APPID" = 90 ]; then \
+        echo "[UPDATE] Applying hotfixes for hlds"; \
+        # Hotfix "Error:./libstdc++.so.6: version CXXABI_1.3.8' not found"
+        ln -sfnv /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 /server/libgcc_s.so.1; \
+        ln -sfnv /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /server/libstdc++.so.6; \
+        ln -sfnv /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /steamcmd/linux32/libstdc++.so.6; \
+    fi; \
     # Create necessary symlinks for srcds/cs2
     if  [ "$APPID" = 730 ]; then \
         mkdir -p /root/.steam/sdk64; \
