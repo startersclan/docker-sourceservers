@@ -354,9 +354,9 @@ fi
 # Create .build.state artifact
 echo "Creating .build.state artifact"
 # Searching for 'WORKDIR /server' is a reliable way to locate the base image layers
-BASE_SIZE=0; for i in $( docker history "$DOCKER_REPOSITORY:latest" --format='{{.Size}} {{.CreatedAt}} {{.CreatedBy}}' --no-trunc --human=false | grep 'WORKDIR /server' -A99999 | awk '{print $1}' ); do BASE_SIZE=$(( $BASE_SIZE + $i )); done
+BASE_SIZE=0; for i in $( docker history "$GAME_IMAGE" --format='{{.Size}} {{.CreatedAt}} {{.CreatedBy}}' --no-trunc --human=false | grep 'WORKDIR /server' -A99999 | awk '{print $1}' ); do BASE_SIZE=$(( $BASE_SIZE + $i )); done
 # Searching for 'UPDATE' is a reliable way to determine the incremental image layers
-LAYERS_SIZE=0; for i in $( docker history "$DOCKER_REPOSITORY:latest" --format='{{.Size}} {{.CreatedAt}} {{.CreatedBy}}' --no-trunc --human=false | grep UPDATE | awk '{print $1}' ); do LAYERS_SIZE=$(( $LAYERS_SIZE + $i )); done
+LAYERS_SIZE=0; for i in $( docker history "$GAME_IMAGE" --format='{{.Size}} {{.CreatedAt}} {{.CreatedBy}}' --no-trunc --human=false | grep UPDATE | awk '{print $1}' ); do LAYERS_SIZE=$(( $LAYERS_SIZE + $i )); done
 LAYERED_SIZE=$(( $BASE_SIZE + $LAYERS_SIZE ))
 cat - > .build.state <<EOF
 BASE_SIZE=$BASE_SIZE
