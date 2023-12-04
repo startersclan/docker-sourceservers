@@ -191,6 +191,7 @@ if [ "$PIPELINE" = 'build' ]; then
     BUILD_CONTEXT='build/'
 elif [ "$PIPELINE" = 'update' ]; then
     GAME_IMAGE_LAYERED="$DOCKER_REPOSITORY:$GAME_VERSION-layered"
+    GAME_IMAGE_LAYERED_CALVER="$GAME_IMAGE_LAYERED-$( date -u '+%Y%m%d' )"
     BUILD_CONTEXT='update/'
 fi
 GAME_IMAGE_LATEST="$DOCKER_REPOSITORY:latest"
@@ -222,10 +223,9 @@ fi
 
 # Build / Update the game image
 if [ "$PIPELINE" = 'build' ]; then
-    GAME_IMAGE="$GAME_IMAGE_CLEAN"
     if [ "$CACHE" = 'true' ]; then
         date -Iseconds
-        time docker pull "$GAME_IMAGE" || true
+        time docker pull "$GAME_IMAGE_CLEAN" || true
     fi
     date -Iseconds
     STEAM_USERNAME="$STEAM_USERNAME" STEAM_PASSWORD="$STEAM_PASSWORD" time docker build \
@@ -240,7 +240,7 @@ if [ "$PIPELINE" = 'build' ]; then
         --build-arg INSTALL_COUNT="$INSTALL_COUNT" \
         --build-arg STEAM_LOGIN="$STEAM_LOGIN" \
         --build-arg CACHE_KEY="$GAME_VERSION" \
-        -t "$GAME_IMAGE" \
+        -t "$GAME_IMAGE_CLEAN" \
         --label "appid=$APPID" \
         --label "mod=$MOD" \
         --label "client_appid=$CLIENT_APPID" \
@@ -252,11 +252,11 @@ if [ "$PIPELINE" = 'build' ]; then
         --label "commit_sha=$COMMIT_SHA" \
         "$BUILD_CONTEXT"
     if [ "$LATEST" = 'true' ]; then
-        docker tag "$GAME_IMAGE" "$GAME_IMAGE_LATEST"
+        docker tag "$GAME_IMAGE_CLEAN" "$GAME_IMAGE_LATEST"
     fi
     date -Iseconds
+    GAME_IMAGE="$GAME_IMAGE_CLEAN"
 elif [ "$PIPELINE" = 'update' ]; then
-    GAME_IMAGE="$GAME_IMAGE_LAYERED"
     date -Iseconds
     if [ ! "$NO_PULL" = 'true' ]; then
         time docker pull "$GAME_IMAGE_LATEST"
@@ -271,13 +271,15 @@ elif [ "$PIPELINE" = 'update' ]; then
         --build-arg INSTALL_COUNT="$INSTALL_COUNT" \
         --build-arg STEAM_LOGIN="$STEAM_LOGIN" \
         --build-arg CACHE_KEY="$GAME_VERSION" \
-        -t "$GAME_IMAGE" \
+        -t "$GAME_IMAGE_LAYERED" \
+        -t "$GAME_IMAGE_LAYERED_CALVER" \
         -t "$GAME_IMAGE_LATEST" \
         --label "game_version=$GAME_VERSION" \
         --label "game_update_count=$GAME_UPDATE_COUNT" \
         --label "commit_sha=$COMMIT_SHA" \
         "$BUILD_CONTEXT"
     date -Iseconds
+    GAME_IMAGE="$GAME_IMAGE_LAYERED"
 fi
 docker images
 docker inspect "$GAME_IMAGE"
@@ -331,12 +333,14 @@ fi
 # Push the game image
 if [ ! "$NO_PUSH" = 'true' ]; then
     date -Iseconds
-    time docker push "$GAME_IMAGE"
     if [ "$PIPELINE" = 'build' ]; then
+        time docker push "$GAME_IMAGE_CLEAN"
         if [ "$LATEST" = 'true' ]; then
             time docker push "$GAME_IMAGE_LATEST"
         fi
     elif [ "$PIPELINE" = 'update' ]; then
+        time docker push "$GAME_IMAGE_LAYERED"
+        time docker push "$GAME_IMAGE_LAYERED_CALVER"
         time docker push "$GAME_IMAGE_LATEST"
     fi
     date -Iseconds
