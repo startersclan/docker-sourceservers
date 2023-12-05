@@ -62,16 +62,16 @@ usage() {
     echo "                          Type: string"
     echo "Examples:"
     echo "  # Build hlds/cstrike image and push"
-    echo "  PIPELINE=build GAME_VERSION=1127 APPID=90 CLIENT_APPID=10 GAME=cstrike MOD=cstrike FIX_APPMANIFEST=true LATEST=true STEAM_LOGIN=true DOCKER_REPOSITORY=docker.io/mynamespace/cstrike REGISTRY_USER=xxx REGISTRY_PASSWORD=xxx STEAM_USERNAME=xxx STEAM_PASSWORD=xxx ./build.sh"
+    echo "  PIPELINE=build GAME_VERSION=1127 APPID=90 CLIENT_APPID=10 GAME=cstrike MOD=cstrike LATEST=true STEAM_LOGIN=true DOCKER_REPOSITORY=docker.io/mynamespace/cstrike REGISTRY_USER=xxx REGISTRY_PASSWORD=xxx STEAM_USERNAME=xxx STEAM_PASSWORD=xxx ./build.sh"
     echo
     echo "  # Update hlds/cstrike image and push"
-    echo "  PIPELINE=update GAME_UPDATE_COUNT=1 GAME_VERSION=1128 APPID=90 CLIENT_APPID=10 GAME=cstrike MOD=cstrike FIX_APPMANIFEST=true STEAM_LOGIN=true DOCKER_REPOSITORY=docker.io/mynamespace/cstrike REGISTRY_USER=xxx REGISTRY_PASSWORD=xxx STEAM_USERNAME=xxx STEAM_PASSWORD=xxx ./build.sh"
+    echo "  PIPELINE=update GAME_UPDATE_COUNT=1 GAME_VERSION=1128 APPID=90 CLIENT_APPID=10 GAME=cstrike MOD=cstrike STEAM_LOGIN=true DOCKER_REPOSITORY=docker.io/mynamespace/cstrike REGISTRY_USER=xxx REGISTRY_PASSWORD=xxx STEAM_USERNAME=xxx STEAM_PASSWORD=xxx ./build.sh"
     echo
     echo "  # Build hlds/valve image and push"
-    echo "  PIPELINE=build GAME_VERSION=1122 APPID=90 CLIENT_APPID=10 GAME=valve MOD= FIX_APPMANIFEST=true LATEST=true STEAM_LOGIN=true DOCKER_REPOSITORY=docker.io/mynamespace/valve REGISTRY_USER=xxx REGISTRY_PASSWORD=xxx STEAM_USERNAME=xxx STEAM_PASSWORD=xxx ./build.sh"
+    echo "  PIPELINE=build GAME_VERSION=1122 APPID=90 CLIENT_APPID=10 GAME=valve MOD= LATEST=true STEAM_LOGIN=true DOCKER_REPOSITORY=docker.io/mynamespace/valve REGISTRY_USER=xxx REGISTRY_PASSWORD=xxx STEAM_USERNAME=xxx STEAM_PASSWORD=xxx ./build.sh"
     echo
     echo "  # Update hlds/valve image and push"
-    echo "  PIPELINE=update GAME_UPDATE_COUNT=1 GAME_VERSION=1123 APPID=90 CLIENT_APPID=10 GAME=valve MOD= FIX_APPMANIFEST=true STEAM_LOGIN=true DOCKER_REPOSITORY=docker.io/mynamespace/valve REGISTRY_USER=xxx REGISTRY_PASSWORD=xxx STEAM_USERNAME=xxx STEAM_PASSWORD=xxx ./build.sh"
+    echo "  PIPELINE=update GAME_UPDATE_COUNT=1 GAME_VERSION=1123 APPID=90 CLIENT_APPID=10 GAME=valve MOD= STEAM_LOGIN=true DOCKER_REPOSITORY=docker.io/mynamespace/valve REGISTRY_USER=xxx REGISTRY_PASSWORD=xxx STEAM_USERNAME=xxx STEAM_PASSWORD=xxx ./build.sh"
     echo
     echo "  # Build srcds/csgo image and push"
     echo "  PIPELINE=build GAME_VERSION=13840 APPID=740 CLIENT_APPID=730 GAME=csgo LATEST=true DOCKER_REPOSITORY=docker.io/mynamespace/csgo REGISTRY_USER=xxx REGISTRY_PASSWORD=xxx ./build.sh"
