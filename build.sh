@@ -366,3 +366,7 @@ EOF
 cat .build.state
 ls -al .build.state
 date -Iseconds
+
+echo
+echo "Success:"
+docker inspect "$GAME_IMAGE" --format='{{ range .RepoTags }}{{ printf "%s\n" . }}{{ end }}'
