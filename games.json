@@ -114,7 +114,7 @@
     "game_engine": "srcds",
     "game": "cs2",
     "mod": "",
-    "appid": 740,
+    "appid": 730,
     "client_appid": 730,
     "docker_repository": "sourceservers/cs2",
     "fix_app_manifest": false
