@@ -3,10 +3,12 @@ Get-Module Pester -ListAvailable
 Describe "Generate-GitBranches.ps1" {
 
     BeforeEach {
-        $games = Get-Content $PSScriptRoot/games.json -Encoding utf8 | ConvertFrom-Json -AsHashtable
-
         $testDrive = "TestDrive:"
         $sourceRepo = $PSScriptRoot
+
+        $games = Get-Content $PSScriptRoot/games.json -Encoding utf8 | ConvertFrom-Json -AsHashtable
+        $remote = 'origin'
+        $remoteUrl = git remote get-url $remote
     }
 
     AfterEach {
@@ -50,9 +52,9 @@ Describe "Generate-GitBranches.ps1" {
         It "Creates and updates branches of a same repo" {
             $currentRef = git rev-parse --short HEAD
             if ($LASTEXITCODE) { throw }
-            & ./Generate-GitBranches.ps1 -Repo . -ErrorAction Stop 6>$null # Create
+            & ./Generate-GitBranches.ps1 -Repo $sameRepo -ErrorAction Stop 6>$null # Create
             git checkout $currentRef
-            & ./Generate-GitBranches.ps1 -Repo . -ErrorAction Stop 6>$null # Update
+            & ./Generate-GitBranches.ps1 -Repo $sameRepo -ErrorAction Stop 6>$null # Update
 
             cd $sameRepo
             $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
@@ -71,8 +73,8 @@ Describe "Generate-GitBranches.ps1" {
         }
 
         It "Creates and updates branches of a same repo of (one game)" {
-            & $sourceRepo/Generate-GitBranches.ps1 -Repo . -GamePlatform steam -GameEngine hlds -Game valve -ErrorAction Stop 6>$null # Create
-            & $sourceRepo/Generate-GitBranches.ps1 -Repo . -GamePlatform steam -GameEngine hlds -Game valve -Pull -ErrorAction Stop 6>$null # Update
+            & $sourceRepo/Generate-GitBranches.ps1 -Repo $sameRepo -GamePlatform steam -GameEngine hlds -Game valve -ErrorAction Stop 6>$null # Create
+            & $sourceRepo/Generate-GitBranches.ps1 -Repo $sameRepo -Remote $remote -Pull -GamePlatform steam -GameEngine hlds -Game valve -ErrorAction Stop 6>$null # Update
 
             cd $sameRepo
             $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
@@ -97,7 +99,7 @@ Describe "Generate-GitBranches.ps1" {
             $differentRepo = "$testDrive/$( (Get-Item $sourceRepo).Name )"
             New-Item $differentRepo -ItemType Directory > $null
             cd $differentRepo
-            git init
+            git init --initial-branch master
             git config user.name "bot"
             git config user.email "bot@example.com"
             git commit --allow-empty -m 'Init'

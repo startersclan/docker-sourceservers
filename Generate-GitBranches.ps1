@@ -6,29 +6,36 @@
 
 .EXAMPLE
 # Create branches for all games (dry-run)
-./Generate-GitBranches.ps1 -Repo . -Pull -WhatIf
+./Generate-GitBranches.ps1 -Repo . -WhatIf
 
 # Create branches for all games
-./Generate-GitBranches.ps1 -Repo . -Pull
+./Generate-GitBranches.ps1 -Repo .
 
-# Create branches for specific game
-./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine hlds -Game valve
-./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine srcds -Game csgo
+# Create branches for all games, and push to git remote 'upstream'
+./Generate-GitBranches.ps1 -Repo . -Remote upstream -Push
 
 # Create branches for specific game(s)
-./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine hlds -Game valve,cstrike
-./Generate-GitBranches.ps1 -Repo . -Pull -GameEngine srcds -Game cs2,csgo
+./Generate-GitBranches.ps1 -Repo . -Remote upstream -Push -GameEngine hlds -Game valve,cstrike
+./Generate-GitBranches.ps1 -Repo . -Remote upstream -Push -GameEngine srcds -Game cs2,csgo
 
-# Update branches for all games
+# Create branches for specific game(s), and push to git remote 'upstream'
+./Generate-GitBranches.ps1 -Repo . -Remote upstream -Push -GameEngine hlds -Game valve,cstrike
+./Generate-GitBranches.ps1 -Repo . -Remote upstream -Push -GameEngine srcds -Game cs2,csgo
+
+.EXAMPLE
+# Update branches for all games, pulling and pushing to git remote 'origin'
 ./Generate-GitBranches.ps1 -Repo . -Pull -Push
 
-# Update branches for specific game
-./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine hlds -Game valve
-./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine srcds -Game csgo
+# Update branches for all games, pulling and pushing to git remote 'upstream'
+./Generate-GitBranches.ps1 -Repo . -Remote upstream -Pull -Push
 
-# Update branches for specific game(s)
+# Update branches for specific game(s), pulling and pushing to git remote 'origin'
 ./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine hlds -Game valve,cstrike
 ./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine srcds -Game cs2,csgo
+
+# Update branches for specific game(s), pulling and pushing to git remote 'origin'
+./Generate-GitBranches.ps1 -Repo . -Remote upstream -Pull -Push -GameEngine hlds -Game valve,cstrike
+./Generate-GitBranches.ps1 -Repo . -Remote upstream -Pull -Push -GameEngine srcds -Game cs2,csgo
 #>
 [CmdletBinding(SupportsShouldProcess)]
 param (
@@ -36,19 +43,22 @@ param (
     [ValidateNotNullOrEmpty()]
     [string]$Repo
 ,
+    [Parameter(HelpMessage="Git remote. Default: 'origin'")]
+    [string]$Remote = 'origin'
+,
     [Parameter(HelpMessage="Whether to pull changes from remote repo before creating / updating branches")]
     [switch]$Pull
 ,
     [Parameter(HelpMessage="Whether to push changes after creating / updating branches")]
     [switch]$Push
 ,
-    [Parameter(HelpMessage="Game platform. E.g. 'steam'")]
+    [Parameter(HelpMessage="Game platform. E.g. 'steam'. If unspecified, all game platforms are selected.")]
     [string[]]$GamePlatform
 ,
-    [Parameter(HelpMessage="Game engine. E.g. 'hlds' or 'srcds'")]
+    [Parameter(HelpMessage="Game engine. E.g. 'hlds' or 'srcds'. If unspecified, all game engines are selected.")]
     [string[]]$GameEngine
 ,
-    [Parameter(HelpMessage="Game. E.g. 'cstrike'")]
+    [Parameter(HelpMessage="Game. E.g. 'cstrike'. If unspecified, all games are selected.")]
     [string[]]$Game
 )
 Set-StrictMode -Version Latest
@@ -150,16 +160,16 @@ try {
 
         { git checkout -f master } | Execute-Command
         if ($Pull) {
-            { git pull origin master } | Execute-Command
+            { git pull "$Remote" master } | Execute-Command
         }
         $existingBranch = { git rev-parse --verify $branch 2>$null } | Execute-Command -ErrorAction SilentlyContinue
         if ($existingBranch) {
             "Updating branch '$branch'" | Write-Host -ForegroundColor Green
             if ($Pull) {
-                { git fetch origin } | Execute-Command
-                $existingRemoteBranch = { git rev-parse --verify origin/$branch 2>$null } | Execute-Command -ErrorAction SilentlyContinue
+                { git fetch "$Remote" } | Execute-Command
+                $existingRemoteBranch = { git rev-parse --verify "$Remote/$branch" 2>$null } | Execute-Command -ErrorAction SilentlyContinue
                 if ($existingRemoteBranch) {
-                    { git branch -f $branch origin/$branch } | Execute-Command
+                    { git branch -f $branch "$Remote/$branch" } | Execute-Command
                 }
             }
             { git checkout -f $branch } | Execute-Command
@@ -247,7 +257,7 @@ LAYERED_SIZE=$( if ($kv.Contains('LAYERED_SIZE')) { $kv['LAYERED_SIZE'] } else {
         }
 
         if ($Push) {
-            { git push origin "$branch" } | Execute-Command
+            { git push "$Remote" "$branch" } | Execute-Command
         }
     }
 }catch {
