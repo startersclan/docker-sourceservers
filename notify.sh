@@ -12,7 +12,7 @@ if [ "${1:-}" = '-h' ] || [ "${1:-}" = '--help' ]; then
 fi
 
 # CI variables
-CI_JOB_ID=${CI_JOB_ID:?err}
+# CI_JOB_ID=${CI_JOB_ID:?err}
 CI_PROJECT_NAMESPACE=${CI_PROJECT_NAMESPACE:?err}
 CI_PROJECT_NAME=${CI_PROJECT_NAME:-$( git rev-parse --show-toplevel | xargs basename )}
 CI_COMMIT_BRANCH=${CI_COMMIT_BRANCH:-$( git rev-parse --abbrev-ref HEAD )}
