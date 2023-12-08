@@ -108,8 +108,8 @@
     "fix_app_manifest": false
   },
   {
-    "game_version": 13978,
-    "game_update_count": 8,
+    "game_version": 13980,
+    "game_update_count": 9,
     "game_platform": "steam",
     "game_engine": "srcds",
     "game": "cs2",
