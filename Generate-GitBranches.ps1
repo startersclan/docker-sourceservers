@@ -250,7 +250,7 @@ LAYERED_SIZE=$( if ($kv.Contains('LAYERED_SIZE')) { $kv['LAYERED_SIZE'] } else {
 
         if (git status --porcelain 2>$null) {
             "Committing files" | Write-Host -ForegroundColor Green
-            { git add build update build.sh notify.sh .gitlab-ci.yml .env .state .trigger } | Execute-Command
+            { git add . } | Execute-Command
             $msg = if ($existingBranch) { "Update files" } else { "Add files" }
             { git commit -m "$msg" } | Execute-Command
         }else {
