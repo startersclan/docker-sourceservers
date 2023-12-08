@@ -178,8 +178,9 @@ try {
             { git checkout -b $branch } | Execute-Command
         }
 
-        "Removing all files" | Write-Host -ForegroundColor Green
-        Get-ChildItem . -Exclude '.git' -Force | Remove-Item -Recurse -Force
+        "Removing all tracked files" | Write-Host -ForegroundColor Green
+        # Get-ChildItem . -Exclude '.git' -Force | Remove-Item -Recurse -Force
+        { git ls-files } | Execute-Command -WhatIf:$false | Remove-Item -Recurse -Force
 
         "Checking out files" | Write-Host -ForegroundColor Green
         if ($isSameRepo) {
