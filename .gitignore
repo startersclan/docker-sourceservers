@@ -1,0 +1,7 @@
+/.*
+!/.circleci
+!/.github
+!/.generate
+!/.gitignore
+!/.gitlab-ci.yml
+!/.travis.yml
