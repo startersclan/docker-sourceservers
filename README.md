@@ -2,32 +2,12 @@
 
 [**Source**](https://developer.valvesoftware.com/wiki/Source) / [**Goldsource**](https://developer.valvesoftware.com/wiki/GoldSrc) dedicated server images built through use of [`steamcmd`](https://github.com/startersclan/docker-steamcmd).
 
-| `master` | `build` | `update` |
-|:-:|:-:|:-:|
-[![pipeline-github-master-badge][]][pipeline-github-master-link] | [![pipeline-travis-build-badge][]][pipeline-travis-build-link] [![pipeline-azurepipelines-build-badge][]][pipeline-azurepipelines-build-link] [![pipeline-circleci-build-badge][]][pipeline-circleci-build-link] [![pipeline-gitlab-build-badge][]][pipeline-gitlab-build-link] | [![pipeline-travis-update-badge][]][pipeline-travis-update-link] [![pipeline-azurepipelines-update-badge][]][pipeline-azurepipelines-update-link] [![pipeline-circleci-update-badge][]][pipeline-circleci-update-link] [![pipeline-gitlab-update-badge][]][pipeline-gitlab-update-link]
+| `master` |
+|:-:|
+[![pipeline-github-master-badge][]][pipeline-github-master-link] |
 
 [pipeline-github-master-badge]: https://img.shields.io/github/actions/workflow/status/startersclan/docker-sourceservers/ci-master-pr.yml?branch=master&label=&logo=github&style=flat-square
 [pipeline-github-master-link]: https://github.com/startersclan/docker-sourceservers/actions?query=branch%3Amaster
-
-[pipeline-travis-build-badge]: https://img.shields.io/travis/com/startersclan/docker-sourceservers/build.svg?label=&logo=travis&style=flat-square
-[pipeline-travis-build-link]: https://app.travis-ci.com/startersclan/docker-sourceservers/builds
-[pipeline-travis-update-badge]: https://img.shields.io/travis/com/startersclan/docker-sourceservers/update.svg?label=&logo=travis&style=flat-square
-[pipeline-travis-update-link]: https://app.travis-ci.com/startersclan/docker-sourceservers/builds
-
-[pipeline-azurepipelines-build-badge]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/2/build.svg?label=&logo=azure-pipelines&style=flat-square
-[pipeline-azurepipelines-build-link]: https://dev.azure.com/startersclan/docker-sourceservers/_build?definitionId=2
-[pipeline-azurepipelines-update-badge]: https://img.shields.io/azure-devops/build/startersclan/docker-sourceservers/3/update.svg?label=&logo=azure-pipelines&style=flat-square
-[pipeline-azurepipelines-update-link]: https://dev.azure.com/startersclan/docker-sourceservers/_build?definitionId=3
-
-[pipeline-circleci-build-badge]: https://img.shields.io/circleci/build/gh/startersclan/docker-sourceservers/build.svg?label=&logo=circleci&style=flat-square
-[pipeline-circleci-build-link]: https://app.circleci.com/pipelines/github/startersclan/docker-sourceservers?branch=build
-[pipeline-circleci-update-badge]: https://img.shields.io/circleci/build/gh/startersclan/docker-sourceservers/update.svg?label=&logo=circleci&style=flat-square
-[pipeline-circleci-update-link]: https://app.circleci.com/pipelines/github/startersclan/docker-sourceservers?branch=update
-
-[pipeline-gitlab-build-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=build&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-build-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=build
-[pipeline-gitlab-update-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=update&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-update-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=update
 
 ## Supported Tags
 
@@ -52,109 +32,143 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 
 ### Source Engine (SRCDS)
 
-| Game | Image | Tag `v<tag>` | Size |
-|:-:|:-:|:-:|:-:|
-| Counter-Strike 2 | [`sourceservers/cs2`][srcds-cs2-dockerhub-link] | [![srcds-cs2-version-badge][]][srcds-cs2-metadata-link] | [![srcds-cs2-size-badge][]][srcds-cs2-metadata-link] | [![srcds-cs2-layers-badge][]][srcds-cs2-metadata-link] |
-| Counter-Strike: Global Offensive | [`sourceservers/csgo`][srcds-csgo-dockerhub-link] | [![srcds-csgo-version-badge][]][srcds-csgo-metadata-link] | [![srcds-csgo-size-badge][]][srcds-csgo-metadata-link] | [![srcds-csgo-layers-badge][]][srcds-csgo-metadata-link] |
-| Counter-Strike: Source | [`sourceservers/cstrike`][srcds-cstrike-dockerhub-link] | [![srcds-cstrike-version-badge][]][srcds-cstrike-metadata-link] | [![srcds-cstrike-size-badge][]][srcds-cstrike-metadata-link] | [![srcds-cstrike-layers-badge][]][srcds-cstrike-metadata-link] |
-| Day of Defeat: Source | [`sourceservers/dod`][srcds-dod-dockerhub-link] | [![srcds-dod-version-badge][]][srcds-dod-metadata-link] | [![srcds-dod-size-badge][]][srcds-dod-metadata-link] | [![srcds-dod-layers-badge][]][srcds-dod-metadata-link] |
-| Half-Life 2: Deathmatch | [`sourceservers/hl2mp`][srcds-hl2mp-dockerhub-link] | [![srcds-hl2mp-version-badge][]][srcds-hl2mp-metadata-link] | [![srcds-hl2mp-size-badge][]][srcds-hl2mp-metadata-link] | [![srcds-hl2mp-layers-badge][]][srcds-hl2mp-metadata-link] |
-| Left 4 Dead | [`sourceservers/left4dead`][srcds-left4dead-dockerhub-link] | [![srcds-left4dead-version-badge][]][srcds-left4dead-metadata-link] | [![srcds-left4dead-size-badge][]][srcds-left4dead-metadata-link] | [![srcds-left4dead-layers-badge][]][srcds-left4dead-metadata-link] |
-| Left 4 Dead 2 | [`sourceservers/left4dead2`][srcds-left4dead2-dockerhub-link] | [![srcds-left4dead2-version-badge][]][srcds-left4dead2-metadata-link] | [![srcds-left4dead2-size-badge][]][srcds-left4dead2-metadata-link] | [![srcds-left4dead2-layers-badge][]][srcds-left4dead2-metadata-link] |
-| Team Fortress 2 | [`sourceservers/tf`][srcds-tf-dockerhub-link] | [![srcds-tf-version-badge][]][srcds-tf-metadata-link] | [![srcds-tf-size-badge][]][srcds-tf-metadata-link] | [![srcds-tf-layers-badge][]][srcds-tf-metadata-link] |
+| Game | Image | Tag `v<tag>` | Size | Status |
+|:-:|:-:|:-:|:-:|:-:|
+| Counter-Strike 2 | [`sourceservers/cs2`][srcds-cs2-dockerhub-link] | [![srcds-cs2-version-badge][]][srcds-cs2-metadata-link] | [![srcds-cs2-size-badge][]][srcds-cs2-metadata-link] | [![pipeline-gitlab-srcds-cs2-badge][]][pipeline-gitlab-srcds-cs2-link] |
+| Counter-Strike: Global Offensive | [`sourceservers/csgo`][srcds-csgo-dockerhub-link] | [![srcds-csgo-version-badge][]][srcds-csgo-metadata-link] | [![srcds-csgo-size-badge][]][srcds-csgo-metadata-link] | [![pipeline-gitlab-srcds-csgo-badge][]][pipeline-gitlab-srcds-csgo-link] |
+| Counter-Strike: Source | [`sourceservers/cstrike`][srcds-cstrike-dockerhub-link] | [![srcds-cstrike-version-badge][]][srcds-cstrike-metadata-link] | [![srcds-cstrike-size-badge][]][srcds-cstrike-metadata-link] | [![pipeline-gitlab-srcds-cstrike-badge][]][pipeline-gitlab-srcds-cstrike-link] |
+| Day of Defeat: Source | [`sourceservers/dod`][srcds-dod-dockerhub-link] | [![srcds-dod-version-badge][]][srcds-dod-metadata-link] | [![srcds-dod-size-badge][]][srcds-dod-metadata-link] | [![pipeline-gitlab-srcds-dod-badge][]][pipeline-gitlab-srcds-dod-link] |
+| Half-Life 2: Deathmatch | [`sourceservers/hl2mp`][srcds-hl2mp-dockerhub-link] | [![srcds-hl2mp-version-badge][]][srcds-hl2mp-metadata-link] | [![srcds-hl2mp-size-badge][]][srcds-hl2mp-metadata-link] | [![pipeline-gitlab-srcds-hl2mp-badge][]][pipeline-gitlab-srcds-hl2mp-link] |
+| Left 4 Dead | [`sourceservers/left4dead`][srcds-left4dead-dockerhub-link] | [![srcds-left4dead-version-badge][]][srcds-left4dead-metadata-link] | [![srcds-left4dead-size-badge][]][srcds-left4dead-metadata-link] | [![pipeline-gitlab-srcds-left4dead-badge][]][pipeline-gitlab-srcds-left4dead-link] |
+| Left 4 Dead 2 | [`sourceservers/left4dead2`][srcds-left4dead2-dockerhub-link] | [![srcds-left4dead2-version-badge][]][srcds-left4dead2-metadata-link] | [![srcds-left4dead2-size-badge][]][srcds-left4dead2-metadata-link] | [![pipeline-gitlab-srcds-left4dead2-badge][]][pipeline-gitlab-srcds-left4dead2-link] |
+| Team Fortress 2 | [`sourceservers/tf`][srcds-tf-dockerhub-link] | [![srcds-tf-version-badge][]][srcds-tf-metadata-link] | [![srcds-tf-size-badge][]][srcds-tf-metadata-link] | [![pipeline-gitlab-srcds-tf-badge][]][pipeline-gitlab-srcds-tf-link] |
 
 [srcds-cs2-dockerhub-link]: https://hub.docker.com/r/sourceservers/cs2
 [srcds-cs2-version-badge]: https://img.shields.io/docker/v/sourceservers/cs2/latest?label=&style=flat-square
 [srcds-cs2-size-badge]: https://img.shields.io/docker/image-size/sourceservers/cs2/latest?label=&style=flat-square
 [srcds-cs2-metadata-link]: https://hub.docker.com/r/sourceservers/cs2/tags
+[pipeline-gitlab-srcds-cs2-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-cs2&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-cs2-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-cs2
 
 [srcds-csgo-dockerhub-link]: https://hub.docker.com/r/sourceservers/csgo
 [srcds-csgo-version-badge]: https://img.shields.io/docker/v/sourceservers/csgo/latest?label=&style=flat-square
 [srcds-csgo-size-badge]: https://img.shields.io/docker/image-size/sourceservers/csgo/latest?label=&style=flat-square
 [srcds-csgo-metadata-link]: https://hub.docker.com/r/sourceservers/csgo/tags
+[pipeline-gitlab-srcds-csgo-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-csgo&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-csgo-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-csgo
 
 [srcds-cstrike-dockerhub-link]: https://hub.docker.com/r/sourceservers/cstrike
 [srcds-cstrike-version-badge]: https://img.shields.io/docker/v/sourceservers/cstrike/latest?label=&style=flat-square
 [srcds-cstrike-size-badge]: https://img.shields.io/docker/image-size/sourceservers/cstrike/latest?label=&style=flat-square
 [srcds-cstrike-metadata-link]: https://hub.docker.com/r/sourceservers/cstrike/tags
+[pipeline-gitlab-srcds-cstrike-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-cstrike&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-cstrike-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-cstrike
 
 [srcds-dod-dockerhub-link]: https://hub.docker.com/r/sourceservers/dod
 [srcds-dod-version-badge]: https://img.shields.io/docker/v/sourceservers/dod/latest?label=&style=flat-square
 [srcds-dod-size-badge]: https://img.shields.io/docker/image-size/sourceservers/dod/latest?label=&style=flat-square
 [srcds-dod-metadata-link]: https://hub.docker.com/r/sourceservers/dod/tags
+[pipeline-gitlab-srcds-dod-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-dod&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-dod-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-dod
 
 [srcds-hl2mp-dockerhub-link]: https://hub.docker.com/r/sourceservers/hl2mp
 [srcds-hl2mp-version-badge]: https://img.shields.io/docker/v/sourceservers/hl2mp/latest?label=&style=flat-square
 [srcds-hl2mp-size-badge]: https://img.shields.io/docker/image-size/sourceservers/hl2mp/latest?label=&style=flat-square
 [srcds-hl2mp-metadata-link]: https://hub.docker.com/r/sourceservers/hl2mp/tags
+[pipeline-gitlab-srcds-hl2mp-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-hl2mp&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-hl2mp-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-hl2mp
 
 [srcds-left4dead-dockerhub-link]: https://hub.docker.com/r/sourceservers/left4dead
 [srcds-left4dead-version-badge]: https://img.shields.io/docker/v/sourceservers/left4dead/latest?label=&style=flat-square
 [srcds-left4dead-size-badge]: https://img.shields.io/docker/image-size/sourceservers/left4dead/latest?label=&style=flat-square
 [srcds-left4dead-metadata-link]: https://hub.docker.com/r/sourceservers/left4dead/tags
+[pipeline-gitlab-srcds-left4dead-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-left4dead&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-left4dead-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-left4dead
 
 [srcds-left4dead2-dockerhub-link]: https://hub.docker.com/r/sourceservers/left4dead2
 [srcds-left4dead2-version-badge]: https://img.shields.io/docker/v/sourceservers/left4dead2/latest?label=&style=flat-square
 [srcds-left4dead2-size-badge]: https://img.shields.io/docker/image-size/sourceservers/left4dead2/latest?label=&style=flat-square
 [srcds-left4dead2-metadata-link]: https://hub.docker.com/r/sourceservers/left4dead2/tags
+[pipeline-gitlab-srcds-left4dead2-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-left4dead2&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-left4dead2-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-left4dead2
 
 [srcds-tf-dockerhub-link]: https://hub.docker.com/r/sourceservers/tf
 [srcds-tf-version-badge]: https://img.shields.io/docker/v/sourceservers/tf/latest?label=&style=flat-square
 [srcds-tf-size-badge]: https://img.shields.io/docker/image-size/sourceservers/tf/latest?label=&style=flat-square
 [srcds-tf-metadata-link]: https://hub.docker.com/r/sourceservers/tf/tags
+[pipeline-gitlab-srcds-tf-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-tf&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-tf-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-tf
 
 ### Goldsource Engine (HLDS)
 
-| Game | Image | Tag `v<tag>` | Size |
-|:-:|:-:|:-:|:-:|
-| Counter-Strike 1.6 | [`goldsourceservers/cstrike`][hlds-cstrike-dockerhub-link] | [![hlds-cstrike-version-badge][]][hlds-cstrike-metadata-link] | [![hlds-cstrike-size-badge][]][hlds-cstrike-metadata-link] | [![hlds-cstrike-layers-badge][]][hlds-cstrike-metadata-link] |
-| Counter-Strike: Condition Zero | [`goldsourceservers/czero`][hlds-czero-dockerhub-link] | [![hlds-czero-version-badge][]][hlds-czero-metadata-link] | [![hlds-czero-size-badge][]][hlds-czero-metadata-link] | [![hlds-czero-layers-badge][]][hlds-czero-metadata-link] |
-| Deathmatch Classic | [`goldsourceservers/dmc`][hlds-dmc-dockerhub-link] | [![hlds-dmc-version-badge][]][hlds-dmc-metadata-link] | [![hlds-dmc-size-badge][]][hlds-dmc-metadata-link] | [![hlds-dmc-layers-badge][]][hlds-dmc-metadata-link] |
-| Day of Defeat | [`goldsourceservers/dod`][hlds-dod-dockerhub-link] | [![hlds-dod-version-badge][]][hlds-dod-metadata-link] | [![hlds-dod-size-badge][]][hlds-dod-metadata-link] | [![hlds-dod-layers-badge][]][hlds-dod-metadata-link] |
-| Opposing Force | [`goldsourceservers/gearbox`][hlds-gearbox-dockerhub-link] | [![hlds-gearbox-version-badge][]][hlds-gearbox-metadata-link] | [![hlds-gearbox-size-badge][]][hlds-gearbox-metadata-link] | [![hlds-gearbox-layers-badge][]][hlds-gearbox-metadata-link] |
-| Ricochet | [`goldsourceservers/ricochet`][hlds-ricochet-dockerhub-link] | [![hlds-ricochet-version-badge][]][hlds-ricochet-metadata-link] | [![hlds-ricochet-size-badge][]][hlds-ricochet-metadata-link] | [![hlds-ricochet-layers-badge][]][hlds-ricochet-metadata-link] |
-| Team Fortress Classic | [`goldsourceservers/tfc`][hlds-tfc-dockerhub-link] | [![hlds-tfc-version-badge][]][hlds-tfc-metadata-link] | [![hlds-tfc-size-badge][]][hlds-tfc-metadata-link] | [![hlds-tfc-layers-badge][]][hlds-tfc-metadata-link] |
-| Half-Life | [`goldsourceservers/valve`][hlds-valve-dockerhub-link] | [![hlds-valve-version-badge][]][hlds-valve-metadata-link] | [![hlds-valve-size-badge][]][hlds-valve-metadata-link] | [![hlds-valve-layers-badge][]][hlds-valve-metadata-link] |
+| Game | Image | Tag `v<tag>` | Size | Status |
+|:-:|:-:|:-:|:-:|:-:|
+| Counter-Strike 1.6 | [`goldsourceservers/cstrike`][hlds-cstrike-dockerhub-link] | [![hlds-cstrike-version-badge][]][hlds-cstrike-metadata-link] | [![hlds-cstrike-size-badge][]][hlds-cstrike-metadata-link] | [![pipeline-gitlab-hlds-cstrike-badge][]][pipeline-gitlab-hlds-cstrike-link] |
+| Counter-Strike: Condition Zero | [`goldsourceservers/czero`][hlds-czero-dockerhub-link] | [![hlds-czero-version-badge][]][hlds-czero-metadata-link] | [![hlds-czero-size-badge][]][hlds-czero-metadata-link] | [![pipeline-gitlab-hlds-czero-badge][]][pipeline-gitlab-hlds-czero-link] |
+| Deathmatch Classic | [`goldsourceservers/dmc`][hlds-dmc-dockerhub-link] | [![hlds-dmc-version-badge][]][hlds-dmc-metadata-link] | [![hlds-dmc-size-badge][]][hlds-dmc-metadata-link] | [![pipeline-gitlab-hlds-dmc-badge][]][pipeline-gitlab-hlds-dmc-link] |
+| Day of Defeat | [`goldsourceservers/dod`][hlds-dod-dockerhub-link] | [![hlds-dod-version-badge][]][hlds-dod-metadata-link] | [![hlds-dod-size-badge][]][hlds-dod-metadata-link] | [![pipeline-gitlab-hlds-dod-badge][]][pipeline-gitlab-hlds-dod-link] |
+| Opposing Force | [`goldsourceservers/gearbox`][hlds-gearbox-dockerhub-link] | [![hlds-gearbox-version-badge][]][hlds-gearbox-metadata-link] | [![hlds-gearbox-size-badge][]][hlds-gearbox-metadata-link] | [![pipeline-gitlab-hlds-gearbox-badge][]][pipeline-gitlab-hlds-gearbox-link] |
+| Ricochet | [`goldsourceservers/ricochet`][hlds-ricochet-dockerhub-link] | [![hlds-ricochet-version-badge][]][hlds-ricochet-metadata-link] | [![hlds-ricochet-size-badge][]][hlds-ricochet-metadata-link] | [![pipeline-gitlab-hlds-ricochet-badge][]][pipeline-gitlab-hlds-ricochet-link] |
+| Team Fortress Classic | [`goldsourceservers/tfc`][hlds-tfc-dockerhub-link] | [![hlds-tfc-version-badge][]][hlds-tfc-metadata-link] | [![hlds-tfc-size-badge][]][hlds-tfc-metadata-link] | [![pipeline-gitlab-hlds-tfc-badge][]][pipeline-gitlab-hlds-tfc-link] |
+| Half-Life | [`goldsourceservers/valve`][hlds-valve-dockerhub-link] | [![hlds-valve-version-badge][]][hlds-valve-metadata-link] | [![hlds-valve-size-badge][]][hlds-valve-metadata-link] | [![pipeline-gitlab-hlds-valve-badge][]][pipeline-gitlab-hlds-valve-link] |
+
+[![hlds-cstrike-pipeline-gitlab-build-badge][]][hlds-cstrike-pipeline-gitlab-build-link]
 
 [hlds-cstrike-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/cstrike
 [hlds-cstrike-version-badge]: https://img.shields.io/docker/v/goldsourceservers/cstrike/latest?label=&style=flat-square
 [hlds-cstrike-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/cstrike/latest?label=&style=flat-square
 [hlds-cstrike-metadata-link]: https://hub.docker.com/r/goldsourceservers/cstrike/tags
+[pipeline-gitlab-hlds-cstrike-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-cstrike&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-cstrike-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-cstrike
 
 [hlds-czero-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/czero
 [hlds-czero-version-badge]: https://img.shields.io/docker/v/goldsourceservers/czero/latest?label=&style=flat-square
 [hlds-czero-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/czero/latest?label=&style=flat-square
 [hlds-czero-metadata-link]: https://hub.docker.com/r/goldsourceservers/czero/tags
+[pipeline-gitlab-hlds-czero-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-czero&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-czero-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-czero
 
 [hlds-dmc-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/dmc
 [hlds-dmc-version-badge]: https://img.shields.io/docker/v/goldsourceservers/dmc/latest?label=&style=flat-square
 [hlds-dmc-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/dmc/latest?label=&style=flat-square
 [hlds-dmc-metadata-link]: https://hub.docker.com/r/goldsourceservers/dmc/tags
+[pipeline-gitlab-hlds-dmc-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-dmc&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-dmc-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-dmc
 
 [hlds-dod-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/dod
 [hlds-dod-version-badge]: https://img.shields.io/docker/v/goldsourceservers/dod/latest?label=&style=flat-square
 [hlds-dod-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/dod/latest?label=&style=flat-square
 [hlds-dod-metadata-link]: https://hub.docker.com/r/goldsourceservers/dod/tags
+[pipeline-gitlab-hlds-dod-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-dod&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-dod-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-dod
 
 [hlds-gearbox-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/gearbox
 [hlds-gearbox-version-badge]: https://img.shields.io/docker/v/goldsourceservers/gearbox/latest?label=&style=flat-square
 [hlds-gearbox-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/gearbox/latest?label=&style=flat-square
 [hlds-gearbox-metadata-link]: https://hub.docker.com/r/goldsourceservers/gearbox/tags
+[pipeline-gitlab-hlds-gearbox-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-gearbox&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-gearbox-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-gearbox
 
 [hlds-ricochet-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/ricochet
 [hlds-ricochet-version-badge]: https://img.shields.io/docker/v/goldsourceservers/ricochet/latest?label=&style=flat-square
 [hlds-ricochet-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/ricochet/latest?label=&style=flat-square
 [hlds-ricochet-metadata-link]: https://hub.docker.com/r/goldsourceservers/ricochet/tags
+[pipeline-gitlab-hlds-ricochet-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-ricochet&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-ricochet-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-ricochet
 
 [hlds-tfc-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/tfc
 [hlds-tfc-version-badge]: https://img.shields.io/docker/v/goldsourceservers/tfc/latest?label=&style=flat-square
 [hlds-tfc-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/tfc/latest?label=&style=flat-square
 [hlds-tfc-metadata-link]: https://hub.docker.com/r/goldsourceservers/tfc/tags
+[pipeline-gitlab-hlds-tfc-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-tfc&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-tfc-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-tfc
 
 [hlds-valve-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/valve
 [hlds-valve-version-badge]: https://img.shields.io/docker/v/goldsourceservers/valve/latest?label=&style=flat-square
 [hlds-valve-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/valve/latest?label=&style=flat-square
 [hlds-valve-metadata-link]: https://hub.docker.com/r/goldsourceservers/valve/tags
+[pipeline-gitlab-hlds-valve-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-valve&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-valve-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-valve
 
 ## Image Info
 
