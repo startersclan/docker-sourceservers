@@ -9,7 +9,7 @@
     "appid": 90,
     "client_appid": 10,
     "docker_repository": "goldsourceservers/cstrike",
-    "fix_app_manifest": true
+    "fix_app_manifest": false
   },
   {
     "game_version": 1003,
@@ -21,7 +21,7 @@
     "appid": 90,
     "client_appid": 80,
     "docker_repository": "goldsourceservers/czero",
-    "fix_app_manifest": true
+    "fix_app_manifest": false
   },
   {
     "game_version": 1123,
@@ -33,7 +33,7 @@
     "appid": 90,
     "client_appid": 40,
     "docker_repository": "goldsourceservers/dmc",
-    "fix_app_manifest": true
+    "fix_app_manifest": false
   },
   {
     "game_version": 1126,
@@ -45,7 +45,7 @@
     "appid": 90,
     "client_appid": 30,
     "docker_repository": "goldsourceservers/dod",
-    "fix_app_manifest": true
+    "fix_app_manifest": false
   },
   {
     "game_version": 1122,
@@ -57,7 +57,7 @@
     "appid": 90,
     "client_appid": 70,
     "docker_repository": "goldsourceservers/gearbox",
-    "fix_app_manifest": true
+    "fix_app_manifest": false
   },
   {
     "game_version": 1121,
@@ -69,7 +69,7 @@
     "appid": 90,
     "client_appid": 60,
     "docker_repository": "goldsourceservers/ricochet",
-    "fix_app_manifest": true
+    "fix_app_manifest": false
   },
   {
     "game_version": 1122,
@@ -81,7 +81,7 @@
     "appid": 90,
     "client_appid": 20,
     "docker_repository": "goldsourceservers/tfc",
-    "fix_app_manifest": true
+    "fix_app_manifest": false
   },
   {
     "game_version": 1122,
@@ -93,7 +93,7 @@
     "appid": 90,
     "client_appid": 70,
     "docker_repository": "goldsourceservers/valve",
-    "fix_app_manifest": true
+    "fix_app_manifest": false
   },
   {
     "game_version": 13881,
