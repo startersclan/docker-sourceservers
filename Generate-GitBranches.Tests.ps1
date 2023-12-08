@@ -8,7 +8,18 @@ Describe "Generate-GitBranches.ps1" {
 
         $games = Get-Content $PSScriptRoot/games.json -Encoding utf8 | ConvertFrom-Json -AsHashtable
         $remote = 'origin'
-        $remoteUrl = git remote get-url $remote
+        $remoteUrl = git remote get-url $
+
+        $expectedFiles = @(
+            '.env'
+            '.gitignore'
+            '.gitlab-ci.yml'
+            '.state'
+            'build.sh'
+            'build/Dockerfile'
+            'notify.sh'
+            'update/Dockerfile'
+        )
     }
 
     AfterEach {
@@ -60,15 +71,7 @@ Describe "Generate-GitBranches.ps1" {
             $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
             $branches.Count | Should -Be $games.Count
             foreach ($b in $branches) {
-                git ls-tree -r --name-only $b | Should -Be @(
-                    '.env'
-                    '.gitlab-ci.yml'
-                    '.state'
-                    'build.sh'
-                    'build/Dockerfile'
-                    'notify.sh'
-                    'update/Dockerfile'
-                )
+                git ls-tree -r --name-only $b | Should -Be $expectedFiles
             }
         }
 
@@ -80,15 +83,7 @@ Describe "Generate-GitBranches.ps1" {
             $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
             $branches.Count | Should -Be 1
             foreach ($b in $branches) {
-                git ls-tree -r --name-only $b | Should -Be @(
-                    '.env'
-                    '.gitlab-ci.yml'
-                    '.state'
-                    'build.sh'
-                    'build/Dockerfile'
-                    'notify.sh'
-                    'update/Dockerfile'
-                )
+                git ls-tree -r --name-only $b | Should -Be $expectedFiles
             }
         }
     }
@@ -126,15 +121,7 @@ Describe "Generate-GitBranches.ps1" {
             $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
             $branches.Count | Should -Be $games.Count
             foreach ($b in $branches) {
-                git ls-tree -r --name-only $b | Should -Be @(
-                    '.env'
-                    '.gitlab-ci.yml'
-                    '.state'
-                    'build.sh'
-                    'build/Dockerfile'
-                    'notify.sh'
-                    'update/Dockerfile'
-                )
+                git ls-tree -r --name-only $b | Should -Be $expectedFiles
             }
         }
 
@@ -146,15 +133,7 @@ Describe "Generate-GitBranches.ps1" {
             $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
             $branches.Count | Should -Be 1
             foreach ($b in $branches) {
-                git ls-tree -r --name-only $b | Should -Be @(
-                    '.env'
-                    '.gitlab-ci.yml'
-                    '.state'
-                    'build.sh'
-                    'build/Dockerfile'
-                    'notify.sh'
-                    'update/Dockerfile'
-                )
+                git ls-tree -r --name-only $b | Should -Be $expectedFiles
             }
         }
 
