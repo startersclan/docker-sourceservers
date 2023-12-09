@@ -248,12 +248,20 @@ LAYERED_SIZE=$( if ($kv.Contains('LAYERED_SIZE')) { $kv['LAYERED_SIZE'] } else {
 
         "Creating .gitignore" | Write-Host -ForegroundColor Green
         @"
-/.*
+*
+!/build/
+/build/*
+!/build/Dockerfile
+!/update/
+/update/*
+!/update/Dockerfile
 !/.env
 !/.gitignore
 !/.gitlab-ci.yml
 !/.state
 !/.trigger
+!/build.sh
+!/notify.sh
 "@ | Out-File .gitignore -Encoding utf8 -Force
 
         if (git status --porcelain 2>$null) {
