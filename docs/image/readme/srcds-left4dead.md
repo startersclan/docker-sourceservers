@@ -13,5 +13,5 @@
 [srcds-left4dead-version-badge]: https://img.shields.io/docker/v/sourceservers/left4dead/latest?label=&style=flat-square
 [srcds-left4dead-size-badge]: https://img.shields.io/docker/image-size/sourceservers/left4dead/latest?label=&style=flat-square
 [srcds-left4dead-metadata-link]: https://hub.docker.com/r/sourceservers/left4dead/tags
-[pipeline-gitlab-srcds-left4dead-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-left4dead&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-srcds-left4dead-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-left4dead
+[pipeline-gitlab-srcds-left4dead-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-srcds-left4dead&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-left4dead-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-srcds-left4dead

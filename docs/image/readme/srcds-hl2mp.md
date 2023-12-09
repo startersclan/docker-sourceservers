@@ -13,5 +13,5 @@
 [srcds-hl2mp-version-badge]: https://img.shields.io/docker/v/sourceservers/hl2mp/latest?label=&style=flat-square
 [srcds-hl2mp-size-badge]: https://img.shields.io/docker/image-size/sourceservers/hl2mp/latest?label=&style=flat-square
 [srcds-hl2mp-metadata-link]: https://hub.docker.com/r/sourceservers/hl2mp/tags
-[pipeline-gitlab-srcds-hl2mp-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-hl2mp&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-srcds-hl2mp-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-hl2mp
+[pipeline-gitlab-srcds-hl2mp-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-srcds-hl2mp&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-hl2mp-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-srcds-hl2mp

@@ -13,5 +13,5 @@
 [hlds-gearbox-version-badge]: https://img.shields.io/docker/v/goldsourceservers/gearbox/latest?label=&style=flat-square
 [hlds-gearbox-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/gearbox/latest?label=&style=flat-square
 [hlds-gearbox-metadata-link]: https://hub.docker.com/r/goldsourceservers/gearbox/tags
-[pipeline-gitlab-hlds-gearbox-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-gearbox&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-gearbox-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-gearbox
+[pipeline-gitlab-hlds-gearbox-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-gearbox&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-gearbox-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-gearbox

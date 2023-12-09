@@ -13,5 +13,5 @@
 [srcds-cstrike-version-badge]: https://img.shields.io/docker/v/sourceservers/cstrike/latest?label=&style=flat-square
 [srcds-cstrike-size-badge]: https://img.shields.io/docker/image-size/sourceservers/cstrike/latest?label=&style=flat-square
 [srcds-cstrike-metadata-link]: https://hub.docker.com/r/sourceservers/cstrike/tags
-[pipeline-gitlab-srcds-cstrike-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-cstrike&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-srcds-cstrike-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-cstrike
+[pipeline-gitlab-srcds-cstrike-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-srcds-cstrike&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-cstrike-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-srcds-cstrike
