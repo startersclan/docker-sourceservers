@@ -248,7 +248,7 @@ LAYERED_SIZE=$( if ($kv.Contains('LAYERED_SIZE')) { $kv['LAYERED_SIZE'] } else {
 
         "Creating .gitignore" | Write-Host -ForegroundColor Green
         @"
-*
+/*
 !/build/
 /build/*
 !/build/Dockerfile
