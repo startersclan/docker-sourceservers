@@ -184,11 +184,11 @@ try {
 
         "Checking out files" | Write-Host -ForegroundColor Green
         if ($isSameRepo) {
-            { git checkout master -- build } | Execute-Command
-            { git checkout master -- update } | Execute-Command
-            { git checkout master -- build.sh } | Execute-Command
-            { git checkout master -- notify.sh } | Execute-Command
-            { git checkout master -- .gitlab-ci.yml } | Execute-Command
+            { git checkout $sourceRef -- build } | Execute-Command
+            { git checkout $sourceRef -- update } | Execute-Command
+            { git checkout $sourceRef -- build.sh } | Execute-Command
+            { git checkout $sourceRef -- notify.sh } | Execute-Command
+            { git checkout $sourceRef -- .gitlab-ci.yml } | Execute-Command
         }else {
             Copy-Item $sourceRepo/build . -Recurse -Force
             Copy-Item $sourceRepo/update . -Recurse -Force
