@@ -112,8 +112,6 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 | Team Fortress Classic | [`goldsourceservers/tfc`][hlds-tfc-dockerhub-link] | [![hlds-tfc-version-badge][]][hlds-tfc-metadata-link] | [![hlds-tfc-size-badge][]][hlds-tfc-metadata-link] | [![pipeline-gitlab-hlds-tfc-badge][]][pipeline-gitlab-hlds-tfc-link] |
 | Half-Life | [`goldsourceservers/valve`][hlds-valve-dockerhub-link] | [![hlds-valve-version-badge][]][hlds-valve-metadata-link] | [![hlds-valve-size-badge][]][hlds-valve-metadata-link] | [![pipeline-gitlab-hlds-valve-badge][]][pipeline-gitlab-hlds-valve-link] |
 
-[![hlds-cstrike-pipeline-gitlab-build-badge][]][hlds-cstrike-pipeline-gitlab-build-link]
-
 [hlds-cstrike-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/cstrike
 [hlds-cstrike-version-badge]: https://img.shields.io/docker/v/goldsourceservers/cstrike/latest?label=&style=flat-square
 [hlds-cstrike-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/cstrike/latest?label=&style=flat-square
@@ -190,7 +188,7 @@ Build cache is used where possible to minimize update durations.
 
 ### Build history
 
-The project uses multiple CI services for its build jobs. You can find the history of past build jobs by clicking on their corresponding [build status badges](#docker-sourceservers).
+The project uses multiple CI services for its build jobs. You can find the history of past build jobs by clicking on their corresponding [build status badges](##source-engine-srcds).
 
 ## Usage
 
