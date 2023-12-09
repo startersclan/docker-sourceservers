@@ -200,8 +200,8 @@ COMMIT_SHA=$( git rev-parse HEAD )
 date -Iseconds
 
 # Display docker env vars
-echo "DOCKER_HOST: $DOCKER_HOST"
-echo "DOCKER_BUILDKIT: $DOCKER_BUILDKIT"
+echo "DOCKER_HOST: ${DOCKER_HOST:-}"
+echo "DOCKER_BUILDKIT: ${DOCKER_BUILDKIT:-}"
 
 # Display pipeline
 echo "PIPELINE: $PIPELINE"
