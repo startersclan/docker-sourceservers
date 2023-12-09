@@ -14,8 +14,8 @@ build-image:
     DOCKER_DRIVER: overlay2
     # DOCKER_HOST: unix:///var/run/docker.sock  # For stateful builds, uncomment this, or set it in CI/CD variables
   rules:
-    # Run on all branches except master, when .trigger is added or modified
-    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master"
+    # Run on steam-* branches when .trigger is added or modified
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH =~ /^steam-\w+-\w+$/
       changes:
         - .trigger
   timeout: 120m
@@ -40,8 +40,8 @@ notify:
   stage: notify
   image: alpine:3.15
   rules:
-    # Run on all branches except master, when .trigger is added or modified
-    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master"
+    # Run on steam-* branches when .trigger is added or modified
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH =~ /^steam-\w+-\w+$/
       changes:
         - .trigger
   when: always
