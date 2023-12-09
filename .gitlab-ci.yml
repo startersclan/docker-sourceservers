@@ -12,7 +12,7 @@ build-image:
     - docker:20.10.23-dind
   variables:
     DOCKER_DRIVER: overlay2
-    # DOCKER_HOST: unix:///var/run/docker.sock  # For stateless builds, uncomment this, or set it in CI/CD variables
+    # DOCKER_HOST: unix:///var/run/docker.sock  # For stateful builds, uncomment this, or set it in CI/CD variables
   rules:
     # Run on all branches except master, when .trigger is added or modified
     - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master"
