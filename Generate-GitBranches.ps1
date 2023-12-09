@@ -128,7 +128,7 @@ function Get-EnvFileKv ($file, $branch) {
     if ($branchFiles -contains $file) {
         $content = { git --no-pager show "${branch}:${file}" } | Execute-Command
         $content | % {
-            if ($_ -match '^(\w+)=(.*)$') {
+            if ($_ -match '^#*\s*(\w+)=(.*)$') {
                 $kv[$matches[1]] = $matches[2]
             }else {
                 throw "File '$file' is not in a valid k=v format. Invalid line: $_"
@@ -221,11 +221,11 @@ NO_PULL=
 NO_TEST=
 NO_PUSH=
 DOCKER_REPOSITORY=$( $g['docker_repository'] )
-REGISTRY_USER=
-REGISTRY_PASSWORD=
+#REGISTRY_USER=
+#REGISTRY_PASSWORD=
 STEAM_LOGIN=
-STEAM_USERNAME=
-STEAM_PASSWORD=
+#STEAM_USERNAME=
+#STEAM_PASSWORD=
 "@ | Out-File .env -Encoding utf8 -Force
 
         $kv = Get-EnvFileKv '.state' $branch
