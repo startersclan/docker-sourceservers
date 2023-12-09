@@ -53,6 +53,17 @@ jobs:
       run: |
         ./test/test-game-image-game-version.sh
 
+  test-generate-gitbranches:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Fetch all branches and tags
+    - name: Test
+      shell: pwsh
+      run: |
+        ./Generate-GitBranches.Tests.ps1
+
   update-draft-release:
     needs:
     - test-build-hlds
