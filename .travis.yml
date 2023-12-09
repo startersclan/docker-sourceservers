@@ -1,9 +1,0 @@
-# Push and pr builds can be disabled via project settings
-language: shell
-dist: jammy
-services: docker
-
-script:
-  - |
-    export PIPELINE="$TRAVIS_BRANCH"
-    ./build.sh
