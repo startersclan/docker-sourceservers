@@ -206,7 +206,7 @@ try {
             "Creating .env'" | Write-Host -ForegroundColor Green
         }
         @"
-PIPELINE=build
+PIPELINE=update
 GAME_UPDATE_COUNT=$( if ($kv.Contains('GAME_UPDATE_COUNT')) { $kv['GAME_UPDATE_COUNT'] } else { $g['game_update_count'] } )
 GAME_VERSION=$( $g['game_version'] )
 APPID=$( $g['appid'] )
