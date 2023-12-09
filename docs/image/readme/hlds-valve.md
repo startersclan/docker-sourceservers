@@ -13,5 +13,5 @@
 [hlds-valve-version-badge]: https://img.shields.io/docker/v/goldsourceservers/valve/latest?label=&style=flat-square
 [hlds-valve-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/valve/latest?label=&style=flat-square
 [hlds-valve-metadata-link]: https://hub.docker.com/r/goldsourceservers/valve/tags
-[pipeline-gitlab-hlds-valve-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-valve&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-valve-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-valve
+[pipeline-gitlab-hlds-valve-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-valve&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-valve-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-valve

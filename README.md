@@ -47,57 +47,57 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 [srcds-cs2-version-badge]: https://img.shields.io/docker/v/sourceservers/cs2/latest?label=&style=flat-square
 [srcds-cs2-size-badge]: https://img.shields.io/docker/image-size/sourceservers/cs2/latest?label=&style=flat-square
 [srcds-cs2-metadata-link]: https://hub.docker.com/r/sourceservers/cs2/tags
-[pipeline-gitlab-srcds-cs2-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-cs2&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-srcds-cs2-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-cs2
+[pipeline-gitlab-srcds-cs2-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-srcds-cs2&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-cs2-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-srcds-cs2
 
 [srcds-csgo-dockerhub-link]: https://hub.docker.com/r/sourceservers/csgo
 [srcds-csgo-version-badge]: https://img.shields.io/docker/v/sourceservers/csgo/latest?label=&style=flat-square
 [srcds-csgo-size-badge]: https://img.shields.io/docker/image-size/sourceservers/csgo/latest?label=&style=flat-square
 [srcds-csgo-metadata-link]: https://hub.docker.com/r/sourceservers/csgo/tags
-[pipeline-gitlab-srcds-csgo-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-csgo&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-srcds-csgo-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-csgo
+[pipeline-gitlab-srcds-csgo-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-srcds-csgo&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-csgo-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-srcds-csgo
 
 [srcds-cstrike-dockerhub-link]: https://hub.docker.com/r/sourceservers/cstrike
 [srcds-cstrike-version-badge]: https://img.shields.io/docker/v/sourceservers/cstrike/latest?label=&style=flat-square
 [srcds-cstrike-size-badge]: https://img.shields.io/docker/image-size/sourceservers/cstrike/latest?label=&style=flat-square
 [srcds-cstrike-metadata-link]: https://hub.docker.com/r/sourceservers/cstrike/tags
-[pipeline-gitlab-srcds-cstrike-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-cstrike&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-srcds-cstrike-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-cstrike
+[pipeline-gitlab-srcds-cstrike-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-srcds-cstrike&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-cstrike-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-srcds-cstrike
 
 [srcds-dod-dockerhub-link]: https://hub.docker.com/r/sourceservers/dod
 [srcds-dod-version-badge]: https://img.shields.io/docker/v/sourceservers/dod/latest?label=&style=flat-square
 [srcds-dod-size-badge]: https://img.shields.io/docker/image-size/sourceservers/dod/latest?label=&style=flat-square
 [srcds-dod-metadata-link]: https://hub.docker.com/r/sourceservers/dod/tags
-[pipeline-gitlab-srcds-dod-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-dod&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-srcds-dod-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-dod
+[pipeline-gitlab-srcds-dod-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-srcds-dod&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-dod-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-srcds-dod
 
 [srcds-hl2mp-dockerhub-link]: https://hub.docker.com/r/sourceservers/hl2mp
 [srcds-hl2mp-version-badge]: https://img.shields.io/docker/v/sourceservers/hl2mp/latest?label=&style=flat-square
 [srcds-hl2mp-size-badge]: https://img.shields.io/docker/image-size/sourceservers/hl2mp/latest?label=&style=flat-square
 [srcds-hl2mp-metadata-link]: https://hub.docker.com/r/sourceservers/hl2mp/tags
-[pipeline-gitlab-srcds-hl2mp-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-hl2mp&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-srcds-hl2mp-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-hl2mp
+[pipeline-gitlab-srcds-hl2mp-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-srcds-hl2mp&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-hl2mp-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-srcds-hl2mp
 
 [srcds-left4dead-dockerhub-link]: https://hub.docker.com/r/sourceservers/left4dead
 [srcds-left4dead-version-badge]: https://img.shields.io/docker/v/sourceservers/left4dead/latest?label=&style=flat-square
 [srcds-left4dead-size-badge]: https://img.shields.io/docker/image-size/sourceservers/left4dead/latest?label=&style=flat-square
 [srcds-left4dead-metadata-link]: https://hub.docker.com/r/sourceservers/left4dead/tags
-[pipeline-gitlab-srcds-left4dead-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-left4dead&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-srcds-left4dead-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-left4dead
+[pipeline-gitlab-srcds-left4dead-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-srcds-left4dead&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-left4dead-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-srcds-left4dead
 
 [srcds-left4dead2-dockerhub-link]: https://hub.docker.com/r/sourceservers/left4dead2
 [srcds-left4dead2-version-badge]: https://img.shields.io/docker/v/sourceservers/left4dead2/latest?label=&style=flat-square
 [srcds-left4dead2-size-badge]: https://img.shields.io/docker/image-size/sourceservers/left4dead2/latest?label=&style=flat-square
 [srcds-left4dead2-metadata-link]: https://hub.docker.com/r/sourceservers/left4dead2/tags
-[pipeline-gitlab-srcds-left4dead2-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-left4dead2&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-srcds-left4dead2-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-left4dead2
+[pipeline-gitlab-srcds-left4dead2-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-srcds-left4dead2&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-left4dead2-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-srcds-left4dead2
 
 [srcds-tf-dockerhub-link]: https://hub.docker.com/r/sourceservers/tf
 [srcds-tf-version-badge]: https://img.shields.io/docker/v/sourceservers/tf/latest?label=&style=flat-square
 [srcds-tf-size-badge]: https://img.shields.io/docker/image-size/sourceservers/tf/latest?label=&style=flat-square
 [srcds-tf-metadata-link]: https://hub.docker.com/r/sourceservers/tf/tags
-[pipeline-gitlab-srcds-tf-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-tf&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-srcds-tf-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-tf
+[pipeline-gitlab-srcds-tf-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-srcds-tf&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-tf-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-srcds-tf
 
 ### Goldsource Engine (HLDS)
 
@@ -116,57 +116,57 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 [hlds-cstrike-version-badge]: https://img.shields.io/docker/v/goldsourceservers/cstrike/latest?label=&style=flat-square
 [hlds-cstrike-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/cstrike/latest?label=&style=flat-square
 [hlds-cstrike-metadata-link]: https://hub.docker.com/r/goldsourceservers/cstrike/tags
-[pipeline-gitlab-hlds-cstrike-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-cstrike&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-cstrike-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-cstrike
+[pipeline-gitlab-hlds-cstrike-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-cstrike&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-cstrike-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-cstrike
 
 [hlds-czero-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/czero
 [hlds-czero-version-badge]: https://img.shields.io/docker/v/goldsourceservers/czero/latest?label=&style=flat-square
 [hlds-czero-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/czero/latest?label=&style=flat-square
 [hlds-czero-metadata-link]: https://hub.docker.com/r/goldsourceservers/czero/tags
-[pipeline-gitlab-hlds-czero-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-czero&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-czero-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-czero
+[pipeline-gitlab-hlds-czero-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-czero&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-czero-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-czero
 
 [hlds-dmc-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/dmc
 [hlds-dmc-version-badge]: https://img.shields.io/docker/v/goldsourceservers/dmc/latest?label=&style=flat-square
 [hlds-dmc-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/dmc/latest?label=&style=flat-square
 [hlds-dmc-metadata-link]: https://hub.docker.com/r/goldsourceservers/dmc/tags
-[pipeline-gitlab-hlds-dmc-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-dmc&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-dmc-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-dmc
+[pipeline-gitlab-hlds-dmc-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-dmc&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-dmc-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-dmc
 
 [hlds-dod-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/dod
 [hlds-dod-version-badge]: https://img.shields.io/docker/v/goldsourceservers/dod/latest?label=&style=flat-square
 [hlds-dod-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/dod/latest?label=&style=flat-square
 [hlds-dod-metadata-link]: https://hub.docker.com/r/goldsourceservers/dod/tags
-[pipeline-gitlab-hlds-dod-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-dod&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-dod-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-dod
+[pipeline-gitlab-hlds-dod-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-dod&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-dod-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-dod
 
 [hlds-gearbox-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/gearbox
 [hlds-gearbox-version-badge]: https://img.shields.io/docker/v/goldsourceservers/gearbox/latest?label=&style=flat-square
 [hlds-gearbox-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/gearbox/latest?label=&style=flat-square
 [hlds-gearbox-metadata-link]: https://hub.docker.com/r/goldsourceservers/gearbox/tags
-[pipeline-gitlab-hlds-gearbox-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-gearbox&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-gearbox-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-gearbox
+[pipeline-gitlab-hlds-gearbox-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-gearbox&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-gearbox-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-gearbox
 
 [hlds-ricochet-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/ricochet
 [hlds-ricochet-version-badge]: https://img.shields.io/docker/v/goldsourceservers/ricochet/latest?label=&style=flat-square
 [hlds-ricochet-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/ricochet/latest?label=&style=flat-square
 [hlds-ricochet-metadata-link]: https://hub.docker.com/r/goldsourceservers/ricochet/tags
-[pipeline-gitlab-hlds-ricochet-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-ricochet&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-ricochet-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-ricochet
+[pipeline-gitlab-hlds-ricochet-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-ricochet&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-ricochet-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-ricochet
 
 [hlds-tfc-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/tfc
 [hlds-tfc-version-badge]: https://img.shields.io/docker/v/goldsourceservers/tfc/latest?label=&style=flat-square
 [hlds-tfc-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/tfc/latest?label=&style=flat-square
 [hlds-tfc-metadata-link]: https://hub.docker.com/r/goldsourceservers/tfc/tags
-[pipeline-gitlab-hlds-tfc-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-tfc&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-tfc-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-tfc
+[pipeline-gitlab-hlds-tfc-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-tfc&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-tfc-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-tfc
 
 [hlds-valve-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/valve
 [hlds-valve-version-badge]: https://img.shields.io/docker/v/goldsourceservers/valve/latest?label=&style=flat-square
 [hlds-valve-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/valve/latest?label=&style=flat-square
 [hlds-valve-metadata-link]: https://hub.docker.com/r/goldsourceservers/valve/tags
-[pipeline-gitlab-hlds-valve-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-valve&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-valve-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-valve
+[pipeline-gitlab-hlds-valve-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-valve&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-valve-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-valve
 
 ## Image Info
 

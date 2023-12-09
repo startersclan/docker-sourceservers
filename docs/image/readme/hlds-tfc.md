@@ -13,5 +13,5 @@
 [hlds-tfc-version-badge]: https://img.shields.io/docker/v/goldsourceservers/tfc/latest?label=&style=flat-square
 [hlds-tfc-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/tfc/latest?label=&style=flat-square
 [hlds-tfc-metadata-link]: https://hub.docker.com/r/goldsourceservers/tfc/tags
-[pipeline-gitlab-hlds-tfc-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-tfc&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-tfc-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-tfc
+[pipeline-gitlab-hlds-tfc-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-tfc&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-tfc-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-tfc

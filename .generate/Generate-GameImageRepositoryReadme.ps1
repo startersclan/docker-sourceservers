@@ -113,8 +113,8 @@ $gameList | % {
 [$engine-$($_.Name)-version-badge]: https://img.shields.io/docker/v/$RegistryNamespace/$($_.Name)/latest?label=&style=flat-square
 [$engine-$($_.Name)-size-badge]: https://img.shields.io/docker/image-size/$RegistryNamespace/$($_.Name)/latest?label=&style=flat-square
 [$engine-$($_.Name)-metadata-link]: https://hub.docker.com/r/$RegistryNamespace/$($_.Name)/tags
-[pipeline-gitlab-$engine-$($_.Name)-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=$engine-$($_.Name)&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-$engine-$($_.Name)-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=$engine-$($_.Name)
+[pipeline-gitlab-$engine-$($_.Name)-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-$engine-$($_.Name)&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-$engine-$($_.Name)-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-$engine-$($_.Name)
 "@
         $content
         $outFile = "$readmePath/$engine-$($_.Name).md"

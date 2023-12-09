@@ -13,5 +13,5 @@
 [hlds-dmc-version-badge]: https://img.shields.io/docker/v/goldsourceservers/dmc/latest?label=&style=flat-square
 [hlds-dmc-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/dmc/latest?label=&style=flat-square
 [hlds-dmc-metadata-link]: https://hub.docker.com/r/goldsourceservers/dmc/tags
-[pipeline-gitlab-hlds-dmc-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-dmc&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-dmc-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-dmc
+[pipeline-gitlab-hlds-dmc-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-dmc&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-dmc-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-dmc

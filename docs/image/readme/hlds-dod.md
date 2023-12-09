@@ -13,5 +13,5 @@
 [hlds-dod-version-badge]: https://img.shields.io/docker/v/goldsourceservers/dod/latest?label=&style=flat-square
 [hlds-dod-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/dod/latest?label=&style=flat-square
 [hlds-dod-metadata-link]: https://hub.docker.com/r/goldsourceservers/dod/tags
-[pipeline-gitlab-hlds-dod-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-dod&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-dod-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-dod
+[pipeline-gitlab-hlds-dod-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-dod&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-dod-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-dod

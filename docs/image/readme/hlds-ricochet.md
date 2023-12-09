@@ -13,5 +13,5 @@
 [hlds-ricochet-version-badge]: https://img.shields.io/docker/v/goldsourceservers/ricochet/latest?label=&style=flat-square
 [hlds-ricochet-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/ricochet/latest?label=&style=flat-square
 [hlds-ricochet-metadata-link]: https://hub.docker.com/r/goldsourceservers/ricochet/tags
-[pipeline-gitlab-hlds-ricochet-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-ricochet&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-ricochet-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-ricochet
+[pipeline-gitlab-hlds-ricochet-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-ricochet&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-ricochet-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-ricochet

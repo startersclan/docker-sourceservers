@@ -13,5 +13,5 @@
 [srcds-csgo-version-badge]: https://img.shields.io/docker/v/sourceservers/csgo/latest?label=&style=flat-square
 [srcds-csgo-size-badge]: https://img.shields.io/docker/image-size/sourceservers/csgo/latest?label=&style=flat-square
 [srcds-csgo-metadata-link]: https://hub.docker.com/r/sourceservers/csgo/tags
-[pipeline-gitlab-srcds-csgo-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=srcds-csgo&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-srcds-csgo-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=srcds-csgo
+[pipeline-gitlab-srcds-csgo-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-srcds-csgo&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-csgo-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-srcds-csgo

@@ -13,5 +13,5 @@
 [hlds-czero-version-badge]: https://img.shields.io/docker/v/goldsourceservers/czero/latest?label=&style=flat-square
 [hlds-czero-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/czero/latest?label=&style=flat-square
 [hlds-czero-metadata-link]: https://hub.docker.com/r/goldsourceservers/czero/tags
-[pipeline-gitlab-hlds-czero-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=hlds-czero&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-czero-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=hlds-czero
+[pipeline-gitlab-hlds-czero-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-czero&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-czero-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-czero
