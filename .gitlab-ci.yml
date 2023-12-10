@@ -54,6 +54,11 @@ state:
   stage: build
   image: alpine:3.15
   rules:
+    # Never run when .trigger is added or modified
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH =~ /^steam-\w+-\w+$/
+      changes:
+        - .trigger
+      when: never
     # Run on steam-* branches when .state is added or modified
     - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH =~ /^steam-\w+-\w+$/
       changes:
