@@ -208,7 +208,7 @@ try {
         @"
 PIPELINE=update
 GAME_UPDATE_COUNT=$( if ($kv.Contains('GAME_UPDATE_COUNT')) { $kv['GAME_UPDATE_COUNT'] } else { $g['game_update_count'] } )
-GAME_VERSION=$( $g['game_version'] )
+GAME_VERSION=$( if ($kv.Contains('GAME_VERSION')) { $kv['GAME_VERSION'] } else { $g['game_version'] } )
 APPID=$( $g['appid'] )
 CLIENT_APPID=$( $g['client_appid'] )
 GAME=$( $g['game'] )
