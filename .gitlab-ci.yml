@@ -49,3 +49,22 @@ notify:
   script:
     - apk add --no-cache curl
     - ./notify.sh
+
+state:
+  stage: build
+  image: alpine:3.15
+  rules:
+    # Run on steam-* branches when .state is added or modified
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH =~ /^steam-\w+-\w+$/
+      changes:
+        - .state
+  timeout: 5m
+  script:
+    - |
+        set -eu
+        . .state
+        if [ "$BUILD_STATUS" = 'success' ]; then
+            exit 0
+        else
+            exit 1
+        fi
