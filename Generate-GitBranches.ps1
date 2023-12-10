@@ -237,6 +237,7 @@ STEAM_LOGIN=
         @"
 BUILD_STATUS=$( if ($kv.Contains('BUILD_STATUS')) { $kv['BUILD_STATUS'] } else { '' } )
 BUILD_EPOCH=$( if ($kv.Contains('BUILD_EPOCH')) { $kv['BUILD_EPOCH'] } else { '0' } )
+BUILD_PAUSE=$( if ($kv.Contains('BUILD_PAUSE')) { $kv['BUILD_PAUSE'] } else { '' } )
 BASE_SIZE=$( if ($kv.Contains('BASE_SIZE')) { $kv['BASE_SIZE'] } else { '0' } )
 LAYERED_SIZE=$( if ($kv.Contains('LAYERED_SIZE')) { $kv['LAYERED_SIZE'] } else { '0' } )
 "@ | Out-File .state -Encoding utf8 -Force
