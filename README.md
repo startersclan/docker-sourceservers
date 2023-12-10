@@ -188,7 +188,7 @@ Build cache is used where possible to minimize update durations.
 
 ### Build history
 
-The project uses multiple CI services for its build jobs. You can find the history of past build jobs by clicking on their corresponding [build status badges](##source-engine-srcds).
+The project uses multiple CI services for its build jobs. You can find the history of past build jobs by clicking on their corresponding [build status badges](#source-engine-srcds).
 
 ## Usage
 
