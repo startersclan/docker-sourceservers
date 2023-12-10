@@ -55,7 +55,7 @@ state:
   image: alpine:3.15
   rules:
     # Run on steam-* branches when .state is added or modified
-    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH =~ /^steam-\w+-\w+$/
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH =~ /^steam-\w+-\w+$/ && $CI_COMMIT_MESSAGE =~ /^Update .state/
       changes:
         - .state
   timeout: 5m
