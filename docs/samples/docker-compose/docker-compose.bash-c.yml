@@ -20,8 +20,8 @@ services:
   srcds-csgo:
     image: sourceservers/csgo:latest
     ports:
-      - 27015:27015/tcp
-      - 27015:27015/udp
+      - 27016:27016/tcp
+      - 27016:27016/udp
     stdin_open: true
     tty: true
     entrypoint:
@@ -32,7 +32,7 @@ services:
         set -e
         printenv
         ls -al
-        exec srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2
+        exec srcds_linux -game csgo -port 27016 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2
 
   srcds-hl2mp:
     image: sourceservers/hl2mp:latest
