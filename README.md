@@ -224,12 +224,12 @@ docker run -it --rm -p 27015:27015/tcp -p 27015:27015/udp --entrypoint /bin/bash
 
 # Counter-Strike: Global Offensive
 ## Via default entrypoint (/bin/bash -c)
-docker run -it --rm -p 27015:27015/tcp -p 27015:27015/udp sourceservers/csgo:latest 'srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2'
-docker run -it --rm -p 27015:27015/tcp -p 27015:27015/udp sourceservers/csgo:latest 'printenv && ls -al && exec srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2'
+docker run -it --rm -p 27016:27016/tcp -p 27016:27016/udp sourceservers/csgo:latest 'srcds_linux -game csgo -port 27016 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2'
+docker run -it --rm -p 27016:27016/tcp -p 27016:27016/udp sourceservers/csgo:latest 'printenv && ls -al && exec srcds_linux -game csgo -port 27016 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2'
 ## Via custom entrypoint (game binary)
-docker run -it --rm -p 27015:27015/tcp -p 27015:27015/udp --entrypoint srcds_linux sourceservers/csgo:latest -game csgo -port 27015 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2
+docker run -it --rm -p 27016:27016/tcp -p 27016:27016/udp --entrypoint srcds_linux sourceservers/csgo:latest -game csgo -port 27016 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2
 ## Via custom entrypoint (/bin/bash)
-docker run -it --rm -p 27015:27015/tcp -p 27015:27015/udp --entrypoint /bin/bash sourceservers/csgo:latest -c 'printenv && ls -al && exec srcds_linux -game csgo -port 27015 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2'
+docker run -it --rm -p 27016:27016/tcp -p 27016:27016/udp --entrypoint /bin/bash sourceservers/csgo:latest -c 'printenv && ls -al && exec srcds_linux -game csgo -port 27016 +game_type 0 +game_mode 0 +mapgroup mg_active +map de_dust2'
 
 # Counter-Strike 1.6
 ## Via default entrypoint (/bin/bash -c)
