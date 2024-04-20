@@ -125,8 +125,8 @@ RUN echo "[BUILD] Applying game fixes"; \
     if  [ "$APPID" = 730 ]; then \
         mkdir -p /root/.steam/sdk64; \
         mkdir -p /root/.steam/sdk32; \
-        ln -sf "/$STEAMCMD_DIR/linux64/steamclient.so" /root/.steam/sdk64/steamclient.so; \
-        ln -sf "/$STEAMCMD_DIR/linux32/steamclient.so" /root/.steam/sdk32/steamclient.so; \
+        ln -sf "$STEAMCMD_DIR/linux64/steamclient.so" /root/.steam/sdk64/steamclient.so; \
+        ln -sf "$STEAMCMD_DIR/linux32/steamclient.so" /root/.steam/sdk32/steamclient.so; \
     fi;
 
 # For directly running the hlds_linux / srcds_linux binary
