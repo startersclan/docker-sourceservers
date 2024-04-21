@@ -302,7 +302,7 @@ The game images **do not** include support for configuring game instances via en
 
 Docker images are often packaged with applications designed to comply with [twelve-factor methodology - Config](https://12factor.net/config) where environment variables are read directly as configuration by the application, a case in point being the [Docker Registry](https://docs.docker.com/registry/configuration/#override-specific-configuration-options). Some applications however do not read environment variables as configuration but instead accept command line arguments or read from config files wherein it is common for their docker images to include an entrypoint script which maps environment variables onto command line arguments for invocation.
 
-Source 2, Source, and Goldsource games belong to the group of applications that do not read from environment variables but that are instead configured via parameters (i.e. flags beginning with `-`, e.g. `-usercon`, see [Source 2 parameters](https://developer.valvesoftware.com/wiki/Command_line_options#Command-Line_Parameters_3) / [SRCDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-Line_Parameters_6) and [HLDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-Line_Parameters_7)), as well as Cvars (i.e. flags beginning with `+`, e.g. `+sv_lan 0`, see [SRCDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Console_Variables_2) and [HLDS console variables](https://developer.valvesoftware.com/wiki/Command_line_options#Useful_Console_Variables_2)). Although there are many Cvars shared across SRCDS and HLDS games, there are also Cvars that are game-specific (e.g. the many hundreds for `left4dead` and `left4dead2`), as well as mod/plugin-specific (e.g. `sourcemod`, `amxmodx`).
+Source 2, Source, and Goldsource games belong to the group of applications that do not read from environment variables but that are instead configured via parameters (i.e. flags beginning with `-`, e.g. `-usercon`, see [Source 2 parameters](https://developer.valvesoftware.com/wiki/Command_line_options#Command-Line_Parameters_3) / [SRCDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-Line_Parameters_6) and [HLDS parameters](https://developer.valvesoftware.com/wiki/Command_Line_Options#Command-Line_Parameters_7)), as well as Cvars (i.e. flags beginning with `+`, e.g. `+sv_lan 0`, see [SRCDS console variables](https://developer.valvesoftware.com/wiki/Command_Line_Options#Console_Variables_2) and [HLDS console variables](https://developer.valvesoftware.com/wiki/Command_line_options#Useful_Console_Variables_3)). Although there are many Cvars shared across SRCDS and HLDS games, there are also Cvars that are game-specific (e.g. the many hundreds for `left4dead` and `left4dead2`), as well as mod/plugin-specific (e.g. `sourcemod`, `amxmodx`).
 
 Because of the many parameters and Cvars that exist for each game and mod/plugin setup, it does not make sense to map them directly to environment variables for several reasons: First, doing so introduces an unnecessary layer of abstraction which operators would have to learn on top of the numerous available parameters and Cvars. Second, a single change to any envvar-cvar mapping will require a rebuild of the docker image to contain the new `docker-entrypoint.sh` script, introducing a lot of unnecessary builds. Third, the very `docker-entrypoint.sh` script providing the envvar-cvar mapping would also require versioning, introducing yet another burden on top of just keeping the images updated.
 
@@ -316,7 +316,7 @@ Building a non-root user into the images poses a problem especially when volumes
 
 Operators who wish to run the game servers under a non-root user can customize the provided images with a non-root user with a `UID` of their choice.
 
-### Invocation via wrapper script vs binary
+### Invocation via binary vs wrapper script
 
 #### Source 2
 
@@ -324,17 +324,17 @@ Newly launched games such as `Counter-Strike 2` include only the game binary for
 
 #### Source / Goldsource
 
-The official games from Valve come with a wrapper script and a binary as part of the game files, both of which reside in the game's root directory.
-
-The wrapper script, commonly used in non-containerized setups:
-
-* `srcds_run` (Source)
-* `hlds_run` (Goldsource)
+The official games from Valve include a binary and a wrapper script as part of the game files, both of which reside in the game's root directory.
 
 The game binary:
 
 * `srcds_linux` (Source)
 * `hlds_linux` (Goldsource)
+
+The wrapper script, commonly used in non-containerized setups:
+
+* `srcds_run` (Source)
+* `hlds_run` (Goldsource)
 
 Invoking the game binary directly is the recommended choice especially when hosting the game server within containers. Doing so ensures the *game process* is [run as `PID 1`](https://devops.stackexchange.com/questions/447/why-it-is-recommended-to-run-only-one-process-in-a-container) which in turn ensures the game process functions optimally within a container.
 
