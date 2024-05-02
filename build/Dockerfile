@@ -117,16 +117,16 @@ RUN echo "[BUILD] Applying game fixes"; \
     if [ "$APPID" = 90 ]; then \
         echo "[UPDATE] Applying hotfixes for hlds"; \
         # Hotfix "Error:./libstdc++.so.6: version CXXABI_1.3.8' not found"
-        ln -sfnv /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 /server/libgcc_s.so.1; \
-        ln -sfnv /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /server/libstdc++.so.6; \
-        ln -sfnv /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /steamcmd/linux32/libstdc++.so.6; \
+        ln -sfnv /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 "$SERVER_DIR/libgcc_s.so.1"; \
+        ln -sfnv /usr/lib/x86_64-linux-gnu/libstdc++.so.6 "$SERVER_DIR/libstdc++.so.6"; \
+        ln -sfnv /usr/lib/x86_64-linux-gnu/libstdc++.so.6 "$STEAMCMD_DIR/linux32/libstdc++.so.6"; \
     fi; \
     # Create necessary symlinks for srcds/cs2
     if  [ "$APPID" = 730 ]; then \
         mkdir -p /root/.steam/sdk64; \
         mkdir -p /root/.steam/sdk32; \
-        ln -sf "/$STEAMCMD_DIR/linux64/steamclient.so" /root/.steam/sdk64/steamclient.so; \
-        ln -sf "/$STEAMCMD_DIR/linux32/steamclient.so" /root/.steam/sdk32/steamclient.so; \
+        ln -sfnv "$STEAMCMD_DIR/linux64/steamclient.so" /root/.steam/sdk64/steamclient.so; \
+        ln -sfnv "$STEAMCMD_DIR/linux32/steamclient.so" /root/.steam/sdk32/steamclient.so; \
     fi;
 
 # For directly running the hlds_linux / srcds_linux binary
