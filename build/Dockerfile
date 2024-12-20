@@ -73,40 +73,7 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
             curl -sqL "$APPMANIFEST_AR_URL" | tar -zxvf - -C "$SERVER_DIR/steamapps" --wildcards "$WILDCARD_PATTERN" --strip-components=2; \
             ls -al "$SERVER_DIR/steamapps"; \
         fi; \
-    done; \
-    echo "[BUILD] Performing cleanup"; \
-    # Clean up a different set of files for srcds/cs2
-    if  [ "$APPID" = 730 ]; then \
-        cd "$STEAMCMD_DIR" && rm -rf \
-            package \
-            public \
-            siteserverui \
-            steam \
-            linux32/libtier0_s.so \
-            linux32/libvstdlib_s.so \
-            linux32/steamconsole.so \
-            update_hosts_cached.vdf; \
-    else \
-        cd "$STEAMCMD_DIR" && rm -rf \
-            linux64 \
-            package \
-            public \
-            siteserverui \
-            steam \
-            linux32/libtier0_s.so \
-            linux32/libvstdlib_s.so \
-            linux32/steamclient.so \
-            linux32/steamconsole.so \
-            update_hosts_cached.vdf; \
-        rm -rf /root/.steam; \
-    fi; \
-    if [ "$APPID" = 90 ]; then \
-        # Retain `/root/Steam/appcache` to prevent `steamcmd` from re-downloading `hlds` game entirely on game updates
-        rm -rf $( find /root/Steam -mindepth 1 -maxdepth 1 | grep -v '^/root/Steam/appcache' ); \
-    else \
-        # Cleanup. This also cleans up user data
-        rm -rf /root/Steam; \
-    fi;
+    done;
 
 # Apply game fixes
 RUN echo "[BUILD] Applying game fixes"; \
