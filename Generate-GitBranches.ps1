@@ -156,26 +156,34 @@ try {
 
     Push-Location $Repo
     foreach ($g in $games) {
-        $branch = "$( $g['game_platform'] )-$( $g['game_engine'] )-$( $g['game'] )"
-
         { git checkout -f master } | Execute-Command
         if ($Pull) {
+            { git fetch "$Remote" } | Execute-Command
             { git pull "$Remote" master } | Execute-Command
         }
+
+        $branch = "$( $g['game_platform'] )-$( $g['game_engine'] )-$( $g['game'] )"
         $existingBranch = { git rev-parse --verify $branch 2>$null } | Execute-Command -ErrorAction SilentlyContinue
-        if ($existingBranch) {
-            "Updating branch '$branch'" | Write-Host -ForegroundColor Green
-            if ($Pull) {
-                { git fetch "$Remote" } | Execute-Command
-                $existingRemoteBranch = { git rev-parse --verify "$Remote/$branch" 2>$null } | Execute-Command -ErrorAction SilentlyContinue
-                if ($existingRemoteBranch) {
+        if ($Pull) {
+            $existingRemoteBranch = { git rev-parse --verify "$Remote/$branch" 2>$null } | Execute-Command -ErrorAction SilentlyContinue
+            if ($existingRemoteBranch) {
+                "Updating branch '$branch'" | Write-Host -ForegroundColor Green
+                if ($existingBranch) {
                     { git branch -f $branch "$Remote/$branch" } | Execute-Command
+                }else {
+                    { git checkout --track "$Remote/$branch" } | Execute-Command
                 }
+            }else {
+                throw "No existing remote branch $Remote/$branch for -Pull to --track"
             }
-            { git checkout -f $branch } | Execute-Command
         }else {
-            "Creating new branch '$branch'" | Write-Host -ForegroundColor Green
-            { git checkout -b $branch } | Execute-Command
+            if ($existingBranch) {
+                "Updating branch '$branch'" | Write-Host -ForegroundColor Green
+                { git checkout -f $branch } | Execute-Command
+            }else {
+                "Creating new branch '$branch'" | Write-Host -ForegroundColor Green
+                { git checkout -b $branch } | Execute-Command
+            }
         }
 
         "Removing all tracked files" | Write-Host -ForegroundColor Green
