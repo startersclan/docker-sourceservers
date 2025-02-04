@@ -60,6 +60,11 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
     i=0; \
     while [ "$i" -le $(( $INSTALL_COUNT-1 )) ]; do \
         echo "[BUILD] Install count: [$(( i+1 ))/$INSTALL_COUNT]"; \
+        if [ "$i" -eq 0 ] && [ "$APPID" = 222860 ]; then \
+            steamcmdArgs="+force_install_dir $SERVER_DIR +login $steamcmdLoginArgs +@sSteamCmdForcePlatformType windows +app_update $APPID validate +quit"; \
+            steamcmd.sh $steamcmdArgs; \
+            steamcmdArgs="+force_install_dir $SERVER_DIR +login $steamcmdLoginArgs +@sSteamCmdForcePlatformType linux +app_update $APPID validate +quit"; \
+        fi; \
         steamcmd.sh $steamcmdArgs; \
         ls -al "$SERVER_DIR/steamapps"; \
         i=$(( i+1 )); \
