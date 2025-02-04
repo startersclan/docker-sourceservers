@@ -214,7 +214,7 @@ try {
             "Creating .env'" | Write-Host -ForegroundColor Green
         }
         @"
-PIPELINE=update
+PIPELINE=$( if ($kv.Contains('PIPELINE')) { $kv['PIPELINE'] } else { 'build' } )
 GAME_UPDATE_COUNT=$( if ($kv.Contains('GAME_UPDATE_COUNT')) { $kv['GAME_UPDATE_COUNT'] } else { $g['game_update_count'] } )
 GAME_VERSION=$( if ($kv.Contains('GAME_VERSION')) { $kv['GAME_VERSION'] } else { $g['game_version'] } )
 APPID=$( $g['appid'] )
@@ -222,6 +222,9 @@ CLIENT_APPID=$( $g['client_appid'] )
 GAME=$( $g['game'] )
 MOD=$( $g['mod'] )
 FIX_APPMANIFEST=
+INSTALL_COUNT=$(
+    if ($g['game_engine'] -eq 'srcds' -and $g['game'] -eq 'cs2') { '3' } # srcds/cs2 may require multiple installs to be successful
+)
 LATEST=true
 CACHE=
 NO_CACHE=
@@ -231,7 +234,10 @@ NO_PUSH=
 DOCKER_REPOSITORY=$( $g['docker_repository'] )
 #REGISTRY_USER=
 #REGISTRY_PASSWORD=
-STEAM_LOGIN=
+STEAM_LOGIN=$(
+    if ($g['game_engine'] -eq 'srcds' -and $g['game'] -eq 'cs2') { 'true' }
+    elseif ($g['game_engine'] -eq 'srcds' -and $g['game'] -eq 'tf') { 'true' }
+)
 #STEAM_USERNAME=
 #STEAM_PASSWORD=
 "@ | Out-File .env -Encoding utf8 -Force
