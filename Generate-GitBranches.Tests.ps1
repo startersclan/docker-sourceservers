@@ -8,13 +8,23 @@ Describe "Generate-GitBranches.ps1" {
 
         $games = Get-Content $PSScriptRoot/games.json -Encoding utf8 | ConvertFrom-Json -AsHashtable
         $remote = 'origin'
-        $remoteUrl = git remote get-url $
 
         $expectedFiles = @(
             '.env'
             '.gitignore'
             '.gitlab-ci.yml'
             '.state'
+            'build.sh'
+            'build/Dockerfile'
+            'notify.sh'
+            'update/Dockerfile'
+        )
+        $expectedRemoteFiles = @(
+            '.env'
+            '.gitignore'
+            '.gitlab-ci.yml'
+            '.state'
+            '.trigger'
             'build.sh'
             'build/Dockerfile'
             'notify.sh'
@@ -83,7 +93,7 @@ Describe "Generate-GitBranches.ps1" {
             $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
             $branches.Count | Should -Be 1
             foreach ($b in $branches) {
-                git ls-tree -r --name-only $b | Should -Be $expectedFiles
+                git ls-tree -r --name-only $b | Should -Be $expectedRemoteFiles
             }
         }
     }
