@@ -235,7 +235,7 @@ DOCKER_REPOSITORY=$( $g['docker_repository'] )
 #REGISTRY_USER=
 #REGISTRY_PASSWORD=
 STEAM_LOGIN=$(
-    if ($g['game_engine'] -eq 'srcds' -and $g['game'] -eq 'cs2') { 'true' }
+    if ($g['game_engine'] -eq 'srcds' -and $g['game'] -in @( 'cs2', 'cstrike', 'dod', 'hl2mp' )) { 'true' }
     elseif ($g['game_engine'] -eq 'srcds' -and $g['game'] -eq 'tf') { 'true' }
 )
 #STEAM_USERNAME=
