@@ -188,6 +188,7 @@ else
 fi
 if [ "$PIPELINE" = 'build' ]; then
     GAME_IMAGE_CLEAN="$DOCKER_REPOSITORY:$GAME_VERSION"
+    GAME_IMAGE_CLEAN_CALVER="$GAME_IMAGE_CLEAN-$( date -u '+%Y%m%d' )"
     BUILD_CONTEXT='build/'
 elif [ "$PIPELINE" = 'update' ]; then
     GAME_IMAGE_LAYERED="$DOCKER_REPOSITORY:$GAME_VERSION-layered"
@@ -245,6 +246,7 @@ if [ "$PIPELINE" = 'build' ]; then
         --build-arg STEAM_LOGIN="$STEAM_LOGIN" \
         --build-arg CACHE_KEY="$GAME_VERSION" \
         -t "$GAME_IMAGE_CLEAN" \
+        -t "$GAME_IMAGE_CLEAN_CALVER" \
         --label "appid=$APPID" \
         --label "mod=$MOD" \
         --label "client_appid=$CLIENT_APPID" \
@@ -339,6 +341,7 @@ if [ ! "$NO_PUSH" = 'true' ]; then
     date -Iseconds
     if [ "$PIPELINE" = 'build' ]; then
         time docker push "$GAME_IMAGE_CLEAN"
+        time docker push "$GAME_IMAGE_CLEAN_CALVER"
         if [ "$LATEST" = 'true' ]; then
             time docker push "$GAME_IMAGE_LATEST"
         fi

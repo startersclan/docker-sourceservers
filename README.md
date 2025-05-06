@@ -13,6 +13,7 @@
 
 * `latest` [(*/build/Dockerfile*)][dockerfile-build-link], [(*/update/Dockerfile*)][dockerfile-update-link]
 * `<version>` [(*/build/Dockerfile*)][dockerfile-build-link]
+* `<version>-<date>` [(*/build/Dockerfile*)][dockerfile-build-link]
 * `<version>-layered` [(*/update/Dockerfile*)][dockerfile-update-link]
 * `<version>-layered-<date>` [(*/update/Dockerfile*)][dockerfile-update-link]
 
@@ -172,7 +173,7 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 
 ### Game versions & tags
 
-A *layered* image of a game is but a *clean* image compounded with game update layers. *Clean* images are tagged by `<version>`, while *layered* images are tagged by `<version>-layered` and `<version>-layered-<date>`.
+A *layered* image of a game is but a *clean* image compounded with game update layers. *Clean* images are tagged by `<version>` and `<version>-<date>`, while *layered* images are tagged by `<version>-layered` and `<version>-layered-<date>`.
 
 The `latest` tag of each game points to the game's newest *layered* image unless a newer *clean* image has been built with the `latest` tag. Thus, by using the `latest` tag, *layered* images are almost always used, circumventing the need to pull entire *clean* images for obtaining game updates.
 
