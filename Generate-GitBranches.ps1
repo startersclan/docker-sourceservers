@@ -223,9 +223,7 @@ CLIENT_APPID=$( $g['client_appid'] )
 GAME=$( $g['game'] )
 MOD=$( $g['mod'] )
 FIX_APPMANIFEST=
-INSTALL_COUNT=$(
-    if ($g['game_engine'] -eq 'srcds' -and $g['game'] -eq 'cs2') { '3' } # srcds/cs2 may require multiple installs to be successful
-)
+INSTALL_COUNT=
 LATEST=true
 CACHE=
 NO_CACHE=
