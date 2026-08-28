@@ -170,6 +170,7 @@ try {
                 "Updating branch '$branch'" | Write-Host -ForegroundColor Green
                 if ($existingBranch) {
                     { git branch -f $branch "$Remote/$branch" } | Execute-Command
+                    { git checkout "$branch" } | Execute-Command
                 }else {
                     { git checkout --track "$Remote/$branch" } | Execute-Command
                 }
