@@ -18,7 +18,7 @@ build-image:
     - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH =~ /^steam-\w+-\w+$/
       changes:
         - .trigger
-  timeout: 120m
+  timeout: 240m
   script:
     - |
       set +e
