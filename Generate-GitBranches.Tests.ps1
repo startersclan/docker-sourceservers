@@ -7,7 +7,6 @@ Describe "Generate-GitBranches.ps1" {
         $sourceRepo = $PSScriptRoot
 
         $games = Get-Content $PSScriptRoot/games.json -Encoding utf8 | ConvertFrom-Json -AsHashtable
-        $remote = 'origin'
 
         $expectedFiles = @(
             '.env'
@@ -52,6 +51,8 @@ Describe "Generate-GitBranches.ps1" {
             cd $sameRepo
             git config user.name "bot"
             git config user.email "bot@example.com"
+            $remote = 'origin-gitlab'
+            git remote add $remote https://gitlab.com/startersclan/docker-sourceservers
             $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
             foreach ($b in $branches) {
                 git branch -D $b
@@ -96,6 +97,7 @@ Describe "Generate-GitBranches.ps1" {
                 git ls-tree -r --name-only $b | Should -Be $expectedRemoteFiles
             }
         }
+
     }
 
     Context 'Different repo' {
