@@ -288,7 +288,7 @@ elif [ "$PIPELINE" = 'update' ]; then
     date -Iseconds
     GAME_IMAGE="$GAME_IMAGE_LAYERED"
 fi
-docker images
+docker images --filter label=game_engine="$GAME_ENGINE" --filter label=game="$GAME"
 docker inspect "$GAME_IMAGE"
 docker history "$GAME_IMAGE"
 
