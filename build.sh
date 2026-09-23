@@ -197,6 +197,7 @@ elif [ "$PIPELINE" = 'update' ]; then
 fi
 GAME_IMAGE_LATEST="$DOCKER_REPOSITORY:latest"
 COMMIT_SHA=$( git rev-parse HEAD )
+CLEANUP=${CLEANUP:-}
 
 date -Iseconds
 
@@ -331,9 +332,29 @@ if [ ! "$NO_TEST" = 'true' ]; then
         echo "Game version matches GAME_VERSION=$GAME_VERSION"
     else
         echo "Game version does not match GAME_VERSION=$GAME_VERSION"
-        exit 1
+        CLEANUP=true
     fi
     rm -f "$TEST_DIR/test"
+fi
+
+if [ "$CLEANUP" = 'true' ]; then
+    echo "Cleaning up failed build's image and build cache"
+    # Remove failed images
+    if [ "$PIPELINE" = 'build' ]; then
+        docker rmi "$GAME_IMAGE_CLEAN"
+        docker rmi "$GAME_IMAGE_CLEAN_CALVER"
+        if [ "$LATEST" = 'true' ]; then
+            docker rmi "$GAME_IMAGE_LATEST"
+        fi
+    elif [ "$PIPELINE" = 'update' ]; then
+        docker rmi "$GAME_IMAGE_LAYERED"
+        docker rmi "$GAME_IMAGE_LAYERED_CALVER"
+        docker rmi "$GAME_IMAGE_LATEST"
+    fi
+    # Remove the build cache
+    docker system df
+    docker system prune -f --filter label=game_engine="$GAME_ENGINE" --filter label=game="$GAME" --filter label=game_version="$GAME_VERSION"
+    exit 1
 fi
 
 # Push the game image
