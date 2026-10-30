@@ -225,12 +225,13 @@ docker info
 docker version
 
 if [ "$CLEANUP_IMAGES" = 'true' ]; then
+    # Remove existing game images
     BASE_VERSIONS=$( docker images --filter label=game_update_count=0 --filter label=appid="$APPID" --filter label=game="$GAME" --format '{{.Tag}}' | sort -u )
     for i in $BASE_VERSIONS; do
         echo "Will remove the following images matching game_version_base=$i:"
-        docker images --filter label=game_version_base="$i" --filter label=game_engine=srcds --filter label=game=cs2
+        docker images --filter label=game_version_base="$i" --filter label=appid="$APPID" --filter label=game="$GAME"
         echo "Removing images..."
-        docker images --filter label=game_version_base="$i" --filter label=game_engine=srcds --filter label=game=cs2 -q | xargs docker rmi -f
+        docker images --filter label=game_version_base="$i" --filter label=appid="$APPID" --filter label=game="$GAME" -q | xargs docker rmi -f
     done
 fi
 
