@@ -202,7 +202,7 @@ elif [ "$PIPELINE" = 'update' ]; then
 fi
 GAME_IMAGE_LATEST="$DOCKER_REPOSITORY:latest"
 COMMIT_SHA=$( git rev-parse HEAD )
-CLEANUP=${CLEANUP:-}
+CLEANUP=
 
 date -Iseconds
 
