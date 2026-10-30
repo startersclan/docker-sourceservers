@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -u
+set -eu
 
 usage() {
     echo "build.sh: Builds a docker image. Requires docker and git"
@@ -223,9 +223,6 @@ df -h
 pwd
 docker info
 docker version
-
-# Terminate the build on errors
-set -e
 
 if [ "$CLEANUP_IMAGES" = 'true' ]; then
     BASE_VERSIONS=$( docker images --filter label=game_update_count=0 --filter label=appid="$APPID" --filter label=game="$GAME" --format '{{.Tag}}' | sort -u )
