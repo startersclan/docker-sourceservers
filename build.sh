@@ -60,6 +60,9 @@ usage() {
     echo "                          Type: string"
     echo "  STEAM_PASSWORD          Steam password"
     echo "                          Type: string"
+    echo "  CLEANUP_IMAGES          Whether to remove game images matching APPID and GAME to free up disk space before a build. Defaults to 'true' for PIPELINE=build"
+    echo "                          Type: bool, optional"
+    echo "                          Possible values: 'true', 'false'"
     echo "Examples:"
     echo "  # Build hlds/cstrike image and push"
     echo "  PIPELINE=build GAME_VERSION=1127 APPID=90 CLIENT_APPID=10 GAME=cstrike MOD=cstrike LATEST=true STEAM_LOGIN=true DOCKER_REPOSITORY=docker.io/mynamespace/cstrike REGISTRY_USER=xxx REGISTRY_PASSWORD=xxx STEAM_USERNAME=xxx STEAM_PASSWORD=xxx ./build.sh"
@@ -137,6 +140,7 @@ if [ "$PIPELINE" = 'build' ]; then
     NO_TEST=${NO_TEST:-}
     NO_PUSH=${NO_PUSH:-}
     STEAM_LOGIN=${STEAM_LOGIN:-}
+    CLEANUP_IMAGES=${CLEANUP_IMAGES:-true}
 elif [ "$PIPELINE" = 'update' ]; then
     GAME_VERSION=${GAME_VERSION:?err}
     APPID=${APPID:?err}
@@ -148,6 +152,7 @@ elif [ "$PIPELINE" = 'update' ]; then
     NO_TEST=${NO_TEST:-}
     NO_PUSH=${NO_PUSH:-}
     STEAM_LOGIN=${STEAM_LOGIN:-}
+    CLEANUP_IMAGES=${CLEANUP_IMAGES:-}
 else
     echo "Invalid PIPELINE '$PIPELINE'"
     exit 1
@@ -221,6 +226,16 @@ docker version
 
 # Terminate the build on errors
 set -e
+
+if [ "$CLEANUP_IMAGES" = 'true' ]; then
+    BASE_VERSIONS=$( docker images --filter label=game_update_count=0 --filter label=appid="$APPID" --filter label=game="$GAME" --format '{{.Tag}}' | sort -u )
+    for i in $BASE_VERSIONS; do
+        echo "Will remove the following images matching game_version_base=$i:"
+        docker images --filter label=game_version_base="$i" --filter label=game_engine=srcds --filter label=game=cs2
+        echo "Removing images..."
+        docker images --filter label=game_version_base="$i" --filter label=game_engine=srcds --filter label=game=cs2 -q | xargs docker rmi -f
+    done
+fi
 
 # Docker registry login
 if [ ! "$NO_PUSH" = 'true' ]; then
