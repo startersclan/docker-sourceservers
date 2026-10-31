@@ -214,6 +214,7 @@ echo "DOCKER_BUILDKIT: ${DOCKER_BUILDKIT:-}"
 echo "PIPELINE: $PIPELINE"
 
 # Display system info
+(
 hostname
 whoami
 cat /etc/*release
@@ -221,6 +222,7 @@ lscpu
 free
 df -h
 pwd
+) || true
 docker info
 docker version
 

@@ -13,8 +13,15 @@ on:
 jobs:
   test-build-hlds:
     runs-on: ubuntu-latest
+    container:
+      image: docker:20.10.23-git
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
     steps:
     - uses: actions/checkout@v3
+    - name: Ignore git permissions
+      run: |
+        git config --global --add safe.directory "$( pwd )"
     - name: Test build
       run: |
         ./build.sh --env-file ./test/build-hlds-cstrike.env
@@ -30,8 +37,15 @@ jobs:
 
   test-build-srcds:
     runs-on: ubuntu-latest
+    container:
+      image: docker:20.10.23-git
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
     steps:
     - uses: actions/checkout@v3
+    - name: Ignore git permissions
+      run: |
+        git config --global --add safe.directory "$( pwd )"
     - name: Test build
       run: |
         ./build.sh --env-file ./test/build-srcds-hl2mp.env
