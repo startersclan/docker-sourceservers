@@ -227,13 +227,21 @@ docker info
 docker version
 
 if [ "$CLEANUP_IMAGES" = 'true' ]; then
-    # Remove existing game images
-    BASE_VERSIONS=$( docker images --filter label=game_update_count=0 --filter label=appid="$APPID" --filter label=game="$GAME" --format '{{.Tag}}' | sort -u )
+    # Remove existing stale game images
+    BASE_VERSIONS=$( docker images --filter label=game_update_count=0 --filter label=appid="$APPID" --filter label=game="$GAME" --format '{{.Tag}}' | grep -E '^[0-9]+$' | sort -n | uniq ) # Match only base version(s). E.g. '12345'
     for i in $BASE_VERSIONS; do
-        echo "Will remove the following images matching game_version_base=$i:"
-        docker images --filter label=game_version_base="$i" --filter label=appid="$APPID" --filter label=game="$GAME"
-        echo "Removing images..."
-        docker images --filter label=game_version_base="$i" --filter label=appid="$APPID" --filter label=game="$GAME" -q | xargs docker rmi -f
+        # Get all stale image ids (base and layered)
+        IDS=$( docker images --filter label=game_version_base="$i" --filter label=appid="$APPID" --filter label=game="$GAME" -q | sort -n | uniq )
+        if [ -n "$IDS" ]; then
+            echo "Will remove the following stale images matching game_version_base=$i, appid="$APPID, game="$GAME:"
+            docker images --filter label=game_version_base="$i" --filter label=appid="$APPID" --filter label=game="$GAME"
+            echo "Removing stale images and build cache"
+            echo "$IDS" | xargs docker rmi -f
+            docker system df
+            docker system prune -f --filter label=game_version_base="$i" --filter label=appid="$APPID" --filter label=game="$GAME"
+        else
+            echo "No stale images to remove"
+        fi
     done
 fi
 
