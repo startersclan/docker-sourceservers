@@ -12,7 +12,7 @@ on:
 
 jobs:
   test-build-hlds:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     container:
       image: docker:20.10.23-git
       volumes:
@@ -36,7 +36,7 @@ jobs:
         STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
 
   test-build-srcds:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     container:
       image: docker:20.10.23-git
       volumes:
@@ -60,7 +60,7 @@ jobs:
         STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
 
   test-game-image-game-version:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v3
     - name: Test
@@ -68,7 +68,7 @@ jobs:
         ./test/test-game-image-game-version.sh
 
   test-generate-gitbranches:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v3
       with:
@@ -83,7 +83,7 @@ jobs:
     - test-build-hlds
     - test-build-srcds
     if: github.ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
     - uses: release-drafter/release-drafter@v5
       with:
@@ -97,7 +97,7 @@ jobs:
     - test-build-hlds
     - test-build-srcds
     if: startsWith(github.ref, 'refs/tags/')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
     - uses: release-drafter/release-drafter@v5
       with:
@@ -109,7 +109,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   dockerhub-description-hlds:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs:
     - test-build-hlds
     if: github.ref == 'refs/heads/master'
@@ -153,7 +153,7 @@ jobs:
         readme-filepath: docs/image/readme/${{ matrix.ENGINE }}-${{ matrix.GAME }}.md
 
   dockerhub-description-srcds:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs:
     - test-build-srcds
     if: github.ref == 'refs/heads/master'
