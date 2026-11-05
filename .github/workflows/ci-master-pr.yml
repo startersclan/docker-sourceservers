@@ -14,7 +14,7 @@ jobs:
   test-build-hlds:
     runs-on: ubuntu-24.04
     container:
-      image: docker:20.10.23-git
+      image: docker:28-cli
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
     steps:
@@ -38,7 +38,7 @@ jobs:
   test-build-srcds:
     runs-on: ubuntu-24.04
     container:
-      image: docker:20.10.23-git
+      image: docker:28-cli
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
     steps:
