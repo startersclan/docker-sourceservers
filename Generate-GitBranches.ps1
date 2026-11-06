@@ -68,16 +68,16 @@ $ErrorActionPreference = 'Stop'
 # Get games
 $games = Get-Content $PSScriptRoot/games.json -Encoding utf8 -Force | ConvertFrom-Json -AsHashtable
 if ($GamePlatform) {
-    $games = $games | ? { $_['game_platform'] -in $GamePlatform }
+    $games = @( $games | ? { $_['game_platform'] -in $GamePlatform } )
 }
 if ($GameEngine) {
-    $games = $games | ? { $_['game_engine'] -in $GameEngine }
+    $games = @( $games | ? { $_['game_engine'] -in $GameEngine } )
 }
 if ($Game) {
-    $games = $games | ? { $_['game'] -in $Game }
+    $games = @( $games | ? { $_['game'] -in $Game } )
 }
 if ($games.Count -eq 0) {
-    throw "No games found"
+    throw "No matching game(s) in games.json. Please define the game in games.json and re-run the script."
 }
 
 function Execute-Command {
