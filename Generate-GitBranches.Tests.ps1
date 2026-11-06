@@ -3,10 +3,9 @@ Get-Module Pester -ListAvailable
 Describe "Generate-GitBranches.ps1" {
 
     BeforeEach {
+        $ProgressPreference = 'SilentlyContinue'
         $testDrive = "TestDrive:"
         $sourceRepo = $PSScriptRoot
-
-        $games = Get-Content $PSScriptRoot/games.json -Encoding utf8 | ConvertFrom-Json -AsHashtable
 
         $expectedFiles = @(
             '.env'
@@ -29,6 +28,7 @@ Describe "Generate-GitBranches.ps1" {
             'notify.sh'
             'update/Dockerfile'
         )
+        $games = Get-Content $PSScriptRoot/games.json -Encoding utf8 | ConvertFrom-Json -AsHashtable
     }
 
     AfterEach {
@@ -36,15 +36,33 @@ Describe "Generate-GitBranches.ps1" {
         Remove-Item $testDrive/* -Recurse -Force
     }
 
-    It "Parameter validation" {
-        {
-            cd $PSScriptRoot
-            & ./Generate-GitBranches.ps1 -Repo '' -ErrorAction Stop
-        } | Should -Throw
+    Context 'Configuration' {
+        BeforeEach {
+            $sameRepo = "$testDrive/$( (Get-Item $sourceRepo).Name )"
+            Copy-Item $sourceRepo $sameRepo -Recurse -Force
+            cd $sameRepo
+        }
+
+        It "Throws if -Repo is unspecified" {
+            {
+                cd $PSScriptRoot
+                & ./Generate-GitBranches.ps1 -Repo '' -ErrorAction Stop
+            } | Should -Throw
+        }
+        It "Throws if games.json does not exist" {
+            {
+                Remove-Item games.json -Force
+                & ./Generate-GitBranches.ps1 -Repo .  -ErrorAction Stop
+            } | Should -Throw "*/games.json' because it does not exist."
+        }
+        It "Throws if there is an unmatched game" {
+            {
+                & ./Generate-GitBranches.ps1 -Repo . -Game nonexistentgame  -ErrorAction Stop
+            } | Should -Throw "No matching game(s) in games.json*"
+        }
     }
 
     Context 'Same repo' {
-
         BeforeEach {
             $sameRepo = "$testDrive/$( (Get-Item $sourceRepo).Name )"
             Copy-Item $sourceRepo $sameRepo -Recurse -Force
@@ -97,11 +115,9 @@ Describe "Generate-GitBranches.ps1" {
                 git ls-tree -r --name-only $b | Should -Be $expectedRemoteFiles
             }
         }
-
     }
 
     Context 'Different repo' {
-
         BeforeEach {
             $differentRepo = "$testDrive/$( (Get-Item $sourceRepo).Name )"
             New-Item $differentRepo -ItemType Directory > $null
@@ -124,7 +140,6 @@ Describe "Generate-GitBranches.ps1" {
             $branches = git branch | % { $_.Replace('*', '').Trim() } | ? { $_ -match '^steam-' }
             $branches.Count | Should -Be 0
         }
-
         It "Creates and updates branches of a different repo" {
             & $sourceRepo/Generate-GitBranches.ps1 -Repo $differentRepo -ErrorAction Stop 6>$null # Create
             & $sourceRepo/Generate-GitBranches.ps1 -Repo $differentRepo -ErrorAction Stop 6>$null # Update
@@ -136,7 +151,6 @@ Describe "Generate-GitBranches.ps1" {
                 git ls-tree -r --name-only $b | Should -Be $expectedFiles
             }
         }
-
         It "Creates and updates branches of a different repo (one game)" {
             & $sourceRepo/Generate-GitBranches.ps1 -Repo $differentRepo -GamePlatform steam -GameEngine hlds -Game valve -ErrorAction Stop 6>$null # Create
             & $sourceRepo/Generate-GitBranches.ps1 -Repo $differentRepo -GamePlatform steam -GameEngine hlds -Game valve -ErrorAction Stop 6>$null # Update
@@ -148,7 +162,5 @@ Describe "Generate-GitBranches.ps1" {
                 git ls-tree -r --name-only $b | Should -Be $expectedFiles
             }
         }
-
     }
-
 }
