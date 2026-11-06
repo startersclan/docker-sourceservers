@@ -135,6 +135,6 @@ jobs:
       with:
         username: ${{ secrets.REGISTRY_USER }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
-        repository: ${{ matrix.docker_repository }}"
+        repository: ${{ matrix.docker_repository }}
         short-description: ${{ matrix.game_name }} (${{ matrix.game_engine }}) 🐳
         readme-filepath: docs/readme/${{ matrix.game_engine }}-${{ matrix.game }}.md
