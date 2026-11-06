@@ -106,12 +106,13 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 |:-:|:-:|:-:|:-:|:-:|
 | Counter-Strike 1.6 | [`goldsourceservers/cstrike`][hlds-cstrike-dockerhub-link] | [![hlds-cstrike-version-badge][]][hlds-cstrike-metadata-link] | [![hlds-cstrike-size-badge][]][hlds-cstrike-metadata-link] | [![pipeline-gitlab-hlds-cstrike-badge][]][pipeline-gitlab-hlds-cstrike-link] |
 | Counter-Strike: Condition Zero | [`goldsourceservers/czero`][hlds-czero-dockerhub-link] | [![hlds-czero-version-badge][]][hlds-czero-metadata-link] | [![hlds-czero-size-badge][]][hlds-czero-metadata-link] | [![pipeline-gitlab-hlds-czero-badge][]][pipeline-gitlab-hlds-czero-link] |
-| Deathmatch Classic | [`goldsourceservers/dmc`][hlds-dmc-dockerhub-link] | [![hlds-dmc-version-badge][]][hlds-dmc-metadata-link] | [![hlds-dmc-size-badge][]][hlds-dmc-metadata-link] | [![pipeline-gitlab-hlds-dmc-badge][]][pipeline-gitlab-hlds-dmc-link] |
 | Day of Defeat | [`goldsourceservers/dod`][hlds-dod-dockerhub-link] | [![hlds-dod-version-badge][]][hlds-dod-metadata-link] | [![hlds-dod-size-badge][]][hlds-dod-metadata-link] | [![pipeline-gitlab-hlds-dod-badge][]][pipeline-gitlab-hlds-dod-link] |
+| Deathmatch Classic | [`goldsourceservers/dmc`][hlds-dmc-dockerhub-link] | [![hlds-dmc-version-badge][]][hlds-dmc-metadata-link] | [![hlds-dmc-size-badge][]][hlds-dmc-metadata-link] | [![pipeline-gitlab-hlds-dmc-badge][]][pipeline-gitlab-hlds-dmc-link] |
+| Half-Life | [`goldsourceservers/valve`][hlds-valve-dockerhub-link] | [![hlds-valve-version-badge][]][hlds-valve-metadata-link] | [![hlds-valve-size-badge][]][hlds-valve-metadata-link] | [![pipeline-gitlab-hlds-valve-badge][]][pipeline-gitlab-hlds-valve-link] |
 | Opposing Force | [`goldsourceservers/gearbox`][hlds-gearbox-dockerhub-link] | [![hlds-gearbox-version-badge][]][hlds-gearbox-metadata-link] | [![hlds-gearbox-size-badge][]][hlds-gearbox-metadata-link] | [![pipeline-gitlab-hlds-gearbox-badge][]][pipeline-gitlab-hlds-gearbox-link] |
 | Ricochet | [`goldsourceservers/ricochet`][hlds-ricochet-dockerhub-link] | [![hlds-ricochet-version-badge][]][hlds-ricochet-metadata-link] | [![hlds-ricochet-size-badge][]][hlds-ricochet-metadata-link] | [![pipeline-gitlab-hlds-ricochet-badge][]][pipeline-gitlab-hlds-ricochet-link] |
+| Sven Co-op | [`goldsourceservers/svencoop`][hlds-svencoop-dockerhub-link] | [![hlds-svencoop-version-badge][]][hlds-svencoop-metadata-link] | [![hlds-svencoop-size-badge][]][hlds-svencoop-metadata-link] | [![pipeline-gitlab-hlds-svencoop-badge][]][pipeline-gitlab-hlds-svencoop-link] |
 | Team Fortress Classic | [`goldsourceservers/tfc`][hlds-tfc-dockerhub-link] | [![hlds-tfc-version-badge][]][hlds-tfc-metadata-link] | [![hlds-tfc-size-badge][]][hlds-tfc-metadata-link] | [![pipeline-gitlab-hlds-tfc-badge][]][pipeline-gitlab-hlds-tfc-link] |
-| Half-Life | [`goldsourceservers/valve`][hlds-valve-dockerhub-link] | [![hlds-valve-version-badge][]][hlds-valve-metadata-link] | [![hlds-valve-size-badge][]][hlds-valve-metadata-link] | [![pipeline-gitlab-hlds-valve-badge][]][pipeline-gitlab-hlds-valve-link] |
 
 [hlds-cstrike-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/cstrike
 [hlds-cstrike-version-badge]: https://img.shields.io/docker/v/goldsourceservers/cstrike/latest?label=&style=flat-square
@@ -127,6 +128,13 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 [pipeline-gitlab-hlds-czero-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-czero&label=&logo=gitlab&style=flat-square
 [pipeline-gitlab-hlds-czero-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-czero
 
+[hlds-dod-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/dod
+[hlds-dod-version-badge]: https://img.shields.io/docker/v/goldsourceservers/dod/latest?label=&style=flat-square
+[hlds-dod-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/dod/latest?label=&style=flat-square
+[hlds-dod-metadata-link]: https://hub.docker.com/r/goldsourceservers/dod/tags
+[pipeline-gitlab-hlds-dod-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-dod&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-dod-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-dod
+
 [hlds-dmc-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/dmc
 [hlds-dmc-version-badge]: https://img.shields.io/docker/v/goldsourceservers/dmc/latest?label=&style=flat-square
 [hlds-dmc-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/dmc/latest?label=&style=flat-square
@@ -134,12 +142,12 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 [pipeline-gitlab-hlds-dmc-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-dmc&label=&logo=gitlab&style=flat-square
 [pipeline-gitlab-hlds-dmc-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-dmc
 
-[hlds-dod-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/dod
-[hlds-dod-version-badge]: https://img.shields.io/docker/v/goldsourceservers/dod/latest?label=&style=flat-square
-[hlds-dod-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/dod/latest?label=&style=flat-square
-[hlds-dod-metadata-link]: https://hub.docker.com/r/goldsourceservers/dod/tags
-[pipeline-gitlab-hlds-dod-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-dod&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-dod-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-dod
+[hlds-valve-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/valve
+[hlds-valve-version-badge]: https://img.shields.io/docker/v/goldsourceservers/valve/latest?label=&style=flat-square
+[hlds-valve-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/valve/latest?label=&style=flat-square
+[hlds-valve-metadata-link]: https://hub.docker.com/r/goldsourceservers/valve/tags
+[pipeline-gitlab-hlds-valve-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-valve&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-valve-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-valve
 
 [hlds-gearbox-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/gearbox
 [hlds-gearbox-version-badge]: https://img.shields.io/docker/v/goldsourceservers/gearbox/latest?label=&style=flat-square
@@ -155,19 +163,19 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 [pipeline-gitlab-hlds-ricochet-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-ricochet&label=&logo=gitlab&style=flat-square
 [pipeline-gitlab-hlds-ricochet-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-ricochet
 
+[hlds-svencoop-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/svencoop
+[hlds-svencoop-version-badge]: https://img.shields.io/docker/v/goldsourceservers/svencoop/latest?label=&style=flat-square
+[hlds-svencoop-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/svencoop/latest?label=&style=flat-square
+[hlds-svencoop-metadata-link]: https://hub.docker.com/r/goldsourceservers/svencoop/tags
+[pipeline-gitlab-hlds-svencoop-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-svencoop&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-hlds-svencoop-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-svencoop
+
 [hlds-tfc-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/tfc
 [hlds-tfc-version-badge]: https://img.shields.io/docker/v/goldsourceservers/tfc/latest?label=&style=flat-square
 [hlds-tfc-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/tfc/latest?label=&style=flat-square
 [hlds-tfc-metadata-link]: https://hub.docker.com/r/goldsourceservers/tfc/tags
 [pipeline-gitlab-hlds-tfc-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-tfc&label=&logo=gitlab&style=flat-square
 [pipeline-gitlab-hlds-tfc-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-tfc
-
-[hlds-valve-dockerhub-link]: https://hub.docker.com/r/goldsourceservers/valve
-[hlds-valve-version-badge]: https://img.shields.io/docker/v/goldsourceservers/valve/latest?label=&style=flat-square
-[hlds-valve-size-badge]: https://img.shields.io/docker/image-size/goldsourceservers/valve/latest?label=&style=flat-square
-[hlds-valve-metadata-link]: https://hub.docker.com/r/goldsourceservers/valve/tags
-[pipeline-gitlab-hlds-valve-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-hlds-valve&label=&logo=gitlab&style=flat-square
-[pipeline-gitlab-hlds-valve-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-hlds-valve
 
 ## Image Info
 
