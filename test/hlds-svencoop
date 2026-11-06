@@ -1,0 +1,31 @@
+
+Console initialized.
+Using breakpad crash handler
+Setting breakpad minidump AppID = 225840
+Forcing breakpad minidump interfaces to load
+dlopen failed trying to load:
+/root/.steam/sdk32/steamclient.so
+with error:
+/root/.steam/sdk32/steamclient.so: cannot open shared object file: No such file or directory
+Looking up breakpad interfaces from steamclient
+Calling BreakpadMiniDumpSystemInit
+Threaded networking started successfully.
+Protocol version 48
+Engine version 5.0.1.8 (svencoop)
+Engine build: 19:37:07 Dec  5 2024 (10269)
+STEAM Auth Server
+Protocol version 48
+Engine version 5.0.1.8 (svencoop)
+Engine build: 19:37:07 Dec  5 2024 (10269)
+Initializing IP networking.
+Local IP address: 0.0.0.0, SV port: 27015, CL port: -1
+Steam P2P networking disabled.
+Server logging data to file logs/2026-11-05.log
+L 05/11/2026 - 14:20:16: Log file started (file "logs/2026-11-05.log") (game "svencoop") (version "48/5.0.1.8/10269")
+L 05/11/2026 - 14:20:16: Server cvar "sv_aim" = "0"
+couldn't exec banned.cfg
+couldn't exec listip.cfg
+Closed IP networking.
+Threaded networking stopped successfully.
+L 05/11/2026 - 14:20:16: Server shutdown
+L 05/11/2026 - 14:20:16: Log file closed

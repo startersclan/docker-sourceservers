@@ -335,6 +335,9 @@ if [ ! "$NO_TEST" = 'true' ]; then
         docker logs "$CONTAINER_ID"
         docker exec "$CONTAINER_ID" bash -c 'printf "\\xff\\xff\\xff\\xffTSource Engine Query\\x00" | nc -w1 -u 127.0.0.1 27015 | tr "[:cntrl:]" "\\n"' | tee "$TEST_DIR/test"
         docker rm -f "$CONTAINER_ID" > /dev/null
+    # hlds/svencoop
+    elif  [ "$APPID" = 276060 ]; then
+        time docker run -t --rm "$GAME_IMAGE" "./svends_i686 -game svencoop +version +exit" | tee "$TEST_DIR/test"
     else
         time docker run -t --rm "$GAME_IMAGE" "$GAME_BIN -game $GAME +version +exit" | tee "$TEST_DIR/test"
     fi

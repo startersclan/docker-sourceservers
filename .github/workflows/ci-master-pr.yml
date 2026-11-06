@@ -116,7 +116,7 @@ jobs:
     strategy:
       matrix:
         ENGINE: [hlds]
-        GAME: [cstrike, czero, dmc, dod, gearbox, ricochet, tfc, valve]
+        GAME: [cstrike, czero, dod, dmc, gearbox, valve, ricochet, svencoop, tfc]
         include:
         - ENGINE: hlds
           GAME: cstrike
@@ -137,6 +137,9 @@ jobs:
           GAME: ricochet
           GAME_FULLNAME: 'Ricochet'
         - ENGINE: hlds
+          GAME: svencoop
+          GAME_FULLNAME: 'Sven Co-op'
+        - ENGINE: hlds
           GAME: tfc
           GAME_FULLNAME: 'Team Fortress Classic'
         - ENGINE: hlds
@@ -150,7 +153,7 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
         repository: ${{ vars.REGISTRY_GOLDSOURCE }}/${{ matrix.GAME }}
         short-description: ${{ matrix.GAME_FULLNAME }} (${{ matrix.ENGINE }}) 🐳
-        readme-filepath: docs/image/readme/${{ matrix.ENGINE }}-${{ matrix.GAME }}.md
+        readme-filepath: docs/readme/${{ matrix.ENGINE }}-${{ matrix.GAME }}.md
 
   dockerhub-description-srcds:
     runs-on: ubuntu-24.04
@@ -194,4 +197,4 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
         repository: ${{ vars.REGISTRY_SOURCE }}/${{ matrix.GAME }}
         short-description: ${{ matrix.GAME_FULLNAME }} (${{ matrix.ENGINE }}) 🐳
-        readme-filepath: docs/image/readme/${{ matrix.ENGINE }}-${{ matrix.GAME }}.md
+        readme-filepath: docs/readme/${{ matrix.ENGINE }}-${{ matrix.GAME }}.md
