@@ -39,6 +39,7 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 | Counter-Strike: Global Offensive | [`sourceservers/csgo`][srcds-csgo-dockerhub-link] | [![srcds-csgo-version-badge][]][srcds-csgo-metadata-link] | [![srcds-csgo-size-badge][]][srcds-csgo-metadata-link] | [![pipeline-gitlab-srcds-csgo-badge][]][pipeline-gitlab-srcds-csgo-link] |
 | Counter-Strike: Source | [`sourceservers/cstrike`][srcds-cstrike-dockerhub-link] | [![srcds-cstrike-version-badge][]][srcds-cstrike-metadata-link] | [![srcds-cstrike-size-badge][]][srcds-cstrike-metadata-link] | [![pipeline-gitlab-srcds-cstrike-badge][]][pipeline-gitlab-srcds-cstrike-link] |
 | Day of Defeat: Source | [`sourceservers/dod`][srcds-dod-dockerhub-link] | [![srcds-dod-version-badge][]][srcds-dod-metadata-link] | [![srcds-dod-size-badge][]][srcds-dod-metadata-link] | [![pipeline-gitlab-srcds-dod-badge][]][pipeline-gitlab-srcds-dod-link] |
+| Garry's Mod | [`sourceservers/garrysmod`][srcds-garrysmod-dockerhub-link] | [![srcds-garrysmod-version-badge][]][srcds-garrysmod-metadata-link] | [![srcds-garrysmod-size-badge][]][srcds-garrysmod-metadata-link] | [![pipeline-gitlab-srcds-garrysmod-badge][]][pipeline-gitlab-srcds-garrysmod-link] |
 | Half-Life 2: Deathmatch | [`sourceservers/hl2mp`][srcds-hl2mp-dockerhub-link] | [![srcds-hl2mp-version-badge][]][srcds-hl2mp-metadata-link] | [![srcds-hl2mp-size-badge][]][srcds-hl2mp-metadata-link] | [![pipeline-gitlab-srcds-hl2mp-badge][]][pipeline-gitlab-srcds-hl2mp-link] |
 | Left 4 Dead | [`sourceservers/left4dead`][srcds-left4dead-dockerhub-link] | [![srcds-left4dead-version-badge][]][srcds-left4dead-metadata-link] | [![srcds-left4dead-size-badge][]][srcds-left4dead-metadata-link] | [![pipeline-gitlab-srcds-left4dead-badge][]][pipeline-gitlab-srcds-left4dead-link] |
 | Left 4 Dead 2 | [`sourceservers/left4dead2`][srcds-left4dead2-dockerhub-link] | [![srcds-left4dead2-version-badge][]][srcds-left4dead2-metadata-link] | [![srcds-left4dead2-size-badge][]][srcds-left4dead2-metadata-link] | [![pipeline-gitlab-srcds-left4dead2-badge][]][pipeline-gitlab-srcds-left4dead2-link] |
@@ -71,6 +72,13 @@ Dedicated servers hosted on Steam are usually required to be running the *latest
 [srcds-dod-metadata-link]: https://hub.docker.com/r/sourceservers/dod/tags
 [pipeline-gitlab-srcds-dod-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-srcds-dod&label=&logo=gitlab&style=flat-square
 [pipeline-gitlab-srcds-dod-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-srcds-dod
+
+[srcds-garrysmod-dockerhub-link]: https://hub.docker.com/r/sourceservers/garrysmod
+[srcds-garrysmod-version-badge]: https://img.shields.io/docker/v/sourceservers/garrysmod/latest?label=&style=flat-square
+[srcds-garrysmod-size-badge]: https://img.shields.io/docker/image-size/sourceservers/garrysmod/latest?label=&style=flat-square
+[srcds-garrysmod-metadata-link]: https://hub.docker.com/r/sourceservers/garrysmod/tags
+[pipeline-gitlab-srcds-garrysmod-badge]: https://img.shields.io/gitlab/pipeline-status/startersclan/docker-sourceservers?branch=steam-srcds-garrysmod&label=&logo=gitlab&style=flat-square
+[pipeline-gitlab-srcds-garrysmod-link]: https://gitlab.com/startersclan/docker-sourceservers/-/pipelines?page=1&scope=all&ref=steam-srcds-garrysmod
 
 [srcds-hl2mp-dockerhub-link]: https://hub.docker.com/r/sourceservers/hl2mp
 [srcds-hl2mp-version-badge]: https://img.shields.io/docker/v/sourceservers/hl2mp/latest?label=&style=flat-square
