@@ -1,41 +1,20 @@
 <#
 .SYNOPSIS
-# 1. This script create / updates git branches (named <game_platform>-<game_engine>-<game>) based on games.json
-# 2. By default it creates a git branch for each game found in games.json. To limit to one game, specify -GamePlatform, -GameEngine, and -Game
-# 3. To build a game, checkout to its branch, edit .env, mutate .trigger, commit and push
+# 1. This script create / updates git branches named as `<game_platform>-<game_engine>-<game>` based on games.json
+# 2. By default it creates git branches for games games.json. To limit to one game, specify -GamePlatform, -GameEngine, and -Game
+# 3. To build a game, checkout to its branch (E.g. steam-hlds-cstrike), edit .env, mutate .trigger, commit and push branch
 
 .EXAMPLE
-# Create branches for all games (dry-run)
-./Generate-GitBranches.ps1 -Repo . -WhatIf
-
-# Create branches for all games
+# Create / Update local git branches for all games in games.json. Use -WhatIf for a dry run. Useful for creating a new repo the first time, and for patching files of all local game branches.
 ./Generate-GitBranches.ps1 -Repo .
 
-# Create branches for all games, and push to git remote 'upstream'
-./Generate-GitBranches.ps1 -Repo . -Remote upstream -Push
+# Create / Update local git branches for specific game(s) matched in games.json. Use -WhatIf for a dry run. Useful for patching files of one specific local game branch.
+./Generate-GitBranches.ps1 -Repo . -GameEngine hlds -Game cstrike
+./Generate-GitBranches.ps1 -Repo . -GameEngine srcds -Game hl2mp
 
-# Create branches for specific game(s)
-./Generate-GitBranches.ps1 -Repo . -Remote upstream -Push -GameEngine hlds -Game valve,cstrike
-./Generate-GitBranches.ps1 -Repo . -Remote upstream -Push -GameEngine srcds -Game cs2,csgo
-
-# Create branches for specific game(s), and push to git remote 'upstream'
-./Generate-GitBranches.ps1 -Repo . -Remote upstream -Push -GameEngine hlds -Game valve,cstrike
-./Generate-GitBranches.ps1 -Repo . -Remote upstream -Push -GameEngine srcds -Game cs2,csgo
-
-.EXAMPLE
-# Update branches for all games, pulling and pushing to git remote 'origin'
-./Generate-GitBranches.ps1 -Repo . -Pull -Push
-
-# Update branches for all games, pulling and pushing to git remote 'upstream'
-./Generate-GitBranches.ps1 -Repo . -Remote upstream -Pull -Push
-
-# Update branches for specific game(s), pulling and pushing to git remote 'origin'
-./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine hlds -Game valve,cstrike
-./Generate-GitBranches.ps1 -Repo . -Pull -Push -GameEngine srcds -Game cs2,csgo
-
-# Update branches for specific game(s), pulling and pushing to git remote 'origin'
-./Generate-GitBranches.ps1 -Repo . -Remote upstream -Pull -Push -GameEngine hlds -Game valve,cstrike
-./Generate-GitBranches.ps1 -Repo . -Remote upstream -Pull -Push -GameEngine srcds -Game cs2,csgo
+# Create / Update local and remote branches for specific game(s) matched in games.json by: 1) Pull branch 2) Commit files on branch 3) Push branch. Use -WhatIf for a dry run
+./Generate-GitBranches.ps1 -Repo . -GameEngine hlds -Game cstrike -Remote upstream -Pull -Push
+./Generate-GitBranches.ps1 -Repo . -GameEngine srcds -Game hl2mp -Remote upstream -Pull -Push
 #>
 [CmdletBinding(SupportsShouldProcess)]
 param (
@@ -52,13 +31,13 @@ param (
     [Parameter(HelpMessage="Whether to push changes after creating / updating branches")]
     [switch]$Push
 ,
-    [Parameter(HelpMessage="Game platform. E.g. 'steam'. If unspecified, all game platforms are selected.")]
+    [Parameter(HelpMessage="Game platform. E.g. 'steam'. If unspecified, all game platforms are matched.")]
     [string[]]$GamePlatform
 ,
-    [Parameter(HelpMessage="Game engine. E.g. 'hlds' or 'srcds'. If unspecified, all game engines are selected.")]
+    [Parameter(HelpMessage="Game engine. E.g. 'hlds' or 'srcds'. If unspecified, all game engines are matched.")]
     [string[]]$GameEngine
 ,
-    [Parameter(HelpMessage="Game. E.g. 'cstrike'. If unspecified, all games are selected.")]
+    [Parameter(HelpMessage="Game. E.g. 'cstrike' or 'hl2mp'. Use a comma-delimited string for multiple values (E.g. 'cstrike,valve'). If unspecified, all games are matched.")]
     [string[]]$Game
 )
 Set-StrictMode -Version Latest
@@ -223,7 +202,9 @@ CLIENT_APPID=$( $g['client_appid'] )
 GAME=$( $g['game'] )
 MOD=$( $g['mod'] )
 FIX_APPMANIFEST=
-INSTALL_COUNT=
+INSTALL_COUNT=$(
+    if ($g['game_engine'] -eq 'srcds' -and $g['game'] -in @( 'garrysmod', 'hl2mp' )) { '2' }
+)
 LATEST=true
 CACHE=
 NO_CACHE=
