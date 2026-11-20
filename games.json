@@ -169,6 +169,19 @@
     "fix_app_manifest": false
   },
   {
+    "game_version": 140419,
+    "game_update_count": 0,
+    "game_platform": "steam",
+    "game_engine": "srcds",
+    "game": "garrysmod",
+    "game_name": "Garry's Mod",
+    "mod": "",
+    "appid": 4020,
+    "client_appid": 4000,
+    "docker_repository": "sourceservers/garrysmod",
+    "fix_app_manifest": false
+  },
+  {
     "game_version": 6630498,
     "game_update_count": 2,
     "game_platform": "steam",

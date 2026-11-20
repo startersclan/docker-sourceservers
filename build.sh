@@ -335,6 +335,9 @@ if [ ! "$NO_TEST" = 'true' ]; then
         docker logs "$CONTAINER_ID"
         docker exec "$CONTAINER_ID" bash -c 'printf "\\xff\\xff\\xff\\xffTSource Engine Query\\x00" | nc -w1 -u 127.0.0.1 27015 | tr "[:cntrl:]" "\\n"' | tee "$TEST_DIR/test"
         docker rm -f "$CONTAINER_ID" > /dev/null
+    # srcds/garrysmod
+    elif  [ "$APPID" = 4020 ]; then
+        time docker run -t --rm "$GAME_IMAGE" "srcds_linux +version +exit"
     # hlds/svencoop
     elif  [ "$APPID" = 276060 ]; then
         time docker run -t --rm "$GAME_IMAGE" "./svends_i686 -game svencoop +version +exit" | tee "$TEST_DIR/test"
@@ -343,24 +346,28 @@ if [ ! "$NO_TEST" = 'true' ]; then
     fi
     date -Iseconds
 
-    # Verify game version of the game image matches the value of GAME_VERSION
-    echo 'Verifying game image game version'
-    GAME_IMAGE_VERSION_LINES=$(
-        if  [ "$APPID" = 730 ]; then
-            cat "$TEST_DIR/test" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' || true
+    if [ -f "$TEST_DIR/test" ]; then
+        # Verify game version of the game image matches the value of GAME_VERSION
+        echo 'Verifying game image game version'
+        GAME_IMAGE_VERSION_LINES=$(
+            if  [ "$APPID" = 730 ]; then
+                cat "$TEST_DIR/test" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' || true
+            else
+                cat "$TEST_DIR/test" | grep -iE '\bexe\b|version' || true
+            fi
+        )
+        echo 'GAME_IMAGE_VERSION_LINES:'
+        echo "$GAME_IMAGE_VERSION_LINES"
+        if echo "$GAME_IMAGE_VERSION_LINES" | sed 's/[^0-9]//g' | grep -E "^$GAME_VERSION" > /dev/null; then
+            echo "Game version matches GAME_VERSION=$GAME_VERSION"
         else
-            cat "$TEST_DIR/test" | grep -iE '\bexe\b|version' || true
+            echo "Game version does not match GAME_VERSION=$GAME_VERSION"
+            CLEANUP=true
         fi
-    )
-    echo 'GAME_IMAGE_VERSION_LINES:'
-    echo "$GAME_IMAGE_VERSION_LINES"
-    if echo "$GAME_IMAGE_VERSION_LINES" | sed 's/[^0-9]//g' | grep -E "^$GAME_VERSION" > /dev/null; then
-        echo "Game version matches GAME_VERSION=$GAME_VERSION"
+        rm -f "$TEST_DIR/test"
     else
-        echo "Game version does not match GAME_VERSION=$GAME_VERSION"
-        CLEANUP=true
+        echo 'Skipping check for game image game version'
     fi
-    rm -f "$TEST_DIR/test"
 fi
 
 if [ "$CLEANUP" = 'true' ]; then
