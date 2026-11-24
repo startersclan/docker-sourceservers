@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1
-
 # Builds a layered image containing the latest game version based upon the specified game image.
 
 ARG GAME_IMAGE
@@ -42,39 +40,28 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
         ls -al "$SERVER_DIR/steamapps"; \
         i=$(( i+1 )); \
     done; \
-    if [ "$APPID" = 90 ]; then \
-        echo "[UPDATE] Applying hotfixes for hlds"; \
-        # Hotfix "Error:./libstdc++.so.6: version CXXABI_1.3.8' not found"
-        ln -sfnv /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 "$SERVER_DIR/libgcc_s.so.1"; \
-        ln -sfnv /usr/lib/x86_64-linux-gnu/libstdc++.so.6 "$SERVER_DIR/libstdc++.so.6"; \
-        ln -sfnv /usr/lib/x86_64-linux-gnu/libstdc++.so.6 "$STEAMCMD_DIR/linux32/libstdc++.so.6"; \
-    fi; \
     echo "[UPDATE] Performing cleanup"; \
-    # Clean up a different set of files for srcds/cs2
-    if  [ "$APPID" = 730 ]; then \
+    cd "$STEAMCMD_DIR" && rm -rf \
+        package \
+        public \
+        siteserverui \
+        steam \
+        linux32/libtier0_s.so \
+        linux32/libvstdlib_s.so \
+        linux32/logs \
+        linux32/steamconsole.so \
+        linux64/crashhandler.so \
+        linux64/libtier0_s.so \
+        linux64/libvstdlib_s.so \
+        linux64/steamcmd \
+        linux64/steamconsole.so \
+        linux64/steamerrorreporter \
+        update_hosts_cached.vdf; \
+    if [ ! "$APPID" = 730 ]; then \
         cd "$STEAMCMD_DIR" && rm -rf \
-            package \
-            public \
-            siteserverui \
-            steam \
-            linux32/libtier0_s.so \
-            linux32/libvstdlib_s.so \
-            linux32/steamconsole.so \
-            update_hosts_cached.vdf; \
-    else \
-        cd "$STEAMCMD_DIR" && rm -rf \
-            linux64 \
-            package \
-            public \
-            siteserverui \
-            steam \
-            linux32/libtier0_s.so \
-            linux32/libvstdlib_s.so \
-            linux32/steamclient.so \
-            linux32/steamconsole.so \
-            update_hosts_cached.vdf; \
-        rm -rf /root/.steam; \
+            linux64; \
     fi; \
+    rm -rf /root/.steam; \
     if [ "$APPID" = 90 ]; then \
         # Retain `/root/Steam/appcache` to prevent `steamcmd` from re-downloading `hlds` game entirely on game updates
         rm -rf $( find /root/Steam -mindepth 1 -maxdepth 1 | grep -v '^/root/Steam/appcache' ); \
@@ -82,3 +69,17 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
         # Cleanup. This also cleans up user data
         rm -rf /root/Steam; \
     fi;
+
+# Apply game fixes
+RUN echo "[UPDATE] Applying game fixes"; \
+    # Create steam_appid.txt containing the game's appid to prevent crashes on first run
+    echo "[UPDATE] CLIENT_APPID: $CLIENT_APPID"; \
+    echo "$CLIENT_APPID" > "$SERVER_DIR/steam_appid.txt"; \
+    if [ "$APPID" = 730 ]; then \
+        # Fix error for 64-bit games: /root/.steam/sdk64/steamclient.so: cannot open shared object file: No such file or directory
+        mkdir -p /root/.steam/sdk64; \
+        ln -sfnv "$STEAMCMD_DIR/linux64/steamclient.so" /root/.steam/sdk64/steamclient.so; \
+    fi; \
+    # Fix error for 32-bit games: /root/.steam/sdk32/steamclient.so: cannot open shared object file: No such file or directory
+    mkdir -p /root/.steam/sdk32; \
+    ln -sfnv "$STEAMCMD_DIR/linux32/steamclient.so" /root/.steam/sdk32/steamclient.so;
