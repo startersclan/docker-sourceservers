@@ -1,6 +1,6 @@
 # Builds a clean image containing the latest version of the specified game.
 
-FROM startersclan/steamcmd:git-20261122.0.0
+FROM startersclan/steamcmd:git-20261125.0.0
 
 ARG SERVER_DIR=/server
 ARG APPMANIFEST_AR_URL=https://github.com/startersclan/hlds-appmanifest/archive/refs/tags/v2.0.0.tar.gz
