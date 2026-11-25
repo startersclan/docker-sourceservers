@@ -94,7 +94,7 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
         linux64/steamconsole.so \
         linux64/steamerrorreporter \
         update_hosts_cached.vdf; \
-    if [ ! "$APPID" = 730 ]; then \
+    if [ "$APPID" = 90 ]; then \
         cd "$STEAMCMD_DIR" && rm -rf \
             linux64; \
     fi; \
@@ -112,7 +112,7 @@ RUN echo "[BUILD] Applying game fixes"; \
     # Create steam_appid.txt containing the game's appid to prevent crashes on first run
     echo "[BUILD] CLIENT_APPID: $CLIENT_APPID"; \
     echo "$CLIENT_APPID" > "$SERVER_DIR/steam_appid.txt"; \
-    if [ "$APPID" = 730 ]; then \
+    if [ ! "$APPID" = 90 ]; then \
         # Fix error for 64-bit games: /root/.steam/sdk64/steamclient.so: cannot open shared object file: No such file or directory
         mkdir -p /root/.steam/sdk64; \
         ln -sfnv "$STEAMCMD_DIR/linux64/steamclient.so" /root/.steam/sdk64/steamclient.so; \
@@ -122,7 +122,7 @@ RUN echo "[BUILD] Applying game fixes"; \
     ln -sfnv "$STEAMCMD_DIR/linux32/steamclient.so" /root/.steam/sdk32/steamclient.so;
 
 # For directly running the hlds_linux / srcds_linux binary
-ENV LD_LIBRARY_PATH /usr/lib/x86_64-linux-gnu/:/usr/lib/i386-linux-gnu/:/steamcmd/linux64/:/steamcmd/linux32/:.:bin
+ENV LD_LIBRARY_PATH /usr/lib/x86_64-linux-gnu/:/usr/lib/i386-linux-gnu/:/steamcmd/linux64/:/steamcmd/linux32/:.:bin/linux64/:bin
 
 ENV APPID $APPID
 ENV MOD $MOD

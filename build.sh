@@ -321,11 +321,11 @@ if [ ! "$NO_TEST" = 'true' ]; then
 
     echo "Testing image"
     date -Iseconds
-    time docker run -t --rm "$GAME_IMAGE" 'printenv && ls -al'
+    ( set -x; time docker run -t --rm "$GAME_IMAGE" 'printenv && ls -al' )
     date -Iseconds
     # srcds/cs2
     if  [ "$APPID" = 730 ]; then
-        CONTAINER_ID=$( docker run -td "$GAME_IMAGE" "$GAME_BIN -dedicated -port 27015 +map de_dust2" )
+        CONTAINER_ID=$( set -x; docker run -td "$GAME_IMAGE" "$GAME_BIN -dedicated -port 27015 +map de_dust2" )
         i=0; while [ "$i" -lt 30 ]; do
             echo "Waiting for server to start"
             docker container inspect -f '{{.State.Running}}' "$CONTAINER_ID" | grep '^true$' > /dev/null || break
@@ -333,38 +333,45 @@ if [ ! "$NO_TEST" = 'true' ]; then
             i=$(($i + 1))
         done
         docker logs "$CONTAINER_ID"
-        docker exec "$CONTAINER_ID" bash -c 'printf "\\xff\\xff\\xff\\xffTSource Engine Query\\x00" | nc -w1 -u 127.0.0.1 27015 | tr "[:cntrl:]" "\\n"' | tee "$TEST_DIR/test"
+        docker exec "$CONTAINER_ID" bash -c 'printf "\\xff\\xff\\xff\\xffTSource Engine Query\\x00" | nc -w1 -u 127.0.0.1 27015 | tr "[:cntrl:]" "\\n"' | tee "$TEST_DIR/test64"
         docker rm -f "$CONTAINER_ID" > /dev/null
     # srcds/garrysmod
     elif  [ "$APPID" = 4020 ]; then
-        time docker run -t --rm "$GAME_IMAGE" "srcds_linux +version +exit"
+        ( set -x; time docker run -t --rm "$GAME_IMAGE" "srcds_linux +version +exit" )
+    # srcds/tf
+    elif  [ "$APPID" = 232250 ]; then
+        ( set -x; time docker run -t --rm "$GAME_IMAGE" "srcds_linux64 -game $GAME +version +exit" | tee "$TEST_DIR/test64" )
+        ( set -x; time docker run -t --rm "$GAME_IMAGE" "srcds_linux -game $GAME +version +exit" | tee "$TEST_DIR/test32" )
     # hlds/svencoop
     elif  [ "$APPID" = 276060 ]; then
-        time docker run -t --rm "$GAME_IMAGE" "./svends_i686 -game svencoop +version +exit" | tee "$TEST_DIR/test"
+        ( set -x; time docker run -t --rm "$GAME_IMAGE" "./svends_i686 -game svencoop +version +exit" | tee "$TEST_DIR/test32" )
     else
-        time docker run -t --rm "$GAME_IMAGE" "$GAME_BIN -game $GAME +version +exit" | tee "$TEST_DIR/test"
+        ( set -x; time docker run -t --rm "$GAME_IMAGE" "$GAME_BIN -game $GAME +version +exit" | tee "$TEST_DIR/test32" )
     fi
     date -Iseconds
 
-    if [ -f "$TEST_DIR/test" ]; then
-        # Verify game version of the game image matches the value of GAME_VERSION
-        echo 'Verifying game image game version'
-        GAME_IMAGE_VERSION_LINES=$(
-            if  [ "$APPID" = 730 ]; then
-                cat "$TEST_DIR/test" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' || true
+    TESTS=$( find "$TEST_DIR" -type f -name 'test32' -or -name 'test64' | sort -nr )
+    if [ -n "$TESTS" ]; then
+        for t in $TESTS; do
+            # Verify game version of the game image matches the value of GAME_VERSION
+            echo "Verifying game image game version in: $t"
+            GAME_IMAGE_VERSION_LINES=$(
+                if  [ "$APPID" = 730 ]; then
+                    cat "$t" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' || true
+                else
+                    cat "$t" | grep -iE '\bexe\b|version' || true
+                fi
+            )
+            echo 'GAME_IMAGE_VERSION_LINES:'
+            echo "$GAME_IMAGE_VERSION_LINES"
+            if echo "$GAME_IMAGE_VERSION_LINES" | sed 's/[^0-9]//g' | grep -E "^$GAME_VERSION" > /dev/null; then
+                echo "Game version matches GAME_VERSION=$GAME_VERSION"
             else
-                cat "$TEST_DIR/test" | grep -iE '\bexe\b|version' || true
+                echo "Game version does not match GAME_VERSION=$GAME_VERSION"
+                CLEANUP=true
             fi
-        )
-        echo 'GAME_IMAGE_VERSION_LINES:'
-        echo "$GAME_IMAGE_VERSION_LINES"
-        if echo "$GAME_IMAGE_VERSION_LINES" | sed 's/[^0-9]//g' | grep -E "^$GAME_VERSION" > /dev/null; then
-            echo "Game version matches GAME_VERSION=$GAME_VERSION"
-        else
-            echo "Game version does not match GAME_VERSION=$GAME_VERSION"
-            CLEANUP=true
-        fi
-        rm -f "$TEST_DIR/test"
+            rm -f "$t"
+        done
     else
         echo 'Skipping check for game image game version'
     fi

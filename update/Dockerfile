@@ -57,7 +57,7 @@ RUN --mount=type=secret,id=STEAM_USERNAME \
         linux64/steamconsole.so \
         linux64/steamerrorreporter \
         update_hosts_cached.vdf; \
-    if [ ! "$APPID" = 730 ]; then \
+    if [ "$APPID" = 90 ]; then \
         cd "$STEAMCMD_DIR" && rm -rf \
             linux64; \
     fi; \
@@ -75,7 +75,7 @@ RUN echo "[UPDATE] Applying game fixes"; \
     # Create steam_appid.txt containing the game's appid to prevent crashes on first run
     echo "[UPDATE] CLIENT_APPID: $CLIENT_APPID"; \
     echo "$CLIENT_APPID" > "$SERVER_DIR/steam_appid.txt"; \
-    if [ "$APPID" = 730 ]; then \
+    if [ ! "$APPID" = 90 ]; then \
         # Fix error for 64-bit games: /root/.steam/sdk64/steamclient.so: cannot open shared object file: No such file or directory
         mkdir -p /root/.steam/sdk64; \
         ln -sfnv "$STEAMCMD_DIR/linux64/steamclient.so" /root/.steam/sdk64/steamclient.so; \
