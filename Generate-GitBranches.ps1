@@ -203,7 +203,8 @@ GAME=$( $g['game'] )
 MOD=$( $g['mod'] )
 FIX_APPMANIFEST=
 INSTALL_COUNT=$(
-    if ($g['game_engine'] -eq 'srcds' -and $g['game'] -in @( 'garrysmod', 'hl2mp' )) { '2' }
+    if ($g['game_engine'] -eq 'hlds' -and $g['game'] -in @( 'svencoop' )) { '2' }
+    elseif ($g['game_engine'] -eq 'srcds' -and $g['game'] -in @( 'garrysmod', 'hl2mp', 'left4dead' )) { '2' }
 )
 LATEST=true
 CACHE=
